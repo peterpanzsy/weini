@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="json" extends="json-default">
+		<action name="listAdmin" class="com.weini.manage.action.AdminAction" method="listAdmin">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
+		<action name="updateAdmin" class="com.weini.manage.action.AdminAction" method="updateAdmin">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
+		<action name="delAdmin" class="com.weini.manage.action.AdminAction" method="delAdmin">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
+		<action name="listAuthByRole" class="com.weini.manage.action.AdminAction" method="listAuthByRole">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
+		<action name="updateAuthByRole" class="com.weini.manage.action.AdminAction" method="updateAuthByRole">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
+	</package>
+
+</struts>    
