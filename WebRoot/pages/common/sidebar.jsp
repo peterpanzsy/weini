@@ -61,10 +61,10 @@
         <i class="fa fa-database"></i> 账户管理 <div class="pull-right"><span class="caret"></span></div>
       </a>
       <ul class="templatemo-submenu">
-        <li><a href="pages/adminManage/rootAdmin.jsp">超级管理员</a></li>
-        <li><a href="pages/adminManage/financeAdmin.jsp">财务管理员</a></li>
-        <li><a href="pages/adminManage/goodAdmin.jsp">产品管理员</a></li>             
-        <li><a href="pages/adminManage/ordinaryAdmin.jsp">普通管理员</a></li>
+        <li id="rootAdminLi"><a href="pages/adminManage/rootAdmin.jsp">超级管理员</a></li>
+        <li id="financeAdminLi"><a href="pages/adminManage/financeAdmin.jsp">财务管理员</a></li>
+        <li id="goodAdminLi"><a href="pages/adminManage/goodAdmin.jsp">产品管理员</a></li>             
+        <li id="ordinaryAdminLi"><a href="pages/adminManage/ordinaryAdmin.jsp">普通管理员</a></li>
       </ul>
     </li>
     <li id="reportManage" class="sub">
