@@ -22,12 +22,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       </div>   
     </div>
     <div class="template-page-wrapper">
-      <form class="form-horizontal templatemo-signin-form" role="form" action="login.action" method="get">
+      <form id="loginForm" class="form-horizontal templatemo-signin-form" role="form" action="login.action" method="get">
         <div class="form-group">
           <div class="col-md-12">
             <label for="username" class="col-sm-2 control-label">用户名</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="username" placeholder="Username">
+              <input type="text" class="form-control" id="username" name="username" placeholder="Username">
             </div>
           </div>              
         </div>
@@ -35,7 +35,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <div class="col-md-12">
             <label for="password" class="col-sm-2 control-label">密码</label>
             <div class="col-sm-10">
-              <input type="password" class="form-control" id="password" placeholder="Password">
+              <input type="password" class="form-control" id="password" name="password" placeholder="Password">
             </div>
           </div>
         </div>

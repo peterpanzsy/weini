@@ -40,14 +40,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 
 <input id="role" value="root" style="display:none" />
-  	<script src="js/jquery.min.js"></script>
+  	<!-- <script src="js/jquery.min.js"></script> -->
+  	<script type="text/javascript" charset="utf8" src="DataTables-1.10.4/js/jquery-1.11.1.min.js"></script>  
+  	<script src="js/bootstrap.min.js"></script>
   	<script src="jquery-validation-1.11.1/dist/jquery.validate.js" type="text/javascript"></script>
   	<script src="jquery-ui-1.11.2/jquery-ui.js"></script>
-  	<script src="js/bootstrap.min.js"></script>
+  	
     <script src="js/templatemo_script.js"></script>
   	<!-- DataTables -->
   	<script type="text/javascript" charset="utf8" src="DataTables-1.10.4/js/jquery.dataTables.min.js"></script>
   	<script type="text/javascript" charset="utf8" src="DataTables-1.10.4/js/dataTables.bootstrap.js"></script>  
-    <script type="text/javascript" charset="utf8" src="js/adminManage.js"  class="init"></script>
+    <script type="text/javascript" charset="utf8" src="js/adminManage.js"></script>
 </body>
 </html>

@@ -146,7 +146,39 @@ public class AdminDao  {
 		}
 		return result1;
 	}
-
+	
+	public Admin searchAdmin(String name,String pass){
+		Admin adminR=null;
+		try {
+		        Query query = session.createSQLQuery("select t.admin_id,t.admin_username,t.admin_pwd,t2.admin_role_roleid from t_admin t,t_admin_role t2 where t.admin_id=t2.admin_role_adminid and t.admin_username=? and t.admin_pwd=?");	
+		        query.setParameter(0, name);
+		        query.setParameter(1, pass);
+		        List users=new ArrayList<Admin>();
+				List l = query.list();
+				for(int i=0;i<l.size();i++)
+				{
+					  Object[] row = (Object[])l.get(i);;
+					  int adminID = (Integer) row[0];
+					  String username = (String)row[1];  
+					  String password = (String)row[2];
+					  int roleid = (Integer) row[3];
+					  Admin admin=new Admin();
+					  admin.setAdminID(adminID);
+					  admin.setAdminName(username);
+					  admin.setAdminPassword(password);
+					  admin.setRoleID(roleid);
+					  users.add(admin);
+				}
+				if(!users.isEmpty()){
+					adminR=new Admin();
+					adminR=(Admin)users.get(0);
+				}
+				
+				} catch (Exception e) {
+			e.printStackTrace();
+		}		
+		return adminR;
+	}
 
 
 

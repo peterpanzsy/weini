@@ -2,7 +2,9 @@
     
 $(document).ready( function() {        
 
-	// sidebar menu click
+	/*
+	 * 菜单点击
+	 */
 	$('.templatemo-sidebar-menu li.sub a').click(function(){//一级菜单点击
 //		$(".open").removeClass("open");
 		$(".active").removeClass("active");
@@ -32,6 +34,29 @@ $(document).ready( function() {
 		break;
 		
 	}	
-
 	
 }); // document.ready
+/*
+ * 注销
+ */
+function logout(){
+	if(confirm("您确定要注销吗?")){
+		    
+		}else{
+			return false;
+		} 
+	$.ajax({
+		url:'logout.action',
+		type:'post',
+		dataType:'json',
+		success:function(data){
+			if(data.flag=="true"){
+				alert("注销成功！");
+				location.href="pages/sign-in.jsp";
+//				window.location.reload();
+			}else{
+				alert("注销失败！");
+			}
+		}
+	});
+}

@@ -2,6 +2,16 @@
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
 	<package name="json" extends="json-default">
+		<!-- 登陆登出 -->
+		<action name="login" class="com.weini.manage.action.LoginAction" method="login" >
+			<result name="succ" type="redirect">/pages/index.jsp</result>
+			<result name="fail" type="redirect">/pages/sign-in.jsp</result>
+		</action>
+	    <action name="logout" class="com.weini.manage.action.LoginAction" method="logout">
+			<result name="success" type="json">				
+			</result>
+		</action>
+	    <!--账户管理-->
 		<action name="listAdmin" class="com.weini.manage.action.AdminAction" method="listAdmin">
 			<result name="SUCCESS" type="json">				
 			</result>
@@ -22,6 +32,7 @@
 			<result name="SUCCESS" type="json">				
 			</result>
 		</action>
+		
 	</package>
 
 </struts>    
