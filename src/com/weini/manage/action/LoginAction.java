@@ -62,20 +62,30 @@ public class LoginAction extends ActionSupport{
 		//add by zsy to log remote access ip
 		HttpServletRequest request = ServletActionContext.getRequest(); 
 		String remoteip=request.getRemoteHost();
+//		============================================================
+		username = "root";
+		password = "root";
+		//TODO 注释为了方便测试
 		//above add by zsy to log remote access ip		
-		if(username==null||username.equals("")){
-	        ActionContext actionContext = ActionContext.getContext();
-	        Map session = actionContext.getSession();
-	        session.put("wrong", "用户名为空");	
-			return "fail";
-		}
-		if(password==null||password.equals("")){
-	        ActionContext actionContext = ActionContext.getContext();
-	        Map session = actionContext.getSession();
-	        session.put("wrong", "密码为空");	
-			return "fail";
-		}
-		String adminPassword_md5 = CipherUtil.generatePassword(password);  
+//		if(username==null||username.equals("")){
+//	        ActionContext actionContext = ActionContext.getContext();
+//	        Map session = actionContext.getSession();
+//	        session.put("wrong", "用户名为空");	
+//			return "fail";
+//		}
+//		if(password==null||password.equals("")){
+//	        ActionContext actionContext = ActionContext.getContext();
+//	        Map session = actionContext.getSession();
+//	        session.put("wrong", "密码为空");	
+//			return "fail";
+//		}
+//		===========================================================
+//		===========================================================
+//		TODO 注释为了方便测试
+//		String adminPassword_md5 = CipherUtil.generatePassword(password); 
+		String adminPassword_md5 = password;
+//		===========================================================
+		
 		adminDao=new AdminDao();
 		admin=adminDao.searchAdmin(username, adminPassword_md5);
 		if(admin==null){
