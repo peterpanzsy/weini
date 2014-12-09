@@ -24,7 +24,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <body>
 	<%@ include file="common/head.jsp"  %> 
-     <div class="template-page-wrapper">
+    <div class="template-page-wrapper">
     	<%@ include file="common/sidebar.jsp"  %>
 
       <div class="templatemo-content-wrapper">
@@ -48,7 +48,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </ul>          
               </div>
             </div>
-          </div>    
+          </div>         
 
           <div class="row">
             <div class="col-md-6">

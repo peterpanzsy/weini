@@ -1,10 +1,10 @@
 <%@ page language="java" import="java.util.*,com.weini.manage.business.*" pageEncoding="utf-8"%>
-  <%
+ <%
 Admin userlogin=(Admin)(session.getAttribute("user"));
 List<Auth> authlist=(List<Auth>)session.getAttribute("authList");
 List<String> anamelist=new ArrayList<String>();
 if (userlogin==null){
-	response.sendRedirect("../pages/sign-in.jsp");
+	response.sendRedirect("../sign-in.jsp");
 	return;
 }
 else{
@@ -54,8 +54,6 @@ else{
         <li><a href="#">添加商品</a></li>
         <li><a href="#">优惠活动</a></li>             
         <li><a href="#">积分兑换商品</a></li>
-        <li><a href="#">已确认订单</a></li>
-        <li><a href="#">未确认订单</a></li>
       </ul>
     </li>
     <%
