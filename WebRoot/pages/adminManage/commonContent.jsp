@@ -66,7 +66,7 @@
                 </tr>
                <tr>
                     <td>
-                       <input id="submit" type="submit" name="submit" value="Submit" />
+                       <input id="submit" type="submit" name="submit" value="提交" />
                        <input id="mark" type="hidden" name="mark" />
                    </td>
                 </tr>

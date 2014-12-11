@@ -65,7 +65,7 @@ else{
         <i class="fa fa-database"></i> 商家管理 <div class="pull-right"><span class="caret"></span></div>
       </a>
       <ul class="templatemo-submenu">
-        <li><a href="#">添加商家</a></li>
+        <li id="manageVendorLi"><a href="pages/vendorManage/manageVendor.jsp">商家列表</a></li>
         <li><a href="#">商家审核</a></li>
         <li><a href="#">商家信息</a></li>             
         <li><a href="#">商家后台管理</a></li>

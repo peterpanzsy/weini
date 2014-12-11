@@ -32,7 +32,19 @@
 			<result name="SUCCESS" type="json">				
 			</result>
 		</action>
-		
+		<!-- 商家管理 -->
+		<action name="listVendor" class="com.weini.manage.action.VendorAction" method="listVendor">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
+			<action name="updateVendor" class="com.weini.manage.action.VendorAction" method="updateVendor">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
+		<action name="delVendor" class="com.weini.manage.action.VendorAction" method="delVendor">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
 	</package>
 
 </struts>    
