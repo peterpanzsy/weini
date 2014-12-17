@@ -1,10 +1,11 @@
 <%@ page language="java" import="java.util.*,com.weini.manage.business.*" pageEncoding="utf-8"%>
+
  <%
 Admin userlogin=(Admin)(session.getAttribute("user"));
 List<Auth> authlist=(List<Auth>)session.getAttribute("authList");
 List<String> anamelist=new ArrayList<String>();
 if (userlogin==null){
-	response.sendRedirect("../sign-in.jsp");
+	response.sendRedirect("sign-in.jsp");
 	return;
 }
 else{
@@ -14,6 +15,7 @@ else{
 	}
 }
 %>
+
 <div class="navbar-collapse collapse templatemo-sidebar">
   <ul class="templatemo-sidebar-menu">
   	<li><a><i class="fa "></i>欢迎您！<%out.print(userlogin.getAdminName());%></a></li>

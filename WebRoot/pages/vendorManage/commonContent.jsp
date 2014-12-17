@@ -20,10 +20,12 @@
 	            <th>待付金额</th>
 	            <th>员工规模</th>
 	            <th>厨师规模</th>
-	            <th>营业时间</th>
+	            <th>开始营业时间</th>
+	            <th>结束营业时间</th>
 	            <th>支付方式</th>
 	            <th>默认账户</th>
 	            <th>商圈</th>
+	            <th>详情</th>
 	            <th>编辑</th>
 	            <th>删除</th>
 	        </tr>
@@ -60,19 +62,35 @@
                  <tr>
                      <td>是否营业</td>
                      <td>
-                        <input id="vendorIsopen" name="vendorIsopen" type="text" style="width:200px" class="required"/>*</td>
+                     	<input type="radio" name="vendorIsopen" value="是" > 是
+                     	<input type="radio" name="vendorIsopen" value="否" > 否
+                        <!-- <input id="vendorIsopen" name="vendorIsopen" type="text" style="width:200px" class="required"/>*</td> -->
                  </tr>
                  <tr>
                      <td>雇员规模</td>
                      <td>
-                        <input id="vendorEmploynum" name="vendorEmploynum" type="text" style="width:128px" class="required"/>*</td>
+                        <input id="vendorEmploynum" name="vendorEmploynum" type="text" style="width:128px"/>*</td>
                 </tr>
                 <tr>
                      <td>厨师规模</td>
                      <td>
-                        <input id="vendorCooknum" name="vendorCooknum" type="text" style="width:128px" class="required"/>*</td>
+                        <input id="vendorCooknum" name="vendorCooknum" type="text" style="width:128px" />*</td>
                 </tr>
-                
+                <tr>
+                     <td>开始营业时间</td>
+                     <td>
+                        <input id="vendorShophourStart" name="vendorShophourStart" type="text" style="width:128px" class="required"/>*</td>
+                </tr>
+                <tr>
+                     <td>结束营业时间</td>
+                     <td>
+                        <input id="vendorShophourEnd" name="vendorShophourEnd" type="text" style="width:128px" class="required"/>*</td>
+                </tr>
+                <tr>
+                     <td>商家详情</td>
+                     <td>
+                        <input id="vendorDetail" name="vendorDetail" type="text" style="width:128px"/></td>
+               </tr>
                <tr>
                     <td>
                        <input id="submit" type="submit" name="submit" value="提交" />

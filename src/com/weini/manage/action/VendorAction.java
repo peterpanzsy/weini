@@ -1,5 +1,7 @@
 package com.weini.manage.action;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -30,14 +32,15 @@ public class VendorAction extends ActionSupport{
     private int vendorRemainedmoney;
     private int vendorEmploynum;
     private int vendorCooknum; 
-    private Date vendorShophour;
+    private String vendorShophourStart;
+    private String vendorShophourEnd;
     private int vendorPaytype;
     private String vendorAccount;
     private String vendorBusinessArea;
     private String vendorDis;
     private String vendorCity;
     private String vendorProvince;
-
+    private String vendorDetail;
 	
 	public String listVendor(){//根据角色获取账户列表		
 		VendorDao dao=new VendorDao();
@@ -47,7 +50,8 @@ public class VendorAction extends ActionSupport{
 	}
 	public String updateVendor(){//更新或者添加账户 
 		VendorDao dao=new VendorDao();
-		int res=dao.updateVendor(vendorID,vendorName,vendorMail,vendorPhonenum,vendorIsopen,vendorEmploynum,vendorCooknum,mark);
+	
+		int res=dao.updateVendor(vendorID,vendorName,vendorMail,vendorPhonenum,vendorIsopen,vendorEmploynum,vendorCooknum,vendorShophourStart,vendorShophourEnd,vendorDetail,mark);
 		dao.close();
 		return "SUCCESS";
 	}
@@ -143,14 +147,20 @@ public class VendorAction extends ActionSupport{
 	public void setVendorCooknum(int vendorCooknum) {
 		this.vendorCooknum = vendorCooknum;
 	}
-	public Date getVendorShophour() {
-		return vendorShophour;
-	}
-	public void setVendorShophour(Date vendorShophour) {
-		this.vendorShophour = vendorShophour;
-	}
 	public int getVendorPaytype() {
 		return vendorPaytype;
+	}
+	public String getVendorShophourStart() {
+		return vendorShophourStart;
+	}
+	public void setVendorShophourStart(String vendorShophourStart) {
+		this.vendorShophourStart = vendorShophourStart;
+	}
+	public String getVendorShophourEnd() {
+		return vendorShophourEnd;
+	}
+	public void setVendorShophourEnd(String vendorShophourEnd) {
+		this.vendorShophourEnd = vendorShophourEnd;
 	}
 	public void setVendorPaytype(int vendorPaytype) {
 		this.vendorPaytype = vendorPaytype;
@@ -184,6 +194,13 @@ public class VendorAction extends ActionSupport{
 	}
 	public void setVendorProvince(String vendorProvince) {
 		this.vendorProvince = vendorProvince;
+	}
+	
+	public String getVendorDetail() {
+		return vendorDetail;
+	}
+	public void setVendorDetail(String vendorDetail) {
+		this.vendorDetail = vendorDetail;
 	}
 	public String getMark() {
 		return mark;

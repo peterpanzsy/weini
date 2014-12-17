@@ -12,12 +12,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <meta name="keywords" content="" />
   <meta name="description" content="" />
   <meta name="viewport" content="width=device-width">        
-  <link rel="stylesheet" href="css/templatemo_main.css">
+  
   <!-- DataTables CSS -->
   <link rel="stylesheet" type="text/css" href="DataTables-1.10.4/css/jquery.dataTables.css">
   <link rel="stylesheet" href="jquery-ui-1.11.2/themes/smoothness/jquery-ui.css">
-
-  
+  <link rel="stylesheet" href="jtimepicker/jquery.timepicker.css">
+  <link rel="stylesheet" href="css/templatemo_main.css">
 </head>
 <body>
   <div id="main-wrapper">
@@ -50,6 +50,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<!-- DataTables -->
   	<script type="text/javascript" charset="utf8" src="DataTables-1.10.4/js/jquery.dataTables.min.js"></script>
   	<script type="text/javascript" charset="utf8" src="DataTables-1.10.4/js/dataTables.bootstrap.js"></script>  
+  	
+  	<script type="text/javascript" charset="utf8" src="jtimepicker/jquery.timepicker.js"></script>  
     <script type="text/javascript" charset="utf8" src="js/vendorManage.js"></script>
 </body>
 </html>

@@ -20,27 +20,27 @@ public class Vendor  implements java.io.Serializable {
     private int vendorRemainedmoney;
     private int vendorEmploynum;
     private int vendorCooknum; 
-    private Date vendorShophour;
+    private String vendorShophourStart;
+    private String vendorShophourEnd;
     private int vendorPaytype;
     private String vendorAccount;
     private String vendorBusinessArea;
     private String vendorDis;
     private String vendorCity;
     private String vendorProvince;
-
+    private String vendorDetail;
+    
 	/** default constructor */
     public Vendor() {
     }
 
-    
 	public Vendor(int order, int vendorID, String vendorName,
 			String vendorMail, String vendorPhonenum,
-			Boolean vendorIsopen, int vendorTotalmoney,
-			int vendorPaidmoney, int vendorRemainedmoney,
-			int vendorEmploynum, int vendorCooknum, Date vendorShophour,
-			int vendorPaytype, String vendorAccount,
-			String vendorBusinessArea, String vendorDis, String vendorCity,
-			String vendorProvince) {
+			Boolean vendorIsopen, int vendorTotalmoney, int vendorPaidmoney,
+			int vendorRemainedmoney, int vendorEmploynum, int vendorCooknum,
+			String vendorShophourStart, String vendorShophourEnd,
+			int vendorPaytype, String vendorAccount, String vendorBusinessArea,
+			String vendorDis, String vendorCity, String vendorProvince,String vendorDetail) {
 		super();
 		this.order = order;
 		this.vendorID = vendorID;
@@ -53,15 +53,16 @@ public class Vendor  implements java.io.Serializable {
 		this.vendorRemainedmoney = vendorRemainedmoney;
 		this.vendorEmploynum = vendorEmploynum;
 		this.vendorCooknum = vendorCooknum;
-		this.vendorShophour = vendorShophour;
+		this.vendorShophourStart = vendorShophourStart;
+		this.vendorShophourEnd = vendorShophourEnd;
 		this.vendorPaytype = vendorPaytype;
 		this.vendorAccount = vendorAccount;
 		this.vendorBusinessArea = vendorBusinessArea;
 		this.vendorDis = vendorDis;
 		this.vendorCity = vendorCity;
 		this.vendorProvince = vendorProvince;
+		this.vendorDetail=vendorDetail;
 	}
-
 
 	public int getOrder() {
 		return order;
@@ -158,13 +159,20 @@ public class Vendor  implements java.io.Serializable {
 	public void setVendorCooknum(int vendorCooknum) {
 		this.vendorCooknum = vendorCooknum;
 	}
-
-	public Date getVendorShophour() {
-		return vendorShophour;
+	public String getVendorShophourStart() {
+		return vendorShophourStart;
 	}
 
-	public void setVendorShophour(Date vendorShophour) {
-		this.vendorShophour = vendorShophour;
+	public void setVendorShophourStart(String vendorShophourStart) {
+		this.vendorShophourStart = vendorShophourStart;
+	}
+
+	public String getVendorShophourEnd() {
+		return vendorShophourEnd;
+	}
+
+	public void setVendorShophourEnd(String vendorShophourEnd) {
+		this.vendorShophourEnd = vendorShophourEnd;
 	}
 
 	public int getVendorPaytype() {
@@ -213,6 +221,14 @@ public class Vendor  implements java.io.Serializable {
 
 	public void setVendorProvince(String vendorProvince) {
 		this.vendorProvince = vendorProvince;
+	}
+
+	public String getVendorDetail() {
+		return vendorDetail;
+	}
+
+	public void setVendorDetail(String vendorDetail) {
+		this.vendorDetail = vendorDetail;
 	}
 	
 	

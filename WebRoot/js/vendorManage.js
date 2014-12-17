@@ -1,6 +1,37 @@
  $(document).ready(function() {
+
+	 $('input#vendorShophourStart').timepicker({
+		    timeFormat: 'HH:mm:ss',
+	        // year, month, day and seconds are not important
+	        minTime: new Date(0, 0, 0, 6, 0, 0),
+	        maxTime: new Date(0, 0, 0, 23, 0, 0),
+	        // time entries start being generated at 6AM but the plugin 
+	        // shows only those within the [minTime, maxTime] interval
+	        startHour: 6,
+	        // the value of the first item in the dropdown, when the input
+	        // field is empty. This overrides the startHour and startMinute 
+	        // options
+	        startTime: new Date(0, 0, 0, 6, 0, 0),
+	        // items in the dropdown are separated by at interval minutes
+	        interval: 10
+	 });
+	 $('input#vendorShophourEnd').timepicker({
+		    timeFormat: 'HH:mm:ss',
+	        // year, month, day and seconds are not important
+	        minTime: new Date(0, 0, 0, 6, 0, 0),
+	        maxTime: new Date(0, 0, 0, 23, 0, 0),
+	        // time entries start being generated at 6AM but the plugin 
+	        // shows only those within the [minTime, maxTime] interval
+	        startHour: 6,
+	        // the value of the first item in the dropdown, when the input
+	        // field is empty. This overrides the startHour and startMinute 
+	        // options
+	        startTime: new Date(0, 0, 0, 6, 0, 0),
+	        // items in the dropdown are separated by at interval minutes
+	        interval: 10
+	 });
 	    /*
-	     * 账户列表管理
+	     * 商家列表管理
 	     */
         var vendorTable=$('#vendorTable').DataTable( {
         	"oLanguage": {
@@ -33,6 +64,15 @@
           /*  "aoColumns": [   {"mDataProp":"order"},
                              {"mDataProp":"adminName"}
                              ],*/
+            "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+        		if(aData.vendorIsopen==true){
+        			aData.vendorIsopen="是";
+        		}else{
+        			aData.vendorIsopen="否";
+        		}
+    			return aData;
+    		},
+            	
             "columnDefs": [{
                 "targets": -2,//编辑
                 "dataList": null,
@@ -59,14 +99,22 @@
 	        {
 	            "targets": 3,//第一列
 	            "data":"vendorMail",
-	            "visible": false
+	            "visible": true
 	        },
 	        {
 	            "targets": 4,//第二列
 	            "data":"vendorPhonenum"
 	        },{
 	        	"targets":5,
-	        	"data":"vendorIsopen"
+	        	"data":"vendorIsopen",
+	        	"createdCell": function (td, cellData, rowData, row, col) {
+	        	      if ( cellData ==true ) {
+//	        	        $(td).css('color', 'red');
+	        	        $(td).html( "是");
+	        	      }else{
+	        	    	$(td).html("否");
+	        	      }
+	        	    }
 	        },{
 	        	"targets":6,
 	        	"data":"vendorTotalmoney"
@@ -89,16 +137,22 @@
 	            "data":"vendorCooknum"
 	        },{
 	        	"targets":11,
-	        	"data":"vendorShophour"
+	        	"data":"vendorShophourStart"
 	        },{
 	        	"targets":12,
-	        	"data":"vendorPaytype"
+	        	"data":"vendorShophourEnd"
 	        },{
 	        	"targets":13,
-	        	"data":"vendorAccount"
+	        	"data":"vendorPaytype"
 	        },{
 	        	"targets":14,
+	        	"data":"vendorAccount"
+	        },{
+	        	"targets":15,
 	        	"data":"vendorBusinessArea"
+	        },{
+	        	"targets":16,
+	        	"data":"vendorDetail"
 	        }]
         } );
       
@@ -164,20 +218,32 @@
         	$(":input[name='vendorName']").val("");
         	$(":input[name='vendorMail']").val("");
         	$(":input[name='vendorPhonenum']").val("");
-        	$(":input[name='vendorIsopen']").val("");
         	$(":input[name='vendorEmploynum']").val("");
         	$(":input[name='vendorCooknum']").val("");
+        	$(":input[name='vendorShophourStart']").val("");
+        	$(":input[name='vendorShophourEnd']").val("");
+        	$(":input[name='vendorDetail']").val("");
         }
         function putValue(data) {
         	$(":input[name='vendorID']").val(data.vendorID);
         	$(":input[name='vendorName']").val(data.vendorName);
         	$(":input[name='vendorMail']").val(data.vendorMail);
         	$(":input[name='vendorPhonenum']").val(data.vendorPhonenum);
-        	$(":input[name='vendorIsopen']").val(data.vendorIsopen);
+        	$("input[name='vendorIsopen'][value='"+data.vendorIsopen+"']").attr("checked",true);
         	$(":input[name='vendorEmploynum']").val(data.vendorEmploynum);
         	$(":input[name='vendorCooknum']").val(data.vendorCooknum);
+        	$(":input[name='vendorShophourStart']").val(data.vendorShophourStart);
+        	$(":input[name='vendorShophourEnd']").val(data.vendorShophourEnd);
+        	$(":input[name='vendorDetail']").val(data.vendorDetail);
         }
        
+        
+        jQuery.validator.addMethod("isphone", function(value, element) {
+        	  var length = value.length;
+        	  var phone = /(^(\d{3,4}-)?\d{6,8}$)|(^(\d{3,4}-)?\d{6,8}(-\d{1,5})?$)|(\d{11})/;
+        	  return this.optional(element) || (phone.test(value));
+        	 }, "请填写正确的电话号码");
+        
         //添加或者修改数据的验证与提交
         function updateVendorValidation(){
        	 $("#updateVendorForm").validate({
@@ -187,19 +253,57 @@
  			onkeyup:true,
  	     	rules: {
  	     		vendorName: "required",
- 	     		vendorMail: "required",
- 	     		vendorPhonenum: "required"
+ 	     		vendorMail: {
+ 	     		    required: true,
+ 	     		    email: true
+ 	     		   },
+ 	     		vendorPhonenum: {
+ 	     			required:true,
+ 	     			isphone : true
+ 	     		},
+ 	     		vendorEmploynum:{
+ 	     			digits:true
+ 	     		},
+ 	     		vendorCooknum:{
+ 	     			digits:true
+ 	     		},
+ 	     		vendorShophourStart:{
+ 	     			required: true,
+ 	     		},
+ 	     		vendorShophourEnd:{
+ 	     			required: true,
+ 	     		}
  	     	},
  	       messages: {
- 	    	   vendorName: "请输入商家名称！",
- 	    	   vendorMail: {
- 		        required: "请输入邮箱！"
- 		       },
- 		       vendorPhonenum: {
- 		        required: "请输入电话！"
- 		       }
+ 	    	    vendorName: "请输入商家名称！",
+ 	    	    vendorMail: {
+ 	    		    required: "请输入邮箱！",
+ 		        	email: "请输入正确的email地址！"
+ 		        },
+ 		        vendorPhonenum: {
+ 		    	    required: "请输入电话号码！",
+ 		    	    isphone : "请输入正确的电话号码！"
+ 		        },
+ 		        vendorEmploynum:{
+	     			digits:"请输入整数！"
+	     		},
+	     	    vendorCooknum:{
+	     			digits:"请输入整数！"
+	     		},
+				vendorShophourStart:{
+					required:"请输入开始营业时间！"
+				},
+	     	    vendorShophourEnd:{
+	     	    	required:"请输入结束营业时间！"
+	     		}
  		    },
  		  	submitHandler:function(){
+ 		  	   var isopen=$('input[name="vendorIsopen"]:checked').val();
+ 	 		    if(isopen=="是"){
+ 	 		    	isopen=true;
+ 	 		    }else{
+ 	 		    	isopen=false;
+ 	 		    };
  		  		$.ajax({
  		  			type : 'POST',
  		  			url : 'updateVendor.action',
@@ -208,9 +312,13 @@
  		  				vendorName:$("#vendorName").val(),
  		  				vendorMail:$("#vendorMail").val(),
  		  				vendorPhonenum:$("#vendorPhonenum").val(),
- 		  				vendorIsopen:$("#vendorIsopen").val(),
+ 		  				vendorIsopen:isopen,
+// 		  				vendorIsopen:$("#vendorIsopen").value,
  		  				vendorEmploynum:$("#vendorEmploynum").val(),
  		  				vendorCooknum:$("#vendorCooknum").val(),
+ 		  				vendorShophourStart:$("#vendorShophourStart").val(),
+ 		  				vendorShophourEnd:$("#vendorShophourEnd").val(),
+ 		  				vendorDetail:$("#vendorDetail").val(),
  		  				mark:$("#mark").val()
  		  			},
  		  			success : function(data) {
@@ -227,7 +335,7 @@
  		  			},
  		  			error:function(msg){
  		  				dialogClose();
- 		  				alter(msg);	  				
+ 		  				alert(msg);	  				
  		  			}
  		  		});
  			}
