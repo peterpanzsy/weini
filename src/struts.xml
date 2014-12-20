@@ -45,6 +45,15 @@
 			<result name="SUCCESS" type="json">				
 			</result>
 		</action>
+		<!-- 用户管理 -->
+		<action name="listUser" class="com.weini.manage.action.UserAction" method="listUser">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
+		<action name="delUser" class="com.weini.manage.action.UserAction" method="delUser">
+			<result name="SUCCESS" type="json">				
+			</result>
+		</action>
 	</package>
 
 </struts>    
