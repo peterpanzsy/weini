@@ -21,6 +21,9 @@ $(document).ready( function() {
 	}else if($pathname.indexOf("/WeiNiManage/pages/vendorManage")>=0){//二级菜单点击进入页面后，保持一级菜单的active效果
 		$(".active").removeClass("active");
 		$("#vendorManage").addClass("open active");
+	}else if($pathname.indexOf("/WeiNiManage/pages/userManage")>=0){//二级菜单点击进入页面后，保持一级菜单的active效果
+		$(".active").removeClass("active");
+		$("#userManage").addClass("open active");
 	}
 	switch($pathname){
 	case "/WeiNiManage/pages/adminManage/rootAdmin.jsp":
@@ -38,7 +41,9 @@ $(document).ready( function() {
 	case "/WeiNiManage/pages/vendorManage/manageVendor.jsp":
 		$("#manageVendorLi").css("background-color","#FFF");
 		break;
-		
+	case "/WeiNiManage/pages/userManage/manageUser.jsp":
+		$("#manageUserLi").css("background-color","#FFF");
+		break;	
 	}	
 	
 }); // document.ready

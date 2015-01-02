@@ -82,7 +82,7 @@ else{
         <i class="fa fa-database"></i> 用户管理 <div class="pull-right"><span class="caret"></span></div>
       </a>
       <ul class="templatemo-submenu">
-      	 <li id="manageUserLi"><a href="pages/userManage/manageUser.jsp">用户列表</a></li>
+      	<li id="manageUserLi"><a href="pages/userManage/manageUser.jsp">用户列表</a></li>
         <li><a href="#">用户信息</a></li>
         <li><a href="#">积分信息</a></li>
         <li><a href="#">用户位置定位</a></li>             

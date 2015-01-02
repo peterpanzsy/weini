@@ -36,11 +36,11 @@
     		},
             	
             "columnDefs": [
-//                           {
-//                "targets": -2,//编辑
-//                "dataList": null,
-//                "defaultContent": "<button id='editrow' class='btn btn-primary' type='button'><i class='fa fa-edit'></i></button>"
-//            },
+                           {
+                "targets": -2,//编辑
+                "dataList": null,
+                "defaultContent": "<button id='editrow' class='btn btn-primary' type='button'><i class='fa fa-edit'></i></button>"
+            },
             {
                 "targets": -1,//删除
                 "dataList": null,
