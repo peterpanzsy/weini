@@ -180,6 +180,4 @@ public class AdminDao  {
 		return adminR;
 	}
 
-
-
 }

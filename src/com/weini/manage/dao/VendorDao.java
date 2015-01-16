@@ -1,16 +1,12 @@
 package com.weini.manage.dao;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
-import com.weini.manage.business.Admin;
-import com.weini.manage.business.Auth;
 import com.weini.manage.business.Vendor;
 import com.weini.tools.HibernateSessionManager;
 

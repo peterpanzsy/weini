@@ -51,6 +51,13 @@
 			</result>
 		</action>
 		<action name="delUser" class="com.weini.manage.action.UserAction" method="delUser">
+			<result name="SUCCESS" type="json">	
+			</result>
+		</action>
+		
+		
+		<!-- TODO 以下是测试的部分最后删掉即可 -->
+		<action name="testJSON" class="com.weini.manage.action.TestJSON" >
 			<result name="SUCCESS" type="json">				
 			</result>
 		</action>
