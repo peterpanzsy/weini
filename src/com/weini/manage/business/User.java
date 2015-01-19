@@ -59,6 +59,9 @@ public class User  implements java.io.Serializable {
 		this.pointTotal = pointTotal;
 	}
 
+	public User() {
+	}
+
 	public int getOrder() {
 		return order;
 	}

@@ -36,7 +36,6 @@ public class UserDao  {
 	public void initDao()
 	{	
 		session = HibernateSessionManager.getThreadLocalSession();
-	
 	}	
 	
 	public List<User> getUserList(){
@@ -124,5 +123,26 @@ public class UserDao  {
 		return result3;
 	}
 
+	
+	public User searchUser(String name,String pass){
+		SQLQuery query = session.createSQLQuery("select t1.user_id,t1.user_name,t1.user_gender,t1.user_address,t1.user_phoneNumber,t1.user_phoneType,t1.user_scale"
+				+ " from t_user t1 where user_phoneNumber = ? and user_pwd =? ");
+	    query.setParameter(0, name);
+	    query.setParameter(1, pass);
+	   User u = new User();
+	   List l= query.list();
+	   if(l.size()>0){
+		   Object[] row =(Object[]) l.get(0);
+		   	u.setUserID((Integer)row[0]);
+		   	u.setUserName((String)row[1]);		
+		   	u.setUserGender((Integer)row[2]);
+		   	u.setUserAddress((String)row[3]);
+		   	u.setUserPhoneNumber((String)row[4]);
+		   	u.setUserPhoneType((Integer)row[5]);
+		   	u.setUserScale((Integer)row[6]);
+		   	return u;
+	   }
+		   return null;
+	}
 
 }
