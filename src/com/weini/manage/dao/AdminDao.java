@@ -84,8 +84,7 @@ public class AdminDao  {
 		}
 		q.setParameter(0, roleid);
 		q.setParameter(1, authid);
-		int result=q.executeUpdate();
-		return result;
+		return q.executeUpdate();
 	}
 	
 	public List<Admin> getAdminList(int roleid) {//获取账户列表

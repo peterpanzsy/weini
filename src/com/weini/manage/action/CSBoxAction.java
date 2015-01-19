@@ -52,6 +52,7 @@ public class CSBoxAction extends ActionSupport{
 		System.out.println(busId);
 		CSBoxDao dao = new CSBoxDao();
 		dataList = dao.getOfficeBuildingList(busId);
+		dao.close();
 		return "OFFICESUCCESS";
 	}
 	public String getResult() {
