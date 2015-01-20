@@ -9,7 +9,7 @@ import org.hibernate.SQLQuery;
 
 import com.weini.manage.business.Box;
 import com.weini.manage.business.BoxType;
-import com.weini.manage.business.BusInessArea;
+import com.weini.manage.business.BusinessArea;
 import com.weini.manage.business.OfficeBuilding;
 import com.weini.manage.business.User;
 
@@ -52,12 +52,12 @@ public class CSBoxDao extends GeneralDao {
 		q =session.createSQLQuery(sql);
 		q.setInteger(0, typeId);
 		List l = q.list();
-		List<BusInessArea> re=new ArrayList();
+		List<BusinessArea> re=new ArrayList();
 		for(int i=0;i<l.size();i++){
 			Object[] row=(Object[])l.get(i);
-			BusInessArea temp = new BusInessArea();
-			temp.setBusId((Integer)row[0]);
-			temp.setBusName((String)row[1]);
+			BusinessArea temp = new BusinessArea();
+			temp.setBusinessAreaId((Integer)row[0]);
+			temp.setBusinessAreaName((String)row[1]);
 			re.add(temp);
 		}
 			return re;

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="menuinfo" extends="json-default">
+	<!--商品管理-->
+	<action name="listGood" class="com.weini.manage.action.GoodManageAction" method="listGood">
+		<result name="SUCCESS" type="json">				
+		</result>
+	</action>
+	<action name="delGood" class="com.weini.manage.action.GoodManageAction" method="delGood">
+		<result name="SUCCESS" type="json">				
+		</result>
+	</action>
+	<action name="recoverGood" class="com.weini.manage.action.GoodManageAction" method="recoverGood">
+		<result name="SUCCESS" type="json">				
+		</result>
+	</action>
+	<action name="listProvice" class="com.weini.manage.action.GoodManageAction" method="listProvice">
+		<result name="SUCCESS" type="json">				
+		</result>
+	</action>
+	<action name="listCity" class="com.weini.manage.action.GoodManageAction" method="listCity">
+		<result name="SUCCESS" type="json">				
+		</result>
+	</action>
+	<action name="listDistrict" class="com.weini.manage.action.GoodManageAction" method="listDistrict">
+		<result name="SUCCESS" type="json">				
+		</result>
+	</action>
+	<action name="listbussArea" class="com.weini.manage.action.GoodManageAction" method="listbussArea">
+		<result name="SUCCESS" type="json">				
+		</result>
+	</action>
+	<action name="searchVendor" class="com.weini.manage.action.GoodManageAction" method="listVendor">
+		<result name="SUCCESS" type="json">				
+		</result>
+	</action>
+	<action name="uploadPicture" class="com.weini.manage.action.GoodManageAction" method="uploadPicture">
+		<result name="SUCCESS" type="json">				
+		</result>
+	</action>
+	<action name="addGood" class="com.weini.manage.action.GoodManageAction" method="addGood">
+		<result name="SUCCESS" type="json">				
+		</result>
+	</action>
+	
+	
+	
+	</package>
+
+</struts>    

@@ -57,27 +57,27 @@
 		
 		
 		<!-- TODO 以下是测试的部分最后删掉即可 -->
-		<action name="testJSON" class="com.weini.manage.action.TestJSON" >
+		<!-- <action name="testJSON" class="com.weini.manage.action.TestJSON" >
 			<result name="SUCCESS" type="json">				
 			</result>
 		</action>
-		<!-- 处理和Box有关的Action信息 -->
+		处理和Box有关的Action信息
 		<action name="CSBox_*" class="com.weini.manage.action.CSBoxAction" method="{1}">
 			<result name="TYPESUCCESS" type="json">	
 				<param name="includeProperties">dataList.*,result</param> 
 			</result>
-			<!-- 支持片区选择列表 -->
+			支持片区选择列表
 			<result name="AREASUCCESS" type="json">	
 				<param name="includeProperties">dataList.*</param> 
 			</result>
-			<!-- 写字楼的选择列表 -->
+			写字楼的选择列表
 			<result name="OFFICESUCCESS" type="json">	
 				<param name="includeProperties">dataList.*</param> 
 			</result>
 		</action>
-		<!-- 处理手机端的用户登录 -->
+		处理手机端的用户登录
 		<action name="CSUserLoginAction_*" class="com.weini.manage.action.CSUserLoginAction" method="{1}">
-			<!-- 使用手机号码和密码登录-->
+			使用手机号码和密码登录
 			<result name="LOGINSUCCESS" type="json">	
 				<param name="includeProperties">u.*,result</param> 
 			</result>
@@ -85,13 +85,13 @@
 				<param name="includeProperties">result</param> 
 			</result>
 		</action>
-		<!-- 处理手机端的订单信息的Action -->
+		处理手机端的订单信息的Action
 		<action name="CSOrder_*" class="com.weini.manage.action.CSOrderAction" method="{1}">
 			<result name="SUCCESS" type="json">	
 				<param name="includeProperties">dataList.*</param> 
 			</result>
 		</action>
-		<!-- 处理手机端的菜品信息的Action -->
+		处理手机端的菜品信息的Action
 		<action name="CSMenu_*" class="com.weini.manage.action.CSMenuAction" method="{1}">
 			<result name="SUCCESS" type="stream">  
                <param name="contentType">text/plain</param>  
@@ -105,7 +105,7 @@
 			<result name="DETAIL" type="json">
 				<param name="includeProperties">menu.*</param> 
 			</result>
-		</action>
+		</action> -->
 	</package>
-
+	<include file="strutsConfig/struts-goodManage.xml"></include>
 </struts>    

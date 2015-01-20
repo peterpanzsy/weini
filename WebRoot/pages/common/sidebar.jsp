@@ -52,10 +52,12 @@ else{
         <i class="fa fa-database"></i> 商品管理 <div class="pull-right"><span class="caret"></span></div>
       </a>
       <ul class="templatemo-submenu">
-        <li><a href="#">使用概况</a></li>
-        <li><a href="#">添加商品</a></li>
-        <li><a href="#">优惠活动</a></li>             
-        <li><a href="#">积分兑换商品</a></li>
+        <!-- <li id="utiliSurveyli"><a href="pages/goodManage/utilizationSurvey.jsp">使用概况</a></li> -->
+        <li id="existGoodli"><a href="pages/goodManage/existGood.jsp">现有商品</a></li>
+        <li id="deletedGoodli"><a href="pages/goodManage/deletedGood.jsp">已删除商品</a></li>
+        <li id="addGoodli"><a href="pages/goodManage/addGood.jsp">添加商品</a></li>
+        <li><a href="pages/goodManage/addGood.jsp">优惠活动</a></li>             
+        <li><a href="pages/goodManage/addGood.jsp">积分兑换商品</a></li>
       </ul>
     </li>
     <%
@@ -82,7 +84,7 @@ else{
         <i class="fa fa-database"></i> 用户管理 <div class="pull-right"><span class="caret"></span></div>
       </a>
       <ul class="templatemo-submenu">
-      	<li id="manageUserLi"><a href="pages/userManage/manageUser.jsp">用户列表</a></li>
+      	 <li id="manageUserLi"><a href="pages/userManage/manageUser.jsp">用户列表</a></li>
         <li><a href="#">用户信息</a></li>
         <li><a href="#">积分信息</a></li>
         <li><a href="#">用户位置定位</a></li>             

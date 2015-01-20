@@ -7,7 +7,7 @@ import org.apache.struts2.json.annotations.JSON;
 import com.opensymphony.xwork2.ActionSupport;
 import com.weini.manage.business.Box;
 import com.weini.manage.business.BoxType;
-import com.weini.manage.business.BusInessArea;
+import com.weini.manage.business.BusinessArea;
 import com.weini.manage.business.User;
 import com.weini.manage.dao.CSBoxDao;
 /**
@@ -43,7 +43,7 @@ public class CSBoxAction extends ActionSupport{
 		dataList=dao.getAreaList(typeId);
 		dao.close();
 		for(Object u:dataList){
-			System.out.println(((BusInessArea)u).getBusName());
+			System.out.println(((BusinessArea)u).getBusinessAreaName());
 		} 
 		return "AREASUCCESS";
 	}

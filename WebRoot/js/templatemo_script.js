@@ -21,9 +21,6 @@ $(document).ready( function() {
 	}else if($pathname.indexOf("/WeiNiManage/pages/vendorManage")>=0){//二级菜单点击进入页面后，保持一级菜单的active效果
 		$(".active").removeClass("active");
 		$("#vendorManage").addClass("open active");
-	}else if($pathname.indexOf("/WeiNiManage/pages/userManage")>=0){//二级菜单点击进入页面后，保持一级菜单的active效果
-		$(".active").removeClass("active");
-		$("#userManage").addClass("open active");
 	}
 	switch($pathname){
 	case "/WeiNiManage/pages/adminManage/rootAdmin.jsp":
@@ -41,10 +38,22 @@ $(document).ready( function() {
 	case "/WeiNiManage/pages/vendorManage/manageVendor.jsp":
 		$("#manageVendorLi").css("background-color","#FFF");
 		break;
-	case "/WeiNiManage/pages/userManage/manageUser.jsp":
-		$("#manageUserLi").css("background-color","#FFF");
-		break;	
 	}	
+	if($pathname.indexOf("/WeiNiManage/pages/goodManage")>=0){////二级菜单点击进入页面后，保持一级菜单的active效果
+		$(".active").removeClass("active");
+		$("#goodManage").addClass("open active");
+	}
+	switch($pathname){
+	case "/WeiNiManage/pages/goodManage/existGood.jsp":
+		$("#existGoodli").css("background-color","#FFF");
+		break;
+	case "/WeiNiManage/pages/goodManage/deletedGood.jsp":
+		$("#deletedGoodli").css("background-color","#FFF");
+		break;
+	case "/WeiNiManage/pages/goodManage/addGood.jsp":
+		$("#addGoodli").css("background-color","#FFF");
+		break;
+	}
 	
 }); // document.ready
 /*
