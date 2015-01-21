@@ -1,26 +1,21 @@
 package com.weini.manage.action;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.weini.manage.business.BusinessArea;
-import com.weini.manage.business.City;
-import com.weini.manage.business.District;
-import com.weini.manage.business.Menuinfo;
-import com.weini.manage.business.Vendor;
-import com.weini.manage.dao.GoodManageDao;
-import com.weini.manage.business.Province;
+import com.weini.manage.business.MenuinfoService;
+import com.weini.manage.entity.TBusinessarea;
+import com.weini.manage.entity.TCity;
+import com.weini.manage.entity.TDistrict;
+import com.weini.manage.entity.TMenuinfo;
+import com.weini.manage.entity.TProvince;
+import com.weini.manage.entity.TVendor;
 import com.weini.tools.Configure;
 import com.weini.tools.Tools;
 
@@ -31,14 +26,14 @@ public class GoodManageAction extends ActionSupport{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private GoodManageDao gooddao;
-	private List<Menuinfo> goodlist;
-	private List<Province> provices;
+	private MenuinfoService menuinfoSer;
+	private List<TMenuinfo> goodlist;
+	private List<TProvince> provices;
 	private int indexID;
-	private List<City> citys;
-	private List<District> diss;
-	private List<BusinessArea> busses;
-	private List<Vendor> vendors;
+	private List<TCity> citys;
+	private List<TDistrict> diss;
+	private List<TBusinessarea> busses;
+	private List<TVendor> vendors;
 	private boolean isExistGood;
 	private boolean aflag;
 	//图片上传
@@ -48,7 +43,7 @@ public class GoodManageAction extends ActionSupport{
     private String picNewPath;
     private boolean uploadSuccess;
     //增加商品
-    private Menuinfo menu;
+    private TMenuinfo menu;
     //商品信息
     private String menuName;
     private int vendorId;
@@ -57,23 +52,24 @@ public class GoodManageAction extends ActionSupport{
     private String img3;
     private String img4;
     private String menuDetail;
+    //判断是增加商品还是编辑商品
+    private boolean isAdd;
     
 	/**
 	 * 列出所有的菜品
 	 */
 	public String listGood(){
-		gooddao = new GoodManageDao();
-		this.goodlist = gooddao.listGoodInfo(isExistGood);
-		gooddao.close();
+		menuinfoSer = new MenuinfoService();
+		this.goodlist = menuinfoSer.listMenuInfo(isExistGood);
 		return "SUCCESS";
 	}
 	/**
-	 * 增加菜品
-	 * @return 增加的结果
+	 * 更新菜品信息
+	 * @return 更新结果
 	 */
-	public String addGood(){
-		gooddao = new GoodManageDao();
-		Menuinfo menu = new Menuinfo();
+	public String updateGood(){
+		menuinfoSer = new MenuinfoService();
+		TMenuinfo menu = new TMenuinfo();
 		this.uploadSuccess = false;
 		//商品名称不能为空
 		if(menuName == null || menuName.equals("")){
@@ -96,6 +92,7 @@ public class GoodManageAction extends ActionSupport{
 			this.info = "商品描述不能为空";
 			return "SUCCESS";
 		}
+		System.err.println("update");
 		menu.setMenuinfoName(menuName);
 		menu.setVendorId(vendorId);
 		menu.setMenuinfoImage1(img1);
@@ -103,31 +100,49 @@ public class GoodManageAction extends ActionSupport{
 		menu.setMenuinfoImage3(img3);
 		menu.setMenuinfoImage4(img4);
 		menu.setMenuinfoDetail(menuDetail);
+		if(!isAdd){
+			menu.setMenuinfoId(indexID);
+		}
 		//设置日期
+		boolean res = false;
+		try{
 		menu.setMenuinfoDate(new Timestamp(System.currentTimeMillis()));
-		boolean res = gooddao.addGoodInfo(menu);
+		res = menuinfoSer.updateMenuInfo(menu,isAdd);
+		System.out.println(indexID);
+		System.out.println(res);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		if(res){
 			this.uploadSuccess = true;
 			this.info = "增加成功";
-			gooddao.close();
 		}else{
 			this.info = "增加失败";
-			gooddao.roll();
 		}
 		return "SUCCESS";
 	}
 	
-	public String delGood(){//删除菜品
-		gooddao = new GoodManageDao();
-		this.aflag = gooddao.changeGoodStatus(indexID,false);
-		gooddao.close();
+	public String addGood(){//增加菜品
+		this.isAdd = true;
 		return "SUCCESS";
 	}
 	
-	public String recoverGood(){//删除菜品
-		gooddao = new GoodManageDao();
-		this.aflag = gooddao.changeGoodStatus(indexID,true);
-		gooddao.close();
+	public String editGood(){//编辑菜品
+		this.isAdd = false;
+		menuinfoSer = new MenuinfoService();
+		menu = menuinfoSer.getEditMenuinfo(indexID);
+		return "SUCCESS";
+	}
+	
+	public String delGood(){//删除菜品
+		menuinfoSer = new MenuinfoService();
+		this.aflag = menuinfoSer.changeMenuStatus(indexID,false);
+		return "SUCCESS";
+	}
+	
+	public String recoverGood(){//恢复已删除菜品
+		menuinfoSer = new MenuinfoService();
+		this.aflag = menuinfoSer.changeMenuStatus(indexID,true);
 		return "SUCCESS";
 	}
 	/**
@@ -135,9 +150,8 @@ public class GoodManageAction extends ActionSupport{
 	 * @return
 	 */
 	public String listCity(){
-		gooddao = new GoodManageDao();
-		this.citys = gooddao.listCityInfoByProviceID(this.indexID);
-		gooddao.close();
+		menuinfoSer = new MenuinfoService();
+		this.citys = menuinfoSer.listCitysByProvinceID(this.indexID);
 		return "SUCCESS";
 	}
 	
@@ -146,9 +160,8 @@ public class GoodManageAction extends ActionSupport{
 	 * @return
 	 */
 	public String listDistrict(){
-		gooddao = new GoodManageDao();
-		this.diss = gooddao.listDistrictInfoByCityID(indexID);
-		gooddao.close();
+		menuinfoSer = new MenuinfoService();
+		this.diss = menuinfoSer.listDistrictsByCityID(indexID);
 		return "SUCCESS";
 	}
 	/**
@@ -156,9 +169,8 @@ public class GoodManageAction extends ActionSupport{
 	 * @return
 	 */
 	public String listbussArea(){
-		gooddao = new GoodManageDao();
-		this.busses = gooddao.listBusinessareaInfoByDistrictID(indexID);
-		gooddao.close();
+		menuinfoSer = new MenuinfoService();
+		this.busses = menuinfoSer.listBussByDistrictID(indexID);
 		return "SUCCESS";
 	}
 	
@@ -167,9 +179,8 @@ public class GoodManageAction extends ActionSupport{
 	 * @return 商家列表
 	 */
 	public String listVendor(){
-		gooddao = new GoodManageDao();
-		this.vendors = gooddao.listVendorInfoByDistrictID(indexID);
-		gooddao.close();
+		menuinfoSer = new MenuinfoService();
+		this.vendors = menuinfoSer.listVendorsByBussID(indexID);
 		return "SUCCESS";
 	}
 	
@@ -178,9 +189,8 @@ public class GoodManageAction extends ActionSupport{
 	 * @return
 	 */
 	public String listProvice(){
-		gooddao = new GoodManageDao();
-		this.provices = gooddao.listProivceInfo();
-		gooddao.close();
+		menuinfoSer = new MenuinfoService();
+		this.provices = menuinfoSer.listProvinces();
 		return "SUCCESS";
 	}
 
@@ -216,51 +226,51 @@ public class GoodManageAction extends ActionSupport{
 		this.info = "上传成功";
 		return "SUCCESS";
 	}
-	public List<Menuinfo> getGoodlist() {
+	public List<TMenuinfo> getGoodlist() {
 		return goodlist;
 	}
 
-	public void setGoodlist(List<Menuinfo> goodlist) {
+	public void setGoodlist(List<TMenuinfo> goodlist) {
 		this.goodlist = goodlist;
 	}
 
-	public List<Province> getProvices() {
+	public List<TProvince> getProvices() {
 		return provices;
 	}
 
-	public void setProvices(List<Province> provices) {
+	public void setProvices(List<TProvince> provices) {
 		this.provices = provices;
 	}
 
-	public List<City> getCitys() {
+	public List<TCity> getCitys() {
 		return citys;
 	}
 
-	public void setCitys(List<City> citys) {
+	public void setCitys(List<TCity> citys) {
 		this.citys = citys;
 	}
 
-	public List<District> getDiss() {
+	public List<TDistrict> getDiss() {
 		return diss;
 	}
 
-	public void setDiss(List<District> diss) {
+	public void setDiss(List<TDistrict> diss) {
 		this.diss = diss;
 	}
 
-	public List<BusinessArea> getBusses() {
+	public List<TBusinessarea> getBusses() {
 		return busses;
 	}
 
-	public void setBusses(List<BusinessArea> busses) {
+	public void setBusses(List<TBusinessarea> busses) {
 		this.busses = busses;
 	}
 
-	public List<Vendor> getVendors() {
+	public List<TVendor> getVendors() {
 		return vendors;
 	}
 
-	public void setVendors(List<Vendor> vendors) {
+	public void setVendors(List<TVendor> vendors) {
 		this.vendors = vendors;
 	}
 
@@ -325,10 +335,10 @@ public class GoodManageAction extends ActionSupport{
 	public void setUploadSuccess(boolean uploadSuccess) {
 		this.uploadSuccess = uploadSuccess;
 	}
-	public Menuinfo getMenu() {
+	public TMenuinfo getMenu() {
 		return menu;
 	}
-	public void setMenu(Menuinfo menu) {
+	public void setMenu(TMenuinfo menu) {
 		this.menu = menu;
 	}
 	public String getMenuName() {
@@ -372,6 +382,12 @@ public class GoodManageAction extends ActionSupport{
 	}
 	public void setImg4(String img4) {
 		this.img4 = img4;
+	}
+	public boolean getIsAdd() {
+		return isAdd;
+	}
+	public void setIsAdd(boolean isAdd) {
+		this.isAdd = isAdd;
 	}
 
 

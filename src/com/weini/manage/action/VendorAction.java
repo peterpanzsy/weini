@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.weini.manage.business.Vendor;
-import com.weini.manage.dao.VendorDao;
+import com.weini.manage.business.VendorDao;
 
 
 public class VendorAction extends ActionSupport{

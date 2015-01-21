@@ -2,48 +2,49 @@
 	    
       //添加
         $("#submit").click(function () {
-//            //putNullValue();
-//        	//判断商品名称是否为空
-//        	if($('#menuName').val() == ""){
-//        		alert("商品名称不能为空");
-//        		return false;
-//        	}
-//            //判断商家是否选择
-//        	var index = $('#vendorID option:selected').val();
-//        	if(index == -1){
-//        		alert("请选择商家");
-//        		return false;
-//        	}
-//        	//商品图片验证
-//        	if($('#img1').attr("src") == "" || $('#img2').attr("src") == ""
-//        		|| $('#img3').attr("src") == "" || $('#img4').attr("src") == ""){
-//        		alert("请选择商品图片");
-//        		return false;
-//        	}
-//        	//商品详细详细验证
-//        	if($('#menuDetail').val() == ""){
-//        		alert("请填写商品详细");
-//        		return false;
-//        	}
+            //putNullValue();
+        	//判断商品名称是否为空
+        	if($('#menuName').val() == ""){
+        		alert("商品名称不能为空");
+        		return false;
+        	}
+            //判断商家是否选择
+        	var index = $('#vendorID option:selected').val();
+        	if(index == -1){
+        		alert("请选择商家");
+        		return false;
+        	}
+        	//商品图片验证
+        	if($('#img1').attr("src") == "" || $('#img2').attr("src") == ""
+        		|| $('#img3').attr("src") == "" || $('#img4').attr("src") == ""){
+        		alert("请选择商品图片");
+        		return false;
+        	}
+        	//商品详细详细验证
+        	if($('#menuDetail').val() == ""){
+        		alert("请填写商品详细");
+        		return false;
+        	}
         	//提交表单
         	 $.ajax({
-                 url: 'addGood.action',
+                 url: 'updateGood.action',
                  type: 'POST',
                  dataType: 'json',
-                 data: {menuName: $('#menuName').val(),
-                	 vendorId: $('#vendorID option:selected').val(),
-                	 img1: $('#img1').attr("src"),
-                	 img2: $('#img2').attr("src"),
-                	 img3: $('#img3').attr("src"),
-                	 img4: $('#img4').attr("src"),
-                	 menuDetail: $('#menuDetail').val(),
+                 data: {"menuName": $('#menuName').val(),
+                	 "vendorId": $('#vendorID option:selected').val(),
+                	 "img1": $('#img1').attr("src"),
+                	 "img2": $('#img2').attr("src"),
+                	 "img3": $('#img3').attr("src"),
+                	 "img4": $('#img4').attr("src"),
+                	 "menuDetail": $('#menuDetail').val(),
+                	 "isAdd":$('#isAdd').val(),
+        	 		 "indexID":$('#menuID').val()
                  },
         	 })
         	 .done(function(data) {
         		 if(!data.uploadSuccess){
         			 $('#menuName').val = menuName;
         			 $('#img1').attr("src")
-        			 
         		 }
         		 alert(data.info);
              })
@@ -51,76 +52,6 @@
                  alert("添加商品出错！");
              });
         });
-//        //初始化默认值
-//        function putNullValue(){
-//        	$(":input[name='menuName']").val("");
-//        	$(":input[name='menuDetail']").val("");
-//        }
-        
-//      //添加或者修改数据的验证与提交
-//        function updateAdminValidation(){
-//       	 $("#addGoodForm").validate({
-// 			debug:true,
-// 			onsubmit:true,
-// 			onfocusout:false,
-// 			onkeyup:true,
-// 	     	rules: {
-// 	     		menuName: "required",
-//// 	     	   adminPassword: {
-//// 			        required: true,
-//// 			        minlength: 5
-//// 			       },
-////		       confirmPassword: {
-////		        required: true,
-////		        minlength: 5,
-////		        equalTo: "#adminPassword"
-////		       }
-// 	     	},
-// 	       messages: {
-// 	    	  menuName: "请输入商品名称",
-//// 	    	   adminPassword: {
-//// 		        required: "请输入密码",
-//// 		        minlength: jQuery.format("密码不能小于{0}个字 符")
-//// 		       },
-//// 		       confirmPassword: {
-//// 		        required: "请输入确认密码",
-//// 		        minlength: "确认密码不能小于5个字符",
-//// 		        equalTo: "两次输入密码不一致不一致"
-//// 		       }
-// 		    },
-// 		  	submitHandler:function(){
-// 		  		alert("submit");
-// 		  		$.ajax({
-// 		  			type : 'POST',
-// 		  			url : 'updateAdmin.action',
-// 		  			data : {			
-// 		  				adminID:$("#adminID").val(),	
-// 		  				role:$("#role").val(),
-// 		  				adminName:$("#adminName").val(),
-// 		  				adminPassword:$("#adminPassword").val(),
-// 		  				confirmPassword:$("#confirmPassword").val(),
-// 		  				mark:$("#mark").val()
-// 		  			},
-// 		  			success : function(data) {
-// 		  				switch(data.mark){
-// 		  				case "add":
-// 		  					alert("添加成功！");
-// 		  					break;
-// 		  				case "edit":
-// 		  					alert("修改成功！");
-// 		  					break;
-// 		  				}
-// 		  				dialogClose();
-// 		  				adminTable.ajax.reload();	
-// 		  			},
-// 		  			error:function(msg){
-// 		  				dialogClose();
-// 		  				alter(msg);	  				
-// 		  			}
-// 		  		});
-// 			}
-// 	        });           
-//        }
         //页面加载后调用函数，加载省份
         window.onload = function(){
              if($('#proviceID option').length < 2){
@@ -279,9 +210,10 @@
                 fileObjName: 'uploadify',
                 onUploadSuccess: function (fileObj, data,response) {
                 	var jsonObject = jQuery.parseJSON(data);
-                    alert(jsonObject.info);
                     if(jsonObject.uploadSuccess){
                     	$('#img1').attr("src",""+jsonObject.picNewPath);
+                    }else{
+                    	alert(jsonObject.info);
                     }
         		}
     	});
@@ -300,9 +232,10 @@
             fileObjName: 'uploadify',
             onUploadSuccess: function (fileObj, data,response) {
             	var jsonObject = jQuery.parseJSON(data);
-                alert(jsonObject.info);
                 if(jsonObject.uploadSuccess){
                 	$('#img2').attr("src",""+jsonObject.picNewPath);
+                }else{
+                	alert(jsonObject.info);
                 }
     		}
 	});
@@ -321,9 +254,10 @@
             fileObjName: 'uploadify',
             onUploadSuccess: function (fileObj, data,response) {
             	var jsonObject = jQuery.parseJSON(data);
-                alert(jsonObject.info);
                 if(jsonObject.uploadSuccess){
                 	$('#img3').attr("src",""+jsonObject.picNewPath);
+                }else{
+                	alert(jsonObject.info);
                 }
     		}
 	});
@@ -342,9 +276,10 @@
             fileObjName: 'uploadify',
             onUploadSuccess: function (fileObj, data,response) {
             	var jsonObject = jQuery.parseJSON(data);
-                alert(jsonObject.info);
                 if(jsonObject.uploadSuccess){
                 	$('#img4').attr("src",""+jsonObject.picNewPath);
+                }else{
+                	alert(jsonObject.info);
                 }
     		}
 	});

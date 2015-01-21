@@ -8,6 +8,7 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
 import com.weini.manage.business.Vendor;
+import com.weini.manage.entity.TVendor;
 import com.weini.tools.HibernateSessionManager;
 
 
@@ -15,27 +16,9 @@ public class VendorDao  {
 	 
 	 Session session ;
 	 
-	public VendorDao()
+	public VendorDao(Session sess)
 	{		
-		session = HibernateSessionManager.getThreadLocalSession();
-	}
-	public void close() {
-		// TODO Auto-generated method stub
-		HibernateSessionManager.commitThreadLocalTransaction();
-		HibernateSessionManager.closeThreadLocalSession();
-	}
-
-	public void roll() {
-		// TODO Auto-generated method stub
-		HibernateSessionManager.rollbackThreadLocalTransaction();
-		HibernateSessionManager.closeThreadLocalSession();
-	}
-
-
-	public void initDao()
-	{	
-		session = HibernateSessionManager.getThreadLocalSession();
-	
+		session = sess;
 	}	
 	
 	public List<Vendor> getVendorList(){
@@ -116,6 +99,35 @@ public class VendorDao  {
 		q.setParameter(0, id);
 		int result=q.executeUpdate();		
 		return result;
+	}
+	/**
+	 * 根据商家的id获取商家的名字信息
+	 * @param id 商家id
+	 * @return 商家名字
+	 */
+	public String findVendorNameByID(int id) {
+		String name = "";
+		Query q = session.createSQLQuery(" select t_vendor.vendor_name from t_vendor where vendor_id=?");
+		q.setParameter(0, id);
+		List l = q.list();
+		if(l.size() > 0 ){
+			name = (String) l.get(0);
+		}
+		return name;
+	}
+	public List<TVendor> listVendorsByBussID(int busID){
+		List<TVendor> res = new ArrayList<TVendor>();
+		Query q = session.createSQLQuery("select t_vendor.vendor_id,t_vendor.vendor_name from t_vendor where t_vendor.vendor_business_areaid = ?");
+		q.setParameter(0,busID);
+		List l = q.list();
+		for(int i = 0;i < l.size();i++){
+			Object[] row=(Object[])l.get(i);
+			TVendor ven = new TVendor();
+			ven.setVendorId((Integer)row[0]);
+			ven.setVendorName((String)row[1]);
+			res.add(ven);
+		}
+		return res;
 	}
 
 

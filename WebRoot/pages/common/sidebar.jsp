@@ -55,7 +55,7 @@ else{
         <!-- <li id="utiliSurveyli"><a href="pages/goodManage/utilizationSurvey.jsp">使用概况</a></li> -->
         <li id="existGoodli"><a href="pages/goodManage/existGood.jsp">现有商品</a></li>
         <li id="deletedGoodli"><a href="pages/goodManage/deletedGood.jsp">已删除商品</a></li>
-        <li id="addGoodli"><a href="pages/goodManage/addGood.jsp">添加商品</a></li>
+        <li id="addGoodli"><a href="addGood">添加商品</a></li>
         <li><a href="pages/goodManage/addGood.jsp">优惠活动</a></li>             
         <li><a href="pages/goodManage/addGood.jsp">积分兑换商品</a></li>
       </ul>

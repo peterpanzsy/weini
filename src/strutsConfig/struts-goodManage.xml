@@ -39,13 +39,21 @@
 		<result name="SUCCESS" type="json">				
 		</result>
 	</action>
-	<action name="addGood" class="com.weini.manage.action.GoodManageAction" method="addGood">
+	<action name="updateGood" class="com.weini.manage.action.GoodManageAction" method="updateGood">
 		<result name="SUCCESS" type="json">				
 		</result>
 	</action>
 	
-	
-	
+	</package>
+	<package name="menuinfoJSP" extends="struts-default">
+	<action name="addGood" class="com.weini.manage.action.GoodManageAction" method="addGood">
+		<result name="SUCCESS" >/pages/goodManage/addOrEditGood.jsp				
+		</result>
+	</action>
+	<action name="editGood" class="com.weini.manage.action.GoodManageAction" method="editGood">
+		<result name="SUCCESS">/pages/goodManage/addOrEditGood.jsp				
+		</result>
+	</action>
 	</package>
 
 </struts>    
