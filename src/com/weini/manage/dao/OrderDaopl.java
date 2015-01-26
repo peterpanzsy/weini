@@ -68,7 +68,6 @@ public class OrderDaopl{
 	 * @return
 	 */
 	public boolean getUserOrderTimeSum(int[] temp){
-		System.out.println("OrderTime");
 		boolean flag = false;
 		Query q = session.createSQLQuery("select (t.order_orderTime - t.order_startTime) as time from t_order as t");
 		List l = q.list();
@@ -97,12 +96,12 @@ public class OrderDaopl{
 	 * 只要下过订单且已付款都算，不管是否退款
 	 * @return
 	 */
-	public long getRealBuyUserSum(){
+	public int getRealBuyUserSum(){
 		int res = 0;
 		Query q = session.createSQLQuery("select count(distinct user_id) from t_order as t where t.order_payStatus = 1;");
 		List l = q.list();
 		if(l.size() > 0){
-			res = (int)l.get(0);
+			res = ((BigInteger)(l.get(0))).intValue();
 		}
 		return res;
 	}
@@ -129,16 +128,16 @@ public class OrderDaopl{
 	 * @param isAll 是否为全部订单，true表示是，false表示否
 	 * @return
 	 */
-	public List<TwoEntity> getOrderSumByDate(Timestamp start, Timestamp end, boolean isAll){
+	public List<TwoEntity> getOrderSumByDate(String start, String end, boolean isAll){
 		List<TwoEntity> res = new ArrayList<TwoEntity>();
 		Query q ;
 		if(isAll){
-			q = session.createSQLQuery("select DATE_FORMAT(order_orderTime,'%Y-%m-%d'),count(order_id) from t_order where order_orderTime betweent @start and @end group by DAY(order_orderTime);");
+			q = session.createSQLQuery("select DATE_FORMAT(order_orderTime,'%Y-%m-%d'),count(order_id) from t_order where order_orderTime between ? and ? group by DAY(order_orderTime) order by order_orderTime DESC;");
 		}else{
-			q = session.createSQLQuery("select DATE_FORMAT(order_orderTime,'%Y-%m-%d'),count(order_id) from t_order where t.order_isvalid = 1 and order_orderTime betweent @start and @end group by DAY(order_orderTime);");
+			q = session.createSQLQuery("select DATE_FORMAT(order_orderTime,'%Y-%m-%d'),count(order_id) from t_order where t.order_isvalid = 1 and order_orderTime between ? and ? group by DAY(order_orderTime) order by order_orderTime DESC;");
 		}
-		q.setParameter("start",start);
-		q.setParameter("end",end);
+		q.setString(0,start);
+		q.setString(1,end);
 		List l = q.list();
 		for(int i = 0; i < l.size(); i++){
 			TwoEntity temp = new TwoEntity();

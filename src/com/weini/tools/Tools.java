@@ -11,6 +11,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.UUID;
 
 public class Tools {
@@ -186,4 +192,23 @@ public class Tools {
 	    	//print by web 
 	    	return 2;
 	    }
+	    public static String getSomeDayDate(int type){
+			Timestamp time = null;
+			DateFormat format2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");         
+			Date date = null;	
+			Calendar cale = Calendar.getInstance();
+			cale.add(Calendar.DATE, type);
+//			String tarday = new SimpleDateFormat("yyyy-MM-dd").format(cale.getTime())+" 00:00:00";
+			String tarday = new SimpleDateFormat("yyyy-MM-dd").format(cale.getTime());
+			return tarday;
+//			// String转Date    
+//			try {               
+//	           date = format2.parse(tarday); 
+//	           System.out.println(date.getTime());
+//	           time = new Timestamp(date.getTime());
+//			} catch (ParseException e) {    
+//			           e.printStackTrace();  
+//			}
+//			return time;
+		}
 }

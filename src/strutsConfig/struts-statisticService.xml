@@ -11,6 +11,14 @@
 		<result name="SUCCESS" type="json">				
 		</result>
 	</action>
+	<action name="getOrderAnalysis" class="com.weini.manage.action.StatisticAction" method="getOrderAnalysis">
+		<result name="SUCCESS" type="json">				
+		</result>
+	</action>
+	<action name="getChangeAnalysis" class="com.weini.manage.action.StatisticAction" method="getChangeAnalysis">
+		<result name="SUCCESS" type="json">				
+		</result>
+	</action>
 	
 	</package>
 

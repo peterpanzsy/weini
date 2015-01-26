@@ -1,11 +1,13 @@
 package com.weini.manage.business;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.weini.manage.business.GeneralServive;
 import com.weini.manage.dao.OrderDaopl;
 import com.weini.manage.dao.UserDaopl;
+import com.weini.tools.Tools;
 import com.weini.tools.TwoEntity;
 
 public class StatisticService extends GeneralServive{
@@ -33,7 +35,6 @@ public class StatisticService extends GeneralServive{
  	 * @return
  	 */
  	public List<TwoEntity> getUserOrderTime(){
- 		System.out.println("orderTime");
  		List<TwoEntity> res = new ArrayList<TwoEntity>();
  		int[] temp = new int[6];
  		boolean flag = orderdao.getUserOrderTimeSum(temp);
@@ -62,7 +63,44 @@ public class StatisticService extends GeneralServive{
  	 * @return
  	 */
  	public double getRealTotalMoney(){
- 		return 0;
+ 		double res = this.orderdao.getOrderTotalMoney();
+ 		return res;
  	}
-	
+ 	/**
+ 	 * 根据时间统计用户下单数，如果某一天不存在数据，则置为0
+ 	 * @param num 统计的天数
+ 	 * @return 月份与统计数的list
+ 	 */
+ 	public List<TwoEntity> getOrderSumByTime(int num){
+ 		List<TwoEntity> res = null;
+ 		String end = Tools.getSomeDayDate(0);
+ 		String start = Tools.getSomeDayDate(0-num);
+ 		res = this.orderdao.getOrderSumByDate(start, end, true);
+ 		if(res.size() < num){
+ 			List<TwoEntity> templist = new ArrayList<TwoEntity>();
+ 			String tempDate = "";
+ 			int j = 0;
+ 			TwoEntity tempEntity = res.get(j);
+ 			for(int i = -1; i >= -num; i--){
+ 				tempDate = Tools.getSomeDayDate(i);
+ 				if(tempDate.equalsIgnoreCase(tempEntity.getIndex1().toString())){
+ 					templist.add(tempEntity);
+ 					j++;
+ 					if(j < res.size()){
+ 						tempEntity = res.get(j);
+ 					}
+ 				}else{
+ 					templist.add(new TwoEntity(tempDate,0));
+ 				}
+ 			}
+ 			res = templist;
+ 		}
+ 		this.close();
+ 		return res;
+ 		
+ 	}
+	public int getRealBuyUserSum(){
+		int res = this.orderdao.getRealBuyUserSum();
+		return res;
+	}
 }

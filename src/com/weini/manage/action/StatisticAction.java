@@ -1,12 +1,12 @@
 package com.weini.manage.action;
 
-import java.util.ArrayList;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.weini.manage.business.StatisticService;
-import com.weini.manage.business.Vendor;
-import com.weini.manage.business.VendorDao;
+import com.weini.tools.Tools;
 import com.weini.tools.TwoEntity;
 
 
@@ -19,6 +19,8 @@ public class StatisticAction extends ActionSupport{
 	private StatisticService staSer;
 	private List<TwoEntity> dataChannel;
 	private List<TwoEntity> timeData;
+	private int orderStaType;
+	private List<TwoEntity> orderSum;
 	/**获取用户的渠道分析
 	 * 
 	 * @return 返回用户的百分比
@@ -53,7 +55,10 @@ public class StatisticAction extends ActionSupport{
 	 * 用户转换率的分析
 	 * @return 实际购买用户，实际购买金额
 	 */
-	public String changeAnalysis(){
+	public String getChangeAnalysis(){
+		staSer = new StatisticService();
+		System.out.println(staSer.getRealTotalMoney());
+		System.out.println(staSer.getRealBuyUserSum());
 		return "SUCCESS";
 	}
 	/**
@@ -61,7 +66,19 @@ public class StatisticAction extends ActionSupport{
 	 * 
 	 * @return
 	 */
-	public String orderSum(){
+	public String getOrderAnalysis(){
+		staSer = new StatisticService();
+		if(this.orderStaType == 1){
+			this.orderSum = staSer.getOrderSumByTime(1);
+		}else if(this.orderStaType == 2){
+			this.orderSum = staSer.getOrderSumByTime(3);
+		}else if(this.orderStaType == 3){
+			this.orderSum = staSer.getOrderSumByTime(7);
+		}else if(this.orderStaType == 4){
+			this.orderSum = staSer.getOrderSumByTime(15);
+		}else{
+			this.orderSum = staSer.getOrderSumByTime(30);
+		}
 		return "SUCCESS";
 	}
 	/**
@@ -82,6 +99,18 @@ public class StatisticAction extends ActionSupport{
 	}
 	public void setTimeData(List<TwoEntity> timeData) {
 		this.timeData = timeData;
+	}
+	public int getOrderStaType() {
+		return orderStaType;
+	}
+	public void setOrderStaType(int orderStaType) {
+		this.orderStaType = orderStaType;
+	}
+	public List<TwoEntity> getOrderSum() {
+		return orderSum;
+	}
+	public void setOrderSum(List<TwoEntity> orderSum) {
+		this.orderSum = orderSum;
 	}
 
 	
