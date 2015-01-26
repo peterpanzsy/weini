@@ -33,16 +33,22 @@ public class StatisticService extends GeneralServive{
  	 * @return
  	 */
  	public List<TwoEntity> getUserOrderTime(){
+ 		System.out.println("orderTime");
  		List<TwoEntity> res = new ArrayList<TwoEntity>();
  		int[] temp = new int[6];
  		boolean flag = orderdao.getUserOrderTimeSum(temp);
  		this.close();
  		if(flag && temp[0] > 0){
- 			res.add(new TwoEntity("0-10",(float)temp[1] / temp[0]*100));
- 			res.add(new TwoEntity("10-20",(float)temp[2] / temp[0]*100));
- 			res.add(new TwoEntity("20-30",(float)temp[3] / temp[0]*100));
- 			res.add(new TwoEntity("30-60",(float)temp[4] / temp[0]*100));
- 			res.add(new TwoEntity(">60" ,(float)temp[5] / temp[0]*100));
+ 			if(temp[1]!=0)
+ 				res.add(new TwoEntity("0-10s",(float)temp[1] / temp[0]*100));
+ 			if(temp[2]!=0)
+ 				res.add(new TwoEntity("10-20s",(float)temp[2] / temp[0]*100));
+ 			if(temp[3]!=0)
+ 				res.add(new TwoEntity("20-30s",(float)temp[3] / temp[0]*100));
+ 			if(temp[4]!=0)
+ 				res.add(new TwoEntity("30-60s",(float)temp[4] / temp[0]*100));
+ 			if(temp[5]!=0)
+ 				res.add(new TwoEntity(">60s" ,(float)temp[5] / temp[0]*100));
  			return res;
  		}else{
  			return null;

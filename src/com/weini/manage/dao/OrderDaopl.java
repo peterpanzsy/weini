@@ -68,6 +68,7 @@ public class OrderDaopl{
 	 * @return
 	 */
 	public boolean getUserOrderTimeSum(int[] temp){
+		System.out.println("OrderTime");
 		boolean flag = false;
 		Query q = session.createSQLQuery("select (t.order_orderTime - t.order_startTime) as time from t_order as t");
 		List l = q.list();

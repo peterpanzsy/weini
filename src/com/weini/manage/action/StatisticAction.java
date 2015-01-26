@@ -18,7 +18,7 @@ public class StatisticAction extends ActionSupport{
 	private static final long serialVersionUID = 1L;
 	private StatisticService staSer;
 	private List<TwoEntity> dataChannel;
-	
+	private List<TwoEntity> timeData;
 	/**获取用户的渠道分析
 	 * 
 	 * @return 返回用户的百分比
@@ -39,7 +39,7 @@ public class StatisticAction extends ActionSupport{
 	 */
 	public String getTimeAnalysis(){
 		staSer = new StatisticService();
-		dataChannel = staSer.getUserOrderTime();
+		timeData = staSer.getUserOrderTime();
 		return "SUCCESS";
 	}
 	/**
@@ -76,6 +76,12 @@ public class StatisticAction extends ActionSupport{
 	}
 	public void setDataChannel(List<TwoEntity> dataChannel) {
 		this.dataChannel = dataChannel;
+	}
+	public List<TwoEntity> getTimeData() {
+		return timeData;
+	}
+	public void setTimeData(List<TwoEntity> timeData) {
+		this.timeData = timeData;
 	}
 
 	

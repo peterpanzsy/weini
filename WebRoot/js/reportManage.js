@@ -26,7 +26,7 @@ $(document).ready(function() {
                 text: '渠道分析'
             },
             tooltip: {
-              pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+              pointFormat: '{}: <b>{point.percentage:.1f}%</b>'
             },
             plotOptions: {
                 pie: {
@@ -54,33 +54,33 @@ $(document).ready(function() {
          alert("！");
      });
   	 
- 	//渠道分析
+ 	//时间点分析
   	 $.ajax({
-         url: 'getChannelAnalysis.action',
+         url: 'getTimeAnalysis.action',
          type: 'POST',
          async: false,
          dataType: 'json',
      })
      .done(function(json) {
     	 
-    	 var dat = json.dataChannel;
+    	 var dat = json.timeData;
     	 var result = new Array();
     	 for(var i = 0; i<dat.length;i++){
     		 var tmp = new Array(dat[i].index1,dat[i].index2);
     		 result.push(tmp);
     	 }
     	 console.log(result);
- 		$('#channelAnalysis').highcharts({
+ 		$('#timeAnalysis').highcharts({
             chart: {
                 plotBackgroundColor: null,
                 plotBorderWidth: null,
                 plotShadow: false
             },
             title: {
-                text: '渠道分析'
+                text: '用户下单耗时时间分析'
             },
             tooltip: {
-              pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+              pointFormat: '{}: <b>{point.percentage:.1f}%</b>'
             },
             plotOptions: {
                 pie: {
@@ -118,7 +118,7 @@ $(document).ready(function() {
             },
 
             xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                categories: ['2015/2/3', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
             },
             yAxis: {
                 title: {
@@ -151,7 +151,49 @@ $(document).ready(function() {
 	});
         
         
+    $("button.order").click(function(){        
+        var orderSta = eval($(this).attr('data-type'));
+        
+        switch (orderSta){
+            case 1:
+                orderAnalysisChart.series[0].remove();
+                
+                $.ajax({
+                     url: 'getorderAnalysis.action',
+                     type: 'POST',
+                     data: {orderStaType:1},
+                     async: false,
+                     dataType: 'json',
+                 })
+                 .done(function(json) {
 
+                    orderAnalysisChart.addSeries({data:result}); 
+                })
+                 .fail(function() {
+                     alert("！");
+                });               
+
+                break;
+            case 2:
+                orderAnalysisChart.series[0].remove();
+                orderAnalysisChart.addSeries({data:[7,8]});
+                
+                break;
+            case 3:
+                orderAnalysisChart.series[0].remove();
+                orderAnalysisChart.addSeries({data:[7,8,12]});
+                
+                break;
+            case 4:
+                orderAnalysisChart.series[0].remove();
+                orderAnalysisChart.addSeries({data:[7,8,12,7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,10]});
+                
+                break;
+            case 5:
+                
+                break;
+        }
+    });
         
         $('#buyAnalysis').highcharts({
             title: {
@@ -194,37 +236,7 @@ $(document).ready(function() {
         var orderAnalysisChart = $('#orderAnalysis').highcharts();
         //var series = orderAnalysisChart.series[0];
         
-    $("button.order").click(function(){        
-        var orderSta = eval($(this).attr('data-type'));
-        
-        switch (orderSta){
-            case 1:
-            	orderAnalysisChart.series[0].remove();
-            	orderAnalysisChart.addSeries({data:[7]});
-            	//orderAnalysisChart.series[0].setData([7]);
-                
-                //orderAnalysisChart.series.data = [7];
-                break;
-            case 2:
-            	orderAnalysisChart.series[0].remove();
-            	orderAnalysisChart.addSeries({data:[7,8]});
-            	
-                break;
-            case 3:
-            	orderAnalysisChart.series[0].remove();
-            	orderAnalysisChart.addSeries({data:[7,8,12]});
-            	
-                break;
-            case 4:
-            	orderAnalysisChart.series[0].remove();
-            	orderAnalysisChart.addSeries({data:[7,8,12,7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,10]});
-            	
-                break;
-            case 5:
-            	
-                break;
-        }
-    });
+
     
     
     
