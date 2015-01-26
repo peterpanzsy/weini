@@ -66,7 +66,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6 col-sm-6">
+              <div class="col-md-12 col-sm-12">
                 <div class="panel panel-success">
                   <div class="panel-heading"><b>&nbsp;订单统计</b>
                     <div class="btn-group-xs " style="display: inline;">
@@ -84,14 +84,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   </div>
                 </div>                       
               </div>
-              <div class="col-md-6 col-sm-6">
+              
+            </div>
+            <div>
+              <div class="col-md-12 col-sm-12">
                 <div class="panel panel-primary">
                   <div class="panel-heading">平均购买力
-                  	<div class="btn-group-xs " style="display: inline;">
-                        <button type="button" class="btn btn-default date-line-type" data-type="1">按省划分</button>
-                        <button type="button" class="btn btn-default date-line-type" data-type="2">按市划分</button>
-                        <button type="button" class="btn btn-default date-line-type" data-type="3">按商圈划分</button>
-                        <button type="button" class="btn btn-default date-line-type" data-type="4">按区域划分</button>
+                    <div class="btn-group-xs " style="display: inline;">
+                        <button type="button" class="btn btn-default date-line-type buy" data-type="1">按省划分</button>
+                        <button type="button" class="btn btn-default date-line-type buy" data-type="2">按市划分</button>
+                        <button type="button" class="btn btn-default date-line-type buy" data-type="3">按商圈划分</button>
+                        <button type="button" class="btn btn-default date-line-type buy" data-type="4">按区域划分</button>
                     </div>
                   </div>
                   <div class="panel-body" style="">

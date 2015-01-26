@@ -51,10 +51,10 @@ $(document).ready(function() {
         });
      })
      .fail(function() {
-         alert("！");
+         alert("渠道分析没有数据！");
      });
   	 
- 	//时间点分析
+ 	//用户下单耗时分析
   	 $.ajax({
          url: 'getTimeAnalysis.action',
          type: 'POST',
@@ -69,7 +69,7 @@ $(document).ready(function() {
     		 var tmp = new Array(dat[i].index1,dat[i].index2);
     		 result.push(tmp);
     	 }
-    	 console.log(result);
+    	 
  		$('#timeAnalysis').highcharts({
             chart: {
                 plotBackgroundColor: null,
@@ -105,69 +105,277 @@ $(document).ready(function() {
         });
      })
      .fail(function() {
-         alert("！");
+         alert("用户下单耗时没有数据！");
      });
+
     
 	//订单统计
-	$.getJSON("", function(json){
-		
-        $('#orderAnalysis').highcharts({
-            title: {
-                text: '订单统计',
-                x: -20 //center
-            },
-
-            xAxis: {
-                categories: ['2015/2/3', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-            },
-            yAxis: {
+    $.ajax({
+         url: 'getOrderAnalysis.action',
+         type: 'POST',
+         data: {orderStaType:5},
+         async: false,
+         dataType: 'json',
+        })
+        .done(function(json) {
+            var categoriesX = new Array();
+            var result = new Array();
+            var dat = json.orderSum;
+            for(var i = dat.length-1;i>=0;i--){
+            	categoriesX.push(dat[i].index1);
+            	result.push(dat[i].index2);
+            }
+            $('#orderAnalysis').highcharts({
                 title: {
-                    text: 'Temperature (°C)'
+                    text: '订单统计',
+                    x: -20 //center
                 },
-                plotLines: [{
-                    value: 0,
-                    width: 1,
-                    color: '#808080'
+
+                xAxis: {
+                    categories: categoriesX,
+                    //gridLineWidth: 1, 
+                    labels: {
+                    	  rotation:-35,
+                        step: 1,
+                        staggerLines: 1,
+                        align:'right'
+                      } 
+                },
+                yAxis: {
+                    title: {
+                        text: '订单个数'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+                tooltip: {
+                	pointFormat: ' : {point.y}个'
+                	
+                },
+                legend: {
+                    enabled:false
+                },
+                credits: {
+                    enabled: false
+                },
+                series: [{
+                    name: '',
+                    data: result
                 }]
-            },
-            tooltip: {
-                valueSuffix: '°C'
-            },
-            legend: {
-                /*layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'middle',
-                borderWidth: 0*/
-            	enabled:false
-            },
-            credits: {
-                enabled: false
-            },
-            series: [{
-                name: '',
-                data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-            }]
-        });		
-	});
-        
+            }); 
+        })
+        .fail(function() {
+            alert("订单统计没有数据！");
+    });      
         
     $("button.order").click(function(){        
         var orderSta = eval($(this).attr('data-type'));
         
         switch (orderSta){
-            case 1:
-                orderAnalysisChart.series[0].remove();
+            case 1:             
                 
                 $.ajax({
-                     url: 'getorderAnalysis.action',
+                     url: 'getOrderAnalysis.action',
                      type: 'POST',
                      data: {orderStaType:1},
                      async: false,
                      dataType: 'json',
                  })
                  .done(function(json) {
-
+                	 var categoriesX = new Array();
+                     var result = new Array();
+                     var dat = json.orderSum;
+                     for(var i = dat.length-1;i>=0;i--){
+                     	categoriesX.push(dat[i].index1);
+                     	result.push(dat[i].index2);
+                     }
+                    var orderAnalysisChart = $('#orderAnalysis').highcharts();
+                    orderAnalysisChart.series[0].remove();
+                    orderAnalysisChart.xAxis[0].setCategories(categoriesX);
                     orderAnalysisChart.addSeries({data:result}); 
+                })
+                 .fail(function() {
+                     alert("！"+orderStaType);
+                });               
+
+                break;
+            case 2:
+                $.ajax({
+                     url: 'getOrderAnalysis.action',
+                     type: 'POST',
+                     data: {orderStaType:2},
+                     async: false,
+                     dataType: 'json',
+                 })
+                 .done(function(json) {
+                	 var categoriesX = new Array();
+                     var result = new Array();
+                     var dat = json.orderSum;
+                     for(var i = dat.length-1;i>=0;i--){
+                     	categoriesX.push(dat[i].index1);
+                     	result.push(dat[i].index2);
+                     }
+                    var orderAnalysisChart = $('#orderAnalysis').highcharts();
+                    orderAnalysisChart.series[0].remove();
+                    orderAnalysisChart.xAxis[0].setCategories(categoriesX);
+                    orderAnalysisChart.addSeries({data:result}); 
+                })
+                 .fail(function() {
+                     alert("！"+orderStaType);
+                });  
+                
+                break;
+            case 3:
+                $.ajax({
+                     url: 'getOrderAnalysis.action',
+                     type: 'POST',
+                     data: {orderStaType:3},
+                     async: false,
+                     dataType: 'json',
+                 })
+                 .done(function(json) {
+                	 var categoriesX = new Array();
+                     var result = new Array();
+                     var dat = json.orderSum;
+                     for(var i = dat.length-1;i>=0;i--){
+                     	categoriesX.push(dat[i].index1);
+                     	result.push(dat[i].index2);
+                     }
+                    var orderAnalysisChart = $('#orderAnalysis').highcharts();
+                    orderAnalysisChart.series[0].remove();
+                    orderAnalysisChart.xAxis[0].setCategories(categoriesX);
+                    orderAnalysisChart.addSeries({data:result}); 
+                })
+                 .fail(function() {
+                     alert("！"+orderStaType);
+                });                  
+                break;
+            case 4:
+                $.ajax({
+                     url: 'getOrderAnalysis.action',
+                     type: 'POST',
+                     data: {orderStaType:4},
+                     async: false,
+                     dataType: 'json',
+                 })
+                 .done(function(json) {
+                	 var categoriesX = new Array();
+                     var result = new Array();
+                     var dat = json.orderSum;
+                     for(var i = dat.length-1;i>=0;i--){
+                     	categoriesX.push(dat[i].index1);
+                     	result.push(dat[i].index2);
+                     }
+                    var orderAnalysisChart = $('#orderAnalysis').highcharts();
+                    orderAnalysisChart.series[0].remove();
+                    orderAnalysisChart.xAxis[0].setCategories(categoriesX);
+                    orderAnalysisChart.addSeries({data:result}); 
+                })
+                 .fail(function() {
+                     alert("！"+orderStaType);
+                });  
+                break;
+            case 5:
+                $.ajax({
+                     url: 'getOrderAnalysis.action',
+                     type: 'POST',
+                     data: {orderStaType:5},
+                     async: false,
+                     dataType: 'json',
+                 })
+                 .done(function(json) {
+                	 var categoriesX = new Array();
+                     var result = new Array();
+                     var dat = json.orderSum;
+                     for(var i = dat.length-1;i>=0;i--){
+                     	categoriesX.push(dat[i].index1);
+                     	result.push(dat[i].index2);
+                     }
+                    var orderAnalysisChart = $('#orderAnalysis').highcharts();
+                    orderAnalysisChart.series[0].remove();
+                    orderAnalysisChart.xAxis[0].setCategories(categoriesX);
+                    orderAnalysisChart.addSeries({data:result}); 
+                })
+                 .fail(function() {
+                     alert("！"+orderStaType);
+                });  
+                break;
+        }
+    });
+
+
+
+    
+    //购买力分析
+    $.ajax({
+         url: '',
+         type: 'POST',
+         data: {buyStaType:1},
+         async: false,
+         dataType: 'json',
+        })
+        .done(function(json) {
+            var categoriesX ;
+            var result; 
+            $('#buyAnalysis').highcharts({
+                title: {
+                    text: '平均购买力统计',
+                    x: -20 //center
+                },
+
+                xAxis: {
+                    categories: categoriesX
+                },
+                yAxis: {
+                    title: {
+                        text: 'Temperature (°C)'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+                tooltip: {
+                    valueSuffix: '°C'
+                },
+                legend: {
+                    enabled:false
+                },
+                credits: {
+                    enabled: false
+                },
+                series: [{
+                    name: '',
+                    data: result
+                }]
+            }); 
+        })
+        .fail(function() {
+            alert("！");
+    });    
+    var buyAnalysisChart = $('#buyAnalysis').highcharts();    
+    $("button.buy").click(function(){        
+        var buySta = eval($(this).attr('data-type'));
+        
+        switch (buySta){
+            case 1:             
+                
+                $.ajax({
+                     url: '',
+                     type: 'POST',
+                     data: {buyStaType:1},
+                     async: false,
+                     dataType: 'json',
+                 })
+                 .done(function(json) {
+
+                    buyAnalysisChart.series[0].remove();
+                    buyAnalysisChart.xAxis[0].setCategories();
+                    buyAnalysisChart.addSeries({data:result}); 
                 })
                  .fail(function() {
                      alert("！");
@@ -175,65 +383,65 @@ $(document).ready(function() {
 
                 break;
             case 2:
-                orderAnalysisChart.series[0].remove();
-                orderAnalysisChart.addSeries({data:[7,8]});
+                $.ajax({
+                     url: '',
+                     type: 'POST',
+                     data: {buyStaType:2},
+                     async: false,
+                     dataType: 'json',
+                 })
+                 .done(function(json) {
+                    
+                    buyAnalysisChart.series[0].remove();
+                    buyAnalysisChart.xAxis[0].setCategories();
+                    buyAnalysisChart.addSeries({data:result}); 
+                })
+                 .fail(function() {
+                     alert("！");
+                });  
                 
                 break;
             case 3:
-                orderAnalysisChart.series[0].remove();
-                orderAnalysisChart.addSeries({data:[7,8,12]});
-                
+                $.ajax({
+                     url: '',
+                     type: 'POST',
+                     data: {buyStaType:3},
+                     async: false,
+                     dataType: 'json',
+                 })
+                 .done(function(json) {
+                    
+                    buyAnalysisChart.series[0].remove();
+                    buyAnalysisChart.xAxis[0].setCategories();
+                    buyAnalysisChart.addSeries({data:result}); 
+                })
+                 .fail(function() {
+                     alert("！");
+                });                  
                 break;
             case 4:
-                orderAnalysisChart.series[0].remove();
-                orderAnalysisChart.addSeries({data:[7,8,12,7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,10]});
-                
+                $.ajax({
+                     url: '',
+                     type: 'POST',
+                     data: {buyStaType:4},
+                     async: false,
+                     dataType: 'json',
+                 })
+                 .done(function(json) {
+                    
+                    buyAnalysisChart.series[0].remove();
+                    buyAnalysisChart.xAxis[0].setCategories();
+                    buyAnalysisChart.addSeries({data:result}); 
+                })
+                 .fail(function() {
+                     alert("！");
+                });  
                 break;
-            case 5:
-                
-                break;
+            
         }
     });
         
-        $('#buyAnalysis').highcharts({
-            title: {
-                text: '平均购买力统计',
-                x: -20 //center
-            },
-
-            xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-            },
-            yAxis: {
-                title: {
-                    text: 'Temperature (°C)'
-                },
-                plotLines: [{
-                    value: 0,
-                    width: 1,
-                    color: '#808080'
-                }]
-            },
-            tooltip: {
-                valueSuffix: '°C'
-            },
-            legend: {
-                /*layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'middle',
-                borderWidth: 0*/
-            	enabled:false
-            },
-            credits: {
-                enabled: false
-            },
-            series: [{
-                name: 'Tokyo',
-                data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-            }]
-        });
-        
-        var orderAnalysisChart = $('#orderAnalysis').highcharts();
+    
         //var series = orderAnalysisChart.series[0];
         
 

@@ -80,7 +80,9 @@ public class StatisticService extends GeneralServive{
  			List<TwoEntity> templist = new ArrayList<TwoEntity>();
  			String tempDate = "";
  			int j = 0;
- 			TwoEntity tempEntity = res.get(j);
+ 			TwoEntity tempEntity = new TwoEntity("##",-1);
+ 			if(res.size()!=0)
+ 			 { tempEntity= res.get(j);}
  			for(int i = -1; i >= -num; i--){
  				tempDate = Tools.getSomeDayDate(i);
  				if(tempDate.equalsIgnoreCase(tempEntity.getIndex1().toString())){
