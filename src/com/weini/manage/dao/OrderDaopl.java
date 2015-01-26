@@ -1,5 +1,6 @@
 package com.weini.manage.dao;
 
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,13 +69,13 @@ public class OrderDaopl{
 	 */
 	public boolean getUserOrderTimeSum(int[] temp){
 		boolean flag = false;
-		Query q = session.createQuery("select (t.order_orderTime - t.order_startTime) as time from t_order");
+		Query q = session.createSQLQuery("select (t.order_orderTime - t.order_startTime) as time from t_order as t");
 		List l = q.list();
 		temp[0] = l.size(); 
 		if(temp[0] > 0){
 			flag = true;
 			for(int i = 0; i < l.size(); i++){
-				int time = (int)l.get(i);
+				int time = ((BigInteger)(l.get(i))).intValue();
 				if(time < 10){
 					temp[1] ++;
 				}else if(time < 20){
@@ -97,7 +98,7 @@ public class OrderDaopl{
 	 */
 	public long getRealBuyUserSum(){
 		int res = 0;
-		Query q = session.createQuery("select count(distinct user_id) from t_order as t where t.order_payStatus = 1;");
+		Query q = session.createSQLQuery("select count(distinct user_id) from t_order as t where t.order_payStatus = 1;");
 		List l = q.list();
 		if(l.size() > 0){
 			res = (int)l.get(0);
@@ -110,8 +111,8 @@ public class OrderDaopl{
 	 */
 	public double getOrderTotalMoney(){
 		double res = 0;
-		Query q1 = session.createQuery("select SUM(box_price) from t_order as t where t.S_order_consumeStatus = -1 and t.order_isRefund = 0 and order_isvalid = 1;");
-		Query q2 = session.createQuery("select SUM(o.box_price / box_type * S_order_consumeStatus) from t_order as o,t_box as b where o.order_isRefund = 1 and o.S_order_consumeStatus != 0 and o.box_id = b.box_id and order_isvalid = 1;");
+		Query q1 = session.createSQLQuery("select SUM(box_price) from t_order as t where t.S_order_consumeStatus = -1 and t.order_isRefund = 0 and order_isvalid = 1;");
+		Query q2 = session.createSQLQuery("select SUM(o.box_price / box_type * S_order_consumeStatus) from t_order as o,t_box as b where o.order_isRefund = 1 and o.S_order_consumeStatus != 0 and o.box_id = b.box_id and order_isvalid = 1;");
 		List l1 = q1.list();
 		List l2 = q1.list();
 		if(l1.size() > 0 && l2.size() > 0){
@@ -131,9 +132,9 @@ public class OrderDaopl{
 		List<TwoEntity> res = new ArrayList<TwoEntity>();
 		Query q ;
 		if(isAll){
-			q = session.createQuery("select DATE_FORMAT(order_orderTime,'%Y-%m-%d'),count(order_id) from t_order where order_orderTime betweent @start and @end group by DAY(order_orderTime);");
+			q = session.createSQLQuery("select DATE_FORMAT(order_orderTime,'%Y-%m-%d'),count(order_id) from t_order where order_orderTime betweent @start and @end group by DAY(order_orderTime);");
 		}else{
-			q = session.createQuery("select DATE_FORMAT(order_orderTime,'%Y-%m-%d'),count(order_id) from t_order where t.order_isvalid = 1 and order_orderTime betweent @start and @end group by DAY(order_orderTime);");
+			q = session.createSQLQuery("select DATE_FORMAT(order_orderTime,'%Y-%m-%d'),count(order_id) from t_order where t.order_isvalid = 1 and order_orderTime betweent @start and @end group by DAY(order_orderTime);");
 		}
 		q.setParameter("start",start);
 		q.setParameter("end",end);
@@ -154,7 +155,7 @@ public class OrderDaopl{
 	 */
 	public List<TwoEntity> getOrderFirstModelSum(){
 		List<TwoEntity> res = new ArrayList<TwoEntity>();
-		Query q = session.createQuery("select box_type,count(order_id) from t_order as o,t_box as b where o.order_isFirst = 1 and o.order_isvalid = 1 and o.order_isRefund = 0 and o.S_order_consumeStatus = -1 and o.box_id = b.box_id group by box_type;");
+		Query q = session.createSQLQuery("select box_type,count(order_id) from t_order as o,t_box as b where o.order_isFirst = 1 and o.order_isvalid = 1 and o.order_isRefund = 0 and o.S_order_consumeStatus = -1 and o.box_id = b.box_id group by box_type;");
 		List l = q.list();
 		for(int i = 0; i < l.size(); i++){
 			Object[] row = (Object[])l.get(0);
@@ -169,7 +170,7 @@ public class OrderDaopl{
 	 */
 	public int getUserSumSecondOrder(){
 		int res = 0;
-		Query q = session.createQuery("select count(distinct user_id) from t_order where user_id in(select user_id from t_order group by user_id having count(order_id) > 1);");
+		Query q = session.createSQLQuery("select count(distinct user_id) from t_order where user_id in(select user_id from t_order group by user_id having count(order_id) > 1);");
 		List l = q.list();
 		if(l.size() > 0){
 			res = (int)l.get(0);
@@ -186,7 +187,7 @@ public class OrderDaopl{
 	 */
 	public List<TwoEntity> getOrderModelSumByDispatch(int provinceID,int cityID,int bussID){
 		List<TwoEntity> res = new ArrayList<TwoEntity>();
-		Query q = session.createQuery("select box_type,count(order_id) from t_order as o,t_box as b,"
+		Query q = session.createSQLQuery("select box_type,count(order_id) from t_order as o,t_box as b,"
 				+ "t_dispatching as d where o.order_isvalid = 1 and d.dispatching_province = @province "
 				+ "and d.dispatching_city = @city and d.dispatching_businessAreaid = @buss and "
 				+ "o.order_dispatching_id = d.dispatching_id and o.box_id = b.box_id group by box_type;");

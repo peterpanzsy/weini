@@ -113,10 +113,12 @@ else{
     <li id="reportManage" class="sub">
       <a href="javascript:;">
         <i class="fa fa-database"></i> 报表数据统计 <div class="pull-right"><span class="caret"></span></div>
-      </a>
-      <ul class="templatemo-submenu">
-        <li id="statistics"><a href="pages/reportManage/statistics.jsp">报表数据统计详情</a></li>        
+      </a>  
+        <ul class="templatemo-submenu">
+        <li id="statistics"><a href="pages/reportManage/statistics.jsp">报表数据统计详情</a></li>
+        <li id="userPrefer"><a href="pages/reportManage/userPrefer.jsp">用户偏好统计</a></li>       
       </ul>
+          
     </li>
     <%
 		}

@@ -8,7 +8,7 @@ import com.weini.manage.dao.OrderDaopl;
 import com.weini.manage.dao.UserDaopl;
 import com.weini.tools.TwoEntity;
 
-public class StatisticService extends GeneralServive {
+public class StatisticService extends GeneralServive{
 	private UserDaopl userdao  = new UserDaopl(this.session);
 	private OrderDaopl orderdao = new OrderDaopl(this.session);
 	/**
@@ -19,9 +19,10 @@ public class StatisticService extends GeneralServive {
  		int[] temp = new int[3];
  		List<TwoEntity> res = new ArrayList<TwoEntity>();
  		boolean flag = userdao.getUserTypeSum(temp);
+ 		this.close();
  		if(flag && temp[0] > 0){
- 			res.add(new TwoEntity("Android",(float)temp[1] / temp[0]));
- 			res.add(new TwoEntity("IOS",(float)temp[2] / temp[0]));
+ 			res.add(new TwoEntity("Android",(float)temp[1] / temp[0]*100));
+ 			res.add(new TwoEntity("IOS",(float)temp[2] / temp[0]*100));
  			return res;
  		}else{
  			return null;
@@ -35,12 +36,13 @@ public class StatisticService extends GeneralServive {
  		List<TwoEntity> res = new ArrayList<TwoEntity>();
  		int[] temp = new int[6];
  		boolean flag = orderdao.getUserOrderTimeSum(temp);
+ 		this.close();
  		if(flag && temp[0] > 0){
- 			res.add(new TwoEntity("0-10",(float)temp[1] / temp[0]));
- 			res.add(new TwoEntity("10-20",(float)temp[2] / temp[0]));
- 			res.add(new TwoEntity("20-30",(float)temp[3] / temp[0]));
- 			res.add(new TwoEntity("30-60",(float)temp[4] / temp[0]));
- 			res.add(new TwoEntity(">60" ,(float)temp[5] / temp[0]));
+ 			res.add(new TwoEntity("0-10",(float)temp[1] / temp[0]*100));
+ 			res.add(new TwoEntity("10-20",(float)temp[2] / temp[0]*100));
+ 			res.add(new TwoEntity("20-30",(float)temp[3] / temp[0]*100));
+ 			res.add(new TwoEntity("30-60",(float)temp[4] / temp[0]*100));
+ 			res.add(new TwoEntity(">60" ,(float)temp[5] / temp[0]*100));
  			return res;
  		}else{
  			return null;

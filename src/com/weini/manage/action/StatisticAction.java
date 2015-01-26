@@ -16,15 +16,16 @@ public class StatisticAction extends ActionSupport{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private StatisticService staSer = new StatisticService();
-	private List<TwoEntity> data;
+	private StatisticService staSer;
+	private List<TwoEntity> dataChannel;
 	
 	/**获取用户的渠道分析
 	 * 
 	 * @return 返回用户的百分比
 	 */
 	public String getChannelAnalysis(){
-		data = staSer.getUserType();
+		staSer = new StatisticService();
+		dataChannel = staSer.getUserType();
 		return "SUCCESS";
 	}
 	/**
@@ -37,7 +38,8 @@ public class StatisticAction extends ActionSupport{
 	 * >60
 	 */
 	public String getTimeAnalysis(){
-		data = staSer.getUserOrderTime();
+		staSer = new StatisticService();
+		dataChannel = staSer.getUserOrderTime();
 		return "SUCCESS";
 	}
 	/**
@@ -69,11 +71,12 @@ public class StatisticAction extends ActionSupport{
 	public String averageBuy(){
 		return "SUCCESS";
 	}
-	public List<TwoEntity> getData() {
-		return data;
+	public List<TwoEntity> getDataChannel() {
+		return dataChannel;
 	}
-	public void setData(List<TwoEntity> data) {
-		this.data = data;
+	public void setDataChannel(List<TwoEntity> dataChannel) {
+		this.dataChannel = dataChannel;
 	}
+
 	
 }

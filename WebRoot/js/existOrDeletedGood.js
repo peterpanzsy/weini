@@ -9,7 +9,7 @@
 	 switch($pathname){
 		case "/WeiNiManage/pages/goodManage/deletedGood.jsp":
 			url = "listGood.action?isExistGood=false";
-			delOrRecoverButton = "<button id='recrow' class='btn btn-primary' type='button'><i class='fa fa-trash-o'></i></button>";
+			delOrRecoverButton = "<button id='recrow' class='btn btn-primary' type='button'><span class='glyphicon glyphicon-new-window'></span></button>";
 			isExist = false;
 			break;
 	 }

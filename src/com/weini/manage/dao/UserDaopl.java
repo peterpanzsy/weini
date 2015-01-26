@@ -1,5 +1,6 @@
 package com.weini.manage.dao;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,7 +13,7 @@ import com.weini.manage.business.User;
 import com.weini.tools.HibernateSessionManager;
 
 
-public class UserDaopl  {
+public class UserDaopl{
 	protected Session session;
 	public UserDaopl(Session sess){
 		this.session = sess;
@@ -130,11 +131,11 @@ public class UserDaopl  {
 	 */
 	public boolean getUserTypeSum(int[] temp){
 		boolean flag = false;
-		Query q = session.createQuery("select count(user_id) from t_user group by user_phoneType;");
+		Query q = session.createSQLQuery("select count(user_id) from t_user group by user_phoneType");
 		List l = q.list();
 		if(l.size() > 1 ){
-			temp[1] = (int)l.get(0);
-			temp[2] = (int)l.get(1);
+			temp[1] = ((BigInteger)(l.get(0))).intValue();
+			temp[2] = ((BigInteger)(l.get(1))).intValue();
 			temp[0] = temp[1] + temp[2]; 
 			flag = true;
 		}
