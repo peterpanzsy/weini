@@ -159,7 +159,7 @@ public class OrderDaopl{
 		List l = q.list();
 		for(int i = 0; i < l.size(); i++){
 			Object[] row = (Object[])l.get(0);
-			TwoEntity temp = new TwoEntity(row[0],row[1]);
+			TwoEntity temp = new TwoEntity(row[0],((BigInteger)row[1]).intValue());
 			res.add(temp);
 		}
 		return res;

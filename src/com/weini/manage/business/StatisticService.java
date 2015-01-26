@@ -132,4 +132,23 @@ public class StatisticService extends GeneralServive{
 		}
 		return res;
 	}
+	public List<TwoEntity> getFirstBuyModelSum(){
+		List<TwoEntity> res = this.orderdao.getOrderFirstModelSum();
+		int sum = 0;
+		if(res.size() > 0){
+			for(int i = 0;i < res.size(); i++){
+				sum += (int)res.get(i).getIndex2();
+			}
+			if(sum != 0){
+				for(int i = 0; i < res.size(); i++){
+					TwoEntity temp = res.get(i);
+					temp.setIndex2((int)temp.getIndex2() / sum * 100);
+				}
+			}
+		}
+		return res;
+	}
+//	public List<TwoEntity> getConBuyModelSum(){
+//		List<TwoEntity> res = this.orderdao.get
+//	}
 }

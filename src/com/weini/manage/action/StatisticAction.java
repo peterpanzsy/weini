@@ -23,8 +23,28 @@ public class StatisticAction extends ActionSupport{
 	private List<TwoEntity> orderSum;
 	private int bussID;
 	private List<TwoEntity> averageBuySum;
-	private double RealTotalMoney;
-	private int RealBuyUserSum;
+	private double realTotalMoney;
+	private int realBuyUserSum;
+	private List<TwoEntity> conBuyUseSum;
+	private List<TwoEntity> firBuyModelSum;
+	public double getRealTotalMoney() {
+		return realTotalMoney;
+	}
+	public void setRealTotalMoney(double realTotalMoney) {
+		this.realTotalMoney = realTotalMoney;
+	}
+	public int getRealBuyUserSum() {
+		return realBuyUserSum;
+	}
+	public void setRealBuyUserSum(int realBuyUserSum) {
+		this.realBuyUserSum = realBuyUserSum;
+	}
+	public List<TwoEntity> getConBuyUseSum() {
+		return conBuyUseSum;
+	}
+	public void setConBuyUseSum(List<TwoEntity> conBuyUseSum) {
+		this.conBuyUseSum = conBuyUseSum;
+	}
 	/**获取用户的渠道分析
 	 * 
 	 * @return 返回用户的百分比
@@ -61,8 +81,8 @@ public class StatisticAction extends ActionSupport{
 	 */
 	public String getChangeAnalysis(){
 		staSer = new StatisticService();
-		this.RealTotalMoney = staSer.getRealTotalMoney();
-		this.RealBuyUserSum = staSer.getRealBuyUserSum();
+		this.realTotalMoney = staSer.getRealTotalMoney();
+		this.realBuyUserSum = staSer.getRealBuyUserSum();
 		return "SUCCESS";
 	}
 	/**
@@ -94,6 +114,17 @@ public class StatisticAction extends ActionSupport{
 		this.averageBuySum = staSer.getOrderSumByDispatching(bussID);
 		return "SUCCESS";
 	}
+//	public String getContinueBuyUserSum(){
+//		staSer = new StatisticService();
+//		this.conBuyUseSum = staSer.();
+//		return "SUCCESS";
+//	}
+	public String getFirstBuyModelSum(){
+		staSer = new StatisticService();
+		this.firBuyModelSum = staSer.getFirstBuyModelSum();
+		return "SUCCESS";
+		
+	}
 	public List<TwoEntity> getDataChannel() {
 		return dataChannel;
 	}
@@ -124,23 +155,17 @@ public class StatisticAction extends ActionSupport{
 	public void setAverageBuySum(List<TwoEntity> averageBuySum) {
 		this.averageBuySum = averageBuySum;
 	}
-	public double getRealTotalMoney() {
-		return RealTotalMoney;
-	}
-	public void setRealTotalMoney(double realTotalMoney) {
-		RealTotalMoney = realTotalMoney;
-	}
-	public int getRealBuyUserSum() {
-		return RealBuyUserSum;
-	}
-	public void setRealBuyUserSum(int realBuyUserSum) {
-		RealBuyUserSum = realBuyUserSum;
-	}
 	public int getBussID() {
 		return bussID;
 	}
 	public void setBussID(int bussID) {
 		this.bussID = bussID;
+	}
+	public List<TwoEntity> getFirBuyModelSum() {
+		return firBuyModelSum;
+	}
+	public void setFirBuyModelSum(List<TwoEntity> firBuyModelSum) {
+		this.firBuyModelSum = firBuyModelSum;
 	}
 
 	
