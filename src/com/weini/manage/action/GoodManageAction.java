@@ -146,51 +146,12 @@ public class GoodManageAction extends ActionSupport{
 		return "SUCCESS";
 	}
 	/**
-	 * 列出所有的省份
-	 * @return
-	 */
-	public String listCity(){
-		menuinfoSer = new MenuinfoService();
-		this.citys = menuinfoSer.listCitysByProvinceID(this.indexID);
-		return "SUCCESS";
-	}
-	
-	/**
-	 * 列出城市根据选择的省份
-	 * @return
-	 */
-	public String listDistrict(){
-		menuinfoSer = new MenuinfoService();
-		this.diss = menuinfoSer.listDistrictsByCityID(indexID);
-		return "SUCCESS";
-	}
-	/**
-	 * 列出商圈根据所选择的城市
-	 * @return
-	 */
-	public String listbussArea(){
-		menuinfoSer = new MenuinfoService();
-		this.busses = menuinfoSer.listBussByDistrictID(indexID);
-		return "SUCCESS";
-	}
-	
-	/**
 	 * 列出商家根据所选择的商圈
 	 * @return 商家列表
 	 */
 	public String listVendor(){
 		menuinfoSer = new MenuinfoService();
 		this.vendors = menuinfoSer.listVendorsByBussID(indexID);
-		return "SUCCESS";
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public String listProvice(){
-		menuinfoSer = new MenuinfoService();
-		this.provices = menuinfoSer.listProvinces();
 		return "SUCCESS";
 	}
 

@@ -108,5 +108,6 @@
 		</action> -->
 	</package>
 	<include file="strutsConfig/struts-goodManage.xml"></include>
-	<include file="strutsConfig/struts-statisticService.xml"></include>
+	<include file="strutsConfig/struts-statisticManage.xml"></include>
+	<include file="strutsConfig/struts-addressManage.xml"></include>
 </struts>    

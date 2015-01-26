@@ -15,22 +15,6 @@
 		<result name="SUCCESS" type="json">				
 		</result>
 	</action>
-	<action name="listProvice" class="com.weini.manage.action.GoodManageAction" method="listProvice">
-		<result name="SUCCESS" type="json">				
-		</result>
-	</action>
-	<action name="listCity" class="com.weini.manage.action.GoodManageAction" method="listCity">
-		<result name="SUCCESS" type="json">				
-		</result>
-	</action>
-	<action name="listDistrict" class="com.weini.manage.action.GoodManageAction" method="listDistrict">
-		<result name="SUCCESS" type="json">				
-		</result>
-	</action>
-	<action name="listbussArea" class="com.weini.manage.action.GoodManageAction" method="listbussArea">
-		<result name="SUCCESS" type="json">				
-		</result>
-	</action>
 	<action name="searchVendor" class="com.weini.manage.action.GoodManageAction" method="listVendor">
 		<result name="SUCCESS" type="json">				
 		</result>

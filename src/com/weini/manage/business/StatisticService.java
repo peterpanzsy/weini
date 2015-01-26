@@ -117,9 +117,9 @@ public class StatisticService extends GeneralServive{
 	 * @param bussID 商圈ID;
 	 * @return 这个商圈各个订单模式的统计
 	 */
-	public List<TwoEntity> getOrderSumByDispatching(int provinceID,int cityID,int districtID,int bussID){
+	public List<TwoEntity> getOrderSumByDispatching(int bussID){
 		List<TwoEntity> res = new ArrayList<TwoEntity>();
-		res = this.orderdao.getOrderModelSumByDispatch(provinceID, cityID, districtID, bussID);
+		res = this.orderdao.getOrderModelSumByDispatch(bussID);
 		float sum = 0;
 		for(int i = 0; i < res.size(); i++){
 			sum += (int)res.get(i).getIndex2();

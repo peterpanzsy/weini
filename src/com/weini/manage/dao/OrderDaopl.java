@@ -185,16 +185,12 @@ public class OrderDaopl{
 	 * @param bussID 商圈ID
 	 * @return 返回模式和订单数的对应列表
 	 */
-	public List<TwoEntity> getOrderModelSumByDispatch(int provinceID,int cityID,int districtID,int bussID){
+	public List<TwoEntity> getOrderModelSumByDispatch(int bussID){
 		List<TwoEntity> res = new ArrayList<TwoEntity>();
 		Query q = session.createSQLQuery("select box_type,count(order_id) from t_order as o,t_box as b,"
-				+ "t_dispatching as d where o.order_isvalid = 1 and d.dispatching_province = ? "
-				+ "and d.dispatching_city = ? and d.dispatching_businessAreaid = ? and d.dispatching_district = ? and "
+				+ "t_dispatching as d where o.order_isvalid = 1 and d.dispatching_businessAreaid = ? and "
 				+ "o.order_dispatching_id = d.dispatching_id and o.box_id = b.box_id group by box_type");
-		q.setInteger(0,provinceID);
-		q.setInteger(1,cityID);
-		q.setInteger(2,bussID);
-		q.setInteger(3, districtID);
+		q.setInteger(0,bussID);
 		List l = q.list();
 		for(int i = 0; i < l.size(); i++){
 			Object[] row = (Object[])l.get(i);

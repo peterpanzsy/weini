@@ -21,9 +21,6 @@ public class StatisticAction extends ActionSupport{
 	private List<TwoEntity> timeData;
 	private int orderStaType;
 	private List<TwoEntity> orderSum;
-	private int provinceID;
-	private int cityID;
-	private int districtID;
 	private int bussID;
 	private List<TwoEntity> averageBuySum;
 	private double RealTotalMoney;
@@ -94,7 +91,7 @@ public class StatisticAction extends ActionSupport{
 	 */
 	public String getAverageBuy(){
 		staSer = new StatisticService();
-		this.averageBuySum = staSer.getOrderSumByDispatching(provinceID, cityID, districtID, bussID);
+		this.averageBuySum = staSer.getOrderSumByDispatching(bussID);
 		return "SUCCESS";
 	}
 	public List<TwoEntity> getDataChannel() {
@@ -138,24 +135,6 @@ public class StatisticAction extends ActionSupport{
 	}
 	public void setRealBuyUserSum(int realBuyUserSum) {
 		RealBuyUserSum = realBuyUserSum;
-	}
-	public int getProvinceID() {
-		return provinceID;
-	}
-	public void setProvinceID(int provinceID) {
-		this.provinceID = provinceID;
-	}
-	public int getCityID() {
-		return cityID;
-	}
-	public void setCityID(int cityID) {
-		this.cityID = cityID;
-	}
-	public int getDistrictID() {
-		return districtID;
-	}
-	public void setDistrictID(int districtID) {
-		this.districtID = districtID;
 	}
 	public int getBussID() {
 		return bussID;

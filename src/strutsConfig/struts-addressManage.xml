@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="addressmanage" extends="json-default">
+	<!--地址管理-->
+	<action name="listProvice" class="com.weini.manage.action.AddressManageAction" method="listProvice">
+		<result name="SUCCESS" type="json">				
+		</result>
+	</action>
+	<action name="listCity" class="com.weini.manage.action.AddressManageAction" method="listCity">
+		<result name="SUCCESS" type="json">				
+		</result>
+	</action>
+	<action name="listDistrict" class="com.weini.manage.action.AddressManageAction" method="listDistrict">
+		<result name="SUCCESS" type="json">				
+		</result>
+	</action>
+	<action name="listbussArea" class="com.weini.manage.action.AddressManageAction" method="listbussArea">
+		<result name="SUCCESS" type="json">				
+		</result>
+	</action>
+	</package>
+
+</struts>    
