@@ -21,6 +21,13 @@ public class StatisticAction extends ActionSupport{
 	private List<TwoEntity> timeData;
 	private int orderStaType;
 	private List<TwoEntity> orderSum;
+	private int provinceID;
+	private int cityID;
+	private int districtID;
+	private int bussID;
+	private List<TwoEntity> averageBuySum;
+	private double RealTotalMoney;
+	private int RealBuyUserSum;
 	/**获取用户的渠道分析
 	 * 
 	 * @return 返回用户的百分比
@@ -57,8 +64,8 @@ public class StatisticAction extends ActionSupport{
 	 */
 	public String getChangeAnalysis(){
 		staSer = new StatisticService();
-		System.out.println(staSer.getRealTotalMoney());
-		System.out.println(staSer.getRealBuyUserSum());
+		this.RealTotalMoney = staSer.getRealTotalMoney();
+		this.RealBuyUserSum = staSer.getRealBuyUserSum();
 		return "SUCCESS";
 	}
 	/**
@@ -85,7 +92,9 @@ public class StatisticAction extends ActionSupport{
 	 * 平均购买力
 	 * @return
 	 */
-	public String averageBuy(){
+	public String getAverageBuy(){
+		staSer = new StatisticService();
+		this.averageBuySum = staSer.getOrderSumByDispatching(provinceID, cityID, districtID, bussID);
 		return "SUCCESS";
 	}
 	public List<TwoEntity> getDataChannel() {
@@ -111,6 +120,48 @@ public class StatisticAction extends ActionSupport{
 	}
 	public void setOrderSum(List<TwoEntity> orderSum) {
 		this.orderSum = orderSum;
+	}
+	public List<TwoEntity> getAverageBuySum() {
+		return averageBuySum;
+	}
+	public void setAverageBuySum(List<TwoEntity> averageBuySum) {
+		this.averageBuySum = averageBuySum;
+	}
+	public double getRealTotalMoney() {
+		return RealTotalMoney;
+	}
+	public void setRealTotalMoney(double realTotalMoney) {
+		RealTotalMoney = realTotalMoney;
+	}
+	public int getRealBuyUserSum() {
+		return RealBuyUserSum;
+	}
+	public void setRealBuyUserSum(int realBuyUserSum) {
+		RealBuyUserSum = realBuyUserSum;
+	}
+	public int getProvinceID() {
+		return provinceID;
+	}
+	public void setProvinceID(int provinceID) {
+		this.provinceID = provinceID;
+	}
+	public int getCityID() {
+		return cityID;
+	}
+	public void setCityID(int cityID) {
+		this.cityID = cityID;
+	}
+	public int getDistrictID() {
+		return districtID;
+	}
+	public void setDistrictID(int districtID) {
+		this.districtID = districtID;
+	}
+	public int getBussID() {
+		return bussID;
+	}
+	public void setBussID(int bussID) {
+		this.bussID = bussID;
 	}
 
 	

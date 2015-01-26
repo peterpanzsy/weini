@@ -99,8 +99,35 @@ public class StatisticService extends GeneralServive{
  		return res;
  		
  	}
+ 	/**
+ 	 * 获取真正购买用户的数量
+ 	 * @return
+ 	 */
 	public int getRealBuyUserSum(){
 		int res = this.orderdao.getRealBuyUserSum();
+		return res;
+	}
+	/**
+	 * 根据选择的地区来统计这个地区的各个模式的订购数量
+	 * @param privinceID 省ID;
+	 * @param cityID 城市ID;
+	 * @param district 行政区ID;
+	 * @param bussID 商圈ID;
+	 * @return 这个商圈各个订单模式的统计
+	 */
+	public List<TwoEntity> getOrderSumByDispatching(int provinceID,int cityID,int districtID,int bussID){
+		List<TwoEntity> res = new ArrayList<TwoEntity>();
+		res = this.orderdao.getOrderModelSumByDispatch(provinceID, cityID, districtID, bussID);
+		float sum = 0;
+		for(int i = 0; i < res.size(); i++){
+			sum += (int)res.get(i).getIndex2();
+		}
+		if(sum != 0){
+			for(int i = 0; i < res.size(); i++){
+				TwoEntity temp = res.get(i);
+				temp.setIndex2((int)temp.getIndex2() / sum * 100);
+			}
+		}
 		return res;
 	}
 }

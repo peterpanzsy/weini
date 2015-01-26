@@ -185,19 +185,20 @@ public class OrderDaopl{
 	 * @param bussID 商圈ID
 	 * @return 返回模式和订单数的对应列表
 	 */
-	public List<TwoEntity> getOrderModelSumByDispatch(int provinceID,int cityID,int bussID){
+	public List<TwoEntity> getOrderModelSumByDispatch(int provinceID,int cityID,int districtID,int bussID){
 		List<TwoEntity> res = new ArrayList<TwoEntity>();
 		Query q = session.createSQLQuery("select box_type,count(order_id) from t_order as o,t_box as b,"
-				+ "t_dispatching as d where o.order_isvalid = 1 and d.dispatching_province = @province "
-				+ "and d.dispatching_city = @city and d.dispatching_businessAreaid = @buss and "
-				+ "o.order_dispatching_id = d.dispatching_id and o.box_id = b.box_id group by box_type;");
-		q.setParameter("province",provinceID);
-		q.setParameter("city",cityID);
-		q.setParameter("buss",bussID);
+				+ "t_dispatching as d where o.order_isvalid = 1 and d.dispatching_province = ? "
+				+ "and d.dispatching_city = ? and d.dispatching_businessAreaid = ? and d.dispatching_district = ? and "
+				+ "o.order_dispatching_id = d.dispatching_id and o.box_id = b.box_id group by box_type");
+		q.setInteger(0,provinceID);
+		q.setInteger(1,cityID);
+		q.setInteger(2,bussID);
+		q.setInteger(3, districtID);
 		List l = q.list();
 		for(int i = 0; i < l.size(); i++){
-			Object[] row = (Object[])l.get(0);
-			TwoEntity temp = new TwoEntity(row[0],row[1]);
+			Object[] row = (Object[])l.get(i);
+			TwoEntity temp = new TwoEntity(row[0],((BigInteger)row[1]).intValue());
 			res.add(temp);
 		}
 		return res;
