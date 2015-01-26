@@ -21,6 +21,7 @@ public class TOrder implements java.io.Serializable {
 	private Boolean orderIsRefund;
 	private Timestamp orderPayTime;
 	private Float boxPrice;
+	private Integer orderIsFirst;
 
 	// Constructors
 
@@ -28,11 +29,16 @@ public class TOrder implements java.io.Serializable {
 	public TOrder() {
 	}
 
+	/** minimal constructor */
+	public TOrder(Integer orderIsFirst) {
+		this.orderIsFirst = orderIsFirst;
+	}
+
 	/** full constructor */
 	public TOrder(Integer userId, Integer boxId, Timestamp orderStartTime,
 			Timestamp orderOrderTime, Integer orderPayStatus,
 			Integer SOrderConsumeStatus, Boolean orderIsRefund,
-			Timestamp orderPayTime, Float boxPrice) {
+			Timestamp orderPayTime, Float boxPrice, Integer orderIsFirst) {
 		this.userId = userId;
 		this.boxId = boxId;
 		this.orderStartTime = orderStartTime;
@@ -42,6 +48,7 @@ public class TOrder implements java.io.Serializable {
 		this.orderIsRefund = orderIsRefund;
 		this.orderPayTime = orderPayTime;
 		this.boxPrice = boxPrice;
+		this.orderIsFirst = orderIsFirst;
 	}
 
 	// Property accessors
@@ -124,6 +131,14 @@ public class TOrder implements java.io.Serializable {
 
 	public void setBoxPrice(Float boxPrice) {
 		this.boxPrice = boxPrice;
+	}
+
+	public Integer getOrderIsFirst() {
+		return this.orderIsFirst;
+	}
+
+	public void setOrderIsFirst(Integer orderIsFirst) {
+		this.orderIsFirst = orderIsFirst;
 	}
 
 }

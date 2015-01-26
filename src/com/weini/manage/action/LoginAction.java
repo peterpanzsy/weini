@@ -75,7 +75,8 @@ public class LoginAction extends ActionSupport{
 	        session.put("wrong", "密码为空");	
 			return "fail";
 		}
-		String adminPassword_md5 = CipherUtil.generatePassword(password);  
+//		String adminPassword_md5 = CipherUtil.generatePassword(password);
+		String adminPassword_md5 = password;
 		adminDao=new AdminDao();
 		admin=adminDao.searchAdmin(username, adminPassword_md5);
 		if(admin==null){

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="statisticservice" extends="json-default">
+	<!--报表数据统计-->
+	<action name="getChannelAnalysis" class="com.weini.manage.action.StatisticAction" method="getChannelAnalysis">
+		<result name="SUCCESS" type="json">				
+		</result>
+	</action>
+	<action name="getTimeAnalysis" class="com.weini.manage.action.StatisticAction" method="getTimeAnalysis">
+		<result name="SUCCESS" type="json">				
+		</result>
+	</action>
+	
+	</package>
+
+</struts>    
