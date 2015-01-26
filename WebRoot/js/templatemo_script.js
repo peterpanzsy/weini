@@ -21,7 +21,14 @@ $(document).ready( function() {
 	}else if($pathname.indexOf("/WeiNiManage/pages/vendorManage")>=0){//二级菜单点击进入页面后，保持一级菜单的active效果
 		$(".active").removeClass("active");
 		$("#vendorManage").addClass("open active");
+	}else if($pathname.indexOf("/WeiNiManage/pages/goodManage")>=0){
+		$(".active").removeClass("active");
+		$("#goodManage").addClass("open active");
+	}else if($pathname.indexOf("/WeiNiManage/pages/reportManage")>=0){
+		$(".active").removeClass("active");
+		$("#reportManage").addClass("open active");
 	}
+	//用户管理
 	switch($pathname){
 	case "/WeiNiManage/pages/adminManage/rootAdmin.jsp":
 		$("#rootAdminLi").css("background-color","#FFF");
@@ -39,10 +46,7 @@ $(document).ready( function() {
 		$("#manageVendorLi").css("background-color","#FFF");
 		break;
 	}	
-	if($pathname.indexOf("/WeiNiManage/pages/goodManage")>=0){////二级菜单点击进入页面后，保持一级菜单的active效果
-		$(".active").removeClass("active");
-		$("#goodManage").addClass("open active");
-	}
+	//商品管理
 	switch($pathname){
 	case "/WeiNiManage/pages/goodManage/existGood.jsp":
 		$("#existGoodli").css("background-color","#FFF");
@@ -54,7 +58,15 @@ $(document).ready( function() {
 		$("#addGoodli").css("background-color","#FFF");
 		break;
 	}
-	
+	//报表统计
+	switch($pathname){
+	case "/WeiNiManage/pages/reportManage/statistics.jsp":
+		$("#statistics").css("background-color","#FFF");
+		break;
+	case "/WeiNiManage/pages/reportManage/userPrefer.jsp":
+		$("userPrefer").css("background-color","#FFF");
+		break;
+	}
 }); // document.ready
 /*
  * 注销

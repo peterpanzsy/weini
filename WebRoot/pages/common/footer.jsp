@@ -2,6 +2,6 @@
 
 <footer class="templatemo-footer">
   <div class="templatemo-copyright">
-    <p>Copyright &copy; 2014  味你</p>
+    <p>Copyright &copy; 2015  味你</p>
   </div>
 </footer>

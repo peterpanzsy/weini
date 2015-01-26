@@ -113,16 +113,12 @@ else{
     <li id="reportManage" class="sub">
       <a href="javascript:;">
         <i class="fa fa-database"></i> 报表数据统计 <div class="pull-right"><span class="caret"></span></div>
-      </a>
-      <ul class="templatemo-submenu">
-        <li><a href="#">渠道分析</a></li>
-        <li><a href="#">时间分析</a></li>
-        <li><a href="#">用户偏好分析</a></li>             
-        <li><a href="#">金额结算</a></li>
-        <li><a href="#">转换率分析</a></li>             
-        <li><a href="#">订单统计（数量）</a></li>
-         <li><a href="#">平均购买力</a></li>
+      </a>  
+        <ul class="templatemo-submenu">
+        <li id="statistics"><a href="pages/reportManage/statistics.jsp">报表数据统计详情</a></li>
+        <li id="userPrefer"><a href="pages/reportManage/userPrefer.jsp">用户偏好统计</a></li>       
       </ul>
+          
     </li>
     <%
 		}
