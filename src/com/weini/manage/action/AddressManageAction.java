@@ -1,24 +1,14 @@
 package com.weini.manage.action;
 
-import java.io.File;
-import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.List;
 
-import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.weini.manage.business.AddressService;
-import com.weini.manage.business.BusinessArea;
-import com.weini.manage.business.MenuinfoService;
 import com.weini.manage.entity.TBusinessarea;
 import com.weini.manage.entity.TCity;
 import com.weini.manage.entity.TDistrict;
-import com.weini.manage.entity.TMenuinfo;
 import com.weini.manage.entity.TProvince;
-import com.weini.manage.entity.TVendor;
-import com.weini.tools.Configure;
-import com.weini.tools.Tools;
 
 
 public class AddressManageAction extends ActionSupport{

@@ -3,16 +3,19 @@ package com.weini.manage.action;
 import java.util.List;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.weini.manage.business.Vendor;
-import com.weini.manage.business.VendorDao;
+import com.weini.manage.entity.TVendor;
 
 
 public class VendorAction extends ActionSupport{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	String adminPassword;
 	String confirmPassword;
 	String mark;
 	int id;
-	List<Vendor> dataList;
+	List<TVendor> dataList;
 	
 	private int order;
     private int vendorID;
@@ -36,25 +39,25 @@ public class VendorAction extends ActionSupport{
     private String vendorProvince;
     private String vendorDetail;
 	
-	public String listVendor(){//根据角色获取账户列表		
-		VendorDao dao=new VendorDao();
-		dataList=dao.getVendorList();
-		dao.close();
-		return "SUCCESS";
-	}
-	public String updateVendor(){//更新或者添加账户 
-		VendorDao dao=new VendorDao();
-	
-		int res=dao.updateVendor(vendorID,vendorName,vendorMail,vendorPhonenum,vendorIsopen,vendorEmploynum,vendorCooknum,vendorShophourStart,vendorShophourEnd,vendorDetail,mark);
-		dao.close();
-		return "SUCCESS";
-	}
-	public String delVendor(){//删除账户		
-		VendorDao dao=new VendorDao();
-		dao.delVendor(vendorID);
-		dao.close();
-		return "SUCCESS";
-	}
+//	public String listVendor(){//根据角色获取账户列表		
+//		VendorDao dao=new VendorDao();
+//		dataList=dao.getVendorList();
+//		dao.close();
+//		return "SUCCESS";
+//	}
+//	public String updateVendor(){//更新或者添加账户 
+//		VendorDao dao=new VendorDao();
+//	
+//		int res=dao.updateVendor(vendorID,vendorName,vendorMail,vendorPhonenum,vendorIsopen,vendorEmploynum,vendorCooknum,vendorShophourStart,vendorShophourEnd,vendorDetail,mark);
+//		dao.close();
+//		return "SUCCESS";
+//	}
+//	public String delVendor(){//删除账户		
+//		VendorDao dao=new VendorDao();
+//		dao.delVendor(vendorID);
+//		dao.close();
+//		return "SUCCESS";
+//	}
     
 	public String getAdminPassword() {
 		return adminPassword;
@@ -207,12 +210,6 @@ public class VendorAction extends ActionSupport{
 	}
 	public void setId(int id) {
 		this.id = id;
-	}
-	public List<Vendor> getDataList() {
-		return dataList;
-	}
-	public void setDataList(List<Vendor> dataList) {
-		this.dataList = dataList;
 	}
 	
 }

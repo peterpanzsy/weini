@@ -1,12 +1,11 @@
 package com.weini.manage.action;
 
-import java.sql.Timestamp;
-import java.util.Date;
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.weini.manage.business.StatisticService;
-import com.weini.tools.Tools;
+import com.weini.tools.ThreeEntity;
 import com.weini.tools.TwoEntity;
 
 
@@ -27,24 +26,9 @@ public class StatisticAction extends ActionSupport{
 	private int realBuyUserSum;
 	private List<TwoEntity> conBuyUseSum;
 	private List<TwoEntity> firBuyModelSum;
-	public double getRealTotalMoney() {
-		return realTotalMoney;
-	}
-	public void setRealTotalMoney(double realTotalMoney) {
-		this.realTotalMoney = realTotalMoney;
-	}
-	public int getRealBuyUserSum() {
-		return realBuyUserSum;
-	}
-	public void setRealBuyUserSum(int realBuyUserSum) {
-		this.realBuyUserSum = realBuyUserSum;
-	}
-	public List<TwoEntity> getConBuyUseSum() {
-		return conBuyUseSum;
-	}
-	public void setConBuyUseSum(List<TwoEntity> conBuyUseSum) {
-		this.conBuyUseSum = conBuyUseSum;
-	}
+	private List<ThreeEntity> firOrderList; 
+//	private List<>
+	
 	/**获取用户的渠道分析
 	 * 
 	 * @return 返回用户的百分比
@@ -77,11 +61,15 @@ public class StatisticAction extends ActionSupport{
 	}
 	/**
 	 * 用户转换率的分析
+	 * 与第二次购买模式分布请求合并
 	 * @return 实际购买用户，实际购买金额
 	 */
 	public String getChangeAnalysis(){
 		staSer = new StatisticService();
-		this.realTotalMoney = staSer.getRealTotalMoney();
+		double temp = staSer.getRealTotalMoney();
+		BigDecimal b = new BigDecimal(temp);
+		this.realTotalMoney = b.setScale(6,BigDecimal.ROUND_HALF_UP).doubleValue();
+		staSer = new StatisticService();
 		this.realBuyUserSum = staSer.getRealBuyUserSum();
 		return "SUCCESS";
 	}
@@ -114,14 +102,25 @@ public class StatisticAction extends ActionSupport{
 		this.averageBuySum = staSer.getOrderSumByDispatching(bussID);
 		return "SUCCESS";
 	}
-//	public String getContinueBuyUserSum(){
-//		staSer = new StatisticService();
-//		this.conBuyUseSum = staSer.();
-//		return "SUCCESS";
-//	}
+	public String getContinueBuyUserSum(){
+		staSer = new StatisticService();
+		this.conBuyUseSum = staSer.getConBuyModelSum();
+		this.getChangeAnalysis();
+		return "SUCCESS";
+	}
 	public String getFirstBuyModelSum(){
 		staSer = new StatisticService();
 		this.firBuyModelSum = staSer.getFirstBuyModelSum();
+		return "SUCCESS";
+		
+	}
+	/**
+	 * 获取用户第一次下单，获取的字段主要有用户名，所属商圈，订单id
+	 * @return
+	 */
+	public String getAllFirstOrder(){
+		staSer = new StatisticService();
+		this.firOrderList = staSer.getAllFirstOrder();
 		return "SUCCESS";
 		
 	}
@@ -166,6 +165,30 @@ public class StatisticAction extends ActionSupport{
 	}
 	public void setFirBuyModelSum(List<TwoEntity> firBuyModelSum) {
 		this.firBuyModelSum = firBuyModelSum;
+	}
+	public double getRealTotalMoney() {
+		return realTotalMoney;
+	}
+	public void setRealTotalMoney(double realTotalMoney) {
+		this.realTotalMoney = realTotalMoney;
+	}
+	public int getRealBuyUserSum() {
+		return realBuyUserSum;
+	}
+	public void setRealBuyUserSum(int realBuyUserSum) {
+		this.realBuyUserSum = realBuyUserSum;
+	}
+	public List<TwoEntity> getConBuyUseSum() {
+		return conBuyUseSum;
+	}
+	public void setConBuyUseSum(List<TwoEntity> conBuyUseSum) {
+		this.conBuyUseSum = conBuyUseSum;
+	}
+	public List<ThreeEntity> getFirOrderList() {
+		return firOrderList;
+	}
+	public void setFirOrderList(List<ThreeEntity> firOrderList) {
+		this.firOrderList = firOrderList;
 	}
 
 	

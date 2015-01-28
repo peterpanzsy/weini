@@ -8,50 +8,29 @@ import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
-import com.weini.manage.business.Admin;
-import com.weini.manage.business.Auth;
+import com.weini.manage.entity.TAdmin;
+import com.weini.manage.entity.TAuth;
 import com.weini.tools.HibernateSessionManager;
 
 
 public class AdminDao  {
 	 
-	 Session session ;
-	 
-	public AdminDao()
-	{		
-		session = HibernateSessionManager.getThreadLocalSession();
-	}
-	public void close() {
-		// TODO Auto-generated method stub
-		HibernateSessionManager.commitThreadLocalTransaction();
-		HibernateSessionManager.closeThreadLocalSession();
-	}
-
-	public void roll() {
-		// TODO Auto-generated method stub
-		HibernateSessionManager.rollbackThreadLocalTransaction();
-		HibernateSessionManager.closeThreadLocalSession();
-	}
-
-
-	public void initDao()
-	{	
-		session = HibernateSessionManager.getThreadLocalSession();
-	
-	}	
-	
-	public List<Auth> getAuthbyRoleList(int roleid) {//根据角色获取权限列表
+	 protected Session session ;
+	 public AdminDao(Session sess){
+		 this.session = sess;
+	 }
+	 public List<TAuth> getAuthbyRoleList(int roleid) {//根据角色获取权限列表
 		SQLQuery q;
 		q = session.createSQLQuery("select t.role_authority_authorityid,t2.authority_name from t_role_authority t,t_authority t2 where t.role_authority_authorityid=t2.authority_id and t.role_authority_roleid=?");
 		q.setParameter(0, roleid);
 		List l = q.list();
-		List<Auth> re=new ArrayList<Auth>();
+		List<TAuth> re=new ArrayList<TAuth>();
 		for(int i=0;i<l.size();i++)
 		{
 			  Object[] row = (Object[])l.get(i);
 			  Integer aid = (Integer)row[0];
 			  String aName = (String)row[1];  
-			  Auth auth=new Auth(aid, aName); 
+			  TAuth auth=new TAuth(aid, aName); 
 			  re.add(auth);
 		}
 		return re;
@@ -72,7 +51,6 @@ public class AdminDao  {
 		}else if(auth.equals("reportCheck")){
 			authid=6;
 		}
-		HibernateSessionManager.getThreadLocalTransaction();
 		Query q = null;
 		switch(aflag){
 			case "add":
@@ -87,24 +65,24 @@ public class AdminDao  {
 		return q.executeUpdate();
 	}
 	
-	public List<Admin> getAdminList(int roleid) {//获取账户列表
+	public List<TAdmin> getAdminList(int roleid) {//获取账户列表
 		SQLQuery q;
 		q = session.createSQLQuery("select t.admin_id,t.admin_username,t.admin_pwd from t_admin t,t_admin_role t2 where t.admin_id=t2.admin_role_adminid and t2.admin_role_roleid=? order by t.admin_id desc");
 		q.setParameter(0, roleid);
 		List l = q.list();
-		List<Admin> re=new ArrayList<Admin>();
+		List<TAdmin> re=new ArrayList<TAdmin>();
 		for(int i=0;i<l.size();i++)
 		{
 			  Object[] row = (Object[])l.get(i);
 			  int uid = (Integer)row[0];
 			  String uName = (String)row[1];  
 			  String pwd=(String)row[2];
-			  Admin user=new Admin(uid,i+1, uName,pwd); 
+			  TAdmin user=new TAdmin(uid,i+1, uName,pwd); 
 			  re.add(user);
 		}
 		return re;
 	}
-	public int updateAdmin(int id,String adminName,String adminPassword,String confirmPassword,int roleid,String mark){//添加或修改账户信息
+	public int updateAdmin(int id,String adminName,String adminPassword,int roleid,String mark){//添加或修改账户信息
 		int result=0;
 		HibernateSessionManager.getThreadLocalTransaction();
 		switch(mark){
@@ -146,13 +124,13 @@ public class AdminDao  {
 		return result1;
 	}
 	
-	public Admin searchAdmin(String name,String pass){
-		Admin adminR=null;
+	public TAdmin searchAdmin(String name,String pass){
+		TAdmin adminR=null;
 		try {
 		        Query query = session.createSQLQuery("select t.admin_id,t.admin_username,t.admin_pwd,t2.admin_role_roleid from t_admin t,t_admin_role t2 where t.admin_id=t2.admin_role_adminid and t.admin_username=? and t.admin_pwd=?");	
 		        query.setParameter(0, name);
 		        query.setParameter(1, pass);
-		        List users=new ArrayList<Admin>();
+		        List users=new ArrayList<TAdmin>();
 				List l = query.list();
 				for(int i=0;i<l.size();i++)
 				{
@@ -161,7 +139,7 @@ public class AdminDao  {
 					  String username = (String)row[1];  
 					  String password = (String)row[2];
 					  int roleid = (Integer) row[3];
-					  Admin admin=new Admin();
+					  TAdmin admin=new TAdmin();
 					  admin.setAdminID(adminID);
 					  admin.setAdminName(username);
 					  admin.setAdminPassword(password);
@@ -169,8 +147,8 @@ public class AdminDao  {
 					  users.add(admin);
 				}
 				if(!users.isEmpty()){
-					adminR=new Admin();
-					adminR=(Admin)users.get(0);
+					adminR=new TAdmin();
+					adminR=(TAdmin)users.get(0);
 				}
 				
 				} catch (Exception e) {

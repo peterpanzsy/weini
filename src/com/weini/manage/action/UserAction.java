@@ -4,13 +4,16 @@ import java.util.Date;
 import java.util.List;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.weini.manage.business.User;
-import com.weini.manage.dao.UserDao;
+import com.weini.manage.entity.TUser;
 
 
 public class UserAction extends ActionSupport{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	String mark;
-	List<User> dataList;
+	List<TUser> dataList;
 	
 	private int order;
     private int userID;
@@ -36,33 +39,27 @@ public class UserAction extends ActionSupport{
 	
 	private int pointTotal;
 
-	public String listUser(){//根据角色获取账户列表		
-		UserDao dao=new UserDao();
-		dataList=dao.getUserList();
-		dao.close();
-		return "SUCCESS";
-	}
-	public String updateVendor(){//更新或者添加账户 
-	
-		return "SUCCESS";
-	}
-	public String delUser(){//删除账户		
-		UserDao dao=new UserDao();
-		dao.delUser(userID);
-		dao.close();
-		return "SUCCESS";
-	}
+//	public String listUser(){//根据角色获取账户列表		
+//		UserDaoDEL dao=new UserDaoDEL();
+//		dataList=dao.getUserList();
+//		dao.close();
+//		return "SUCCESS";
+//	}
+//	public String updateVendor(){//更新或者添加账户 
+//	
+//		return "SUCCESS";
+//	}
+//	public String delUser(){//删除账户		
+//		UserDaoDEL dao=new UserDaoDEL();
+//		dao.delUser(userID);
+//		dao.close();
+//		return "SUCCESS";
+//	}
 	public String getMark() {
 		return mark;
 	}
 	public void setMark(String mark) {
 		this.mark = mark;
-	}
-	public List<User> getDataList() {
-		return dataList;
-	}
-	public void setDataList(List<User> dataList) {
-		this.dataList = dataList;
 	}
 	public int getOrder() {
 		return order;

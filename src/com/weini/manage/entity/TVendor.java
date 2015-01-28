@@ -16,17 +16,18 @@ public class TVendor implements java.io.Serializable {
 	private String vendorMail;
 	private String vendorPhonenum;
 	private String vendorPwd;
-	private Boolean vendorIsopen;
-	private Integer vendorTotalmoney;
-	private Integer vendorPaidmoney;
-	private Integer vendorRemianedmoney;
+	private Integer vendorIsopen;
+	private Double vendorTotalmoney;
+	private Double vendorPaidmoney;
+	private Double vendorRemainedmoney;
 	private Integer vendorEmployernum;
 	private Integer vendorCooknum;
 	private String vendorDetail;
-	private Timestamp vendorShophour;
+	private Timestamp vendorShophourStart;
 	private Integer vendorPaytype;
-	private Integer bssinfoBusinessAreaid;
+	private Integer vendorBusinessAreaid;
 	private Integer vendorDefaultAccountid;
+	private Timestamp vendorShophourEnd;
 
 	// Constructors
 
@@ -35,18 +36,18 @@ public class TVendor implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public TVendor(Integer bssinfoBusinessAreaid) {
-		this.bssinfoBusinessAreaid = bssinfoBusinessAreaid;
+	public TVendor(Integer vendorBusinessAreaid) {
+		this.vendorBusinessAreaid = vendorBusinessAreaid;
 	}
 
 	/** full constructor */
 	public TVendor(String vendorName, String vendorMail, String vendorPhonenum,
-			String vendorPwd, Boolean vendorIsopen, Integer vendorTotalmoney,
-			Integer vendorPaidmoney, Integer vendorRemianedmoney,
+			String vendorPwd, Integer vendorIsopen, Double vendorTotalmoney,
+			Double vendorPaidmoney, Double vendorRemainedmoney,
 			Integer vendorEmployernum, Integer vendorCooknum,
-			String vendorDetail, Timestamp vendorShophour,
-			Integer vendorPaytype, Integer bssinfoBusinessAreaid,
-			Integer vendorDefaultAccountid) {
+			String vendorDetail, Timestamp vendorShophourStart,
+			Integer vendorPaytype, Integer vendorBusinessAreaid,
+			Integer vendorDefaultAccountid, Timestamp vendorShophourEnd) {
 		this.vendorName = vendorName;
 		this.vendorMail = vendorMail;
 		this.vendorPhonenum = vendorPhonenum;
@@ -54,14 +55,15 @@ public class TVendor implements java.io.Serializable {
 		this.vendorIsopen = vendorIsopen;
 		this.vendorTotalmoney = vendorTotalmoney;
 		this.vendorPaidmoney = vendorPaidmoney;
-		this.vendorRemianedmoney = vendorRemianedmoney;
+		this.vendorRemainedmoney = vendorRemainedmoney;
 		this.vendorEmployernum = vendorEmployernum;
 		this.vendorCooknum = vendorCooknum;
 		this.vendorDetail = vendorDetail;
-		this.vendorShophour = vendorShophour;
+		this.vendorShophourStart = vendorShophourStart;
 		this.vendorPaytype = vendorPaytype;
-		this.bssinfoBusinessAreaid = bssinfoBusinessAreaid;
+		this.vendorBusinessAreaid = vendorBusinessAreaid;
 		this.vendorDefaultAccountid = vendorDefaultAccountid;
+		this.vendorShophourEnd = vendorShophourEnd;
 	}
 
 	// Property accessors
@@ -106,36 +108,36 @@ public class TVendor implements java.io.Serializable {
 		this.vendorPwd = vendorPwd;
 	}
 
-	public Boolean getVendorIsopen() {
+	public Integer getVendorIsopen() {
 		return this.vendorIsopen;
 	}
 
-	public void setVendorIsopen(Boolean vendorIsopen) {
+	public void setVendorIsopen(Integer vendorIsopen) {
 		this.vendorIsopen = vendorIsopen;
 	}
 
-	public Integer getVendorTotalmoney() {
+	public Double getVendorTotalmoney() {
 		return this.vendorTotalmoney;
 	}
 
-	public void setVendorTotalmoney(Integer vendorTotalmoney) {
+	public void setVendorTotalmoney(Double vendorTotalmoney) {
 		this.vendorTotalmoney = vendorTotalmoney;
 	}
 
-	public Integer getVendorPaidmoney() {
+	public Double getVendorPaidmoney() {
 		return this.vendorPaidmoney;
 	}
 
-	public void setVendorPaidmoney(Integer vendorPaidmoney) {
+	public void setVendorPaidmoney(Double vendorPaidmoney) {
 		this.vendorPaidmoney = vendorPaidmoney;
 	}
 
-	public Integer getVendorRemianedmoney() {
-		return this.vendorRemianedmoney;
+	public Double getVendorRemainedmoney() {
+		return this.vendorRemainedmoney;
 	}
 
-	public void setVendorRemianedmoney(Integer vendorRemianedmoney) {
-		this.vendorRemianedmoney = vendorRemianedmoney;
+	public void setVendorRemainedmoney(Double vendorRemainedmoney) {
+		this.vendorRemainedmoney = vendorRemainedmoney;
 	}
 
 	public Integer getVendorEmployernum() {
@@ -162,12 +164,12 @@ public class TVendor implements java.io.Serializable {
 		this.vendorDetail = vendorDetail;
 	}
 
-	public Timestamp getVendorShophour() {
-		return this.vendorShophour;
+	public Timestamp getVendorShophourStart() {
+		return this.vendorShophourStart;
 	}
 
-	public void setVendorShophour(Timestamp vendorShophour) {
-		this.vendorShophour = vendorShophour;
+	public void setVendorShophourStart(Timestamp vendorShophourStart) {
+		this.vendorShophourStart = vendorShophourStart;
 	}
 
 	public Integer getVendorPaytype() {
@@ -178,12 +180,12 @@ public class TVendor implements java.io.Serializable {
 		this.vendorPaytype = vendorPaytype;
 	}
 
-	public Integer getBssinfoBusinessAreaid() {
-		return this.bssinfoBusinessAreaid;
+	public Integer getVendorBusinessAreaid() {
+		return this.vendorBusinessAreaid;
 	}
 
-	public void setBssinfoBusinessAreaid(Integer bssinfoBusinessAreaid) {
-		this.bssinfoBusinessAreaid = bssinfoBusinessAreaid;
+	public void setVendorBusinessAreaid(Integer vendorBusinessAreaid) {
+		this.vendorBusinessAreaid = vendorBusinessAreaid;
 	}
 
 	public Integer getVendorDefaultAccountid() {
@@ -192,6 +194,14 @@ public class TVendor implements java.io.Serializable {
 
 	public void setVendorDefaultAccountid(Integer vendorDefaultAccountid) {
 		this.vendorDefaultAccountid = vendorDefaultAccountid;
+	}
+
+	public Timestamp getVendorShophourEnd() {
+		return this.vendorShophourEnd;
+	}
+
+	public void setVendorShophourEnd(Timestamp vendorShophourEnd) {
+		this.vendorShophourEnd = vendorShophourEnd;
 	}
 
 }

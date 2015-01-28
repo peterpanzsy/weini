@@ -22,7 +22,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       </div>   
     </div>
     <div class="template-page-wrapper">
-      <form id="loginForm" class="form-horizontal templatemo-signin-form" role="form" action="login.action" method="get">
+      <form id="loginForm" class="form-horizontal templatemo-signin-form" role="form" action="adminLogin.action" method="get">
         <div class="form-group">
           <div class="col-md-12">
             <label for="username" class="col-sm-2 control-label">用户名</label>

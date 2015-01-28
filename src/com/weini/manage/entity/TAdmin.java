@@ -1,54 +1,76 @@
 package com.weini.manage.entity;
-// default package
 
-/**
- * TAdmin entity. @author MyEclipse Persistence Tools
- */
+import javax.persistence.Entity;
 
-public class TAdmin implements java.io.Serializable {
-
-	// Fields
-
-	private Integer adminId;
-	private String adminUsername;
-	private String adminPwd;
-
-	// Constructors
+@Entity
+public class TAdmin  implements java.io.Serializable {
+   
+	private static final long serialVersionUID = 8219783208388795965L;
+	private int order;
+    private int adminID;
+    private String adminName;
+    private String adminPassword;
+    private int roleID;
+    private String roleName;
 
 	/** default constructor */
-	public TAdmin() {
+    public TAdmin() {
+    }
+
+	public TAdmin(int order, int adminID, String adminName,
+			String adminPassword, int roleID, String roleName) {
+		super();
+		this.order = order;
+		this.adminID = adminID;
+		this.adminName = adminName;
+		this.adminPassword = adminPassword;
+		this.roleID = roleID;
+		this.roleName = roleName;
+	}
+	
+	public TAdmin(int adminID,int order, String adminName,String pwd) {
+		super();
+		this.adminID=adminID;
+		this.order = order;
+		this.adminName = adminName;
+		this.adminPassword=pwd;
 	}
 
-	/** full constructor */
-	public TAdmin(String adminUsername, String adminPwd) {
-		this.adminUsername = adminUsername;
-		this.adminPwd = adminPwd;
+	public int getOrder() {
+		return order;
 	}
-
-	// Property accessors
-
-	public Integer getAdminId() {
-		return this.adminId;
+	public void setOrder(int order) {
+		this.order = order;
 	}
-
-	public void setAdminId(Integer adminId) {
-		this.adminId = adminId;
+	public int getAdminID() {
+		return adminID;
 	}
-
-	public String getAdminUsername() {
-		return this.adminUsername;
+	public void setAdminID(int adminID) {
+		this.adminID = adminID;
 	}
-
-	public void setAdminUsername(String adminUsername) {
-		this.adminUsername = adminUsername;
+	public String getAdminName() {
+		return adminName;
 	}
-
-	public String getAdminPwd() {
-		return this.adminPwd;
+	public void setAdminName(String adminName) {
+		this.adminName = adminName;
 	}
-
-	public void setAdminPwd(String adminPwd) {
-		this.adminPwd = adminPwd;
+	public String getAdminPassword() {
+		return adminPassword;
+	}
+	public void setAdminPassword(String adminPassword) {
+		this.adminPassword = adminPassword;
+	}
+	public int getRoleID() {
+		return roleID;
+	}
+	public void setRoleID(int roleID) {
+		this.roleID = roleID;
+	}
+	public String getRoleName() {
+		return roleName;
+	}
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
 	}
 
 }

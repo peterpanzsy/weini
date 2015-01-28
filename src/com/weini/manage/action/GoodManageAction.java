@@ -8,7 +8,6 @@ import java.util.List;
 import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.weini.manage.business.BusinessArea;
 import com.weini.manage.business.MenuinfoService;
 import com.weini.manage.entity.TBusinessarea;
 import com.weini.manage.entity.TCity;
@@ -26,7 +25,6 @@ public class GoodManageAction extends ActionSupport{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private MenuinfoService menuinfoSer;
 	private List<TMenuinfo> goodlist;
 	private List<TProvince> provices;
 	private int indexID;
@@ -59,8 +57,7 @@ public class GoodManageAction extends ActionSupport{
 	 * 列出所有的菜品
 	 */
 	public String listGood(){
-		menuinfoSer = new MenuinfoService();
-		this.goodlist = menuinfoSer.listMenuInfo(isExistGood);
+		this.goodlist = (new MenuinfoService()).listMenuInfo(isExistGood);
 		return "SUCCESS";
 	}
 	/**
@@ -68,7 +65,6 @@ public class GoodManageAction extends ActionSupport{
 	 * @return 更新结果
 	 */
 	public String updateGood(){
-		menuinfoSer = new MenuinfoService();
 		TMenuinfo menu = new TMenuinfo();
 		this.uploadSuccess = false;
 		//商品名称不能为空
@@ -107,7 +103,7 @@ public class GoodManageAction extends ActionSupport{
 		boolean res = false;
 		try{
 		menu.setMenuinfoDate(new Timestamp(System.currentTimeMillis()));
-		res = menuinfoSer.updateMenuInfo(menu,isAdd);
+		res = (new MenuinfoService()).updateMenuInfo(menu,isAdd);
 		System.out.println(indexID);
 		System.out.println(res);
 		}catch(Exception e){
@@ -129,20 +125,17 @@ public class GoodManageAction extends ActionSupport{
 	
 	public String editGood(){//编辑菜品
 		this.isAdd = false;
-		menuinfoSer = new MenuinfoService();
-		menu = menuinfoSer.getEditMenuinfo(indexID);
+		menu = (new MenuinfoService()).getEditMenuinfo(indexID);
 		return "SUCCESS";
 	}
 	
 	public String delGood(){//删除菜品
-		menuinfoSer = new MenuinfoService();
-		this.aflag = menuinfoSer.changeMenuStatus(indexID,false);
+		this.aflag = (new MenuinfoService()).changeMenuStatus(indexID,false);
 		return "SUCCESS";
 	}
 	
 	public String recoverGood(){//恢复已删除菜品
-		menuinfoSer = new MenuinfoService();
-		this.aflag = menuinfoSer.changeMenuStatus(indexID,true);
+		this.aflag = (new MenuinfoService()).changeMenuStatus(indexID,true);
 		return "SUCCESS";
 	}
 	/**
@@ -150,8 +143,7 @@ public class GoodManageAction extends ActionSupport{
 	 * @return 商家列表
 	 */
 	public String listVendor(){
-		menuinfoSer = new MenuinfoService();
-		this.vendors = menuinfoSer.listVendorsByBussID(indexID);
+		this.vendors = (new MenuinfoService()).listVendorsByBussID(indexID);
 		return "SUCCESS";
 	}
 

@@ -78,7 +78,7 @@ function logout(){
 			return false;
 		} 
 	$.ajax({
-		url:'logout.action',
+		url:'adminLogout.action',
 		type:'post',
 		dataType:'json',
 		success:function(data){

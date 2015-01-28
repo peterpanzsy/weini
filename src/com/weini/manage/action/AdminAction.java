@@ -3,9 +3,9 @@ package com.weini.manage.action;
 import java.util.List;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.weini.manage.business.Admin;
-import com.weini.manage.business.Auth;
-import com.weini.manage.dao.AdminDao;
+import com.weini.manage.business.AdminService;
+import com.weini.manage.entity.TAdmin;
+import com.weini.manage.entity.TAuth;
 import com.weini.tools.CipherUtil;
 
 
@@ -19,9 +19,18 @@ public class AdminAction extends ActionSupport{
 	String role;
 	String auth;
 	String aflag;//权限标识
-	List<Admin> dataList;
-	List<Auth> authList;
+	List<TAdmin> dataList;
+	List<TAuth> authList;
+	String result;
 	
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
 
 	public int getRoleid(String role){
 		int roleid=0;
@@ -35,6 +44,34 @@ public class AdminAction extends ActionSupport{
 			roleid=4;
 		}
 		return roleid;
+	}
+	
+	public String listAuthByRole(){//根据角色获取权限列表		
+		authList=(new AdminService()).getAuthbyRoleList(getRoleid(role));
+		return "SUCCESS";
+	}
+	public String updateAuthByRole(){//更新角色的权限列表	
+		(new AdminService()).updateAuthByRole(getRoleid(role),auth,aflag);
+		return "SUCCESS";
+	}
+	public String listAdmin(){//根据角色获取账户列表		
+		dataList=(new AdminService()).getAdminList(getRoleid(role));
+		return "SUCCESS";
+	}
+
+	public String updateAdmin(){//更新或者添加账户
+		this.result = "false";
+		if(this.adminPassword.equals(confirmPassword)){
+			String adminPassword_md5 = CipherUtil.generatePassword(adminPassword);  
+			if((new AdminService()).updateAdmin(adminID,adminName,adminPassword_md5,getRoleid(role),mark)){
+				this.result = "true";
+			}
+		}
+		return "SUCCESS";
+	}
+	public String delAdmin(){//删除账户		
+		(new AdminService()).delAdmin(id);
+		return "SUCCESS";
 	}
 	public int getAdminID() {
 		return adminID;
@@ -84,56 +121,26 @@ public class AdminAction extends ActionSupport{
 	public void setAuth(String auth) {
 		this.auth = auth;
 	}
-	public List<Auth> getAuthList() {
-		return authList;
-	}
-	public void setAuthList(List<Auth> authList) {
-		this.authList = authList;
-	}
 	public String getRole() {
 		return role;
 	}
 	public void setRole(String role) {
 		this.role = role;
 	}
-	public List<Admin> getDataList() {
+	public List<TAdmin> getDataList() {
 		return dataList;
 	}
-	public void setDataList(List<Admin> dataList) {
+
+	public void setDataList(List<TAdmin> dataList) {
 		this.dataList = dataList;
 	}
-	
-	public String listAuthByRole(){//根据角色获取权限列表		
-		AdminDao dao=new AdminDao();
-		authList=dao.getAuthbyRoleList(getRoleid(role));
-		dao.close();
-		return "SUCCESS";
+
+	public List<TAuth> getAuthList() {
+		return authList;
 	}
-	public String updateAuthByRole(){//更新角色的权限列表	
-		AdminDao dao=new AdminDao();
-		int res=dao.updateAuthByRole(getRoleid(role),auth,aflag);
-		dao.close();
-		return "SUCCESS";
-	}
-	public String listAdmin(){//根据角色获取账户列表		
-		AdminDao dao=new AdminDao();
-		dataList=dao.getAdminList(getRoleid(role));
-		dao.close();
-		return "SUCCESS";
-	}
-	public String updateAdmin(){//更新或者添加账户 
-		String adminPassword_md5 = CipherUtil.generatePassword(adminPassword);  
-		String confirmPassword_md5 = CipherUtil.generatePassword(confirmPassword);  
-		AdminDao dao=new AdminDao();
-		int res=dao.updateAdmin(adminID,adminName,adminPassword_md5,confirmPassword_md5,getRoleid(role),mark);
-		dao.close();
-		return "SUCCESS";
-	}
-	public String delAdmin(){//删除账户		
-		AdminDao dao=new AdminDao();
-		dao.delAdmin(id);
-		dao.close();
-		return "SUCCESS";
+
+	public void setAuthList(List<TAuth> authList) {
+		this.authList = authList;
 	}
 	
 	

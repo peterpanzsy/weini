@@ -59,8 +59,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <div class="panel-body" style="">
                     <div class="clearfix setPos" id="leak-chart-lines-panel"></div>
                     <div class="row">
-                      <div id="timeAnalysis" class ="col-md-5" style=""></div>
+                      <div id="firstBuyAnalysis" class ="col-md-5" style=""></div>
                       <div class = "col-md-7">
+                        <table id="againBuyTable" class="display table table-striped table-bordered" cellspacing="0" cellspacing="0" width="100%">
+                          <thead>
+                              <tr>  
+                                <th>盒子模式</th>
+                                  <th>XXXX</th>
+                                  <th>xxxx</th>
+                                  <th>xxx</th>                    
+                              </tr>
+                          </thead>
+                        </table> 
                       </div>
                     </div>
                   </div>
@@ -69,32 +79,88 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div>
 
             <div class="row">
-              <div class="col-md-12 col-sm-12">
+              <div class="col-md-6 col-sm-6">
                 <div class="panel panel-primary">
-                  <div class="panel-heading">继续购买盒子模式
+                  <div class="panel-heading">统计信息
                     <div class="btn-group-xs " style="display: inline;">
                     </div>
                   </div>
                   <div class="panel-body" style="">
                     <div class="clearfix setPos" id="leak-chart-lines-panel"></div>
                     <div class="row">
-                      <div id="channelAnalysis" class ="col-md-5" style=""></div>
-                      <div class = "col-md-7">
+                      <div id="continueBuyAnalysis" class ="col-md-12" ></div>
                       	<table id="againBuyTable" class="display table table-striped table-bordered" cellspacing="0" cellspacing="0" width="100%">
-						    <thead>
-						        <tr>	
-						        	<th>盒子模式</th>
-						            <th>XXXX</th>
-						            <th>xxxx</th>
-						            <th>xxx</th>						        
-						        </tr>
-						    </thead>
-						</table> 
-                      </div>
+                          <thead>
+                              <tr>  
+                                <th style="width:50%;">继续购买盒子模式</th>
+                                <th style="width:50%;">购买人数</th>	                   
+                              </tr>
+                              
+                          </thead>
+                          <tbody>
+                          	<tr>
+                          	   <td>一天模式</td>
+                          	   <td id="oneModelNum">0人</td>
+                          	</tr>
+                          	<tr>
+                          	   <td>三天模式</td>
+                          	   <td id="threeModelNum">0人</td>
+                          	</tr>
+                          	<tr>
+                          	   <td>五天模式</td>
+                          	   <td id="fiveModelNum">0人</td>
+                          	</tr>
+                          </tbody>
+                        </table> 
+                    
+                    	<table id="otherTable" class="display table table-striped table-bordered" cellspacing="0" cellspacing="0" width="100%">
+                          <thead>
+                              <tr>  
+                                <th style="width:50%;">统计栏目</th>
+                                <th style="width:50%;">值</th>	                   
+                              </tr>
+                              
+                          </thead>
+                          <tbody>
+                          	<tr>
+                          	   <td>实际购买用户</td>
+                          	   <td id="realBuyUser">4人</td>
+                          	</tr>
+                          	<tr>
+                          	   <td>实际购买金额</td>
+                          	   <td id="realBuyMoney">8元</td>
+                          	</tr>
+                          	
+                          </tbody>
+                        </table> 
+                    
                     </div>
                   </div>
                 </div>
               </div> 
+              <div class="col-md-6 col-sm-6">
+                <div class="panel panel-primary">
+                  <div class="panel-heading">平均购买力
+                    <div class="btn-group-xs " style="display: inline;">
+                        <select id="buyproviceID" style="width:80px;height:20px;color: rgb(0, 0, 0);" class="required" >
+                         </select>
+                         <select id="buycityID" style="width:80px;height:20px;color: rgb(0, 0, 0);" class="required" >
+                         <option selected = "selected" value="-1">请选择城市</option>
+                         </select>
+                         <select id="buydistrictID" style="width:80px;height:20px;color: rgb(0, 0, 0);" class="required" >
+                         <option selected = "selected" value="-1">请选择县区</option>
+                         </select>
+                         <select id="buybussAreaID" style="width:80px;height:20px;color: rgb(0, 0, 0);" class="required" >
+                         <option selected = "selected" value="-1">请选择商圈</option>
+                         </select>
+                         <button type="button" class="btn btn-default date-line-type" id = "buyStat"data-type="5">统计结果</button>
+                    </div>
+                  </div>
+                  <div class="panel-body" style="">
+                    <div class="clearfix setPos" id="leak-chart-lines-panel"></div>
+                    <div id="buyAnalysis" style="min-width:100%;height:300px"></div>
+                  </div>
+                </div>
               
             </div>
           </div>

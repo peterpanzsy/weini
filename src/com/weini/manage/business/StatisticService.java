@@ -1,18 +1,18 @@
 package com.weini.manage.business;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.weini.manage.business.GeneralServive;
-import com.weini.manage.dao.OrderDaopl;
-import com.weini.manage.dao.UserDaopl;
+import com.weini.manage.dao.OrderDao;
+import com.weini.manage.dao.UserDao;
+import com.weini.tools.ThreeEntity;
 import com.weini.tools.Tools;
 import com.weini.tools.TwoEntity;
 
 public class StatisticService extends GeneralServive{
-	private UserDaopl userdao  = new UserDaopl(this.session);
-	private OrderDaopl orderdao = new OrderDaopl(this.session);
+	private UserDao userdao  = new UserDao(this.session);
+	private OrderDao orderdao = new OrderDao(this.session);
 	/**
 	 * 返回用户类型的百分比
 	 * @return 
@@ -64,6 +64,7 @@ public class StatisticService extends GeneralServive{
  	 */
  	public double getRealTotalMoney(){
  		double res = this.orderdao.getOrderTotalMoney();
+ 		this.close();
  		return res;
  	}
  	/**
@@ -107,6 +108,7 @@ public class StatisticService extends GeneralServive{
  	 */
 	public int getRealBuyUserSum(){
 		int res = this.orderdao.getRealBuyUserSum();
+		this.close();
 		return res;
 	}
 	/**
@@ -120,6 +122,7 @@ public class StatisticService extends GeneralServive{
 	public List<TwoEntity> getOrderSumByDispatching(int bussID){
 		List<TwoEntity> res = new ArrayList<TwoEntity>();
 		res = this.orderdao.getOrderModelSumByDispatch(bussID);
+		this.close();
 		float sum = 0;
 		for(int i = 0; i < res.size(); i++){
 			sum += (int)res.get(i).getIndex2();
@@ -134,7 +137,8 @@ public class StatisticService extends GeneralServive{
 	}
 	public List<TwoEntity> getFirstBuyModelSum(){
 		List<TwoEntity> res = this.orderdao.getOrderFirstModelSum();
-		int sum = 0;
+		this.close();
+		float sum = 0;
 		if(res.size() > 0){
 			for(int i = 0;i < res.size(); i++){
 				sum += (int)res.get(i).getIndex2();
@@ -148,7 +152,14 @@ public class StatisticService extends GeneralServive{
 		}
 		return res;
 	}
-//	public List<TwoEntity> getConBuyModelSum(){
-//		List<TwoEntity> res = this.orderdao.get
-//	}
+	public List<TwoEntity> getConBuyModelSum(){
+		List<TwoEntity> res = this.orderdao.getUserSumSecondOrder();
+		this.close();
+		return res;
+	}
+	public List<ThreeEntity> getAllFirstOrder(){
+		List<ThreeEntity> res = this.orderdao.getAllFirstOrder();
+		this.close();
+		return res;
+	}
 }

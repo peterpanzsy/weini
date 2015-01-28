@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="loginmanage" extends="json-default">
+	<!-- 管理员登陆登出 -->
+		<action name="adminLogin" class="com.weini.manage.action.LoginAction" method="adminLogin" >
+			<result name="succ" type="redirect">/pages/index.jsp</result>
+			<result name="fail" type="redirect">/pages/sign-in.jsp</result>
+		</action>
+	    <action name="adminLogout" class="com.weini.manage.action.LoginAction" method="adminLogout">
+			<result name="success" type="json">	
+			<param name="includeProperties">flag</param>			
+			</result>
+		</action>
+	<!-- 处理手机端的用户登录 -->
+		<!-- <action name="userLogin" class="com.weini.manage.action.LoginAction" method="userLogin">
+			<result name="LOGINSUCCESS" type="json">	
+				<param name="includeProperties">u.*,result</param> 
+			</result>
+			<result name="FAIL" type="json">
+				<param name="includeProperties">result</param> 
+			</result>
+		</action> -->
+	<!-- 商家管理登陆登出 -->
+		<action name="vendorLogin" class="com.weini.manage.action.LoginAction" method="vendorlogin" >
+			<result name="SUCCESS" type="json">
+			</result>
+		</action>
+	    <action name="vendorLogout" class="com.weini.manage.action.LoginAction" method="vendorlogout">
+			<result name="success" type="json">	
+			<param name="includeProperties">flag</param>			
+			</result>
+		</action>
+	</package>
+
+</struts>    

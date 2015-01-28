@@ -1,20 +1,20 @@
-<%@ page language="java" import="java.util.*,com.weini.manage.business.*" pageEncoding="utf-8"%>
+<%@ page language="java" import="java.util.*,com.weini.manage.entity.*" pageEncoding="utf-8"%>
 
  <%
-Admin userlogin=(Admin)(session.getAttribute("user"));
-List<Auth> authlist=(List<Auth>)session.getAttribute("authList");
-List<String> anamelist=new ArrayList<String>();
-if (userlogin==null){
-	response.sendRedirect("sign-in.jsp");
-	return;
-}
-else{
-	
-	for(Auth auth:authlist){//获取权限列表
-		anamelist.add(auth.getName());
-	}
-}
-%>
+ 	TAdmin userlogin=(TAdmin)(session.getAttribute("user"));
+  List<TAuth> authlist=(List<TAuth>)session.getAttribute("authList");
+  List<String> anamelist=new ArrayList<String>();
+  if (userlogin==null){
+  	response.sendRedirect(request.getContextPath()+"/pages/sign-in.jsp");
+  	return;
+  }
+  else{
+  	
+  	for(TAuth auth:authlist){//获取权限列表
+  		anamelist.add(auth.getName());
+  	}
+  }
+ %>
 
 <div class="navbar-collapse collapse templatemo-sidebar">
   <ul class="templatemo-sidebar-menu">

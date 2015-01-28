@@ -5,25 +5,43 @@
 	<!--报表数据统计-->
 	<action name="getChannelAnalysis" class="com.weini.manage.action.StatisticAction" method="getChannelAnalysis">
 		<result name="SUCCESS" type="json">				
+		<param name="includeProperties">dataChannel.*</param>
 		</result>
 	</action>
 	<action name="getTimeAnalysis" class="com.weini.manage.action.StatisticAction" method="getTimeAnalysis">
-		<result name="SUCCESS" type="json">				
+		<result name="SUCCESS" type="json">
+		<param name="includeProperties">timeData.*</param>				
 		</result>
 	</action>
 	<action name="getOrderAnalysis" class="com.weini.manage.action.StatisticAction" method="getOrderAnalysis">
-		<result name="SUCCESS" type="json">				
+		<result name="SUCCESS" type="json">	
+		<param name="includeProperties">orderSum.*</param>			
 		</result>
 	</action>
-	<action name="getChangeAnalysis" class="com.weini.manage.action.StatisticAction" method="getChangeAnalysis">
-		<result name="SUCCESS" type="json">				
+<!-- 	<action name="getChangeAnalysis" class="com.weini.manage.action.StatisticAction" method="getChangeAnalysis">
+		<result name="SUCCESS" type="json">
 		</result>
-	</action>
+	</action> -->
 	<action name="getAverageBuy" class="com.weini.manage.action.StatisticAction" method="getAverageBuy">
-		<result name="SUCCESS" type="json">				
+		<result name="SUCCESS" type="json">	
+		<param name="includeProperties">averageBuySum.*</param>			
 		</result>
 	</action>
-	
+	<action name="getFirstBuyModelSum" class="com.weini.manage.action.StatisticAction" method="getFirstBuyModelSum">
+		<result name="SUCCESS" type="json">	
+		<param name="includeProperties">firBuyModelSum.*</param>				
+		</result>
+	</action>
+	<action name="getContinueBuyUserSum" class="com.weini.manage.action.StatisticAction" method="getContinueBuyUserSum">
+		<result name="SUCCESS" type="json">		
+		<param name="includeProperties">conBuyUseSum.*,realTotalMoney.*,realBuyUserSum.*</param>		
+		</result>
+	</action>
+	<action name="getAllFirstOrder" class="com.weini.manage.action.StatisticAction" method="getAllFirstOrder">
+		<result name="SUCCESS" type="json">		
+		<param name="includeProperties">firOrderList.*</param>		
+		</result>
+	</action>
 	</package>
 
 </struts>    
