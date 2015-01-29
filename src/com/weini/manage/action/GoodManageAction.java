@@ -138,15 +138,25 @@ public class GoodManageAction extends ActionSupport{
 		this.aflag = (new MenuinfoService()).changeMenuStatus(indexID,true);
 		return "SUCCESS";
 	}
+	
 	/**
-	 * 列出商家根据所选择的商圈
+	 * 获取菜品的详细信息
+	 * @param 菜品id
+	 * @return 菜品信息
+	 */
+	public String getGoodDetail(){
+		return SUCCESS;
+	}
+	//TODO 应该放到VendorAction
+	/**
+	 * 根据所选择的商圈列出商家
 	 * @return 商家列表
 	 */
 	public String listVendor(){
 		this.vendors = (new MenuinfoService()).listVendorsByBussID(indexID);
 		return "SUCCESS";
 	}
-
+	// TODO 处理异常
 	public String uploadPicture() throws IOException{
 		this.uploadSuccess = false;
 		String savePath = ServletActionContext.getServletContext().getRealPath(Configure.goodPicPath);//上传完后文件存放位置  

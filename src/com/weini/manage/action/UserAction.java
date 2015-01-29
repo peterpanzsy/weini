@@ -55,6 +55,27 @@ public class UserAction extends ActionSupport{
 //		dao.close();
 //		return "SUCCESS";
 //	}
+	/**
+	 * 用户注册
+	 * @return
+	 */
+	public String addUser(){
+		return SUCCESS;
+	}
+	/**
+	 * 用户修改密码
+	 * @return
+	 */
+	public String changePwd(){
+		return SUCCESS;
+	}
+	/**
+	 * 获取用户的个人信息
+	 * @return
+	 */
+	public String getUserInfo(){
+		return SUCCESS;
+	}
 	public String getMark() {
 		return mark;
 	}

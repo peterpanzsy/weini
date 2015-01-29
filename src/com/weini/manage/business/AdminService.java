@@ -50,6 +50,7 @@ public class AdminService extends GeneralServive{
 				this.roll();
 			}
 		}catch(Exception e){
+			e.printStackTrace();
 			this.roll();
 		}
 		return flag;

@@ -27,7 +27,6 @@ public class StatisticAction extends ActionSupport{
 	private List<TwoEntity> conBuyUseSum;
 	private List<TwoEntity> firBuyModelSum;
 	private List<ThreeEntity> firOrderList; 
-//	private List<>
 	
 	/**获取用户的渠道分析
 	 * 

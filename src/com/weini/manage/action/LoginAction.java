@@ -150,6 +150,13 @@ public class LoginAction extends ActionSupport{
 		return "SUCCESS";
 	}
 	
+	/**
+	 * 获取手机验证码
+	 * @return
+	 */
+	public String getPhoneVeriCode(){
+		return SUCCESS;
+	}
 	public String getUsername() {
 		return username;
 	}
