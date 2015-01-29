@@ -13,16 +13,44 @@ public class AddressService extends GeneralServive{
 	private AddressDao addressdao  = new AddressDao(this.session);
 	
 	public List<TProvince> listProvinces(){
-		return this.addressdao.listProivces();
+		List<TProvince> res = null;
+		try{
+			res = this.addressdao.listProivces();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		this.close();
+		return res;
 	}
 		
 	public List<TCity> listCitysByProvinceID(int proID){
-		return this.addressdao.listCitysByProviceID(proID);
+		List<TCity> res = null;
+		try{
+			res = this.addressdao.listCitysByProviceID(proID);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		this.close();
+		return res;
 	}
 	public List<TDistrict> listDistrictsByCityID(int cityID){
-		return this.addressdao.listDistrictsByCityID(cityID);
+		List<TDistrict> res = null;
+		try{
+			res = this.addressdao.listDistrictsByCityID(cityID);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		this.close();
+		return res;
 	}
 	public List<TBusinessarea> listBussByDistrictID(int disID){
-		return this.addressdao.listBusinessareasByDistrictID(disID);
+		List<TBusinessarea> res = null;
+		try{
+			res = this.addressdao.listBusinessareasByDistrictID(disID);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		this.close();
+		return res;
 	}
 }

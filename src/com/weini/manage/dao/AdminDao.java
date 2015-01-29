@@ -84,7 +84,6 @@ public class AdminDao  {
 	}
 	public int updateAdmin(int id,String adminName,String adminPassword,int roleid,String mark){//添加或修改账户信息
 		int result=0;
-		HibernateSessionManager.getThreadLocalTransaction();
 		switch(mark){
 			case "add":
 				Query q = session.createSQLQuery("insert into t_admin(admin_username,admin_pwd) values (?,?)");
@@ -109,51 +108,40 @@ public class AdminDao  {
 		return result;
 	}
 	public int delAdmin(int id) {//删除账户以及其角色关系
-		HibernateSessionManager.getThreadLocalTransaction();
 		Query q = session.createSQLQuery(" delete from t_admin where admin_id=?");
 		q.setParameter(0, id);
-		int result=q.executeUpdate();		
+		int result = q.executeUpdate();		
 		Query q1 = session.createSQLQuery(" delete from t_admin_role where admin_role_adminid=?");
 		q1.setParameter(0, id);
-		int result1=result;
-		try{
-			result1=q1.executeUpdate();	
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return result1;
+		int result1 = q1.executeUpdate();	
+		return (result1 * result);
 	}
 	
 	public TAdmin searchAdmin(String name,String pass){
 		TAdmin adminR=null;
-		try {
-		        Query query = session.createSQLQuery("select t.admin_id,t.admin_username,t.admin_pwd,t2.admin_role_roleid from t_admin t,t_admin_role t2 where t.admin_id=t2.admin_role_adminid and t.admin_username=? and t.admin_pwd=?");	
-		        query.setParameter(0, name);
-		        query.setParameter(1, pass);
-		        List users=new ArrayList<TAdmin>();
-				List l = query.list();
-				for(int i=0;i<l.size();i++)
-				{
-					  Object[] row = (Object[])l.get(i);;
-					  int adminID = (Integer) row[0];
-					  String username = (String)row[1];  
-					  String password = (String)row[2];
-					  int roleid = (Integer) row[3];
-					  TAdmin admin=new TAdmin();
-					  admin.setAdminID(adminID);
-					  admin.setAdminName(username);
-					  admin.setAdminPassword(password);
-					  admin.setRoleID(roleid);
-					  users.add(admin);
-				}
-				if(!users.isEmpty()){
-					adminR=new TAdmin();
-					adminR=(TAdmin)users.get(0);
-				}
-				
-				} catch (Exception e) {
-			e.printStackTrace();
-		}		
+        Query query = session.createSQLQuery("select t.admin_id,t.admin_username,t.admin_pwd,t2.admin_role_roleid from t_admin t,t_admin_role t2 where t.admin_id=t2.admin_role_adminid and t.admin_username=? and t.admin_pwd=?");	
+        query.setParameter(0, name);
+        query.setParameter(1, pass);
+        List<TAdmin> users=new ArrayList<TAdmin>();
+		List l = query.list();
+		for(int i=0;i<l.size();i++)
+		{
+			  Object[] row = (Object[])l.get(i);;
+			  int adminID = (Integer) row[0];
+			  String username = (String)row[1];  
+			  String password = (String)row[2];
+			  int roleid = (Integer) row[3];
+			  TAdmin admin=new TAdmin();
+			  admin.setAdminID(adminID);
+			  admin.setAdminName(username);
+			  admin.setAdminPassword(password);
+			  admin.setRoleID(roleid);
+			  users.add(admin);
+		}
+		if(!users.isEmpty()){
+			adminR=new TAdmin();
+			adminR=(TAdmin)users.get(0);
+		}
 		return adminR;
 	}
 

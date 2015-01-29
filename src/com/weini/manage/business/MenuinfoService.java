@@ -24,18 +24,28 @@ public class MenuinfoService extends GeneralServive {
 		this.addressDao = new AddressDao(this.session);
 	}
 	public List<TMenuinfo> listMenuInfo(boolean isExistGood){
-		List<TMenuinfo> res;
-		res = menuDao.listMenuInfo(isExistGood);
+		List<TMenuinfo> res = null;
+		try{
+			res = menuDao.listMenuInfo(isExistGood);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		this.close();
 		return res;
 	}
 	public boolean updateMenuInfo(TMenuinfo menu,boolean isAdd){
 		boolean flag = false;
 		HibernateSessionManager.getThreadLocalTransaction();
-		flag = menuDao.updateGoodInfo(menu, isAdd);
-		if(flag){
-			this.close();
-		}else{
+		try{
+			int res = menuDao.updateGoodInfo(menu, isAdd);
+			if(res > 0){
+				flag = true;
+				this.close();
+			}else{
+				this.roll();
+			}
+		}catch(Exception e){
+			e.printStackTrace();
 			this.roll();
 		}
 		return flag;
@@ -46,52 +56,82 @@ public class MenuinfoService extends GeneralServive {
 	 * @return 
 	 */
 	public TMenuinfo getEditMenuinfo(int indexID){
-		TMenuinfo menu = new TMenuinfo();
-		menu = menuDao.findMenuDetailByMenuID(indexID);
-		menu.setVendorName(vendorDao.findVendorNameByID(menu.getVendorId()));
+		TMenuinfo menu = null;
+		try{
+			menu = menuDao.findMenuDetailByMenuID(indexID);
+			menu.setVendorName(vendorDao.findVendorNameByID(menu.getVendorId()));
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		this.close();
 		return menu;
 	}
 	public boolean changeMenuStatus(int menuID,boolean status){
 		boolean flag = false;
 		HibernateSessionManager.getThreadLocalTransaction();
-		flag = menuDao.changeMenuStatus(menuID, status);
-		if(flag){
-			this.close();
-		}else{
+		try{
+			int res = menuDao.changeMenuStatus(menuID, status);
+			if(res > 0){
+				this.close();
+				flag = true;
+			}else{
+				this.roll();
+			}
+		}catch(Exception e){
+			e.printStackTrace();
 			this.roll();
 		}
 		return flag;
 	}
 	public List<TCity> listCitysByProvinceID(int proID){
-		List<TCity> res;
-		res = addressDao.listCitysByProviceID(proID);
+		List<TCity> res = null;
+		try{
+			res = addressDao.listCitysByProviceID(proID);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		this.close();
 		return res;
 	}
 	public List<TDistrict> listDistrictsByCityID(int cityID){
-		List<TDistrict> res;
-		res = addressDao.listDistrictsByCityID(cityID);
+		List<TDistrict> res = null;
+		try{
+			res = addressDao.listDistrictsByCityID(cityID);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		this.close();
 		return res;
 	}
 	public List<TBusinessarea> listBussByDistrictID(int disID){
-		List<TBusinessarea> res;
-		res = addressDao.listBusinessareasByDistrictID(disID);
+		List<TBusinessarea> res = null;
+		try{
+			res = addressDao.listBusinessareasByDistrictID(disID);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		this.close();
 		return res;
 	}
 	public List<TVendor> listVendorsByBussID(int busID){
-		List<TVendor> res;
-		res = vendorDao.listVendorsByBussID(busID);
+		List<TVendor> res = null;
+		try{
+			res = vendorDao.listVendorsByBussID(busID);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		this.close();
 		return res;
 	}
 	public List<TProvince> listProvinces(){
-		List<TProvince> res = addressDao.listProivces();
+		List<TProvince> res = null;
+		try{
+			res = addressDao.listProivces();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		this.close();
 		return res;
-		
 	}
 	
  	

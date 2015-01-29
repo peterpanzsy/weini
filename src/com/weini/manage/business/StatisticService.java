@@ -20,7 +20,12 @@ public class StatisticService extends GeneralServive{
  	public List<TwoEntity> getUserType(){
  		int[] temp = new int[3];
  		List<TwoEntity> res = new ArrayList<TwoEntity>();
- 		boolean flag = userdao.getUserTypeSum(temp);
+ 		boolean flag = false;
+ 		try{
+ 			flag = userdao.getUserTypeSum(temp);
+ 		}catch(Exception e){
+ 			e.printStackTrace();
+ 		}
  		this.close();
  		if(flag && temp[0] > 0){
  			res.add(new TwoEntity("Android",(float)temp[1] / temp[0]*100));
@@ -37,7 +42,12 @@ public class StatisticService extends GeneralServive{
  	public List<TwoEntity> getUserOrderTime(){
  		List<TwoEntity> res = new ArrayList<TwoEntity>();
  		int[] temp = new int[6];
- 		boolean flag = orderdao.getUserOrderTimeSum(temp);
+ 		boolean flag = false;
+ 		try{
+ 			flag = orderdao.getUserOrderTimeSum(temp);
+ 		}catch(Exception e){
+ 			e.printStackTrace();
+ 		}
  		this.close();
  		if(flag && temp[0] > 0){
  			if(temp[1]!=0)
@@ -63,7 +73,12 @@ public class StatisticService extends GeneralServive{
  	 * @return
  	 */
  	public double getRealTotalMoney(){
- 		double res = this.orderdao.getOrderTotalMoney();
+ 		double res = 0;
+ 		try{
+ 			res = this.orderdao.getOrderTotalMoney();
+ 		}catch(Exception e){
+ 			e.printStackTrace();
+ 		}
  		this.close();
  		return res;
  	}
@@ -76,8 +91,12 @@ public class StatisticService extends GeneralServive{
  		List<TwoEntity> res = null;
  		String end = Tools.getSomeDayDate(0);
  		String start = Tools.getSomeDayDate(0-num);
- 		res = this.orderdao.getOrderSumByDate(start, end, true);
- 		if(res.size() < num){
+ 		try{
+ 			res = this.orderdao.getOrderSumByDate(start, end, true);
+ 		}catch(Exception e){
+ 			e.printStackTrace();
+ 		}
+ 		if(res != null && res.size() < num){
  			List<TwoEntity> templist = new ArrayList<TwoEntity>();
  			String tempDate = "";
  			int j = 0;
@@ -107,7 +126,12 @@ public class StatisticService extends GeneralServive{
  	 * @return
  	 */
 	public int getRealBuyUserSum(){
-		int res = this.orderdao.getRealBuyUserSum();
+		int res = 0;
+		try{
+			res = this.orderdao.getRealBuyUserSum();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		this.close();
 		return res;
 	}
@@ -120,27 +144,16 @@ public class StatisticService extends GeneralServive{
 	 * @return 这个商圈各个订单模式的统计
 	 */
 	public List<TwoEntity> getOrderSumByDispatching(int bussID){
-		List<TwoEntity> res = new ArrayList<TwoEntity>();
-		res = this.orderdao.getOrderModelSumByDispatch(bussID);
-		this.close();
-		float sum = 0;
-		for(int i = 0; i < res.size(); i++){
-			sum += (int)res.get(i).getIndex2();
+		List<TwoEntity> res = null;
+		try{
+			res = this.orderdao.getOrderModelSumByDispatch(bussID);
+		}catch(Exception e){
+			e.printStackTrace();
 		}
-		if(sum != 0){
+		this.close();
+		if(res != null && res.size() > 0){
+			float sum = 0;
 			for(int i = 0; i < res.size(); i++){
-				TwoEntity temp = res.get(i);
-				temp.setIndex2((int)temp.getIndex2() / sum * 100);
-			}
-		}
-		return res;
-	}
-	public List<TwoEntity> getFirstBuyModelSum(){
-		List<TwoEntity> res = this.orderdao.getOrderFirstModelSum();
-		this.close();
-		float sum = 0;
-		if(res.size() > 0){
-			for(int i = 0;i < res.size(); i++){
 				sum += (int)res.get(i).getIndex2();
 			}
 			if(sum != 0){
@@ -152,13 +165,47 @@ public class StatisticService extends GeneralServive{
 		}
 		return res;
 	}
+	public List<TwoEntity> getFirstBuyModelSum(){
+		List<TwoEntity> res = null;
+		try{
+			res = this.orderdao.getOrderFirstModelSum();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		this.close();
+		if(res != null && res.size() > 0){
+			float sum = 0;
+			if(res.size() > 0){
+				for(int i = 0;i < res.size(); i++){
+					sum += (int)res.get(i).getIndex2();
+				}
+				if(sum != 0){
+					for(int i = 0; i < res.size(); i++){
+						TwoEntity temp = res.get(i);
+						temp.setIndex2((int)temp.getIndex2() / sum * 100);
+					}
+				}
+			}
+		}
+		return res;
+	}
 	public List<TwoEntity> getConBuyModelSum(){
-		List<TwoEntity> res = this.orderdao.getUserSumSecondOrder();
+		List<TwoEntity> res = null;
+		try{
+			res = this.orderdao.getUserSumSecondOrder();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		this.close();
 		return res;
 	}
 	public List<ThreeEntity> getAllFirstOrder(){
-		List<ThreeEntity> res = this.orderdao.getAllFirstOrder();
+		List<ThreeEntity> res = null;
+		try{
+			res = this.orderdao.getAllFirstOrder();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		this.close();
 		return res;
 	}

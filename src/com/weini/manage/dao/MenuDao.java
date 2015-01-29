@@ -61,8 +61,7 @@ public class MenuDao{
 		Query q3 = session.createSQLQuery("UPDATE t_menuinfo SET menuinfo_point =(menuinfo_point*menuinfo_usernum+ ?)/(menuinfo_usernum+1), menuinfo_usernum = (menuinfo_usernum+1) WHERE menuinfo_id = ?;");
 		q3.setFloat(0, point);
 		q3.setInteger(1, menuId);
-		int result=q3.executeUpdate();
-		return result;
+		return q3.executeUpdate();
 	}
 	/**
 	 * 根据menuID获取menu的详细信息
@@ -121,19 +120,11 @@ public class MenuDao{
 	 * @param id 菜品id
 	 * @return 修改结果
 	 */
-	public boolean changeMenuStatus(int id,boolean isDelete) {
-		boolean flag = false;
+	public int changeMenuStatus(int id,boolean isDelete) {
 		Query q = session.createSQLQuery(" update t_menuinfo set menuinfo_status = ? where menuinfo_id = ?");
 		q.setParameter(0, isDelete);
 		q.setParameter(1, id);
-		int result;
-		try{
-		result=q.executeUpdate();
-		if(result > 0) flag = true;
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return flag;
+		return q.executeUpdate();
 	}
 	/**
 	 * 开启事务
@@ -142,8 +133,7 @@ public class MenuDao{
 	 * @param isAdd 增加菜品true，否则为false
 	 * @return
 	 */
-	public boolean updateGoodInfo(TMenuinfo menu,boolean isAdd) {
-		boolean flag = false;
+	public int updateGoodInfo(TMenuinfo menu,boolean isAdd) {
 		Query q;
 		if(isAdd){
 			q = session.createSQLQuery("insert into t_menuinfo(vendor_id, menuinfo_image1,menuinfo_image2,menuinfo_image3,menuinfo_image4,menuinfo_detail,menuinfo_name,menuinfo_date,menuinfo_status) value (?,?,?,?,?,?,?,?,1)");
@@ -163,13 +153,7 @@ public class MenuDao{
 		if(!isAdd){
 			q.setParameter(8,menu.getMenuinfoId());
 		}
-		int result;
-		try{
-			result=q.executeUpdate();
-			if(result > 0) flag = true;
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return flag;
+		return q.executeUpdate();
+
 	}
 }

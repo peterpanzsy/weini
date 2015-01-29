@@ -12,12 +12,22 @@ public class AdminService extends GeneralServive{
 	private AdminDao admindao  = new AdminDao(this.session);
 	
 	public List<TAuth> getAuthbyRoleList(int roleid){
-		List<TAuth> res = this.admindao.getAuthbyRoleList(roleid);
+		List<TAuth> res = null;
+		try{
+			res = this.admindao.getAuthbyRoleList(roleid);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		this.close();
 		return res;
 	}
 	public List<TAdmin> getAdminList(int roleid){
-		List<TAdmin> res = this.admindao.getAdminList(roleid);
+		List<TAdmin> res = null;
+		try{
+			res = this.admindao.getAdminList(roleid);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		this.close();
 		return res;
 	}

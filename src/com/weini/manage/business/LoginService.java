@@ -1,6 +1,5 @@
 package com.weini.manage.business;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.weini.manage.business.GeneralServive;
@@ -18,22 +17,42 @@ public class LoginService extends GeneralServive{
 	private VendorDao vendao = new VendorDao(this.session);
 	
 	public TAdmin searchAdmin(String username,String pass){
-		TAdmin res = this.admindao.searchAdmin(username, pass);
+		TAdmin res = null;
+		try{
+			res = this.admindao.searchAdmin(username, pass);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		this.close();
 		return res;
 	}
 	public List<TAuth> getAuthbyRoleList(int roleid){
-		List<TAuth> res = this.admindao.getAuthbyRoleList(roleid);
+		List<TAuth> res = null;
+		try{
+			res = this.admindao.getAuthbyRoleList(roleid);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		this.close();
 		return res;
 	}
 	public TUser searchUser(String username,String pass){
-		TUser res = this.userdao.searchUser(username, pass);
+		TUser res = null;
+		try{
+			this.userdao.searchUser(username, pass);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		this.close();
 		return res;
 	}
 	public TVendor searchVendor(String username,String pass){
-		TVendor res = this.vendao.searchVendor(username, pass);
+		TVendor res = null;
+		try{
+			res = this.vendao.searchVendor(username, pass);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		this.close();
 		return res;
 	}
