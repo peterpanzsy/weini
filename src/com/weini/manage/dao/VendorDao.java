@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
 import com.weini.manage.entity.TVendor;
+import com.weini.manage.entity.TVendorextra;
 import com.weini.tools.HibernateSessionManager;
 
 
@@ -163,5 +165,68 @@ public class VendorDao  {
 		}
 		return res;
 	}
-
+	//--------------------------和vendorextra有关的东东------------------
+	/**
+	 * 添加或更新t_vendorextra表
+	 * @param ve
+	 * @return
+	 */
+	public boolean updateVendorextra(TVendorextra ve){
+		try {
+			session.saveOrUpdate(ve);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	/**
+	 * 根据商家Id来查找特定的商家的信息
+	 * @param vendorId 商家Id
+	 * @return
+	 */
+	public TVendorextra findTVendorextraByVendor(Integer vendorId){
+		return (TVendorextra) session.createQuery("fROM TVendorextra t WHERE t.vendorId = ? ").setInteger(0,vendorId).uniqueResult();
+	}
+	/**
+	 * 根据商家vendor来查找特定的商家的信息vendorextra
+	 * @param vendor
+	 * @return
+	 */
+	public TVendorextra findTVendorextraByVendor(TVendor vendor){
+		if(vendor.getVendorId()!=null){
+			return findTVendorextraByVendor(vendor.getVendorId());
+		}else{
+			return null;
+		}
+	}
+	/**
+	 * 根据商家Id来删除t_vendorextra表中对应的数据
+	 * @param vendorId 商家Id
+	 * @return
+	 */
+	public boolean delVendorextra(Integer vendorId){
+		SQLQuery q = session.createSQLQuery("DELETE FROM t_vendorextra WHERE vendor_id =?");
+		q.setInteger(0,vendorId);
+		if(q.executeUpdate()>0){
+			return true;
+		}
+		return false;
+	}
+	/**
+	 * 删除对应商家的vendorextra
+	 * @param vendor 商家
+	 * @return
+	 */
+	public boolean delVendorextra(TVendor vendor){
+		try {
+			if(vendor.getVendorId()!=null){
+				session.delete(vendor);
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

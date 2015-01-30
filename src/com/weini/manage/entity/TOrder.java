@@ -12,19 +12,17 @@ public class TOrder implements java.io.Serializable {
 	// Fields
 
 	private Integer orderId;
-	private String orderNum;
 	private Integer userId;
-	private Integer orderMenuinfoId;
 	private Integer boxId;
 	private Timestamp orderStartTime;
 	private Timestamp orderOrderTime;
 	private Integer orderPayStatus;
 	private Integer SOrderConsumeStatus;
-	private Integer orderIsRefund;
+	private Boolean orderIsRefund;
 	private Timestamp orderPayTime;
 	private Float boxPrice;
 	private Integer orderIsFirst;
-	private Integer orderIsvalid;
+	private Boolean orderIsvalid;
 	private Integer orderDispatchingId;
 	private Integer orderSettleStatus;
 
@@ -34,39 +32,14 @@ public class TOrder implements java.io.Serializable {
 	public TOrder() {
 	}
 
-	/** minimal constructor */
-	public TOrder(String orderNum, Integer userId, Integer orderMenuinfoId,
-			Integer boxId, Timestamp orderStartTime, Timestamp orderOrderTime,
-			Integer orderPayStatus, Integer SOrderConsumeStatus,
-			Integer orderIsRefund, Float boxPrice, Integer orderIsFirst,
-			Integer orderIsvalid, Integer orderDispatchingId,
-			Integer orderSettleStatus) {
-		this.orderNum = orderNum;
-		this.userId = userId;
-		this.orderMenuinfoId = orderMenuinfoId;
-		this.boxId = boxId;
-		this.orderStartTime = orderStartTime;
-		this.orderOrderTime = orderOrderTime;
-		this.orderPayStatus = orderPayStatus;
-		this.SOrderConsumeStatus = SOrderConsumeStatus;
-		this.orderIsRefund = orderIsRefund;
-		this.boxPrice = boxPrice;
-		this.orderIsFirst = orderIsFirst;
-		this.orderIsvalid = orderIsvalid;
-		this.orderDispatchingId = orderDispatchingId;
-		this.orderSettleStatus = orderSettleStatus;
-	}
-
 	/** full constructor */
-	public TOrder(String orderNum, Integer userId, Integer orderMenuinfoId,
-			Integer boxId, Timestamp orderStartTime, Timestamp orderOrderTime,
-			Integer orderPayStatus, Integer SOrderConsumeStatus,
-			Integer orderIsRefund, Timestamp orderPayTime, Float boxPrice,
-			Integer orderIsFirst, Integer orderIsvalid,
-			Integer orderDispatchingId, Integer orderSettleStatus) {
-		this.orderNum = orderNum;
+	public TOrder(Integer userId, Integer boxId, Timestamp orderStartTime,
+			Timestamp orderOrderTime, Integer orderPayStatus,
+			Integer SOrderConsumeStatus, Boolean orderIsRefund,
+			Timestamp orderPayTime, Float boxPrice, Integer orderIsFirst,
+			Boolean orderIsvalid, Integer orderDispatchingId,
+			Integer orderSettleStatus) {
 		this.userId = userId;
-		this.orderMenuinfoId = orderMenuinfoId;
 		this.boxId = boxId;
 		this.orderStartTime = orderStartTime;
 		this.orderOrderTime = orderOrderTime;
@@ -91,28 +64,12 @@ public class TOrder implements java.io.Serializable {
 		this.orderId = orderId;
 	}
 
-	public String getOrderNum() {
-		return this.orderNum;
-	}
-
-	public void setOrderNum(String orderNum) {
-		this.orderNum = orderNum;
-	}
-
 	public Integer getUserId() {
 		return this.userId;
 	}
 
 	public void setUserId(Integer userId) {
 		this.userId = userId;
-	}
-
-	public Integer getOrderMenuinfoId() {
-		return this.orderMenuinfoId;
-	}
-
-	public void setOrderMenuinfoId(Integer orderMenuinfoId) {
-		this.orderMenuinfoId = orderMenuinfoId;
 	}
 
 	public Integer getBoxId() {
@@ -155,11 +112,11 @@ public class TOrder implements java.io.Serializable {
 		this.SOrderConsumeStatus = SOrderConsumeStatus;
 	}
 
-	public Integer getOrderIsRefund() {
+	public Boolean getOrderIsRefund() {
 		return this.orderIsRefund;
 	}
 
-	public void setOrderIsRefund(Integer orderIsRefund) {
+	public void setOrderIsRefund(Boolean orderIsRefund) {
 		this.orderIsRefund = orderIsRefund;
 	}
 
@@ -187,11 +144,11 @@ public class TOrder implements java.io.Serializable {
 		this.orderIsFirst = orderIsFirst;
 	}
 
-	public Integer getOrderIsvalid() {
+	public Boolean getOrderIsvalid() {
 		return this.orderIsvalid;
 	}
 
-	public void setOrderIsvalid(Integer orderIsvalid) {
+	public void setOrderIsvalid(Boolean orderIsvalid) {
 		this.orderIsvalid = orderIsvalid;
 	}
 

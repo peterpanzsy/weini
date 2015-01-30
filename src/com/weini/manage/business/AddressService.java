@@ -2,14 +2,14 @@ package com.weini.manage.business;
 
 import java.util.List;
 
-import com.weini.manage.business.GeneralService;
+import com.weini.manage.business.GeneralServive;
 import com.weini.manage.dao.AddressDao;
 import com.weini.manage.entity.TBusinessarea;
 import com.weini.manage.entity.TCity;
 import com.weini.manage.entity.TDistrict;
 import com.weini.manage.entity.TProvince;
 
-public class AddressService extends GeneralService{
+public class AddressService extends GeneralServive{
 	private AddressDao addressdao  = new AddressDao(this.session);
 	
 	public List<TProvince> listProvinces(){

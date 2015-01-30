@@ -3,16 +3,26 @@ package com.weini.manage.entity;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.hibernate.annotations.GenericGenerator;
+
 /**
  * TUserextra entity. @author MyEclipse Persistence Tools
  */
-
+@Entity   
+@Table(name="t_userextra")
 public class TUserextra implements java.io.Serializable {
 
 	// Fields
 
 	private Integer userextraId;
-	private String userId;
+	private Integer userId;
 	private String userextraImage;
 	private String userextraReserved;
 	private Date userextraBirthday;
@@ -24,12 +34,12 @@ public class TUserextra implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public TUserextra(String userId) {
+	public TUserextra(Integer userId) {
 		this.userId = userId;
 	}
 
 	/** full constructor */
-	public TUserextra(String userId, String userextraImage,
+	public TUserextra(Integer userId, String userextraImage,
 			String userextraReserved, Date userextraBirthday) {
 		this.userId = userId;
 		this.userextraImage = userextraImage;
@@ -38,7 +48,10 @@ public class TUserextra implements java.io.Serializable {
 	}
 
 	// Property accessors
-
+	@Id              // 表示主键
+    @GenericGenerator(name = "generator", strategy = "increment")  
+    @GeneratedValue(generator = "generator")   // 自增长
+    @Column(name = "userextra_id") 
 	public Integer getUserextraId() {
 		return this.userextraId;
 	}
@@ -46,15 +59,15 @@ public class TUserextra implements java.io.Serializable {
 	public void setUserextraId(Integer userextraId) {
 		this.userextraId = userextraId;
 	}
-
-	public String getUserId() {
+	@Column(name = "user_id")
+	public Integer getUserId() {
 		return this.userId;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-
+	@Column(name = "userextra_image")
 	public String getUserextraImage() {
 		return this.userextraImage;
 	}
@@ -62,7 +75,7 @@ public class TUserextra implements java.io.Serializable {
 	public void setUserextraImage(String userextraImage) {
 		this.userextraImage = userextraImage;
 	}
-
+	@Column(name = "userextra_reserved")
 	public String getUserextraReserved() {
 		return this.userextraReserved;
 	}
@@ -70,7 +83,7 @@ public class TUserextra implements java.io.Serializable {
 	public void setUserextraReserved(String userextraReserved) {
 		this.userextraReserved = userextraReserved;
 	}
-
+	@Column(name = "userextra_birthday")
 	public Date getUserextraBirthday() {
 		return this.userextraBirthday;
 	}
@@ -78,5 +91,10 @@ public class TUserextra implements java.io.Serializable {
 	public void setUserextraBirthday(Date userextraBirthday) {
 		this.userextraBirthday = userextraBirthday;
 	}
-
+	@Override  
+    public String toString() {  
+        //两种方式都可以  
+        //return ReflectionToStringBuilder.toString(this);  
+        return ToStringBuilder.reflectionToString(this);  
+    }
 }

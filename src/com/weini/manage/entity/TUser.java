@@ -3,10 +3,20 @@ package com.weini.manage.entity;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.hibernate.annotations.GenericGenerator;
+
 /**
  * TUser entity. @author MyEclipse Persistence Tools
  */
-
+@Entity   
+@Table(name="t_user")
 public class TUser implements java.io.Serializable {
 
 	// Fields
@@ -64,7 +74,10 @@ public class TUser implements java.io.Serializable {
 	}
 
 	// Property accessors
-
+	@Id              // 表示主键
+    @GenericGenerator(name = "generator", strategy = "increment")  
+    @GeneratedValue(generator = "generator")   // 自增长
+    @Column(name = "user_id") 
 	public Integer getUserId() {
 		return this.userId;
 	}
@@ -72,7 +85,7 @@ public class TUser implements java.io.Serializable {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-
+	@Column(name = "user_name")
 	public String getUserName() {
 		return this.userName;
 	}
@@ -80,7 +93,7 @@ public class TUser implements java.io.Serializable {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-
+	@Column(name = "user_pwd")
 	public String getUserPwd() {
 		return this.userPwd;
 	}
@@ -88,7 +101,7 @@ public class TUser implements java.io.Serializable {
 	public void setUserPwd(String userPwd) {
 		this.userPwd = userPwd;
 	}
-
+	@Column(name = "user_gender")
 	public Integer getUserGender() {
 		return this.userGender;
 	}
@@ -96,7 +109,7 @@ public class TUser implements java.io.Serializable {
 	public void setUserGender(Integer userGender) {
 		this.userGender = userGender;
 	}
-
+	@Column(name = "user_address")
 	public String getUserAddress() {
 		return this.userAddress;
 	}
@@ -104,7 +117,7 @@ public class TUser implements java.io.Serializable {
 	public void setUserAddress(String userAddress) {
 		this.userAddress = userAddress;
 	}
-
+	@Column(name = "user_phoneNumber")
 	public String getUserPhoneNumber() {
 		return this.userPhoneNumber;
 	}
@@ -112,7 +125,7 @@ public class TUser implements java.io.Serializable {
 	public void setUserPhoneNumber(String userPhoneNumber) {
 		this.userPhoneNumber = userPhoneNumber;
 	}
-
+	@Column(name = "user_phoneType")
 	public Integer getUserPhoneType() {
 		return this.userPhoneType;
 	}
@@ -120,7 +133,7 @@ public class TUser implements java.io.Serializable {
 	public void setUserPhoneType(Integer userPhoneType) {
 		this.userPhoneType = userPhoneType;
 	}
-
+	@Column(name = "user_scale")
 	public Integer getUserScale() {
 		return this.userScale;
 	}
@@ -128,7 +141,7 @@ public class TUser implements java.io.Serializable {
 	public void setUserScale(Integer userScale) {
 		this.userScale = userScale;
 	}
-
+	@Column(name = "user_bank_default")
 	public Integer getUserBankDefault() {
 		return this.userBankDefault;
 	}
@@ -136,7 +149,7 @@ public class TUser implements java.io.Serializable {
 	public void setUserBankDefault(Integer userBankDefault) {
 		this.userBankDefault = userBankDefault;
 	}
-
+	@Column(name = "user_alipay_default")
 	public Integer getUserAlipayDefault() {
 		return this.userAlipayDefault;
 	}
@@ -144,7 +157,7 @@ public class TUser implements java.io.Serializable {
 	public void setUserAlipayDefault(Integer userAlipayDefault) {
 		this.userAlipayDefault = userAlipayDefault;
 	}
-
+	@Column(name = "user_weChatPay")
 	public String getUserWeChatPay() {
 		return this.userWeChatPay;
 	}
@@ -152,7 +165,7 @@ public class TUser implements java.io.Serializable {
 	public void setUserWeChatPay(String userWeChatPay) {
 		this.userWeChatPay = userWeChatPay;
 	}
-
+	@Column(name = "user_point_default")
 	public Integer getUserPointDefault() {
 		return this.userPointDefault;
 	}
@@ -160,7 +173,7 @@ public class TUser implements java.io.Serializable {
 	public void setUserPointDefault(Integer userPointDefault) {
 		this.userPointDefault = userPointDefault;
 	}
-
+	@Column(name = "user_regdate")
 	public Date getUserRegdate() {
 		return this.userRegdate;
 	}
@@ -168,7 +181,7 @@ public class TUser implements java.io.Serializable {
 	public void setUserRegdate(Date userRegdate) {
 		this.userRegdate = userRegdate;
 	}
-
+	@Column(name = "user_heat")
 	public String getUserHeat() {
 		return this.userHeat;
 	}
@@ -176,7 +189,7 @@ public class TUser implements java.io.Serializable {
 	public void setUserHeat(String userHeat) {
 		this.userHeat = userHeat;
 	}
-
+	@Column(name = "user_dispatchdefault_id")
 	public Integer getUserDispatchdefaultId() {
 		return this.userDispatchdefaultId;
 	}
@@ -184,7 +197,7 @@ public class TUser implements java.io.Serializable {
 	public void setUserDispatchdefaultId(Integer userDispatchdefaultId) {
 		this.userDispatchdefaultId = userDispatchdefaultId;
 	}
-
+	@Column(name = "user_appetite")
 	public Integer getUserAppetite() {
 		return this.userAppetite;
 	}
@@ -192,5 +205,10 @@ public class TUser implements java.io.Serializable {
 	public void setUserAppetite(Integer userAppetite) {
 		this.userAppetite = userAppetite;
 	}
-
+	@Override  
+    public String toString() {  
+        //两种方式都可以  
+        //return ReflectionToStringBuilder.toString(this);  
+        return ToStringBuilder.reflectionToString(this);  
+    }
 }

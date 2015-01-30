@@ -2,7 +2,7 @@ package com.weini.manage.business;
 
 import java.util.List;
 
-import com.weini.manage.business.GeneralService;
+import com.weini.manage.business.GeneralServive;
 import com.weini.manage.dao.AddressDao;
 import com.weini.manage.dao.MenuDao;
 import com.weini.manage.dao.VendorDao;
@@ -14,7 +14,7 @@ import com.weini.manage.entity.TProvince;
 import com.weini.manage.entity.TVendor;
 import com.weini.tools.HibernateSessionManager;
 
-public class MenuinfoService extends GeneralService {
+public class MenuinfoService extends GeneralServive {
 	private MenuDao menuDao;
 	private VendorDao vendorDao;
 	private AddressDao addressDao;
@@ -24,28 +24,18 @@ public class MenuinfoService extends GeneralService {
 		this.addressDao = new AddressDao(this.session);
 	}
 	public List<TMenuinfo> listMenuInfo(boolean isExistGood){
-		List<TMenuinfo> res = null;
-		try{
-			res = menuDao.listMenuInfo(isExistGood);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		List<TMenuinfo> res;
+		res = menuDao.listMenuInfo(isExistGood);
 		this.close();
 		return res;
 	}
 	public boolean updateMenuInfo(TMenuinfo menu,boolean isAdd){
 		boolean flag = false;
 		HibernateSessionManager.getThreadLocalTransaction();
-		try{
-			int res = menuDao.updateGoodInfo(menu, isAdd);
-			if(res > 0){
-				flag = true;
-				this.close();
-			}else{
-				this.roll();
-			}
-		}catch(Exception e){
-			e.printStackTrace();
+		flag = menuDao.updateGoodInfo(menu, isAdd);
+		if(flag){
+			this.close();
+		}else{
 			this.roll();
 		}
 		return flag;
@@ -56,84 +46,50 @@ public class MenuinfoService extends GeneralService {
 	 * @return 
 	 */
 	public TMenuinfo getEditMenuinfo(int indexID){
-		TMenuinfo menu = null;
-		try{
-			menu = menuDao.findMenuDetailByMenuID(indexID);
-			menu.setVendorName(vendorDao.findVendorNameByID(menu.getVendorId()));
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		TMenuinfo menu = new TMenuinfo();
+		menu = menuDao.findMenuDetailByMenuID(indexID);
+		menu.setVendorName(vendorDao.findVendorNameByID(menu.getVendorId()));
 		this.close();
 		return menu;
 	}
 	public boolean changeMenuStatus(int menuID,boolean status){
 		boolean flag = false;
 		HibernateSessionManager.getThreadLocalTransaction();
-		try{
-			int res = menuDao.changeMenuStatus(menuID, status);
-			if(res > 0){
-				this.close();
-				flag = true;
-			}else{
-				this.roll();
-			}
-		}catch(Exception e){
-			e.printStackTrace();
+		flag = menuDao.changeMenuStatus(menuID, status);
+		if(flag){
+			this.close();
+		}else{
 			this.roll();
 		}
 		return flag;
 	}
 	public List<TCity> listCitysByProvinceID(int proID){
-		List<TCity> res = null;
-		try{
-			res = addressDao.listCitysByProviceID(proID);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		List<TCity> res;
+		res = addressDao.listCitysByProviceID(proID);
 		this.close();
 		return res;
 	}
 	public List<TDistrict> listDistrictsByCityID(int cityID){
-		List<TDistrict> res = null;
-		try{
-			res = addressDao.listDistrictsByCityID(cityID);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		List<TDistrict> res;
+		res = addressDao.listDistrictsByCityID(cityID);
 		this.close();
 		return res;
 	}
 	public List<TBusinessarea> listBussByDistrictID(int disID){
-		List<TBusinessarea> res = null;
-		try{
-			res = addressDao.listBusinessareasByDistrictID(disID);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		List<TBusinessarea> res;
+		res = addressDao.listBusinessareasByDistrictID(disID);
 		this.close();
 		return res;
 	}
 	public List<TVendor> listVendorsByBussID(int busID){
-		List<TVendor> res = null;
-		try{
-			res = vendorDao.listVendorsByBussID(busID);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		List<TVendor> res;
+		res = vendorDao.listVendorsByBussID(busID);
 		this.close();
 		return res;
 	}
 	public List<TProvince> listProvinces(){
-		List<TProvince> res = null;
-		try{
-			res = addressDao.listProivces();
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		List<TProvince> res = addressDao.listProivces();
 		this.close();
 		return res;
 	}
-	
- 	
-	
 }

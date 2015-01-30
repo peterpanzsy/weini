@@ -20,8 +20,7 @@ import java.util.Date;
 import java.util.UUID;
 
 public class Tools {
-	 
-		/**
+	 /**
 	    *获得一个UUID
 	    *@return StringUUID
 	    */
@@ -179,13 +178,7 @@ public class Tools {
 	     return 2;
 	    }
 	    public static void main(String args[]){
-//	    	System.out.println(getType("4800.000000000001"));
-//	    	System.out.println(getUUID());
-	    	Calendar cal = Calendar.getInstance();
-			cal.setTime(new Date());
-			
-			Date a = Timestamp.valueOf("2015-01-29 21:45:18.0");
-			System.out.println(a.toString());
+	    	System.out.println(getType("4800.000000000001"));
 	    }
 	    public static int getPrintSource(){
 			Throwable t = new Throwable();

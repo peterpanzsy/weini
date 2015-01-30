@@ -2,13 +2,13 @@ package com.weini.manage.business;
 
 import java.util.List;
 
-import com.weini.manage.business.GeneralService;
+import com.weini.manage.business.GeneralServive;
 import com.weini.manage.dao.AdminDao;
 import com.weini.manage.entity.TAdmin;
 import com.weini.manage.entity.TAuth;
 import com.weini.tools.HibernateSessionManager;
 
-public class AdminService extends GeneralService{
+public class AdminService extends GeneralServive{
 	private AdminDao admindao  = new AdminDao(this.session);
 	
 	public List<TAuth> getAuthbyRoleList(int roleid){

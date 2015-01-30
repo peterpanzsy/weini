@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import com.weini.manage.entity.TBusinessarea;
 import com.weini.manage.entity.TCity;
 import com.weini.manage.entity.TDistrict;
+import com.weini.manage.entity.TOfficebuilding;
 import com.weini.manage.entity.TVendor;
 import com.weini.manage.entity.TProvince;
 
@@ -123,5 +124,14 @@ public class AddressDao{
 			  result.add(ven);
 		}
 		return result;
+	}
+	//----------------wang------------//
+	/**
+	 * 根据商圈列出所有的写字楼
+	 * @param bussId
+	 * @return
+	 */
+	public List<TOfficebuilding> listOfficebuildingByBusinessAreaId(int bussId){
+		return session.createQuery("select TOfficebuilding t where t.businessAreaId = ?").setInteger(0,bussId).list();
 	}
 }

@@ -3,10 +3,21 @@ package com.weini.manage.entity;
 
 import java.sql.Timestamp;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.hibernate.annotations.GenericGenerator;
+
 /**
  * TMenuinfo entity. @author MyEclipse Persistence Tools
  */
-
+@Entity   
+@Table(name="t_menuinfo")
 public class TMenuinfo implements java.io.Serializable {
 
 	// Fields
@@ -66,7 +77,10 @@ public class TMenuinfo implements java.io.Serializable {
 	}
 
 	// Property accessors
-
+	@Id              // 表示主键
+    @GenericGenerator(name = "generator", strategy = "increment")  
+    @GeneratedValue(generator = "generator")   // 自增长
+    @Column(name = "menuinfo_id") 
 	public Integer getMenuinfoId() {
 		return this.menuinfoId;
 	}
@@ -74,7 +88,7 @@ public class TMenuinfo implements java.io.Serializable {
 	public void setMenuinfoId(Integer menuinfoId) {
 		this.menuinfoId = menuinfoId;
 	}
-
+	@Column(name = "menuinfo_name",nullable = false)
 	public String getMenuinfoName() {
 		return this.menuinfoName;
 	}
@@ -82,7 +96,7 @@ public class TMenuinfo implements java.io.Serializable {
 	public void setMenuinfoName(String menuinfoName) {
 		this.menuinfoName = menuinfoName;
 	}
-
+	@Column(name = "vendor_id",nullable = false)
 	public Integer getVendorId() {
 		return this.vendorId;
 	}
@@ -90,7 +104,7 @@ public class TMenuinfo implements java.io.Serializable {
 	public void setVendorId(Integer vendorId) {
 		this.vendorId = vendorId;
 	}
-
+	@Column(name = "menuinfo_image1")
 	public String getMenuinfoImage1() {
 		return this.menuinfoImage1;
 	}
@@ -98,7 +112,7 @@ public class TMenuinfo implements java.io.Serializable {
 	public void setMenuinfoImage1(String menuinfoImage1) {
 		this.menuinfoImage1 = menuinfoImage1;
 	}
-
+	@Column(name = "menuinfo_image2")
 	public String getMenuinfoImage2() {
 		return this.menuinfoImage2;
 	}
@@ -106,7 +120,7 @@ public class TMenuinfo implements java.io.Serializable {
 	public void setMenuinfoImage2(String menuinfoImage2) {
 		this.menuinfoImage2 = menuinfoImage2;
 	}
-
+	@Column(name = "menuinfo_image3")
 	public String getMenuinfoImage3() {
 		return this.menuinfoImage3;
 	}
@@ -114,7 +128,7 @@ public class TMenuinfo implements java.io.Serializable {
 	public void setMenuinfoImage3(String menuinfoImage3) {
 		this.menuinfoImage3 = menuinfoImage3;
 	}
-
+	@Column(name = "menuinfo_image4")
 	public String getMenuinfoImage4() {
 		return this.menuinfoImage4;
 	}
@@ -122,7 +136,7 @@ public class TMenuinfo implements java.io.Serializable {
 	public void setMenuinfoImage4(String menuinfoImage4) {
 		this.menuinfoImage4 = menuinfoImage4;
 	}
-
+	@Column(name = "menuinfo_detail")
 	public String getMenuinfoDetail() {
 		return this.menuinfoDetail;
 	}
@@ -130,7 +144,7 @@ public class TMenuinfo implements java.io.Serializable {
 	public void setMenuinfoDetail(String menuinfoDetail) {
 		this.menuinfoDetail = menuinfoDetail;
 	}
-
+	@Column(name = "menuinfo_date",nullable = false)
 	public Timestamp getMenuinfoDate() {
 		return this.menuinfoDate;
 	}
@@ -138,7 +152,7 @@ public class TMenuinfo implements java.io.Serializable {
 	public void setMenuinfoDate(Timestamp menuinfoDate) {
 		this.menuinfoDate = menuinfoDate;
 	}
-
+	@Column(name = "menuinfo_status",nullable = false)
 	public Integer getMenuinfoStatus() {
 		return this.menuinfoStatus;
 	}
@@ -146,7 +160,7 @@ public class TMenuinfo implements java.io.Serializable {
 	public void setMenuinfoStatus(Integer menuinfoStatus) {
 		this.menuinfoStatus = menuinfoStatus;
 	}
-
+	@Column(name = "menuinfo_point")
 	public Float getMenuinfoPoint() {
 		return this.menuinfoPoint;
 	}
@@ -154,7 +168,7 @@ public class TMenuinfo implements java.io.Serializable {
 	public void setMenuinfoPoint(Float menuinfoPoint) {
 		this.menuinfoPoint = menuinfoPoint;
 	}
-
+	@Column(name = "menuinfo_type")
 	public Integer getMenuinfoType() {
 		return this.menuinfoType;
 	}
@@ -162,7 +176,7 @@ public class TMenuinfo implements java.io.Serializable {
 	public void setMenuinfoType(Integer menuinfoType) {
 		this.menuinfoType = menuinfoType;
 	}
-
+	@Column(name = "menuinfo_consumernum")
 	public Integer getMenuinfoConsumernum() {
 		return this.menuinfoConsumernum;
 	}
@@ -170,7 +184,7 @@ public class TMenuinfo implements java.io.Serializable {
 	public void setMenuinfoConsumernum(Integer menuinfoConsumernum) {
 		this.menuinfoConsumernum = menuinfoConsumernum;
 	}
-
+	@Transient
 	public String getVendorName() {
 		return vendorName;
 	}
@@ -178,7 +192,7 @@ public class TMenuinfo implements java.io.Serializable {
 	public void setVendorName(String vendorName) {
 		this.vendorName = vendorName;
 	}
-
+	@Transient
 	public String getBussinessName() {
 		return bussinessName;
 	}
@@ -186,12 +200,18 @@ public class TMenuinfo implements java.io.Serializable {
 	public void setBussinessName(String bussinessName) {
 		this.bussinessName = bussinessName;
 	}
+	@Transient
 	public int getOrder() {
 		return order;
 	}
-
 	public void setOrder(int order) {
 		this.order = order;
 	}
+   @Override  
+    public String toString() {  
+        //两种方式都可以  
+        //return ReflectionToStringBuilder.toString(this);  
+        return ToStringBuilder.reflectionToString(this);  
+    }
 
 }

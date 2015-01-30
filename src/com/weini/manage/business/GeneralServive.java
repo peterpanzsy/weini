@@ -4,11 +4,11 @@ import org.hibernate.Session;
 
 import com.weini.tools.HibernateSessionManager;
 
-public abstract class GeneralService {
+public abstract class GeneralServive {
 	
 	protected  Session session ;
 	
-	public GeneralService() {
+	public GeneralServive() {
 		session = HibernateSessionManager.getThreadLocalSession();
 	}
 	

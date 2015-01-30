@@ -1,10 +1,21 @@
 package com.weini.manage.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 // default package
+
+
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * TDispatching entity. @author MyEclipse Persistence Tools
  */
-
+@Entity   
+@Table(name="t_dispatching")
 public class TDispatching implements java.io.Serializable {
 
 	// Fields
@@ -50,15 +61,17 @@ public class TDispatching implements java.io.Serializable {
 	}
 
 	// Property accessors
-
+	@Id              // 表示主键
+    @GenericGenerator(name = "generator", strategy = "increment")  
+    @GeneratedValue(generator = "generator")   // 自增长
+    @Column(name = "dispatching_id") 
 	public Integer getDispatchingId() {
 		return this.dispatchingId;
 	}
-
 	public void setDispatchingId(Integer dispatchingId) {
 		this.dispatchingId = dispatchingId;
 	}
-
+	@Column(name = "dispatching_province",nullable = false)
 	public Integer getDispatchingProvince() {
 		return this.dispatchingProvince;
 	}
@@ -66,7 +79,7 @@ public class TDispatching implements java.io.Serializable {
 	public void setDispatchingProvince(Integer dispatchingProvince) {
 		this.dispatchingProvince = dispatchingProvince;
 	}
-
+	@Column(name = "dispatching_city",nullable = false)
 	public Integer getDispatchingCity() {
 		return this.dispatchingCity;
 	}
@@ -74,7 +87,7 @@ public class TDispatching implements java.io.Serializable {
 	public void setDispatchingCity(Integer dispatchingCity) {
 		this.dispatchingCity = dispatchingCity;
 	}
-
+	@Column(name = "dispatching_district",nullable = false)
 	public Integer getDispatchingDistrict() {
 		return this.dispatchingDistrict;
 	}
@@ -82,7 +95,7 @@ public class TDispatching implements java.io.Serializable {
 	public void setDispatchingDistrict(Integer dispatchingDistrict) {
 		this.dispatchingDistrict = dispatchingDistrict;
 	}
-
+	@Column(name = "dispatching_businessAreaid",nullable = false)
 	public Integer getDispatchingBusinessAreaid() {
 		return this.dispatchingBusinessAreaid;
 	}
@@ -90,7 +103,7 @@ public class TDispatching implements java.io.Serializable {
 	public void setDispatchingBusinessAreaid(Integer dispatchingBusinessAreaid) {
 		this.dispatchingBusinessAreaid = dispatchingBusinessAreaid;
 	}
-
+	@Column(name = "dispatching_officeBuilding",nullable = false)
 	public Integer getDispatchingOfficeBuilding() {
 		return this.dispatchingOfficeBuilding;
 	}
@@ -98,7 +111,7 @@ public class TDispatching implements java.io.Serializable {
 	public void setDispatchingOfficeBuilding(Integer dispatchingOfficeBuilding) {
 		this.dispatchingOfficeBuilding = dispatchingOfficeBuilding;
 	}
-
+	@Column(name = "dispatching_addressDetail")
 	public String getDispatchingAddressDetail() {
 		return this.dispatchingAddressDetail;
 	}
@@ -106,13 +119,19 @@ public class TDispatching implements java.io.Serializable {
 	public void setDispatchingAddressDetail(String dispatchingAddressDetail) {
 		this.dispatchingAddressDetail = dispatchingAddressDetail;
 	}
-
+	@Column(name = "user_id",nullable = false)
 	public Integer getUserId() {
 		return this.userId;
 	}
 
 	public void setUserId(Integer userId) {
 		this.userId = userId;
-	}
+	}	
+	@Override  
+    public String toString() {  
+        //两种方式都可以  
+        //return ReflectionToStringBuilder.toString(this);  
+        return ToStringBuilder.reflectionToString(this);  
+    }
 
 }

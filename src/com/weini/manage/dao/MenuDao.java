@@ -9,6 +9,9 @@ import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
+import com.weini.manage.entity.TDishes;
+import com.weini.manage.entity.TMenuCookinfo;
+import com.weini.manage.entity.TMenuDishes;
 import com.weini.manage.entity.TMenuinfo;
 import com.weini.tools.HibernateSessionManager;
 
@@ -18,38 +21,7 @@ public class MenuDao{
 	public MenuDao(Session sess) {
 		this.session = sess;
 	}
-	/**
-	 * 获取菜品图片文件的路径
-	 * @param menuId 菜品id
-	 * @param num 图片id
-	 * @return 返回图片路径
-	 */
-	public String getFileName(int menuId,int num){
-		SQLQuery q;
-		String sql = ("SELECT menuinfo_image"+num+" FROM t_menuinfo t WHERE t.menuinfo_id = ?" );
-		q =session.createSQLQuery(sql);
-		q.setInteger(0, menuId);
-		return (String) q.uniqueResult();
-	}
-//	/**
-//	 * 根据菜品id得到menu的详细信息
-//	 * @param menuId
-//	 * @return
-//	 */
-//	public TMenuinfo menuDetail(int menuId) {
-//		TMenuinfo m = new TMenuinfo();
-//		SQLQuery q;
-//		String sql = ("SELECT menuinfo_id,menuinfo_detail,menuinfo_name,menuinfo_point FROM t_menuinfo t "
-//				+ "WHERE t.menuinfo_id =?;" );
-//		q =session.createSQLQuery(sql);
-//		q.setInteger(0, menuId);
-//		Object[] row = (Object[]) q.uniqueResult();
-//		m.setMenuId((Integer)row[0]);
-//		m.setDetail((String)row[1]);
-//		m.setName((String)row[2]);
-//		m.setPoint((Float)row[3]);
-//		return m;
-//	}
+
 	/**
 	 * 开启事务
 	 * 更新菜品的评分
@@ -57,38 +29,26 @@ public class MenuDao{
 	 * @param point 菜品评分
 	 * @return 返回执行结果
 	 */
-	public Integer updatePoint(int menuId, Float point) {
-		Query q3 = session.createSQLQuery("UPDATE t_menuinfo SET menuinfo_point =(menuinfo_point*menuinfo_usernum+ ?)/(menuinfo_usernum+1), menuinfo_usernum = (menuinfo_usernum+1) WHERE menuinfo_id = ?;");
+	public boolean updatePoint(int menuId, Float point) {
+		Query q3 = session.createSQLQuery("UPDATE t_menuinfo SET menuinfo_point =(menuinfo_point*menuinfo_consumernum+ ?)/(menuinfo_consumernum+1), menuinfo_consumernum = (menuinfo_consumernum+1) WHERE menuinfo_id = ?;");
 		q3.setFloat(0, point);
 		q3.setInteger(1, menuId);
-		return q3.executeUpdate();
+		try {
+			if(q3.executeUpdate()>0)
+				return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
+
 	/**
 	 * 根据menuID获取menu的详细信息
 	 * @param menuId 菜品id
 	 * @return 返回菜品类
 	 */
 	public TMenuinfo findMenuDetailByMenuID(int menuId) {
-		TMenuinfo m = new TMenuinfo();
-		SQLQuery q;
-		String sql = ("SELECT menuinfo_id,menuinfo_name,vendor_id,menuinfo_image1,menuinfo_image2,"
-				+ "menuinfo_image3,menuinfo_image4,menuinfo_detail,menuinfo_date,menuinfo_status,menuinfo_point FROM t_menuinfo t "
-				+ "WHERE t.menuinfo_id =?;" );
-		q =session.createSQLQuery(sql);
-		q.setInteger(0, menuId);
-		Object[] row = (Object[]) q.uniqueResult();
-		m.setMenuinfoId((Integer)row[0]);
-		m.setMenuinfoName((String)row[1]);
-		m.setVendorId((Integer)row[2]);
-		m.setMenuinfoImage1((String)row[3]);
-		m.setMenuinfoImage2((String)row[4]);
-		m.setMenuinfoImage3((String)row[5]);
-		m.setMenuinfoImage4((String)row[6]);
-		m.setMenuinfoDetail((String)row[7]);
-		m.setMenuinfoDate((Timestamp)row[8]);
-		m.setMenuinfoStatus((Integer)row[9]);
-		m.setMenuinfoPoint((Float)row[10]);
-		return m;
+		return (TMenuinfo) session.createQuery("from TMenuinfo t where t.menuinfoId = ?").setInteger(0, menuId).uniqueResult();
 	}
 	/**
 	 * 列出所有的删除或者未删除的菜品信息
@@ -120,11 +80,19 @@ public class MenuDao{
 	 * @param id 菜品id
 	 * @return 修改结果
 	 */
-	public int changeMenuStatus(int id,boolean isDelete) {
+	public boolean changeMenuStatus(int id,boolean isDelete) {
+		boolean flag = false;
 		Query q = session.createSQLQuery(" update t_menuinfo set menuinfo_status = ? where menuinfo_id = ?");
 		q.setParameter(0, isDelete);
 		q.setParameter(1, id);
-		return q.executeUpdate();
+		int result;
+		try{
+		result=q.executeUpdate();
+		if(result > 0) flag = true;
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return flag;
 	}
 	/**
 	 * 开启事务
@@ -133,7 +101,8 @@ public class MenuDao{
 	 * @param isAdd 增加菜品true，否则为false
 	 * @return
 	 */
-	public int updateGoodInfo(TMenuinfo menu,boolean isAdd) {
+	public boolean updateGoodInfo(TMenuinfo menu,boolean isAdd) {
+		boolean flag = false;
 		Query q;
 		if(isAdd){
 			q = session.createSQLQuery("insert into t_menuinfo(vendor_id, menuinfo_image1,menuinfo_image2,menuinfo_image3,menuinfo_image4,menuinfo_detail,menuinfo_name,menuinfo_date,menuinfo_status) value (?,?,?,?,?,?,?,?,1)");
@@ -153,7 +122,265 @@ public class MenuDao{
 		if(!isAdd){
 			q.setParameter(8,menu.getMenuinfoId());
 		}
-		return q.executeUpdate();
+		int result;
+		try{
+			result=q.executeUpdate();
+			if(result > 0) flag = true;
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return flag;
+	}
+	//----------------------------和dishes有关的东东---------------------
+	/**
+	 * 根据菜单的id来得到构成菜单组成
+	 * @param menuId 
+	 * @return 午餐组成列表
+	 */
+	public List<TDishes> findAllDishByMenuinfoId(Integer menuId){
+		SQLQuery q =session.createSQLQuery( "SELECT t1.dishes_id,t1.dishes_name,t1.dishes_series_1,t1.dishes_series_2"
+				+ " FROM t_dishes t1"
+				+ " WHERE  t1.dishes_id IN"
+				+ "	(SELECT t2.dishes_id FROM t_menu_dishes t2"
+				+ " WHERE t2.menuinfo_id=?)");
+		q.setInteger(0, menuId);
+		List l = q.list();
+		List<TDishes> re = new ArrayList<>();
+		for(int i=0 ;i<l.size();i++){
+			Object row[] = (Object[]) l.get(i);
+			TDishes d = new TDishes((String)row[1],(String)row[2],(String)row[3]);
+			d.setDishesId((Integer)row[0]);
+			re.add(d);
+		}
+		return re;
+	}
+	/**
+	 * 添加或更新dishes 之前不存在，添加；之前存在更新
+	 * @param dish 
+	 * @return
+	 */
+	public boolean updateDishes(TDishes dish){
+		try {
+			session.saveOrUpdate(dish);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
+	/**
+	 * 删除菜肴
+	 * @param dish
+	 * @return
+	 */
+	public boolean delDishes(TDishes dish){
+		try {
+			session.delete(dish);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	/**
+	 * 添加午餐和菜肴之间的对应关系,如果关系已存在不进行插入，否则直接插入
+	 * @param dishId  菜肴Id
+	 * @param menuId  午餐Id
+	 * @return  如果之前关系已存在，或者插入失败，返回false
+	 * 			插入成功 返回true
+	 */
+	public boolean addMenuDishes(Integer dishId,Integer menuId){
+		SQLQuery q = session.createSQLQuery("INSERT INTO t_menu_dishes(menuinfo_id,dishes_id)"
+				+ " SELECT ?,? FROM DUAL WHERE NOT EXISTS"
+				+ "(SELECT * FROM t_menu_dishes WHERE menuinfo_id = ? AND dishes_id=?)");
+		q.setInteger(0, menuId);
+		q.setInteger(1, dishId);
+		q.setInteger(2, menuId);
+		q.setInteger(3, dishId);
+		try {
+			if(q.executeUpdate()!=0){
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	/**
+	 * 更新menuinfo和dishesinfo之间的关系
+	 * @param t TMenuDishesinfo对象
+	 * @return
+	 */
+	public boolean updateMenuDishes(TMenuDishes t){
+		if(t.getMenuDishesId()!=null&&t.getDishesId()!=null&&t.getMenuinfoId()!=null){
+			SQLQuery q =session.createSQLQuery(" UPDATE t_menu_dishes SET menuinfo_id= ?,dishes_id = ? WHERE menu_dishes_id= ? ");
+			q.setInteger(0,t.getMenuinfoId());
+			q.setInteger(1, t.getDishesId());
+			q.setInteger(2, t.getMenuDishesId());
+			try {
+				if(q.executeUpdate()>0){
+					return true;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return false;
+		}
+		return false;
+	}
+	/**
+	 * 删除午餐和菜肴之间的对应关系
+	 * @param dishId
+	 * @param menuId
+	 * @return
+	 */
+	public boolean delMenuDishes(Integer dishId,Integer menuId){
+		SQLQuery q = session.createSQLQuery("DELETE FROM t_menu_dishes WHERE menuinfo_id =? AND dishes_id =?");
+		q.setInteger(0, menuId);
+		q.setInteger(1, dishId);
+		try {
+			if(q.executeUpdate()!=0){
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	/**
+	 * 删除t_menu_dishes表中和dishId有关的所有内容
+	 * @param dishId
+	 * @param menuId
+	 * @return
+	 */
+	public boolean delMenuDishesByDishId(Integer dishId){
+		SQLQuery q = session.createSQLQuery("DELETE FROM t_menu_dishes dishes_id =?");
+		q.setInteger(0, dishId);
+		try {
+			if(q.executeUpdate()!=0){
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	/**
+	 * 删除t_menu_dishes表中和menuId有关的所有内容
+	 * @param dishId
+	 * @param menuId
+	 * @return
+	 */
+	public boolean delMenuDishesByMenuId(Integer menuId){
+		SQLQuery q = session.createSQLQuery("DELETE FROM t_menu_dishes WHERE menuinfo_id =? ");
+		q.setInteger(0, menuId);
+		try {
+			if(q.executeUpdate()!=0){
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	//---------------------和MenuCook有关的东东-------------
+	/**
+	 * 设置cookinfo和menuinfo之间的关系，即表t_menu_cookinfo
+	 * @param cookId
+	 * @param menuId
+	 * @return
+	 */
+	public boolean addMenuCook(Integer cookId,Integer menuId){
+		SQLQuery q = session.createSQLQuery("INSERT INTO  t_menu_cookinfo(menuinfo_id,cookinfo_id)"
+				+ " SELECT ?,? FROM DUAL WHERE NOT EXISTS"
+				+ " (SELECT * FROM t_menu_cookinfo WHERE menuinfo_id = ? AND cookinfo_id= ?) ");
+		q.setInteger(0, menuId);
+		q.setInteger(1, cookId);
+		q.setInteger(2, menuId);
+		q.setInteger(3, cookId);
+		try {
+			if(q.executeUpdate()!=0){
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	/**
+	 * 更新menuinfo和cookinfo之间的关系
+	 * @param t TMenuCookinfo对象
+	 * @return
+	 */
+	public boolean updateMenuCook(TMenuCookinfo t){
+		if(t.getMenuCookinfoid()!=null&&t.getCookinfoId()!=null&&t.getMenuinfoId()!=null){
+			SQLQuery q =session.createSQLQuery(" UPDATE t_menu_cookinfo SET menuinfo_id= ?,cookinfo_id = ? WHERE menu_cookinfoid= ? ");
+			q.setInteger(0,t.getMenuinfoId());
+			q.setInteger(1, t.getCookinfoId());
+			q.setInteger(2, t.getMenuCookinfoid());
+			try {
+				if(q.executeUpdate()>0){
+					return true;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return false;
+		}
+		return false;
+	}
+	/**
+	 * 删除cookInfo和menuInfo之间的对应关系
+	 * @param cookId
+	 * @param menuId
+	 * @return
+	 */
+	public boolean delMenuCook(Integer cookId,Integer menuId){
+		SQLQuery q = session.createSQLQuery(" DELETE FROM t_menu_cookinfo WHERE menuinfo_id =? AND cookinfo_id =?");
+		q.setInteger(0, menuId);
+		q.setInteger(1, cookId);
+		try {
+			if(q.executeUpdate()!=0){
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	/**
+	 * 删除t_menu_cookinfo表中和cookId有关的所有内容
+	 * @param cookId
+	 * @return
+	 */
+	public boolean delMenuCookByCookId(Integer cookId){
+		SQLQuery q = session.createSQLQuery("DELETE FROM t_menu_cookinfo WHERE cookinfo_id =?");
+		q.setInteger(0, cookId);
+		try {
+			if(q.executeUpdate()!=0){
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	/**
+	 * 删除t_menu_cookinfo表中和menuId有关的所有内容
+	 * @param menuId
+	 * @return
+	 */
+	public boolean delMenuCookByMenuId(Integer menuId){
+		SQLQuery q = session.createSQLQuery("DELETE FROM t_menu_cookinfo WHERE menuinfo_id = ? ");
+		q.setInteger(0, menuId);
+		try {
+			if(q.executeUpdate()!=0){
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 }
