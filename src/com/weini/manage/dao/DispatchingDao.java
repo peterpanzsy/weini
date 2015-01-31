@@ -29,6 +29,20 @@ public class DispatchingDao {
 		}
 	}
 	/**
+	 * 保存或更新t_dispatching的TDispatching对象
+	 * @param dis
+	 * @return
+	 */
+	public boolean addDispatching(TDispatching dis){
+		try {
+			session.save(dis);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	/**
 	 * 删除dis
 	 * @param dis
 	 * @return

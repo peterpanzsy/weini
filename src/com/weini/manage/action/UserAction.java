@@ -22,9 +22,7 @@ public class UserAction extends ActionSupport{
 	List<TUser> dataList;
 	
 	private int order;
-    private int userID;
     private String userName;
-    private int userGender;
     private String userAddress;
     private String userPhoneNumber;
     private int userPhoneType;
@@ -45,6 +43,12 @@ public class UserAction extends ActionSupport{
 	
 	private int pointTotal;
 	//--------wang------------//
+	//请求的参数
+	private int menutypeId; //修改忌口
+	private Integer userId;
+    private int userGender;
+    private Date userBirthday;
+	//返回的参数
 	private TUser user;
 	private TUserextra userextra;
 	private int code=0;  //状态，0-失败 ，1-成功
@@ -86,7 +90,7 @@ public class UserAction extends ActionSupport{
 	 */
 	public String findUserInfo(){
 		try {
-			TwoEntity two = userService.findUserInfo(userID);
+			TwoEntity two = userService.findUserInfo(userId);
 			user = (TUser)two.getIndex1();
 			userextra = (TUserextra)two.getIndex2();
 			if(user==null){
@@ -102,6 +106,31 @@ public class UserAction extends ActionSupport{
 		}
 		return SUCCESS;
 	}
+	/**
+	 * 修改用户忌口
+	 * @return
+	 */
+	public String updateUserNotEat(){
+		code = userService.updateUserHeat(userId, menutypeId);
+		return SUCCESS;
+	}
+	/**
+	 * 修改用户性别
+	 * @return
+	 */
+	public String updateUserGender(){
+		code = userService.updateUserGender(userId,userGender);
+		return SUCCESS;
+	}
+	/**
+	 * 修改用户生日
+	 * @return
+	 */
+	public String updateUserBirthday(){
+		System.out.println(userBirthday);
+		code = userService.updateUserBirthday(userId,userBirthday);
+		return SUCCESS;
+	}
 	public String getMark() {
 		return mark;
 	}
@@ -113,12 +142,6 @@ public class UserAction extends ActionSupport{
 	}
 	public void setOrder(int order) {
 		this.order = order;
-	}
-	public int getUserID() {
-		return userID;
-	}
-	public void setUserID(int userID) {
-		this.userID = userID;
 	}
 	public String getUserName() {
 		return userName;
@@ -239,5 +262,23 @@ public class UserAction extends ActionSupport{
 	}
 	public void setUserextra(TUserextra userextra) {
 		this.userextra = userextra;
+	}
+	public int getMenutypeId() {
+		return menutypeId;
+	}
+	public void setMenutypeId(int menutypeId) {
+		this.menutypeId = menutypeId;
+	}
+	public Integer getUserId() {
+		return userId;
+	}
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+	public Date getUserBirthday() {
+		return userBirthday;
+	}
+	public void setUserBirthday(Date userBirthday) {
+		this.userBirthday = userBirthday;
 	}
 }

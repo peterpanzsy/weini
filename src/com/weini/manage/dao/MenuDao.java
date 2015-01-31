@@ -383,4 +383,21 @@ public class MenuDao{
 		}
 		return false;
 	}
+	/**
+	 * 根据menutypeId来查找menutypename
+	 * @param userHeat
+	 * @return
+	 */
+	public String getMenutype(Integer menutypeId) {
+		SQLQuery q = session.createSQLQuery("select menutype_desc from t_menutype where menutype_id = ?");
+		q.setInteger(0,menutypeId);
+		return (String) q.uniqueResult();
+	}
+	/**
+	 * 列出所有t_menutype内容
+	 * @return
+	 */
+	public List listMenutype() {
+		return session.createQuery("from TMenutype").list();
+	}
 }

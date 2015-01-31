@@ -267,7 +267,7 @@ public class UserDao{
 		if(userextra.getUserId()==null){
 			return false;
 		}else{
-			session.update(userextra);
+			session.saveOrUpdate(userextra);
 			return true;
 		}
 	}

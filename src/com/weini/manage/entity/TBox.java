@@ -1,10 +1,22 @@
 package com.weini.manage.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 // default package
+
+
+
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * TBox entity. @author MyEclipse Persistence Tools
  */
-
+@Entity   
+@Table(name="t_box")
 public class TBox implements java.io.Serializable {
 
 	// Fields
@@ -14,61 +26,53 @@ public class TBox implements java.io.Serializable {
 	private Float boxPrice;
 	private Integer boxCityid;
 	private String boxImage1;
-	private String boxDesc1;
-	private String boxDesc2;
-	private String boxDesc3;
-	private String boxDesc4;
-	private Integer boxType;
-	private String boxTypename;
-
+	private String boxdesc1;
+	private String boxdesc2;
+	private String boxdesc3;
+	private String boxdesc4;
+	private String boxtypename;
+	private Integer boxtype;
 	// Constructors
 
 	/** default constructor */
 	public TBox() {
 	}
 
-	/** minimal constructor */
-	public TBox(Integer boxGender, Float boxPrice, Integer boxCityid,
-			String boxImage1, String boxDesc1, String boxDesc2,
-			String boxDesc3, String boxDesc4, Integer boxType) {
-		this.boxGender = boxGender;
-		this.boxPrice = boxPrice;
-		this.boxCityid = boxCityid;
-		this.boxImage1 = boxImage1;
-		this.boxDesc1 = boxDesc1;
-		this.boxDesc2 = boxDesc2;
-		this.boxDesc3 = boxDesc3;
-		this.boxDesc4 = boxDesc4;
-		this.boxType = boxType;
-	}
-
 	/** full constructor */
-	public TBox(Integer boxGender, Float boxPrice, Integer boxCityid,
-			String boxImage1, String boxDesc1, String boxDesc2,
-			String boxDesc3, String boxDesc4, Integer boxType,
-			String boxTypename) {
-		this.boxGender = boxGender;
-		this.boxPrice = boxPrice;
-		this.boxCityid = boxCityid;
-		this.boxImage1 = boxImage1;
-		this.boxDesc1 = boxDesc1;
-		this.boxDesc2 = boxDesc2;
-		this.boxDesc3 = boxDesc3;
-		this.boxDesc4 = boxDesc4;
-		this.boxType = boxType;
-		this.boxTypename = boxTypename;
-	}
+	
 
 	// Property accessors
 
+	public TBox(Integer boxGender, Float boxPrice, Integer boxCityid,
+			String boxImage1, String boxdesc1, String boxdesc2,
+			String boxdesc3, String boxdesc4, String boxtypename,
+			Integer boxtype) {
+		super();
+		this.boxGender = boxGender;
+		this.boxPrice = boxPrice;
+		this.boxCityid = boxCityid;
+		this.boxImage1 = boxImage1;
+		this.boxdesc1 = boxdesc1;
+		this.boxdesc2 = boxdesc2;
+		this.boxdesc3 = boxdesc3;
+		this.boxdesc4 = boxdesc4;
+		this.boxtypename = boxtypename;
+		this.boxtype = boxtype;
+	}
+
+	@Id              // 表示主键
+    @GenericGenerator(name = "generator", strategy = "increment")  
+    @GeneratedValue(generator = "generator")   // 自增长
+    @Column(name = "box_id")    
 	public Integer getBoxId() {
 		return this.boxId;
 	}
 
+
 	public void setBoxId(Integer boxId) {
 		this.boxId = boxId;
 	}
-
+	@Column(name = "box_gender")
 	public Integer getBoxGender() {
 		return this.boxGender;
 	}
@@ -76,7 +80,7 @@ public class TBox implements java.io.Serializable {
 	public void setBoxGender(Integer boxGender) {
 		this.boxGender = boxGender;
 	}
-
+	@Column(name = "box_price")
 	public Float getBoxPrice() {
 		return this.boxPrice;
 	}
@@ -84,7 +88,7 @@ public class TBox implements java.io.Serializable {
 	public void setBoxPrice(Float boxPrice) {
 		this.boxPrice = boxPrice;
 	}
-
+	@Column(name = "box_cityid")
 	public Integer getBoxCityid() {
 		return this.boxCityid;
 	}
@@ -92,61 +96,68 @@ public class TBox implements java.io.Serializable {
 	public void setBoxCityid(Integer boxCityid) {
 		this.boxCityid = boxCityid;
 	}
-
+	@Column(name = "box_image1")
 	public String getBoxImage1() {
 		return this.boxImage1;
 	}
-
+	
 	public void setBoxImage1(String boxImage1) {
 		this.boxImage1 = boxImage1;
 	}
 
-	public String getBoxDesc1() {
-		return this.boxDesc1;
+   @Override  
+    public String toString() {  
+        //两种方式都可以  
+        //return ReflectionToStringBuilder.toString(this);  
+        return ToStringBuilder.reflectionToString(this);  
+    }
+	@Column(name = "box_type")
+	public Integer getBoxtype() {
+		return boxtype;
 	}
 
-	public void setBoxDesc1(String boxDesc1) {
-		this.boxDesc1 = boxDesc1;
+	public void setBoxtype(Integer boxtype) {
+		this.boxtype = boxtype;
+	}
+	@Column(name = "box_desc1")
+	public String getBoxdesc1() {
+		return boxdesc1;
 	}
 
-	public String getBoxDesc2() {
-		return this.boxDesc2;
+	public void setBoxdesc1(String boxdesc1) {
+		this.boxdesc1 = boxdesc1;
+	}
+	@Column(name = "box_desc2")
+	public String getBoxdesc2() {
+		return boxdesc2;
 	}
 
-	public void setBoxDesc2(String boxDesc2) {
-		this.boxDesc2 = boxDesc2;
+	public void setBoxdesc2(String boxdesc2) {
+		this.boxdesc2 = boxdesc2;
+	}
+	@Column(name = "box_desc3")
+	public String getBoxdesc3() {
+		return boxdesc3;
+	}
+	
+	public void setBoxdesc3(String boxdesc3) {
+		this.boxdesc3 = boxdesc3;
+	}
+	@Column(name = "box_desc4")
+	public String getBoxdesc4() {
+		return boxdesc4;
 	}
 
-	public String getBoxDesc3() {
-		return this.boxDesc3;
+	public void setBoxdesc4(String boxdesc4) {
+		this.boxdesc4 = boxdesc4;
+	}
+	@Column(name = "box_typename")
+	public String getBoxtypename() {
+		return boxtypename;
 	}
 
-	public void setBoxDesc3(String boxDesc3) {
-		this.boxDesc3 = boxDesc3;
-	}
-
-	public String getBoxDesc4() {
-		return this.boxDesc4;
-	}
-
-	public void setBoxDesc4(String boxDesc4) {
-		this.boxDesc4 = boxDesc4;
-	}
-
-	public Integer getBoxType() {
-		return this.boxType;
-	}
-
-	public void setBoxType(Integer boxType) {
-		this.boxType = boxType;
-	}
-
-	public String getBoxTypename() {
-		return this.boxTypename;
-	}
-
-	public void setBoxTypename(String boxTypename) {
-		this.boxTypename = boxTypename;
-	}
+	public void setBoxtypename(String boxtypename) {
+		this.boxtypename = boxtypename;
+	} 
 
 }

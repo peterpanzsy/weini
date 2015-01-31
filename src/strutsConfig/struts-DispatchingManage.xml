@@ -2,10 +2,15 @@
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
 	<package name="dispatchingmanage" extends="json-default" namespace="/dispatchingManage" >
-		<!-- 列出所有的盒子模型 -->
 		 <action name="addDispatching" class="com.weini.manage.action.DispatchingManageAction" method="addDispatching">
 			<result name="success" type="json">	
 				<param name="includeProperties">code</param>			
+			</result>
+		</action>
+		<!-- 送餐地址列表 -->
+		<action name="listDispatching" class="com.weini.manage.action.DispatchingManageAction" method="listDispatching">
+			<result name="success" type="json">	
+				<param name="includeProperties">list.*</param>			
 			</result>
 		</action>
 	</package>

@@ -3,7 +3,6 @@ package com.weini.manage.action;
 import java.util.List;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.weini.manage.business.BoxService;
 import com.weini.manage.business.DispatchingService;
 import com.weini.manage.entity.TDispatching;
 import com.weini.manage.entity.TDispatchingstatus;
@@ -35,11 +34,18 @@ public class DispatchingManageAction extends ActionSupport {
 	 * @return
 	 */
 	public String addDispatching(){
-		TDispatching temp = new TDispatching(dispatchingProvince, dispatchingCity, dispatchingDistrict,
-						dispatchingBusinessAreaid, dispatchingOfficeBuilding,dispatchingAddressDetail,userId,dispatchingPhoneNum);
-		if(disService.addDistaching(temp)){
+		if(disService.addDistaching(dispatchingProvince, dispatchingCity, dispatchingDistrict,
+				dispatchingBusinessAreaid, dispatchingOfficeBuilding,dispatchingAddressDetail,userId,dispatchingPhoneNum)){
 			code = 1;
 		}
+		return SUCCESS;
+	}
+	/**
+	 * 根据用户Id列出所有的送餐地址
+	 * @return
+	 */
+	public String listDispatching(){
+		list = disService.findDispatchingByUserId(userId);
 		return SUCCESS;
 	}
 	public DispatchingService getDisService() {

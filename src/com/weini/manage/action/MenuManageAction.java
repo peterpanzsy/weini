@@ -7,6 +7,7 @@ import com.weini.manage.business.BoxService;
 import com.weini.manage.business.MenuinfoService;
 import com.weini.manage.entity.TBox;
 import com.weini.manage.entity.TMenuinfo;
+import com.weini.manage.entity.TMenutype;
 
 public class MenuManageAction extends ActionSupport {
 	
@@ -17,6 +18,7 @@ public class MenuManageAction extends ActionSupport {
 	private Integer menuinfoId;
 	private TMenuinfo menu;
 	private List list;
+	private TMenutype menutype;
 	/**
 	 * 
 	 */
@@ -33,6 +35,16 @@ public class MenuManageAction extends ActionSupport {
 			return "fail";
 		}
 		code = 1;
+		return SUCCESS;
+	}
+	
+	public String listMenutype(){
+		list = menuService.listMenutype();
+		if(list.size()==0){
+			code = 0;
+			return "fail";
+		}
+		code = 1 ;
 		return SUCCESS;
 	}
 
@@ -69,6 +81,14 @@ public class MenuManageAction extends ActionSupport {
 
 	public void setResult(String result) {
 		this.result = result;
+	}
+
+	public TMenutype getMenutype() {
+		return menutype;
+	}
+
+	public void setMenutype(TMenutype menutype) {
+		this.menutype = menutype;
 	}
 	
 	

@@ -104,4 +104,13 @@ public class MenuinfoService extends GeneralService {
 			return menu;
 		}
 	}
+	/**
+	 * 得到所有的menutype
+	 * @return
+	 */
+	public List listMenutype() {
+		List l = menuDao.listMenutype();
+		this.close();
+		return l;
+	}
 }

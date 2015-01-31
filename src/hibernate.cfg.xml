@@ -45,5 +45,7 @@
        <mapping class="com.weini.manage.entity.TAlipay"></mapping>
        <mapping class="com.weini.manage.entity.TBank"></mapping>
        <mapping class="com.weini.manage.entity.TOfficebuilding"></mapping>
+       <mapping class="com.weini.manage.entity.TMenutype"></mapping>
+     
 	</session-factory>
 </hibernate-configuration>

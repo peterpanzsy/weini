@@ -134,4 +134,54 @@ public class AddressDao{
 	public List<TOfficebuilding> listOfficebuildingByBusinessAreaId(int bussId){
 		return session.createQuery("select TOfficebuilding t where t.businessAreaId = ?").setInteger(0,bussId).list();
 	}
+	/**
+	 * 根据省份Id来查找省份名称
+	 * @param dispatchingProvince
+	 * @return
+	 */
+	public String findProvince(Integer dispatchingProvince) {
+		SQLQuery q = session.createSQLQuery("select province_name from t_province where province_id = ?");
+		q.setInteger(0,dispatchingProvince);
+		return (String) q.uniqueResult();
+	}
+	/**
+	 * 根据城市Id来查找城市名称
+	 * @param dispatchingCity
+	 * @return
+	 */
+	public String findCity(Integer dispatchingCity) {
+		SQLQuery q = session.createSQLQuery("select city_name from t_city where city_id = ?");
+		q.setInteger(0,dispatchingCity);
+		return (String) q.uniqueResult();
+	}
+	/**
+	 * 根据区县Id来查找区县名称
+	 * @param dispatchingDistrict
+	 * @return
+	 */
+	public String findDistrict(Integer dispatchingDistrict) {
+		SQLQuery q = session.createSQLQuery("select district_name from t_district where district_id = ?");
+		q.setInteger(0,dispatchingDistrict);
+		return (String) q.uniqueResult();
+	}
+	/**
+	 * 根据商业区Id来查找商业区名称
+	 * @param dispatchingBusinessAreaid
+	 * @return
+	 */
+	public String findBusiness(Integer dispatchingBusinessAreaid) {
+		SQLQuery q = session.createSQLQuery("select businessArea_name from t_businessarea where businessArea_id = ?");
+		q.setInteger(0,dispatchingBusinessAreaid);
+		return (String) q.uniqueResult();
+	}
+	/**
+	 * 根据写字楼Id得到写字楼的名称
+	 * @param dispatchingOfficeBuilding
+	 * @return
+	 */
+	public String findOffice(Integer dispatchingOfficeBuilding) {
+		SQLQuery q = session.createSQLQuery("select officeBuilding_name from t_officebuilding where officeBuilding_id = ?");
+		q.setInteger(0,dispatchingOfficeBuilding);
+		return (String) q.uniqueResult();
+	}
 }

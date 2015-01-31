@@ -13,5 +13,14 @@
 				</param>			
 			</result>
 		</action>
+		<!-- 列出所有menutype  -->	
+		<action name="listMenutype" class="com.weini.manage.action.MenuManageAction" method="listMenutype">
+			<result name="success" type="json">	
+				<param name="includeProperties">code,list.*</param>			
+			</result>
+			<result name="fail" type="json">	
+				<param name="includeProperties">code,result</param>			
+			</result>
+		</action>
 	</package>
 </struts>    
