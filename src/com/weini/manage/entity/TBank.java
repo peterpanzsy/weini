@@ -1,19 +1,10 @@
 package com.weini.manage.entity;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
 // default package
-
-import org.hibernate.annotations.GenericGenerator;
 
 /**
  * TBank entity. @author MyEclipse Persistence Tools
  */
-@Entity   
-@Table(name="t_bank")
+
 public class TBank implements java.io.Serializable {
 
 	// Fields
@@ -47,10 +38,7 @@ public class TBank implements java.io.Serializable {
 	}
 
 	// Property accessors
-	@Id              // 表示主键
-    @GenericGenerator(name = "generator", strategy = "increment")  
-    @GeneratedValue(generator = "generator")   // 自增长
-    @Column(name = "bank_id") 
+
 	public Integer getBankId() {
 		return this.bankId;
 	}
@@ -58,7 +46,7 @@ public class TBank implements java.io.Serializable {
 	public void setBankId(Integer bankId) {
 		this.bankId = bankId;
 	}
-	@Column(name = "bank_username",nullable = false)
+
 	public String getBankUsername() {
 		return this.bankUsername;
 	}
@@ -66,7 +54,7 @@ public class TBank implements java.io.Serializable {
 	public void setBankUsername(String bankUsername) {
 		this.bankUsername = bankUsername;
 	}
-	@Column(name = "bank_cardNumber",nullable = false)
+
 	public String getBankCardNumber() {
 		return this.bankCardNumber;
 	}
@@ -74,7 +62,7 @@ public class TBank implements java.io.Serializable {
 	public void setBankCardNumber(String bankCardNumber) {
 		this.bankCardNumber = bankCardNumber;
 	}
-	@Column(name = "alipay_username",nullable = false)
+
 	public String getBankBankname() {
 		return this.bankBankname;
 	}
@@ -82,7 +70,7 @@ public class TBank implements java.io.Serializable {
 	public void setBankBankname(String bankBankname) {
 		this.bankBankname = bankBankname;
 	}
-	@Column(name = "bank_bankname",nullable = false)
+
 	public String getBankSubBankname() {
 		return this.bankSubBankname;
 	}
@@ -90,7 +78,7 @@ public class TBank implements java.io.Serializable {
 	public void setBankSubBankname(String bankSubBankname) {
 		this.bankSubBankname = bankSubBankname;
 	}
-	@Column(name = "bank_sub_bankAddress",nullable = false)
+
 	public String getBankSubBankAddress() {
 		return this.bankSubBankAddress;
 	}
@@ -98,7 +86,7 @@ public class TBank implements java.io.Serializable {
 	public void setBankSubBankAddress(String bankSubBankAddress) {
 		this.bankSubBankAddress = bankSubBankAddress;
 	}
-	@Column(name = "bank_userType",nullable = false)
+
 	public Integer getBankUserType() {
 		return this.bankUserType;
 	}
@@ -106,7 +94,7 @@ public class TBank implements java.io.Serializable {
 	public void setBankUserType(Integer bankUserType) {
 		this.bankUserType = bankUserType;
 	}
-	@Column(name = "bank_userid",nullable = false)
+
 	public Integer getBankUserid() {
 		return this.bankUserid;
 	}

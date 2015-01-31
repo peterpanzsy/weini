@@ -1,21 +1,10 @@
 package com.weini.manage.entity;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
 // default package
-
-
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.hibernate.annotations.GenericGenerator;
 
 /**
  * TCookinfo entity. @author MyEclipse Persistence Tools
  */
-@Entity   
-@Table(name="t_cookinfo")
+
 public class TCookinfo implements java.io.Serializable {
 
 	// Fields
@@ -46,10 +35,7 @@ public class TCookinfo implements java.io.Serializable {
 	}
 
 	// Property accessors
-	@Id              // 表示主键
-    @GenericGenerator(name = "generator", strategy = "increment")  
-    @GeneratedValue(generator = "generator")   // 自增长
-    @Column(name = "cookinfo_id") 
+
 	public Integer getCookinfoId() {
 		return this.cookinfoId;
 	}
@@ -57,7 +43,7 @@ public class TCookinfo implements java.io.Serializable {
 	public void setCookinfoId(Integer cookinfoId) {
 		this.cookinfoId = cookinfoId;
 	}
-	@Column(name = "cookinfo_name",nullable = false)
+
 	public String getCookinfoName() {
 		return this.cookinfoName;
 	}
@@ -65,7 +51,7 @@ public class TCookinfo implements java.io.Serializable {
 	public void setCookinfoName(String cookinfoName) {
 		this.cookinfoName = cookinfoName;
 	}
-	@Column(name = "cookinfo_image")
+
 	public String getCookinfoImage() {
 		return this.cookinfoImage;
 	}
@@ -73,7 +59,7 @@ public class TCookinfo implements java.io.Serializable {
 	public void setCookinfoImage(String cookinfoImage) {
 		this.cookinfoImage = cookinfoImage;
 	}
-	@Column(name = "cookinfo_vendorid",nullable = false)
+
 	public Integer getCookinfoVendorid() {
 		return this.cookinfoVendorid;
 	}
@@ -81,11 +67,5 @@ public class TCookinfo implements java.io.Serializable {
 	public void setCookinfoVendorid(Integer cookinfoVendorid) {
 		this.cookinfoVendorid = cookinfoVendorid;
 	}
-	@Override  
-    public String toString() {  
-        //两种方式都可以  
-        //return ReflectionToStringBuilder.toString(this);  
-        return ToStringBuilder.reflectionToString(this);  
-    }
 
 }

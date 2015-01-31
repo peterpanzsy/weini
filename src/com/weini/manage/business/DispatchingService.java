@@ -6,6 +6,7 @@ import com.weini.manage.dao.DispatchingDao;
 import com.weini.manage.entity.TDispatching;
 
 public class DispatchingService extends GeneralService{
+
 	
 	private DispatchingDao disDao = new DispatchingDao(this.session);
 	

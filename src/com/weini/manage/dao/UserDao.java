@@ -204,7 +204,6 @@ public class UserDao{
 		}
 		return flag;
 	}
-<<<<<<< HEAD
 	/**
 	 * 更新用户的忌口和饭量
 	 * @param userID 用户id
@@ -228,8 +227,7 @@ public class UserDao{
 			res = (String)l.get(0);
 		}
 		return res;
-=======
-
+	}
 	//---------------和userextra有关的东西----------------------
 	/**
 	 * 根据用户id来查找用户的不常用信息
@@ -285,6 +283,5 @@ public class UserDao{
 			session.delete(userextra);
 			return true;
 		}
->>>>>>> 6ee18486e94f459ccd835307160fb0dc1d9e7c11
 	}
 }

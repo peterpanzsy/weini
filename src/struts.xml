@@ -45,4 +45,6 @@
 	<include file="strutsConfig/struts-menuManage.xml"></include>
 	<include file="strutsConfig/struts-userManage.xml"></include>
 	<include file="strutsConfig/struts-DispatchingManage.xml"></include>
+	<include file="strutsConfig/struts-orderManage.xml"></include>
+	<include file="strutsConfig/struts-startupdateManage.xml"></include>
 </struts>    

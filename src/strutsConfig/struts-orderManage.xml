@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="ordermanage" extends="json-default">
+	<!--订单管理-->
+	<action name="UserLastedMonthOrder" class="com.weini.manage.action.OrderAction" method="getUserLastedMonthOrder">
+		<result name="SUCCESS" type="json">
+			<param name="includeProperties">nowMonthOrderlist.*,lastMonthOrderlist.*</param>				
+		</result>
+	</action>
+	<action name="SonOrderList" class="com.weini.manage.action.OrderAction" method="getSonOrderList">
+		<result name="SUCCESS" type="json">
+			<param name="includeProperties">datalist.*</param>				
+		</result>
+	</action>
+	<action name="NewOrder" class="com.weini.manage.action.OrderAction" method="addOrder">
+		<result name="SUCCESS" type="json">
+			<param name="includeProperties">code</param>				
+		</result>
+	</action>
+	</package>
+
+</struts>    

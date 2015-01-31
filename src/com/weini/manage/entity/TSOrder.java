@@ -14,6 +14,7 @@ public class TSOrder implements java.io.Serializable {
 
 	private Integer SOrderId;
 	private Integer FOrderId;
+	private String FOrderNum;
 	private Integer menuId;
 	private Integer SOrderWhichday;
 	private Integer SOrderConsumeStatus;
@@ -24,6 +25,7 @@ public class TSOrder implements java.io.Serializable {
 	private Integer SOrderIsdispatchingStateOpen;
 	private Integer SOrderIsRefund;
 	private String SOrderNotice;
+	private Integer SOrderDispatchingId;
 
 	// Constructors
 
@@ -32,27 +34,29 @@ public class TSOrder implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public TSOrder(Integer FOrderId, Integer menuId, Integer SOrderWhichday,
-			Integer SOrderConsumeStatus, Date SOrderDispatchingDate,
-			Timestamp SOrderPredictTime, Integer SOrderIsdispatchingStateOpen,
+	public TSOrder(Integer FOrderId, String FOrderNum, Integer menuId,
+			Integer SOrderWhichday, Integer SOrderConsumeStatus,
+			Date SOrderDispatchingDate, Integer SOrderIsdispatchingStateOpen,
 			Integer SOrderIsRefund) {
 		this.FOrderId = FOrderId;
+		this.FOrderNum = FOrderNum;
 		this.menuId = menuId;
 		this.SOrderWhichday = SOrderWhichday;
 		this.SOrderConsumeStatus = SOrderConsumeStatus;
 		this.SOrderDispatchingDate = SOrderDispatchingDate;
-		this.SOrderPredictTime = SOrderPredictTime;
 		this.SOrderIsdispatchingStateOpen = SOrderIsdispatchingStateOpen;
 		this.SOrderIsRefund = SOrderIsRefund;
 	}
 
 	/** full constructor */
-	public TSOrder(Integer FOrderId, Integer menuId, Integer SOrderWhichday,
-			Integer SOrderConsumeStatus, String SOrderConsumeEvaluate,
-			Date SOrderDispatchingDate, String SOrderLogisticsEvaluate,
-			Timestamp SOrderPredictTime, Integer SOrderIsdispatchingStateOpen,
-			Integer SOrderIsRefund, String SOrderNotice) {
+	public TSOrder(Integer FOrderId, String FOrderNum, Integer menuId,
+			Integer SOrderWhichday, Integer SOrderConsumeStatus,
+			String SOrderConsumeEvaluate, Date SOrderDispatchingDate,
+			String SOrderLogisticsEvaluate, Timestamp SOrderPredictTime,
+			Integer SOrderIsdispatchingStateOpen, Integer SOrderIsRefund,
+			String SOrderNotice, Integer SOrderDispatchingId) {
 		this.FOrderId = FOrderId;
+		this.FOrderNum = FOrderNum;
 		this.menuId = menuId;
 		this.SOrderWhichday = SOrderWhichday;
 		this.SOrderConsumeStatus = SOrderConsumeStatus;
@@ -63,6 +67,7 @@ public class TSOrder implements java.io.Serializable {
 		this.SOrderIsdispatchingStateOpen = SOrderIsdispatchingStateOpen;
 		this.SOrderIsRefund = SOrderIsRefund;
 		this.SOrderNotice = SOrderNotice;
+		this.SOrderDispatchingId = SOrderDispatchingId;
 	}
 
 	// Property accessors
@@ -81,6 +86,14 @@ public class TSOrder implements java.io.Serializable {
 
 	public void setFOrderId(Integer FOrderId) {
 		this.FOrderId = FOrderId;
+	}
+
+	public String getFOrderNum() {
+		return this.FOrderNum;
+	}
+
+	public void setFOrderNum(String FOrderNum) {
+		this.FOrderNum = FOrderNum;
 	}
 
 	public Integer getMenuId() {
@@ -162,6 +175,14 @@ public class TSOrder implements java.io.Serializable {
 
 	public void setSOrderNotice(String SOrderNotice) {
 		this.SOrderNotice = SOrderNotice;
+	}
+
+	public Integer getSOrderDispatchingId() {
+		return this.SOrderDispatchingId;
+	}
+
+	public void setSOrderDispatchingId(Integer SOrderDispatchingId) {
+		this.SOrderDispatchingId = SOrderDispatchingId;
 	}
 
 }
