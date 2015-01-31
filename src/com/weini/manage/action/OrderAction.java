@@ -5,10 +5,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.weini.manage.business.OrderService;
 import com.weini.manage.business.OtherService;
 import com.weini.manage.entity.TOrder;
+import com.weini.manage.entity.TUser;
+import com.weini.tools.Configure;
 
 public class OrderAction extends ActionSupport {
 
@@ -21,6 +24,7 @@ public class OrderAction extends ActionSupport {
 	private List<Object[]> lastMonthOrderlist;
 	private List<Object[]> datalist;
 	private int code;
+	private int result;
 	// 新增订单的数据
 	private int orderMenuID;
 	private int boxID;
@@ -57,17 +61,8 @@ public class OrderAction extends ActionSupport {
 	public String addOrder(){
 		code = 0;
 		try{
-	//		TUser user = (TUser) ActionContext.getContext().getSession().get(Configure.sessionUserName);
-	//		int userID = user.getUserId();
-			int userID = 1;
-			this.orderMenuID = 1;
-			this.boxID  = 3;
-			this.orderStartTime = "2015-12-02 21:21:21";
-			this.orderOrderTime = "2015-12-23 21:21:21";
-			this.orderIsFirst  = 1;
-			this.orderDispatchingID = 1;
-			this.userHeatID = 1;
-			this.userAppetite = 1;
+			TUser user = (TUser) ActionContext.getContext().getSession().get(Configure.sessionUserName);
+			int userID = user.getUserId();
 			TOrder order = new TOrder();
 			order.setOrderMenuinfoId(this.orderMenuID);
 			order.setBoxId(this.boxID);
@@ -79,7 +74,7 @@ public class OrderAction extends ActionSupport {
 			//设置订单编号
 			order.setOrderNum((new OtherService()).getOrderNumSting());
 			// 剩余uesrHeatID,userAppetite 如果是isFirst的话就需要更新user表
-			if((new OrderService()).addUserOrder(order, orderIsFirst, userID, userHeatID, userAppetite)){
+			if((result = (new OrderService()).addUserOrder(order, orderIsFirst, userID, userHeatID, userAppetite)) != -1){
 				code = 1;
 			}
 		}catch(Exception e){
@@ -182,5 +177,11 @@ public class OrderAction extends ActionSupport {
 	}
 	public void setUserAppetite(int userAppetite) {
 		this.userAppetite = userAppetite;
+	}
+	public int getResult() {
+		return result;
+	}
+	public void setResult(int result) {
+		this.result = result;
 	}
 }

@@ -60,9 +60,9 @@ public class OrderService extends GeneralService {
 	 * @param userID 用户id
 	 * @param userHeatID 用户讨厌食物的id
 	 * @param userAppetite 用户的饭量
-	 * @return 执行结果
+	 * @return 成功返回订单id，失败返回-1
 	 */
-	public boolean addUserOrder(TOrder order,int orderIsFirst,int userID,int userHeatID,int userAppetite){
+	public int addUserOrder(TOrder order,int orderIsFirst,int userID,int userHeatID,int userAppetite){
 		HibernateSessionManager.getThreadLocalTransaction();
 		//设置默认值
 		order.setOrderPayStatus(0);
@@ -88,11 +88,12 @@ public class OrderService extends GeneralService {
 				//设置盒子模式价格
 				order.setBoxPrice(boxPrice);
 				//增加订单
-				//TODO 获取订单id
+				// 获取订单id
 				int orderID = this.orderdao.insertOrder(order);
 				if(orderID > 0){
 					TSOrder sonOrder = new TSOrder();
 					sonOrder.setFOrderId(orderID);
+					sonOrder.setFOrderNum(order.getOrderNum());
 					sonOrder.setMenuId(order.getOrderMenuinfoId());
 					sonOrder.setSOrderConsumeStatus(0);
 					sonOrder.setSOrderConsumeEvaluate("");
@@ -100,6 +101,7 @@ public class OrderService extends GeneralService {
 					sonOrder.setSOrderIsdispatchingStateOpen(1);
 					sonOrder.setSOrderIsRefund(0);
 					sonOrder.setSOrderNotice("注意：不吃："+userheat+" "+"饭量："+Tools.getUserAppetite(userAppetite));
+					sonOrder.setSOrderDispatchingId(order.getOrderDispatchingId());
 					
 					//循环增加子订单
 					List<String> dates = Tools.getDatesNotWeekend(box_type);
@@ -109,11 +111,11 @@ public class OrderService extends GeneralService {
 						sonOrder.setSOrderDispatchingDate((new SimpleDateFormat("yyyy-MM-dd")).parse(dates.get(i-1)));
 						if(this.orderdao.insertSonOrder(sonOrder) <= 0){
 							this.roll();
-							return false;
+							return -1;
 						}
 					}
 					this.close();
-					return true;
+					return orderID;
 				}
 			}
 		}catch(Exception e){
@@ -121,6 +123,6 @@ public class OrderService extends GeneralService {
 			this.roll();
 		}
 		this.roll();
-		return false;
+		return -1;
 	}
 }
