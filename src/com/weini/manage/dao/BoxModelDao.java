@@ -9,9 +9,9 @@ import org.hibernate.Session;
 
 import com.weini.manage.entity.TBoxpage;
 
-public class BoxPageinfoDao {
+public class BoxModelDao {
 	protected Session session;
-	public BoxPageinfoDao(Session sess){
+	public BoxModelDao(Session sess){
 		session = sess;
 	}
 	/**
@@ -29,6 +29,23 @@ public class BoxPageinfoDao {
 			for(Object temp:row){
 				res.add(temp);
 			}
+		}
+		return res;
+	}
+	/**
+	 * 根据盒子模式id获取盒子模式价格
+	 * @param boxID 盒子模式id
+	 * @return
+	 */
+	public List<Object> getBoxPriceAndTypeByBoxID(int boxID){
+		List<Object> res = new ArrayList<Object>();
+		Query q = session.createSQLQuery("select box_price,box_type from t_box where box_id = ?;");
+		q.setInteger(0,boxID);
+		List l = q.list();
+		if(l.size() > 0){
+			Object[] row = (Object[])l.get(0);
+			res.add((float)row[0]);
+			res.add((int)row[1]);
 		}
 		return res;
 	}

@@ -9,6 +9,8 @@ import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
+import com.weini.manage.entity.TOrder;
+import com.weini.manage.entity.TSOrder;
 import com.weini.tools.ThreeEntity;
 import com.weini.tools.TwoEntity;;
 public class OrderDao{
@@ -38,6 +40,57 @@ public class OrderDao{
 		return re;
 	}
 	//=======================wang==========================
+	/**
+	 * 插入订单
+	 * @param order
+	 * @return
+	 */
+	public int insertOrder(TOrder order){
+		Query q = session.createSQLQuery("insert into t_order(order_num,user_id,order_menuinfo_id,box_id,"
+			+ "order_startTime,order_orderTime,order_payStatus,S_order_consumeStatus,order_isRefund,"
+			+ "order_payTime,box_price,order_isFirst,order_isvalid,order_dispatching_id,order_settleStatus)"
+			+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
+		q.setString(0,order.getOrderNum());
+		q.setInteger(1, order.getUserId());
+		q.setInteger(2,order.getOrderMenuinfoId());
+		q.setInteger(3,order.getBoxId());
+		q.setTimestamp(4, order.getOrderStartTime());
+		q.setTimestamp(5,order.getOrderOrderTime());
+		q.setInteger(6,order.getOrderPayStatus());
+		q.setInteger(7,order.getSOrderConsumeStatus());
+		q.setInteger(8,order.getOrderIsRefund());
+		q.setTimestamp(9,order.getOrderPayTime());
+		q.setFloat(10,order.getBoxPrice());
+		q.setInteger(11,order.getOrderIsFirst());
+		q.setInteger(12,order.getOrderIsvalid());
+		q.setInteger(13,order.getOrderDispatchingId());
+		q.setInteger(14,order.getOrderSettleStatus());
+		return q.executeUpdate();
+	}
+	/**
+	 * 插入子订单
+	 * @param sonOrder 子订单
+	 * @return
+	 */
+	public int insertSonOrder(TSOrder sonOrder){
+		Query q = session.createSQLQuery("insert into t_s_order(F_order_id,menu_id,S_order_whichday,"
+				+ "S_order_consumeStatus,S_order_consumeEvaluate,S_order_dispatchingDate,"
+				+ "S_order_logisticsEvaluate,S_order_predictTime,S_order_isdispatchingStateOpen,"
+				+ "S_order_isRefund,S_order_notice)"
+				+ "values(?,?,?,?,?,?,?,?,?,?,?);");
+		q.setInteger(0,sonOrder.getFOrderId());
+		q.setInteger(1, sonOrder.getMenuId());
+		q.setInteger(2,sonOrder.getSOrderWhichday());
+		q.setInteger(3,sonOrder.getSOrderConsumeStatus());
+		q.setString(4, sonOrder.getSOrderConsumeEvaluate());
+		q.setTimestamp(5,sonOrder.getSOrderDispatchingDate());
+		q.setString(6,sonOrder.getSOrderLogisticsEvaluate());
+		q.setTimestamp(7,sonOrder.getSOrderPredictTime());
+		q.setInteger(8,sonOrder.getSOrderIsdispatchingStateOpen());
+		q.setInteger(9,sonOrder.getSOrderIsRefund());
+		q.setString(10,sonOrder.getSOrderNotice());
+		return q.executeUpdate();
+	}
 	public List<Object[]> searchMonth(Integer userId, int year, int month) {
 		Query q;
 		String sql = ("SELECT order_id,order_num,order_menuinfo_id,DATE_FORMAT(order_orderTime,'%Y-%m-%d') as date,"

@@ -2,6 +2,7 @@ package com.weini.manage.entity;
 // default package
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * TSOrder entity. @author MyEclipse Persistence Tools
@@ -13,12 +14,11 @@ public class TSOrder implements java.io.Serializable {
 
 	private Integer SOrderId;
 	private Integer FOrderId;
-	private String dispatchingStatusId;
 	private Integer menuId;
 	private Integer SOrderWhichday;
 	private Integer SOrderConsumeStatus;
 	private String SOrderConsumeEvaluate;
-	private Timestamp SOrderDispatchingStartT;
+	private Date SOrderDispatchingDate;
 	private String SOrderLogisticsEvaluate;
 	private Timestamp SOrderPredictTime;
 	private Integer SOrderIsdispatchingStateOpen;
@@ -32,36 +32,32 @@ public class TSOrder implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public TSOrder(Integer FOrderId, String dispatchingStatusId,
-			Integer menuId, Integer SOrderWhichday,
-			Integer SOrderConsumeStatus, Timestamp SOrderDispatchingStartT,
+	public TSOrder(Integer FOrderId, Integer menuId, Integer SOrderWhichday,
+			Integer SOrderConsumeStatus, Date SOrderDispatchingDate,
 			Timestamp SOrderPredictTime, Integer SOrderIsdispatchingStateOpen,
 			Integer SOrderIsRefund) {
 		this.FOrderId = FOrderId;
-		this.dispatchingStatusId = dispatchingStatusId;
 		this.menuId = menuId;
 		this.SOrderWhichday = SOrderWhichday;
 		this.SOrderConsumeStatus = SOrderConsumeStatus;
-		this.SOrderDispatchingStartT = SOrderDispatchingStartT;
+		this.SOrderDispatchingDate = SOrderDispatchingDate;
 		this.SOrderPredictTime = SOrderPredictTime;
 		this.SOrderIsdispatchingStateOpen = SOrderIsdispatchingStateOpen;
 		this.SOrderIsRefund = SOrderIsRefund;
 	}
 
 	/** full constructor */
-	public TSOrder(Integer FOrderId, String dispatchingStatusId,
-			Integer menuId, Integer SOrderWhichday,
+	public TSOrder(Integer FOrderId, Integer menuId, Integer SOrderWhichday,
 			Integer SOrderConsumeStatus, String SOrderConsumeEvaluate,
-			Timestamp SOrderDispatchingStartT, String SOrderLogisticsEvaluate,
+			Date SOrderDispatchingDate, String SOrderLogisticsEvaluate,
 			Timestamp SOrderPredictTime, Integer SOrderIsdispatchingStateOpen,
 			Integer SOrderIsRefund, String SOrderNotice) {
 		this.FOrderId = FOrderId;
-		this.dispatchingStatusId = dispatchingStatusId;
 		this.menuId = menuId;
 		this.SOrderWhichday = SOrderWhichday;
 		this.SOrderConsumeStatus = SOrderConsumeStatus;
 		this.SOrderConsumeEvaluate = SOrderConsumeEvaluate;
-		this.SOrderDispatchingStartT = SOrderDispatchingStartT;
+		this.SOrderDispatchingDate = SOrderDispatchingDate;
 		this.SOrderLogisticsEvaluate = SOrderLogisticsEvaluate;
 		this.SOrderPredictTime = SOrderPredictTime;
 		this.SOrderIsdispatchingStateOpen = SOrderIsdispatchingStateOpen;
@@ -85,14 +81,6 @@ public class TSOrder implements java.io.Serializable {
 
 	public void setFOrderId(Integer FOrderId) {
 		this.FOrderId = FOrderId;
-	}
-
-	public String getDispatchingStatusId() {
-		return this.dispatchingStatusId;
-	}
-
-	public void setDispatchingStatusId(String dispatchingStatusId) {
-		this.dispatchingStatusId = dispatchingStatusId;
 	}
 
 	public Integer getMenuId() {
@@ -127,12 +115,12 @@ public class TSOrder implements java.io.Serializable {
 		this.SOrderConsumeEvaluate = SOrderConsumeEvaluate;
 	}
 
-	public Timestamp getSOrderDispatchingStartT() {
-		return this.SOrderDispatchingStartT;
+	public Date getSOrderDispatchingDate() {
+		return this.SOrderDispatchingDate;
 	}
 
-	public void setSOrderDispatchingStartT(Timestamp SOrderDispatchingStartT) {
-		this.SOrderDispatchingStartT = SOrderDispatchingStartT;
+	public void setSOrderDispatchingDate(Date SOrderDispatchingDate) {
+		this.SOrderDispatchingDate = SOrderDispatchingDate;
 	}
 
 	public String getSOrderLogisticsEvaluate() {

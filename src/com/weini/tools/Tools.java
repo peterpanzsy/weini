@@ -15,8 +15,10 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class Tools {
@@ -178,14 +180,17 @@ public class Tools {
 	     }
 	     return 2;
 	    }
-	    public static void main(String args[]){
+	    public static void main(String args[]) throws ParseException{
 //	    	System.out.println(getType("4800.000000000001"));
 //	    	System.out.println(getUUID());
-	    	Calendar cal = Calendar.getInstance();
-			cal.setTime(new Date());
-			
-			Date a = Timestamp.valueOf("2015-01-29 21:45:18.0");
-			System.out.println(a.toString());
+//	    	Calendar cale = Calendar.getInstance();
+//	    	cale.add(Calendar.DATE, -2);
+//			System.out.println(cale.get(Calendar.DAY_OF_WEEK));
+//	    	getDatesNotWeekend(3);
+	    	String time = "2015-12-13";
+	    	DateFormat format2= new SimpleDateFormat("yyyy-MM-dd");
+	    	Date date = format2.parse(time);
+	    	System.out.println(date.toString());
 	    }
 	    public static int getPrintSource(){
 			Throwable t = new Throwable();
@@ -200,9 +205,9 @@ public class Tools {
 	    	return 2;
 	    }
 	    public static String getSomeDayDate(int type){
-			Timestamp time = null;
-			DateFormat format2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");         
-			Date date = null;	
+//			Timestamp time = null;
+//			DateFormat format2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");         
+//			Date date = null;	
 			Calendar cale = Calendar.getInstance();
 			cale.add(Calendar.DATE, type);
 //			String tarday = new SimpleDateFormat("yyyy-MM-dd").format(cale.getTime())+" 00:00:00";
@@ -217,5 +222,43 @@ public class Tools {
 //			           e.printStackTrace();  
 //			}
 //			return time;
+		}
+	    /**
+	     * 获取饭量的描述
+	     * @param index 饭量大小索引
+	     * @return
+	     */
+		public static String getUserAppetite(int index){
+			String res = "中等";
+			switch(index){
+				case 1:
+					res = "小份";
+					break;
+				case 2:
+					res = "中等";
+					break;
+				case 3:
+					res = "大份";
+					break;
+				default:
+					res = "中等";
+			}
+			return res;
+		}
+		public static List<String> getDatesNotWeekend(int num){
+			List<String> res = new ArrayList<String>();
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			Calendar cale = Calendar.getInstance();
+			for(int i = 0;i < num ;i++){
+				int weekNo = cale.get(Calendar.DAY_OF_WEEK);
+				while(weekNo == 1 || weekNo == 7){
+					cale.add(Calendar.DATE, 1);
+					weekNo = cale.get(Calendar.DAY_OF_WEEK);
+				}
+				res.add(format.format(cale.getTime()));
+				cale.add(Calendar.DATE, 1);
+			}
+			return res;
+			
 		}
 }

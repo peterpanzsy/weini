@@ -2,7 +2,7 @@ package com.weini.manage.business;
 
 import java.util.List;
 
-import com.weini.manage.dao.BoxPageinfoDao;
+import com.weini.manage.dao.BoxModelDao;
 import com.weini.manage.dao.StartPageinfoDao;
 import com.weini.manage.dao.TrackpageDao;
 import com.weini.manage.dao.VersionDao;
@@ -14,7 +14,7 @@ import com.weini.manage.entity.TVersion;
 public class StartUpdateService extends GeneralService {
 	private VersionDao versiondao = new VersionDao(this.session);
 	private StartPageinfoDao startpagedao = new StartPageinfoDao(this.session);
-	private BoxPageinfoDao boxpagedao = new BoxPageinfoDao(this.session);
+	private BoxModelDao boxpagedao = new BoxModelDao(this.session);
 	private TrackpageDao trackpagedao = new TrackpageDao(this.session);
 	/**
 	 * 根据手机类型，获取最新版本信息和上一个版本信息

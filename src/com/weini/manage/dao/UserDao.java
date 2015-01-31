@@ -141,4 +141,28 @@ public class UserDao{
 		}
 		return flag;
 	}
+	/**
+	 * 更新用户的忌口和饭量
+	 * @param userID 用户id
+	 * @param heatID 用户忌口id
+	 * @param appeID 用户饭量id
+	 * @return
+	 */
+	public int updateUserHeatAndAppe(int userID,int heatID,int appeID){
+		Query q = session.createSQLQuery("update t_user SET user_heat = ?,user_appetite = ? WHERE user_id = ?;");
+		q.setInteger(0,heatID);
+		q.setInteger(1, appeID);
+		q.setInteger(2,userID);
+		return q.executeUpdate();
+	}
+	public String getUserHeatByID(int heatID){
+		String res = "";
+		Query q = session.createSQLQuery("select menutype_desc from t_menutype WHERE menutype_id  = ?;");
+		q.setInteger(0,heatID);
+		List l = q.list();
+		if(l.size() == 1){
+			res = (String)l.get(0);
+		}
+		return res;
+	}
 }
