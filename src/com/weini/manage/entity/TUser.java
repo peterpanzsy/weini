@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.annotations.GenericGenerator;
@@ -38,6 +39,8 @@ public class TUser implements java.io.Serializable {
 	private Integer userDispatchdefaultId;
 	private Integer userAppetite;
 
+	//add 在平台上累计的天数
+	private Integer countDays;    
 	// Constructors
 
 	/** default constructor */
@@ -205,6 +208,15 @@ public class TUser implements java.io.Serializable {
 	public void setUserAppetite(Integer userAppetite) {
 		this.userAppetite = userAppetite;
 	}
+	@Transient
+	public Integer getCountDays() {
+		return countDays;
+	}
+
+	public void setCountDays(Integer countDays) {
+		this.countDays = countDays;
+	}
+
 	@Override  
     public String toString() {  
         //两种方式都可以  

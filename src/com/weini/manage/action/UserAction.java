@@ -4,7 +4,10 @@ import java.util.Date;
 import java.util.List;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.weini.manage.business.UserService;
 import com.weini.manage.entity.TUser;
+import com.weini.manage.entity.TUserextra;
+import com.weini.tools.TwoEntity;
 
 
 public class UserAction extends ActionSupport{
@@ -12,6 +15,9 @@ public class UserAction extends ActionSupport{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private UserService userService = new UserService();
+	
 	String mark;
 	List<TUser> dataList;
 	
@@ -38,7 +44,12 @@ public class UserAction extends ActionSupport{
 	private Date userRegdate;
 	
 	private int pointTotal;
-
+	//--------wang------------//
+	private TUser user;
+	private TUserextra userextra;
+	private int code=0;  //状态，0-失败 ，1-成功
+	private String result;  //错误信息
+	
 //	public String listUser(){//根据角色获取账户列表		
 //		UserDaoDEL dao=new UserDaoDEL();
 //		dataList=dao.getUserList();
@@ -73,7 +84,22 @@ public class UserAction extends ActionSupport{
 	 * 获取用户的个人信息
 	 * @return
 	 */
-	public String getUserInfo(){
+	public String findUserInfo(){
+		try {
+			TwoEntity two = userService.findUserInfo(userID);
+			user = (TUser)two.getIndex1();
+			userextra = (TUserextra)two.getIndex2();
+			if(user==null){
+				code = 0; 
+				result="没有记录";
+				return "fail";
+			}
+			code = 1;
+		} catch (Exception e) {
+			code = 0; 
+			result="参数有误";
+			return "fail";
+		}
 		return SUCCESS;
 	}
 	public String getMark() {
@@ -190,5 +216,28 @@ public class UserAction extends ActionSupport{
 	public void setPointTotal(int pointTotal) {
 		this.pointTotal = pointTotal;
 	}
-
+	public TUser getUser() {
+		return user;
+	}
+	public void setUser(TUser user) {
+		this.user = user;
+	}
+	public int getCode() {
+		return code;
+	}
+	public void setCode(int code) {
+		this.code = code;
+	}
+	public String getResult() {
+		return result;
+	}
+	public void setResult(String result) {
+		this.result = result;
+	}
+	public TUserextra getUserextra() {
+		return userextra;
+	}
+	public void setUserextra(TUserextra userextra) {
+		this.userextra = userextra;
+	}
 }

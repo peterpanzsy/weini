@@ -3,22 +3,21 @@
 	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 
 <hibernate-configuration>
-	<!-- <session-factory name="foo">
- -->
-	 <session-factory>
+	 <session-factory name="foo">
  		<property name="show_sql">true</property>		
 		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
 		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
 		<property name="connection.url"> <![CDATA[jdbc:mysql://127.0.0.1:3306/weini?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull]]></property>
 		<property name="connection.username">root</property>
-		<!-- 
+		
 		 <property name="connection.password">admin</property>
-		 -->
+		<!-- 
 		<property name="connection.password">root</property>
+		 -->
 		<property name="hbm2ddl.auto">update</property>
-		<!-- 连接池配置 -->
+		<!-- 连接池配置 
 		<property name="hibernate.connection.provider_class">org.hibernate.service.jdbc.connections.internal.C3P0ConnectionProvider
-		</property>
+		</property>-->
 		<!-- 连接池中JDBC连接的最小数量。Hibernate默认为1 -->
 		<property name="hibernate.c3p0.min_size">10</property>
 		<!-- 连接池中JDBC连接的最大数量。Hibernate默认为100 -->

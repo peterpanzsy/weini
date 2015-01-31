@@ -21,7 +21,7 @@ public class BoxDao {
 		return  session.createSQLQuery("select * from t_box").addEntity(TBox.class).list();
 	}
 	/**
-	 * 	添加文案
+	 * 	添加盒子模式
 	 * @param box
 	 * @return
 	 * 			true:添加成功
@@ -36,7 +36,7 @@ public class BoxDao {
 		}
 	}
 	/**
-	 * 更新文案
+	 * 更新盒子
 	 * @param box
 	 * @return
 	 *			true:更新成功
@@ -51,7 +51,7 @@ public class BoxDao {
 		}
 	}
 	/**
-	 * 删除文案
+	 * 删除盒子
 	 * @param box
 	 * @return
 	 * 			true:删除成功

@@ -2,6 +2,7 @@ package com.weini.manage.entity;
 // default package
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,6 +41,8 @@ public class TMenuinfo implements java.io.Serializable {
 	private String vendorName;
 	private String bussinessName;
 	private int order;
+	//wangadd
+	private List<TDishes> dishesList;
 	
 	/** default constructor */
 	public TMenuinfo() {
@@ -207,7 +210,17 @@ public class TMenuinfo implements java.io.Serializable {
 	public void setOrder(int order) {
 		this.order = order;
 	}
-   @Override  
+	
+	@Transient
+   public List<TDishes> getDishesList() {
+		return dishesList;
+	}
+
+	public void setDishesList(List<TDishes> dishesList) {
+		this.dishesList = dishesList;
+	}
+
+@Override  
     public String toString() {  
         //两种方式都可以  
         //return ReflectionToStringBuilder.toString(this);  
