@@ -47,17 +47,7 @@ function excute(){
          type : "post",
          dataType : "json",
          data : {
-        	//此处来放置参数信息
-        	// "phoneNumber":1,
-        	// "password": "zsy"
- 			//"typeId":2
-    		//"cityId":1
-    		//"busId":2
-        	//"userId":1,
-         	//"date":"2015-01-23"
-         	"menuId":1,
-         	"point":"4.5"
-         	//"num":1
+
          },
          success : function(data) {
 				//TODO 这个地方用来改得到的数据信息就可以了
