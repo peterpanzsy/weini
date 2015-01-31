@@ -24,14 +24,18 @@ public class BoxService extends GeneralServive{
 	 * @return
 	 */
 	public List listBoxpage() {
-		return boxpageDao.listBoxpage();
+		List list =boxpageDao.listBoxpage();
+		this.close();
+		return list;
 	}
 	/**
 	 *列出所有的盒子模型 
 	 * @return
 	 */
 	public List listBox() {
-		return boxDao.listBox();
+		List list = boxDao.listBox();
+		this.close();
+		return list;
 	}
 	
 	

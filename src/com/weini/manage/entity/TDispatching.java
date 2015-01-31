@@ -28,7 +28,7 @@ public class TDispatching implements java.io.Serializable {
 	private Integer dispatchingOfficeBuilding;
 	private String dispatchingAddressDetail;
 	private Integer userId;
-
+	private String dispatchingPhoneNum;
 	// Constructors
 
 	/** default constructor */
@@ -50,7 +50,7 @@ public class TDispatching implements java.io.Serializable {
 	public TDispatching(Integer dispatchingProvince, Integer dispatchingCity,
 			Integer dispatchingDistrict, Integer dispatchingBusinessAreaid,
 			Integer dispatchingOfficeBuilding, String dispatchingAddressDetail,
-			Integer userId) {
+			Integer userId,String dispatchingPhoneNum) {
 		this.dispatchingProvince = dispatchingProvince;
 		this.dispatchingCity = dispatchingCity;
 		this.dispatchingDistrict = dispatchingDistrict;
@@ -58,6 +58,7 @@ public class TDispatching implements java.io.Serializable {
 		this.dispatchingOfficeBuilding = dispatchingOfficeBuilding;
 		this.dispatchingAddressDetail = dispatchingAddressDetail;
 		this.userId = userId;
+		this.dispatchingPhoneNum =dispatchingPhoneNum;
 	}
 
 	// Property accessors
@@ -127,6 +128,15 @@ public class TDispatching implements java.io.Serializable {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}	
+	@Column(name = "dispatching_phoneNum",nullable = false)
+	public String getDispatchingPhoneNum() {
+		return dispatchingPhoneNum;
+	}
+
+	public void setDispatchingPhoneNum(String dispatchingPhoneNum) {
+		this.dispatchingPhoneNum = dispatchingPhoneNum;
+	}
+
 	@Override  
     public String toString() {  
         //两种方式都可以  

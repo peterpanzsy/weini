@@ -92,4 +92,16 @@ public class MenuinfoService extends GeneralServive {
 		this.close();
 		return res;
 	}
+	
+	public TMenuinfo findMenuById(Integer menuinfoId) {
+		TMenuinfo menu= menuDao.findMenuDetailByMenuID(menuinfoId);
+		if(menu==null){
+			this.close();
+			return null;               //没有记录
+		}else{
+			menu.setDishesList(menuDao.findAllDishByMenuinfoId(menuinfoId));   //设置子菜品
+			this.close();
+			return menu;
+		}
+	}
 }

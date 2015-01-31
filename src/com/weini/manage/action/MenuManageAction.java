@@ -4,13 +4,13 @@ import java.util.List;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.weini.manage.business.BoxService;
-import com.weini.manage.business.MenuService;
+import com.weini.manage.business.MenuinfoService;
 import com.weini.manage.entity.TBox;
 import com.weini.manage.entity.TMenuinfo;
 
 public class MenuManageAction extends ActionSupport {
 	
-	MenuService menuService = new MenuService();
+	MenuinfoService menuService = new MenuinfoService();
 	
 	private int code=0;  //状态，0-失败 ，1-成功
 	private String result;  //错误信息
