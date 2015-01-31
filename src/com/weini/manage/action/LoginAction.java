@@ -31,14 +31,16 @@ public class LoginAction extends ActionSupport{
 		//add by zsy to log remote access ip
 		HttpServletRequest request = ServletActionContext.getRequest(); 
 		String remoteip=request.getRemoteHost();
-		//above add by zsy to log remote access ip
-		ActionContext actionContext = ActionContext.getContext();
-        Map session = actionContext.getSession();
+		//above add by zsy to log remote access ip		
 		if(username==null||username.equals("")){
+	        ActionContext actionContext = ActionContext.getContext();
+	        Map session = actionContext.getSession();
 	        session.put("wrong", "用户名为空");	
 			return "fail";
 		}
 		if(password==null||password.equals("")){
+	        ActionContext actionContext = ActionContext.getContext();
+	        Map session = actionContext.getSession();
 	        session.put("wrong", "密码为空");	
 			return "fail";
 		}
@@ -46,10 +48,14 @@ public class LoginAction extends ActionSupport{
 		String adminPassword_md5 = password;
 		admin=(new LoginService()).searchAdmin(username, adminPassword_md5);
 		if(admin==null){
+	        ActionContext actionContext = ActionContext.getContext();
+	        Map session = actionContext.getSession();
 	        session.put("wrong", "帐户或者密码错误，或者您的账号正在审核中。");	
 			return "fail";
 		}
 		List<TAuth> authList=(new LoginService()).getAuthbyRoleList(admin.getRoleID());
+        ActionContext actionContext = ActionContext.getContext();
+        Map session = actionContext.getSession();
         session.put("user", admin);
         session.put("authList", authList);
 		return "succ";

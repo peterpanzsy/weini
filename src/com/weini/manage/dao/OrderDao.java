@@ -1,8 +1,8 @@
 package com.weini.manage.dao;
 
 import java.math.BigInteger;
-import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -12,7 +12,7 @@ import org.hibernate.Session;
 import com.weini.manage.entity.TOrder;
 import com.weini.manage.entity.TSOrder;
 import com.weini.tools.ThreeEntity;
-import com.weini.tools.TwoEntity;;
+import com.weini.tools.TwoEntity;
 public class OrderDao{
 
 	protected Session session;
@@ -102,12 +102,37 @@ public class OrderDao{
 		q.setInteger(1,year);
 		q.setInteger(2, month);
 		List l = q.list();
-		List<Object[]> res = new ArrayList<Object[]>();
+		List re = new ArrayList();
 		for (int i = 0; i < l.size(); i++) {
 			Object[] row = (Object[]) l.get(i);
-			res.add(row);
+			re.add(row);
 		}
-		return res;
+		return re;
+	}
+	/**
+	 * 下单状态，没有支付
+	 * @param userId 用户id
+	 * @param boxId  盒子模式id
+	 * @param orderTime	下订单时间
+	 * @param startTime 订购开始时间
+	 * @param price		价格
+	 * @param isFirst  是否第一次订购
+	 * @param dispatchingId  配送地址id
+	 * @return
+	 */
+	public Integer addOrder(Integer userId,Integer boxId,Date orderTime,Date startTime,double price,int isFirst,int dispatchingId ){
+		String str = "INSERT INTO t_order (user_id,box_id,order_orderTime,order_startTime,box_price,order_isFirst,order_dispatching_id"
+				+ ",order_payStatus,S_order_consumeStatus,order_isvalid,order_settleStatus,order_isRefund) VALUES "
+				+ "(?,?,?,?,?,?,?,0,0,1,0,1)";
+		SQLQuery q = session.createSQLQuery(str);
+		q.setInteger(0,userId);
+		q.setInteger(1, boxId);
+		q.setDate(2,orderTime);
+		q.setDate(3, startTime);
+		q.setDouble(4, price);
+		q.setInteger(5, isFirst);
+		q.setInteger(6, dispatchingId);
+		return q.executeUpdate();
 	}
 	/**
 	 * 获取用户下订单耗时时间分布的统计
@@ -268,44 +293,4 @@ public class OrderDao{
 		return res;
 	}
 	
-	/**
-	 * 获取index表中的订单日期和订单号
-	 * @return list 0:date;1:num
-	 */
-	public List<String> getOrderNum(){
-		List<String> res = new ArrayList<String>();;
-		Query q = session.createSQLQuery("select index_value from t_index where index_name = 'order_date';");
-		Query q1 = session.createSQLQuery("select index_value from t_index where index_name = 'order_num';");
-		List l = q.list();
-		List l1 = q1.list();
-		if(l.size() > 0 && l1.size() > 0){
-			res.add((String)l.get(0));
-			res.add((String)l1.get(0));
-		}
-		return res;
-	}
-	/**
-	 * 更新订单编号记录中num
-	 * @param value 值
-	 * @return
-	 */
-	public int updateOrderNum(String value){
-		Query q = session.createSQLQuery("update t_index set index_value = ? where index_name = ?");
-		q.setString(0, value);
-		q.setString(1,"order_num");
-		return q.executeUpdate();
-	}
-	/**
-	 * 更新订单编号记录中的全部值
-	 * @param date 形如"20150102"
-	 * @param num 订单数
-	 * @return
-	 */
-	public int updateOrderIndexAll(String date,String num){
-		Query q = session.createSQLQuery("update t_index set index_value = ? where index_name = 'order_date'");
-		q.setString(0,date);
-		Query q1 = session.createSQLQuery("update t_index set index_value = ? where index_name = 'order_num'");
-		q1.setString(0,num);
-		return q.executeUpdate() * q1.executeUpdate() ;
-	}
 }

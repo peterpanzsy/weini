@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="menumanage" extends="json-default" namespace="/menuManage" >
+		<!-- 列出所有的盒子模型 -->
+		 <action name="menuinfoDetail" class="com.weini.manage.action.MenuManageAction" method="menuinfoDetail">
+			<result name="success" type="json">	
+				<param name="includeProperties">code,menu.*</param>			
+			</result>
+			<result name="fail" type="json">	
+				<param name="includeProperties">
+					code,result
+				</param>			
+			</result>
+		</action>
+	</package>
+</struts>    

@@ -22,8 +22,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class Tools {
-	 
-		/**
+	 /**
 	    *获得一个UUID
 	    *@return StringUUID
 	    */

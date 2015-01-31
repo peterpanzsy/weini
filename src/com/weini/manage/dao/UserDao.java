@@ -1,8 +1,6 @@
 package com.weini.manage.dao;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -10,7 +8,7 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
 import com.weini.manage.entity.TUser;
-import com.weini.tools.HibernateSessionManager;
+import com.weini.manage.entity.TUserextra;
 
 
 public class UserDao{
@@ -102,12 +100,76 @@ public class UserDao{
 //		
 //		return result3;
 //	}
+	/**
+	 * 列出所有用户
+	 * @return
+	 */
+	public List<TUser> listUser(){
+		return session.createSQLQuery("select * from t_user").addEntity(TUser.class).list();
+	}
+	/**
+	 * 根据用户id查找用户
+	 * @param userId
+	 * @return 如果存在返回TUser对象
+	 * 		        如果不存在返回null
+	 */
+	public TUser findByUserID(Integer userId){
+		Query q = session.createQuery("from TUser t where t.userId = ? ");
+		q.setInteger(0, userId);
+		return  (TUser) q.uniqueResult();
+	} 
+	/**
+	 * 添加用户
+	 * @param user
+	 * @return
+	 */
 
-	
-	public TUser searchUser(String name,String pass){
+	public boolean addUser(TUser user){
+		try {
+			session.save(user);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+	/**
+	 * 更新用户
+	 * @param user
+	 * @return
+	 */
+	public boolean updateUser(TUser user){
+		try {
+			session.update(user);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+	/**
+	 * 删除用户
+	 * @param user
+	 * @return
+	 */
+	public boolean delUser(TUser user){
+		try {
+			session.delete(user);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+	/**
+	 * 根据用户手机号码和密码来查询是否有此用户
+	 * @param phoneNum  手机号
+	 * @param pass	密码
+	 * @return
+	 * 			如果存在，返回TUser
+	 * 			否则，返回null
+	 */
+	public TUser searchUser(String phoneNum,String pass){
 		SQLQuery query = session.createSQLQuery("select t1.user_id,t1.user_name,t1.user_gender,t1.user_address,t1.user_phoneNumber,t1.user_phoneType,t1.user_scale"
 				+ " from t_user t1 where user_phoneNumber = ? and user_pwd =? ");
-	    query.setParameter(0, name);
+	    query.setParameter(0, phoneNum);
 	    query.setParameter(1, pass);
 	   TUser u = new TUser();
 	   List l= query.list();
@@ -124,6 +186,7 @@ public class UserDao{
 	   }
 		   return null;
 	}
+	
 	/**
 	 * 获取用户类型的统计信息
 	 * @param temp 统计数组，第一个表示总用户数，第二个表示Android用户，第三个表示ios用户
@@ -141,6 +204,7 @@ public class UserDao{
 		}
 		return flag;
 	}
+<<<<<<< HEAD
 	/**
 	 * 更新用户的忌口和饭量
 	 * @param userID 用户id
@@ -164,5 +228,63 @@ public class UserDao{
 			res = (String)l.get(0);
 		}
 		return res;
+=======
+
+	//---------------和userextra有关的东西----------------------
+	/**
+	 * 根据用户id来查找用户的不常用信息
+	 * @param userId
+	 * @return  找到返回TUser，否则返回null
+	 */
+	public TUserextra findUserextraByUserId(Integer userId){
+		return (TUserextra) session.createQuery("from TUserextra t where t.userId = ? ").setInteger(0,userId).uniqueResult();
+	}
+	/**
+	 * 根据用户user来查找用户的不常用信息
+	 * @param userId
+	 * @return  找到返回TUser，否则返回null
+	 */
+	public TUserextra findUserextraByUserId(TUser user){
+		return (TUserextra) session.createQuery("from TUserextra t where t.userId = ? ").setInteger(0,user.getUserId()).uniqueResult();
+	}
+	/**
+	 * 添加用户的信息
+	 * @param userextra
+	 * @return
+	 */
+	public boolean addUserextra(TUserextra userextra){
+		if(userextra.getUserId()==null){
+			return false;
+		}else{
+			session.save(userextra);
+			return true;
+		}
+	}
+	/**
+	 * 更新用户的信息
+	 * @param userextra
+	 * @return
+	 */
+	public boolean updateUserextra(TUserextra userextra){
+		if(userextra.getUserId()==null){
+			return false;
+		}else{
+			session.update(userextra);
+			return true;
+		}
+	}
+	/**
+	 * 删除用户信息
+	 * @param userextra
+	 * @return
+	 */
+	public boolean delUserextra(TUserextra userextra){
+		if(userextra.getUserId()==null){
+			return false;
+		}else{
+			session.delete(userextra);
+			return true;
+		}
+>>>>>>> 6ee18486e94f459ccd835307160fb0dc1d9e7c11
 	}
 }

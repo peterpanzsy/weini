@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="boxmanage" extends="json-default" namespace="/boxManage" >
+	    <action name="listAllBoxpage" class="com.weini.manage.action.BoxManageAction" method="listAllBoxpage">
+			<result name="success" type="json">	
+				<param name="includeProperties">list.*</param>			
+			</result>
+		</action>
+		<!-- 列出所有的盒子模型 -->
+		 <action name="listAllBox" class="com.weini.manage.action.BoxManageAction" method="listAllBox">
+			<result name="success" type="json">	
+				<param name="includeProperties">
+					list\[\d+\]\.boxImage1,list\[\d+\]\.boxPrice,list\[\d+\]\.boxdesc4,list\[\d+\]\.boxdesc1,list\[\d+\]\.boxdesc2,list\[\d+\]\.boxdesc3,list\[\d+\]\.boxtypename
+				</param>			
+			</result>
+		</action>
+	</package>
+</struts>    

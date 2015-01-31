@@ -3,20 +3,21 @@
 	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 
 <hibernate-configuration>
-	<session-factory name="foo">
-		<property name="show_sql">true</property>		
+	 <session-factory name="foo">
+ 		<property name="show_sql">true</property>		
 		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
 		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
 		<property name="connection.url"> <![CDATA[jdbc:mysql://127.0.0.1:3306/weini?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull]]></property>
 		<property name="connection.username">root</property>
-		<!-- 
+		
 		 <property name="connection.password">admin</property>
-		 -->
+		<!-- 
 		<property name="connection.password">root</property>
+		 -->
 		<property name="hbm2ddl.auto">update</property>
-		<!-- 连接池配置 -->
+		<!-- 连接池配置 
 		<property name="hibernate.connection.provider_class">org.hibernate.service.jdbc.connections.internal.C3P0ConnectionProvider
-		</property>
+		</property>-->
 		<!-- 连接池中JDBC连接的最小数量。Hibernate默认为1 -->
 		<property name="hibernate.c3p0.min_size">10</property>
 		<!-- 连接池中JDBC连接的最大数量。Hibernate默认为100 -->
@@ -27,5 +28,22 @@
 		<property name="hibernate.c3p0.max_statements">100</property>
 		<!-- 一个连接被自动验证前的闲置时间（以秒为单位）。Hibernate默认为0 -->
 		<property name="hibernate.c3p0.idle_test_period">120</property>
+		<property name="hibernate.connection.autocommit">true</property>
+	
+	   <mapping class="com.weini.manage.entity.TBoxpage"></mapping>  
+	   <mapping class="com.weini.manage.entity.TBox"></mapping> 
+	   <mapping class="com.weini.manage.entity.TUser"></mapping>  
+	   <mapping class="com.weini.manage.entity.TUserextra"></mapping>  
+	   <mapping class="com.weini.manage.entity.TRegisteraddress"></mapping>
+	   <mapping class="com.weini.manage.entity.TMenuinfo"></mapping> 
+	   <mapping class="com.weini.manage.entity.TDishes"></mapping>  
+	   <mapping class="com.weini.manage.entity.TCookinfo"></mapping>  
+	   <mapping class="com.weini.manage.entity.TVendorextra"></mapping>  
+	   <mapping class="com.weini.manage.entity.TDispatching"></mapping>  
+       <mapping class="com.weini.manage.entity.TDispatchingstatus"></mapping>
+       <mapping class="com.weini.manage.entity.TSorderDispatching"></mapping>
+       <mapping class="com.weini.manage.entity.TAlipay"></mapping>
+       <mapping class="com.weini.manage.entity.TBank"></mapping>
+       <mapping class="com.weini.manage.entity.TOfficebuilding"></mapping>
 	</session-factory>
 </hibernate-configuration>

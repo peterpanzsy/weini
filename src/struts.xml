@@ -36,72 +36,13 @@
 			<result name="SUCCESS" type="json">				
 			</result>
 		</action>
-		<!-- 用户管理 -->
-		<action name="listUser" class="com.weini.manage.action.UserAction" method="listUser">
-			<result name="SUCCESS" type="json">				
-			</result>
-		</action>
-		<action name="delUser" class="com.weini.manage.action.UserAction" method="delUser">
-			<result name="SUCCESS" type="json">	
-			</result>
-		</action>
-		
-		
-		<!-- TODO 以下是测试的部分最后删掉即可 -->
-		<!-- <action name="testJSON" class="com.weini.manage.action.TestJSON" >
-			<result name="SUCCESS" type="json">				
-			</result>
-		</action>
-		处理和Box有关的Action信息
-		<action name="CSBox_*" class="com.weini.manage.action.CSBoxAction" method="{1}">
-			<result name="TYPESUCCESS" type="json">	
-				<param name="includeProperties">dataList.*,result</param> 
-			</result>
-			支持片区选择列表
-			<result name="AREASUCCESS" type="json">	
-				<param name="includeProperties">dataList.*</param> 
-			</result>
-			写字楼的选择列表
-			<result name="OFFICESUCCESS" type="json">	
-				<param name="includeProperties">dataList.*</param> 
-			</result>
-		</action>
-		处理手机端的用户登录
-		<action name="CSUserLoginAction_*" class="com.weini.manage.action.CSUserLoginAction" method="{1}">
-			使用手机号码和密码登录
-			<result name="LOGINSUCCESS" type="json">	
-				<param name="includeProperties">u.*,result</param> 
-			</result>
-			<result name="FAIL" type="json">
-				<param name="includeProperties">result</param> 
-			</result>
-		</action>
-		处理手机端的订单信息的Action
-		<action name="CSOrder_*" class="com.weini.manage.action.CSOrderAction" method="{1}">
-			<result name="SUCCESS" type="json">	
-				<param name="includeProperties">dataList.*</param> 
-			</result>
-		</action>
-		处理手机端的菜品信息的Action
-		<action name="CSMenu_*" class="com.weini.manage.action.CSMenuAction" method="{1}">
-			<result name="SUCCESS" type="stream">  
-               <param name="contentType">text/plain</param>  
-               <param name="contentDisposition">attachment;fileName="${fileName}"</param>  
-         	   <param name="inputName">downloadFile</param>
-               <param name="bufferSize">4096</param>  
-           </result>  
-          	<result name="FAIL" type="json">
-				<param name="includeProperties">result</param> 
-			</result>
-			<result name="DETAIL" type="json">
-				<param name="includeProperties">menu.*</param> 
-			</result>
-		</action> -->
 	</package>
 	<include file="strutsConfig/struts-goodManage.xml"></include>
 	<include file="strutsConfig/struts-statisticManage.xml"></include>
 	<include file="strutsConfig/struts-addressManage.xml"></include>
 	<include file="strutsConfig/struts-loginManage.xml"></include>
-	<include file="strutsConfig/struts-startupdateManage.xml"></include>
-	<include file="strutsConfig/struts-orderManage.xml"></include>
+	<include file="strutsConfig/struts-boxManage.xml"></include>
+	<include file="strutsConfig/struts-menuManage.xml"></include>
+	<include file="strutsConfig/struts-userManage.xml"></include>
+	<include file="strutsConfig/struts-DispatchingManage.xml"></include>
 </struts>    

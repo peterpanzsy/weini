@@ -20,7 +20,6 @@ public class HibernateSessionManager {
 			// 首先获取配置信息
 			configuration =  new Configuration().configure();
 			serviceRegistry = new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();
-			
 			// 创建Session Factory			
 			sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 		} catch (HibernateException e) {
