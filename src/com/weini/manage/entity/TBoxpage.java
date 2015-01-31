@@ -18,6 +18,7 @@ public class TBoxpage implements java.io.Serializable {
 	private String boxpageThreedesctext;
 	private String boxpageFiveboxtext;
 	private String boxpageFivedesctext;
+	private Integer boxpageStatus;
 
 	// Constructors
 
@@ -25,7 +26,7 @@ public class TBoxpage implements java.io.Serializable {
 	public TBoxpage() {
 	}
 
-	/** full constructor */
+	/** minimal constructor */
 	public TBoxpage(String boxpageTitle, String boxpageTiptext,
 			String boxpageOneText, String boxpageOnedesctext,
 			String boxpageThreetext, String boxpageThreedesctext,
@@ -38,6 +39,23 @@ public class TBoxpage implements java.io.Serializable {
 		this.boxpageThreedesctext = boxpageThreedesctext;
 		this.boxpageFiveboxtext = boxpageFiveboxtext;
 		this.boxpageFivedesctext = boxpageFivedesctext;
+	}
+
+	/** full constructor */
+	public TBoxpage(String boxpageTitle, String boxpageTiptext,
+			String boxpageOneText, String boxpageOnedesctext,
+			String boxpageThreetext, String boxpageThreedesctext,
+			String boxpageFiveboxtext, String boxpageFivedesctext,
+			Integer boxpageStatus) {
+		this.boxpageTitle = boxpageTitle;
+		this.boxpageTiptext = boxpageTiptext;
+		this.boxpageOneText = boxpageOneText;
+		this.boxpageOnedesctext = boxpageOnedesctext;
+		this.boxpageThreetext = boxpageThreetext;
+		this.boxpageThreedesctext = boxpageThreedesctext;
+		this.boxpageFiveboxtext = boxpageFiveboxtext;
+		this.boxpageFivedesctext = boxpageFivedesctext;
+		this.boxpageStatus = boxpageStatus;
 	}
 
 	// Property accessors
@@ -112,6 +130,14 @@ public class TBoxpage implements java.io.Serializable {
 
 	public void setBoxpageFivedesctext(String boxpageFivedesctext) {
 		this.boxpageFivedesctext = boxpageFivedesctext;
+	}
+
+	public Integer getBoxpageStatus() {
+		return this.boxpageStatus;
+	}
+
+	public void setBoxpageStatus(Integer boxpageStatus) {
+		this.boxpageStatus = boxpageStatus;
 	}
 
 }

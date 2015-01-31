@@ -2,7 +2,7 @@ package com.weini.manage.business;
 
 import java.util.List;
 
-import com.weini.manage.business.GeneralServive;
+import com.weini.manage.business.GeneralService;
 import com.weini.manage.dao.AddressDao;
 import com.weini.manage.dao.MenuDao;
 import com.weini.manage.dao.VendorDao;
@@ -14,7 +14,7 @@ import com.weini.manage.entity.TProvince;
 import com.weini.manage.entity.TVendor;
 import com.weini.tools.HibernateSessionManager;
 
-public class MenuinfoService extends GeneralServive {
+public class MenuinfoService extends GeneralService {
 	private MenuDao menuDao;
 	private VendorDao vendorDao;
 	private AddressDao addressDao;

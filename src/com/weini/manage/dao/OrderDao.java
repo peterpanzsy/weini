@@ -37,31 +37,25 @@ public class OrderDao{
 		}
 		return re;
 	}
-
-	public List searchMonth(Integer userId, int year, int month) {
-		SQLQuery q;
-		String sql = ("SELECT t3.menuinfo_id,t3.menuinfo_name,t2.S_order_dispatchingStartT "
-				+ "FROM t_menuinfo t3 ,"
-				+ "(SELECT S_order_id,menu_id,S_order_dispatchingStartT FROM t_s_order t "
-				+ "WHERE t.F_order_id IN (SELECT order_id FROM t_order WHERE user_id = ? ) "
-				+ "AND t.S_order_consumeStatus = 1 ) t2 "
-				+ "WHERE t3.menuinfo_id = t2.menu_id "
-				+       "AND YEAR(t2.S_order_dispatchingStartT) = ? "
-				+		"AND MONTH(t2.S_order_dispatchingStartT) = ? "
-				+ "ORDER BY t2.S_order_dispatchingStartT DESC ;");
+	//=======================wang==========================
+	public List<Object[]> searchMonth(Integer userId, int year, int month) {
+		Query q;
+		String sql = ("SELECT order_id,order_num,order_menuinfo_id,DATE_FORMAT(order_orderTime,'%Y-%m-%d') as date,"
+				+ "menuinfo_western,t.menutype_desc from t_order,t_menuinfo as m,t_menutype as t where order_isvalid = 1 and "
+				+ "user_id = ? and order_menuinfo_id = m.menuinfo_id and m.menuinfo_type = t.menutype_id and YEAR(order_orderTime) = ? "
+				+ "and MONTH(order_orderTime)=? ORDER BY order_orderTime;");
 		q = session.createSQLQuery(sql);
 		q.setInteger(0, userId);
 		q.setInteger(1,year);
 		q.setInteger(2, month);
 		List l = q.list();
-		List re = new ArrayList();
+		List<Object[]> res = new ArrayList<Object[]>();
 		for (int i = 0; i < l.size(); i++) {
 			Object[] row = (Object[]) l.get(i);
-			re.add(row);
+			res.add(row);
 		}
-		return re;
+		return res;
 	}
-//=======================wang==========================
 	/**
 	 * 获取用户下订单耗时时间分布的统计
 	 * 0:总数；1："0-10";2:"10-20";3"20-30";4:"30-60";5:">60"
@@ -221,4 +215,44 @@ public class OrderDao{
 		return res;
 	}
 	
+	/**
+	 * 获取index表中的订单日期和订单号
+	 * @return list 0:date;1:num
+	 */
+	public List<String> getOrderNum(){
+		List<String> res = new ArrayList<String>();;
+		Query q = session.createSQLQuery("select index_value from t_index where index_name = 'order_date';");
+		Query q1 = session.createSQLQuery("select index_value from t_index where index_name = 'order_num';");
+		List l = q.list();
+		List l1 = q1.list();
+		if(l.size() > 0 && l1.size() > 0){
+			res.add((String)l.get(0));
+			res.add((String)l1.get(0));
+		}
+		return res;
+	}
+	/**
+	 * 更新订单编号记录中num
+	 * @param value 值
+	 * @return
+	 */
+	public int updateOrderNum(String value){
+		Query q = session.createSQLQuery("update t_index set index_value = ? where index_name = ?");
+		q.setString(0, value);
+		q.setString(1,"order_num");
+		return q.executeUpdate();
+	}
+	/**
+	 * 更新订单编号记录中的全部值
+	 * @param date 形如"20150102"
+	 * @param num 订单数
+	 * @return
+	 */
+	public int updateOrderIndexAll(String date,String num){
+		Query q = session.createSQLQuery("update t_index set index_value = ? where index_name = 'order_date'");
+		q.setString(0,date);
+		Query q1 = session.createSQLQuery("update t_index set index_value = ? where index_name = 'order_num'");
+		q1.setString(0,num);
+		return q.executeUpdate() * q1.executeUpdate() ;
+	}
 }

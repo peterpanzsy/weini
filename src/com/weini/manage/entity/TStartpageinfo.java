@@ -16,6 +16,7 @@ public class TStartpageinfo implements java.io.Serializable {
 	private Timestamp startpageStarttime;
 	private Timestamp startpageEndtime;
 	private String startpageImageloc;
+	private Integer startpagePhonetype;
 
 	// Constructors
 
@@ -26,11 +27,12 @@ public class TStartpageinfo implements java.io.Serializable {
 	/** full constructor */
 	public TStartpageinfo(Integer startpageStatus,
 			Timestamp startpageStarttime, Timestamp startpageEndtime,
-			String startpageImageloc) {
+			String startpageImageloc, Integer startpagePhonetype) {
 		this.startpageStatus = startpageStatus;
 		this.startpageStarttime = startpageStarttime;
 		this.startpageEndtime = startpageEndtime;
 		this.startpageImageloc = startpageImageloc;
+		this.startpagePhonetype = startpagePhonetype;
 	}
 
 	// Property accessors
@@ -73,6 +75,14 @@ public class TStartpageinfo implements java.io.Serializable {
 
 	public void setStartpageImageloc(String startpageImageloc) {
 		this.startpageImageloc = startpageImageloc;
+	}
+
+	public Integer getStartpagePhonetype() {
+		return this.startpagePhonetype;
+	}
+
+	public void setStartpagePhonetype(Integer startpagePhonetype) {
+		this.startpagePhonetype = startpagePhonetype;
 	}
 
 }

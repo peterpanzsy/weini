@@ -2,7 +2,7 @@ package com.weini.manage.business;
 
 import java.util.List;
 
-import com.weini.manage.business.GeneralServive;
+import com.weini.manage.business.GeneralService;
 import com.weini.manage.dao.AdminDao;
 import com.weini.manage.dao.UserDao;
 import com.weini.manage.dao.VendorDao;
@@ -11,7 +11,7 @@ import com.weini.manage.entity.TAuth;
 import com.weini.manage.entity.TUser;
 import com.weini.manage.entity.TVendor;
 
-public class LoginService extends GeneralServive{
+public class LoginService extends GeneralService{
 	private AdminDao admindao  = new AdminDao(this.session);
 	private UserDao userdao = new UserDao(this.session);
 	private VendorDao vendao = new VendorDao(this.session);

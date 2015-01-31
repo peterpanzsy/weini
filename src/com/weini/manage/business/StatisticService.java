@@ -3,14 +3,14 @@ package com.weini.manage.business;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.weini.manage.business.GeneralServive;
+import com.weini.manage.business.GeneralService;
 import com.weini.manage.dao.OrderDao;
 import com.weini.manage.dao.UserDao;
 import com.weini.tools.ThreeEntity;
 import com.weini.tools.Tools;
 import com.weini.tools.TwoEntity;
 
-public class StatisticService extends GeneralServive{
+public class StatisticService extends GeneralService{
 	private UserDao userdao  = new UserDao(this.session);
 	private OrderDao orderdao = new OrderDao(this.session);
 	/**

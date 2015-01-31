@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="startupdatemanage" extends="json-default">
+	<!--启动更新-->
+	<action name="LastedVersion" class="com.weini.manage.action.ClientStartUpdateAction" method="getLastVersion">
+		<result name="SUCCESS" type="json">				
+		<param name="includeProperties">dataResult.*</param>
+		</result>
+	</action>
+	<action name="StartPageUpdate" class="com.weini.manage.action.ClientStartUpdateAction" method="getStartPageUpdate">
+		<result name="SUCCESS" type="json">				
+		<param name="includeProperties">startPage.*</param>
+		</result>
+	</action>
+	<action name="BoxPageInfo" class="com.weini.manage.action.ClientStartUpdateAction" method="getBoxPageInfo">
+		<result name="SUCCESS" type="json">				
+		<param name="includeProperties">boxPage.*</param>
+		</result>
+	</action>
+	<action name="TrackPageInfo" class="com.weini.manage.action.ClientStartUpdateAction" method="getTrackPageInfo">
+		<result name="SUCCESS" type="json">				
+		<param name="includeProperties">trackPage.*</param>
+		</result>
+	</action>
+	
+	
+	</package>
+
+</struts>    

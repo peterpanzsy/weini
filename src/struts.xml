@@ -102,4 +102,6 @@
 	<include file="strutsConfig/struts-statisticManage.xml"></include>
 	<include file="strutsConfig/struts-addressManage.xml"></include>
 	<include file="strutsConfig/struts-loginManage.xml"></include>
+	<include file="strutsConfig/struts-startupdateManage.xml"></include>
+	<include file="strutsConfig/struts-orderManage.xml"></include>
 </struts>    
