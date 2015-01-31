@@ -43,9 +43,10 @@ public class OrderDao{
 	/**
 	 * 插入订单
 	 * @param order
-	 * @return
+	 * @return 如果成功，返回订单id；否则返回-1；
 	 */
 	public int insertOrder(TOrder order){
+		int res = -1;
 		Query q = session.createSQLQuery("insert into t_order(order_num,user_id,order_menuinfo_id,box_id,"
 			+ "order_startTime,order_orderTime,order_payStatus,S_order_consumeStatus,order_isRefund,"
 			+ "order_payTime,box_price,order_isFirst,order_isvalid,order_dispatching_id,order_settleStatus)"
@@ -65,7 +66,14 @@ public class OrderDao{
 		q.setInteger(12,order.getOrderIsvalid());
 		q.setInteger(13,order.getOrderDispatchingId());
 		q.setInteger(14,order.getOrderSettleStatus());
-		return q.executeUpdate();
+		if(q.executeUpdate() > 0){
+			Query q1 = session.createSQLQuery("SELECT last_insert_id() from t_order;");
+			List l = q1.list();
+			if(l.size() > 0){
+				res = ((BigInteger)(l.get(0))).intValue();
+			}
+		}
+		return res;
 	}
 	/**
 	 * 插入子订单
@@ -76,8 +84,8 @@ public class OrderDao{
 		Query q = session.createSQLQuery("insert into t_s_order(F_order_id,menu_id,S_order_whichday,"
 				+ "S_order_consumeStatus,S_order_consumeEvaluate,S_order_dispatchingDate,"
 				+ "S_order_logisticsEvaluate,S_order_predictTime,S_order_isdispatchingStateOpen,"
-				+ "S_order_isRefund,S_order_notice)"
-				+ "values(?,?,?,?,?,?,?,?,?,?,?);");
+				+ "S_order_isRefund,S_order_notice,F_order_num,S_order_dispatchingID)"
+				+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?);");
 		q.setInteger(0,sonOrder.getFOrderId());
 		q.setInteger(1, sonOrder.getMenuId());
 		q.setInteger(2,sonOrder.getSOrderWhichday());
@@ -89,6 +97,8 @@ public class OrderDao{
 		q.setInteger(8,sonOrder.getSOrderIsdispatchingStateOpen());
 		q.setInteger(9,sonOrder.getSOrderIsRefund());
 		q.setString(10,sonOrder.getSOrderNotice());
+		q.setString(11,sonOrder.getFOrderNum());
+		q.setInteger(12,sonOrder.getSOrderDispatchingId());
 		return q.executeUpdate();
 	}
 	public List<Object[]> searchMonth(Integer userId, int year, int month) {
