@@ -9,7 +9,7 @@ public class BoxManageAction extends ActionSupport {
 	
 	BoxService boxService = new BoxService();
 	
-	private List list;
+	private List<Object[]> list;
 	/**
 	 * 
 	 */
@@ -31,10 +31,10 @@ public class BoxManageAction extends ActionSupport {
 		list = boxService.listBoxpage();
 		return SUCCESS;
 	}
-	public List getList() {
+	public List<Object[]> getList() {
 		return list;
 	}
-	public void setList(List list) {
+	public void setList(List<Object[]> list) {
 		this.list = list;
 	}
 	

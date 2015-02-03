@@ -14,8 +14,9 @@
 		<!-- 列出用户的详细信息 -->
 		<action name="findUserInfo" class="com.weini.manage.action.UserAction" method="findUserInfo">
 			<result name="success" type="json">	
-				<param name="includeProperties">code,user\.userId,user\.userName
-				,user\.userGender,user\.userAddress,user\.notEat,user\.countDays,userextra\.userextraBirthday</param>			
+				<!-- <param name="includeProperties">code,user\.userId,user\.userName
+				,user\.userGender,user\.userAddress,user\.notEat,user\.countDays,userextra\.userextraBirthday</param> -->
+				<param name="includeProperties">code,obj.*</param>			
 			</result>
 			<result name="fail" type="json">	
 				<param name="includeProperties">code,result</param>			

@@ -55,9 +55,14 @@ function excute(){
 		//"busId":2
 		//"userId":1,
 		//"date":"2015-01-23"
-		"menuId":1,
-		"point":"4.5"
+		/* "menuId":1,
+		"point":"4.5" */
 		//"num":1
+       /*  "phoneNum":"15844097083",
+       "identifyCode":645206 */
+       	"phoneNum":"18710871983",
+	  	"password":"wpr",
+       	"identifyCode":530949 
          },
          success : function(data) {
 				//TODO 这个地方用来改得到的数据信息就可以了

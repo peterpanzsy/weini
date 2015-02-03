@@ -5,7 +5,7 @@
 		<!-- 列出所有的盒子模型 -->
 		 <action name="menuinfoDetail" class="com.weini.manage.action.MenuManageAction" method="menuinfoDetail">
 			<result name="success" type="json">	
-				<param name="includeProperties">code,menu.*</param>			
+				<param name="includeProperties">code,obj.*</param>			
 			</result>
 			<result name="fail" type="json">	
 				<param name="includeProperties">

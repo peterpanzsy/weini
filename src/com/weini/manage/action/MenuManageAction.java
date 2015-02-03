@@ -19,6 +19,7 @@ public class MenuManageAction extends ActionSupport {
 	private TMenuinfo menu;
 	private List list;
 	private TMenutype menutype;
+	private Object[] obj;
 	/**
 	 * 
 	 */
@@ -28,8 +29,8 @@ public class MenuManageAction extends ActionSupport {
 	 * @return
 	 */
 	public String menuinfoDetail(){
-		menu = menuService.findMenuById(menuinfoId);
-		if(menu==null){
+		obj = menuService.findMenuById(menuinfoId);
+		if(obj==null){
 			code = 0; 
 			result="没有记录";
 			return "fail";
@@ -37,6 +38,7 @@ public class MenuManageAction extends ActionSupport {
 		code = 1;
 		return SUCCESS;
 	}
+
 	
 	public String listMenutype(){
 		list = menuService.listMenutype();
@@ -90,6 +92,12 @@ public class MenuManageAction extends ActionSupport {
 	public void setMenutype(TMenutype menutype) {
 		this.menutype = menutype;
 	}
-	
-	
+
+	public Object[] getObj() {
+		return obj;
+	}
+
+	public void setObj(Object[] obj) {
+		this.obj = obj;
+	}
 }

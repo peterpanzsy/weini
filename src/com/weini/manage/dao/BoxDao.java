@@ -1,5 +1,6 @@
 package com.weini.manage.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -17,8 +18,9 @@ public class BoxDao {
 	 * 返回所有的盒子模式
 	 * @return
 	 */
-	public List<TBox> listBox() {
-		return  session.createSQLQuery("select * from t_box").addEntity(TBox.class).list();
+	public List<Object[]>  listBox() {
+//		return  session.createSQLQuery("select * from t_box").addEntity(TBox.class).list();
+		return  session.createSQLQuery("select * from t_box").list();
 	}
 	/**
 	 * 	添加盒子模式

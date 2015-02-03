@@ -186,7 +186,14 @@ public class UserDao{
 	   }
 		   return null;
 	}
-	
+	/**
+	 * 根据手机号码来查找TUser用户，用来查询该手机号是否为以注册的用户
+	 * @param phoneNum
+	 * @return
+	 */
+	public TUser searchUser(String phoneNum){
+		return (TUser) session.createQuery("from TUser t where t.userPhoneNumber = ?").setString(0, phoneNum).uniqueResult();
+	}
 	/**
 	 * 获取用户类型的统计信息
 	 * @param temp 统计数组，第一个表示总用户数，第二个表示Android用户，第三个表示ios用户

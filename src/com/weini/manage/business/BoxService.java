@@ -1,10 +1,12 @@
 package com.weini.manage.business;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.weini.manage.business.GeneralService;
 import com.weini.manage.dao.BoxDao;
 import com.weini.manage.dao.BoxpageDao;
+import com.weini.manage.entity.TBox;
 
 public class BoxService extends GeneralService{
 	
@@ -28,8 +30,14 @@ public class BoxService extends GeneralService{
 	 *列出所有的盒子模型 
 	 * @return
 	 */
-	public List listBox() {
+	public List<Object[]> listBox() {
+//		List l = new ArrayList<>();
 		List list = boxDao.listBox();
+//		
+//		for(TBox b:list){
+//			Object[] temp = new Object[];
+//			temp[0] = b.getBoxId() 
+//		}
 		this.close();
 		return list;
 	}

@@ -53,6 +53,7 @@ public class UserAction extends ActionSupport{
 	private TUserextra userextra;
 	private int code=0;  //状态，0-失败 ，1-成功
 	private String result;  //错误信息
+	private Object[] obj;
 	
 //	public String listUser(){//根据角色获取账户列表		
 //		UserDaoDEL dao=new UserDaoDEL();
@@ -84,16 +85,39 @@ public class UserAction extends ActionSupport{
 	public String changePwd(){
 		return SUCCESS;
 	}
-	/**
+/*	*//**
 	 * 获取用户的个人信息
 	 * @return
-	 */
+	 *//*
 	public String findUserInfo(){
 		try {
 			TwoEntity two = userService.findUserInfo(userId);
 			user = (TUser)two.getIndex1();
 			userextra = (TUserextra)two.getIndex2();
 			if(user==null){
+				code = 0; 
+				result="没有记录";
+				return "fail";
+			}
+			code = 1;
+		} catch (Exception e) {
+			code = 0; 
+			result="参数有误";
+			return "fail";
+		}
+		return SUCCESS;
+	}*/
+	/**
+	 * 获取用户的个人信息
+	 * @return
+	 */
+	public String findUserInfo(){
+		try {
+			obj = userService.findUserInfo(userId);
+//			TwoEntity two = userService.findUserInfo(userId);
+//			user = (TUser)two.getIndex1();
+//			userextra = (TUserextra)two.getIndex2();
+			if(obj==null){
 				code = 0; 
 				result="没有记录";
 				return "fail";
@@ -127,10 +151,10 @@ public class UserAction extends ActionSupport{
 	 * @return
 	 */
 	public String updateUserBirthday(){
-		System.out.println(userBirthday);
 		code = userService.updateUserBirthday(userId,userBirthday);
 		return SUCCESS;
 	}
+	
 	public String getMark() {
 		return mark;
 	}
@@ -280,5 +304,11 @@ public class UserAction extends ActionSupport{
 	}
 	public void setUserBirthday(Date userBirthday) {
 		this.userBirthday = userBirthday;
+	}
+	public Object[] getObj() {
+		return obj;
+	}
+	public void setObj(Object[] obj) {
+		this.obj = obj;
 	}
 }

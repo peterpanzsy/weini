@@ -137,7 +137,7 @@ public class MenuDao{
 	 * @param menuId 
 	 * @return 午餐组成列表
 	 */
-	public List<TDishes> findAllDishByMenuinfoId(Integer menuId){
+	public List findAllDishByMenuinfoId(Integer menuId){
 		SQLQuery q =session.createSQLQuery( "SELECT t1.dishes_id,t1.dishes_name,t1.dishes_series_1,t1.dishes_series_2"
 				+ " FROM t_dishes t1"
 				+ " WHERE  t1.dishes_id IN"
@@ -145,14 +145,14 @@ public class MenuDao{
 				+ " WHERE t2.menuinfo_id=?)");
 		q.setInteger(0, menuId);
 		List l = q.list();
-		List<TDishes> re = new ArrayList<>();
-		for(int i=0 ;i<l.size();i++){
-			Object row[] = (Object[]) l.get(i);
-			TDishes d = new TDishes((String)row[1],(String)row[2],(String)row[3]);
-			d.setDishesId((Integer)row[0]);
-			re.add(d);
-		}
-		return re;
+//		List<TDishes> re = new ArrayList<>();
+//		for(int i=0 ;i<l.size();i++){
+//			Object row[] = (Object[]) l.get(i);
+////			TDishes d = new TDishes((String)row[1],(String)row[2],(String)row[3]);
+////			d.setDishesId((Integer)row[0]);
+//			re.add(d);
+//		}
+		return l;
 	}
 	/**
 	 * 添加或更新dishes 之前不存在，添加；之前存在更新

@@ -10,6 +10,7 @@ import com.weini.manage.dao.UserDao;
 import com.weini.manage.entity.TUser;
 import com.weini.manage.entity.TUserextra;
 import com.weini.tools.HibernateSessionManager;
+import com.weini.tools.SMSUtil;
 import com.weini.tools.TwoEntity;
 
 public class UserService extends GeneralService{
@@ -43,7 +44,7 @@ public class UserService extends GeneralService{
 	 * 根据用户Id来查找用户的信息
 	 * @param userId
 	 * @return  TwoEntity 由2个对象组成 TUser，TUserextra 
-	 */
+	 *//*
 	public TwoEntity findUserInfo(int userId) {
 		HibernateSessionManager.getThreadLocalTransaction();
 		TwoEntity two = null;
@@ -66,6 +67,46 @@ public class UserService extends GeneralService{
 			this.roll();
 		}
 		return two;
+	}*/
+	/**
+	 * 根据用户Id来查找用户的信息
+	 * @param userId
+	 * @return  TwoEntity 由2个对象组成 TUser，TUserextra 
+	 */
+	public Object[] findUserInfo(int userId) {
+		HibernateSessionManager.getThreadLocalTransaction();
+		Object[] obj = null;
+		try {
+			TUser user = userdao.findByUserID(userId);
+			if(user.getUserRegdate()!=null){
+				try {
+					user.setCountDays(daysBetween(user.getUserRegdate(),new Date()));
+					if(user.getUserHeat()!=0&&user.getUserHeat()!=null){
+						user.setNotEat(menudao.getMenutype(user.getUserHeat()));
+					}
+				} catch (Exception e) {
+					user.setCountDays(0);
+				}
+			}
+			TUserextra userextra = userdao.findUserextraByUserId(user);
+			if(user!=null){
+				obj = new Object[7];
+				obj[0]=user.getUserId();
+				obj[1]=user.getUserName();
+				obj[2]=user.getUserGender();
+				obj[3]=user.getUserAddress();
+				obj[4]=user.getNotEat();
+				obj[5]=user.getCountDays();
+				if(userextra!=null){
+					obj[6] = userextra.getUserextraBirthday();
+				}
+			}
+			
+			this.close();
+		} catch (Exception e) {
+			this.roll();
+		}
+		return obj;
 	}
 	/**
 	 * 修改用户忌口
@@ -129,6 +170,7 @@ public class UserService extends GeneralService{
 	 */
 	public int updateUserBirthday(Integer userId, Date userBirthday) {
 		HibernateSessionManager.getThreadLocalTransaction();
+		boolean flag = false;
 		try {
 			TUser user = userdao.findByUserID(userId);
 			if(user==null){
@@ -152,6 +194,7 @@ public class UserService extends GeneralService{
 			this.roll();
 		}
 		return 0;
+		
 	}
 	  /**  
      * 计算两个日期之间相差的天数  
@@ -174,8 +217,6 @@ public class UserService extends GeneralService{
         long between_days=(time2-time1)/(1000*3600*24);  
         return Integer.parseInt(String.valueOf(between_days));           
     }
-	
-
-
+   
 	
 }

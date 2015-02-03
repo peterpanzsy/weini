@@ -11,6 +11,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.weini.manage.entity.TAdmin;
 import com.weini.manage.entity.TAuth;
+import com.weini.manage.entity.TUser;
 import com.weini.manage.entity.TVendor;
 import com.weini.manage.business.LoginService;
 
@@ -18,8 +19,14 @@ public class LoginAction extends ActionSupport{
 
 	private static final long serialVersionUID = 6382054055046543790L;
 	String  username;
-	String password;
+	String  password;
 	String flag;
+	//---------------wpr----------
+	private int identifyCode; //短信验证码
+	private String phoneNum; //用户手机号
+	private int code=0; //返回的状态码
+	private int userId;
+	
 //    TAdmin admin;
 //    List<TAuth> authList;
     /**
@@ -35,7 +42,7 @@ public class LoginAction extends ActionSupport{
 		if(username==null||username.equals("")){
 	        ActionContext actionContext = ActionContext.getContext();
 	        Map session = actionContext.getSession();
-	        session.put("wrong", "用户名为空");	
+	        session.put("wrong", "手机号为空");	
 			return "fail";
 		}
 		if(password==null||password.equals("")){
@@ -76,33 +83,40 @@ public class LoginAction extends ActionSupport{
 	 * 普通用户登录
 	 * @return
 	 */
-////	TODO 还没有进行修改，需和前台商量
-//	public String userLogin()   {
-//		//add by zsy to log remote access ip
-//		HttpServletRequest request = ServletActionContext.getRequest(); 
-//		String remoteip=request.getRemoteHost();
-//		//above add by zsy to log remote access ip
-//		ActionContext actionContext = ActionContext.getContext();
-//        Map session = actionContext.getSession();
-//		if(username==null||username.equals("")){
-//	        session.put("wrong", "用户名为空");	
-//			return "fail";
-//		}
-//		if(password==null||password.equals("")){
-//	        session.put("wrong", "密码为空");	
-//			return "fail";
-//		}
-////		String adminPassword_md5 = CipherUtil.generatePassword(password);
-//		String adminPassword_md5 = password;
-//		TUser user = new TUser();
-//		user=(new LoginService()).searchUser(username, adminPassword_md5);
-//		if(user==null){
-//	        session.put("wrong", "帐户或者密码错误，或者您的账号正在审核中。");	
-//			return "FAIL";
-//		}
-//        session.put("user", user);
-//		return "SUCCESS";
-//	}
+	public String userLogin()   {
+		String result = "fail";
+		//add by zsy to log remote access ip
+		HttpServletRequest request = ServletActionContext.getRequest(); 
+		String remoteip=request.getRemoteHost();
+		//above add by zsy to log remote access ip
+		ActionContext actionContext = ActionContext.getContext();
+        Map session = actionContext.getSession();
+		if(phoneNum==null||phoneNum.equals("")){
+			code = 0;
+			flag = "用户名为空";
+//	        session.put("wrong", "用户名为空");
+		}else if(password==null||password.equals("")){
+	        code = 0;
+	        flag = "密码为空";
+//			session.put("wrong", "密码为空");	
+		}else{
+//			String adminPassword_md5 = CipherUtil.generatePassword(password);
+			String adminPassword_md5 = password;
+			TUser user = new TUser();
+			user=(new LoginService()).searchUser(phoneNum, adminPassword_md5);
+			if(user==null){
+				code = 0;
+				flag ="帐户或者密码错误，或者您的账号正在审核中。";
+//		        session.put("wrong", "帐户或者密码错误，或者您的账号正在审核中。");	
+			}else{
+				session.put("user", user);
+				userId = user.getUserId();
+				code=1;
+				result = SUCCESS;
+			}
+		}
+		return result;
+	}
 	/**
 	 * 普通用户登出
 	 * @return
@@ -154,9 +168,86 @@ public class LoginAction extends ActionSupport{
 	 * 获取手机验证码
 	 * @return
 	 */
-	public String getPhoneVeriCode(){
+	public String dynamicCode(){
+		LoginService loginService = new LoginService();
+		identifyCode = loginService.sendCode(phoneNum);
+		if(identifyCode!=-1){
+			ActionContext actionContext = ActionContext.getContext();
+	        Map session = actionContext.getSession();
+	        session.put("identifyCode", identifyCode);
+			code = 1;
+		}else{
+			code = 0;
+		}
+		return SUCCESS;
+	} 
+	/**
+	 * 已注册的用户登录
+	 * @return 仅当验证码正确且用户已注册过的情况下返回code=1，成功状态
+	 */
+	public String reguserLogin()  {
+		String result = "fail";
+		ActionContext actionContext = ActionContext.getContext();
+		Map session = actionContext.getSession();
+		Object obj = session.get("identifyCode");
+		if(obj!=null&&(Integer)obj==identifyCode){
+				LoginService loginService = new LoginService();
+				TUser user = loginService.findReguserLogin(phoneNum);
+				if(user!=null){
+					userId = user.getUserId();
+					session.remove("identifyCode");
+					session.put("user", user);
+					code = 1;
+					result = SUCCESS;
+				}else{
+					code =0;
+					flag ="手机号未注册";
+					result = "fail";
+				}
+		}else{
+			flag ="验证码不正确";
+			code = 0;
+			result = "fail";
+		}
+		return result;
+	}
+	/**
+	 * 用户注册
+	 * @return  0-注册失败 ，1-注册成功,2-用户已注册,3-验证码不正确
+	 */
+	public String userRegist(){
+		ActionContext actionContext = ActionContext.getContext();
+		Map session = actionContext.getSession();
+		Object obj = session.get("identifyCode");
+		if(obj!=null&&(Integer)obj==identifyCode){
+			LoginService loginService = new LoginService();
+			code = loginService.userRegist(phoneNum, password);
+			if(code == 1)
+				session.remove("identifyCode");
+		}else{
+			code = 3;
+		}
 		return SUCCESS;
 	}
+	/**
+	 * 修改密码  0-修改失败 ，1-改密码成功,2-用户未注册,3-验证码不正确
+	 * @return
+	 */
+	public String userChangePassword(){
+		ActionContext actionContext = ActionContext.getContext();
+		Map session = actionContext.getSession();
+		Object obj = session.get("identifyCode");
+		if(obj!=null&&(Integer)obj==identifyCode){
+			LoginService loginService = new LoginService();
+			code = loginService.userChangePassword(phoneNum, password);
+			if(code == 1)
+				session.remove("identifyCode");
+		}else{
+			code = 3;
+		}
+		return SUCCESS;
+	}
+	
 	public String getUsername() {
 		return username;
 	}
@@ -175,5 +266,28 @@ public class LoginAction extends ActionSupport{
 	public void setFlag(String flag) {
 		this.flag = flag;
 	}	
-	
+	public int getIdentifyCode() {
+		return identifyCode;
+	}
+	public void setIdentifyCode(int identifyCode) {
+		this.identifyCode = identifyCode;
+	}
+	public String getPhoneNum() {
+		return phoneNum;
+	}
+	public void setPhoneNum(String phoneNum) {
+		this.phoneNum = phoneNum;
+	}
+	public int getCode() {
+		return code;
+	}
+	public void setCode(int code) {
+		this.code = code;
+	}
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 }

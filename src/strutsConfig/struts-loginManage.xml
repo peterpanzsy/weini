@@ -13,14 +13,42 @@
 			</result>
 		</action>
 	<!-- 处理手机端的用户登录 -->
-		<!-- <action name="userLogin" class="com.weini.manage.action.LoginAction" method="userLogin">
-			<result name="LOGINSUCCESS" type="json">	
-				<param name="includeProperties">u.*,result</param> 
+		<!-- 获取验证码 -->
+		<action name="getDynamicCode" class="com.weini.manage.action.LoginAction" method="dynamicCode">
+			<result name="success" type="json">	
+				<param name="includeProperties">code,identifyCode</param>
 			</result>
-			<result name="FAIL" type="json">
-				<param name="includeProperties">result</param> 
+		</action> 
+		<!-- 已注册用户登录,通过动态短信登录 -->
+		<action name="userLoginByDynamicCode" class="com.weini.manage.action.LoginAction" method="reguserLogin">
+			<result name="success" type="json">	
+				<param name="includeProperties">code,userId</param>
 			</result>
-		</action> -->
+			<result name="fail" type="json">	
+				<param name="includeProperties">code,flag</param>
+			</result>
+		</action> 
+		<!-- 注册用户通过手机号和密码登录 -->
+		<action name="userLogin" class="com.weini.manage.action.LoginAction" method="userLogin">
+			<result name="success" type="json">	
+				<param name="includeProperties">code,userId</param>
+			</result>
+			<result name="fail" type="json">	
+				<param name="includeProperties">code,flag</param>
+			</result>
+		</action> 
+		<!-- 用户注册 -->
+		<action name="userRegist" class="com.weini.manage.action.LoginAction" method="userRegist">
+			<result name="success" type="json">	
+				<param name="includeProperties">code</param>
+			</result>
+		</action> 
+		<!-- 用户修改密码 -->
+		<action name="userChangePassword" class="com.weini.manage.action.LoginAction" method="userChangePassword">
+			<result name="success" type="json">	
+				<param name="includeProperties">code</param>
+			</result>
+		</action> 
 	<!-- 商家管理登陆登出 -->
 		<action name="vendorLogin" class="com.weini.manage.action.LoginAction" method="vendorlogin" >
 			<result name="SUCCESS" type="json">

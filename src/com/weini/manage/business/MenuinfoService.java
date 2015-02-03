@@ -93,7 +93,7 @@ public class MenuinfoService extends GeneralService {
 		return res;
 	}
 	
-	public TMenuinfo findMenuById(Integer menuinfoId) {
+/*	public TMenuinfo findMenuById(Integer menuinfoId) {
 		TMenuinfo menu= menuDao.findMenuDetailByMenuID(menuinfoId);
 		if(menu==null){
 			this.close();
@@ -103,7 +103,39 @@ public class MenuinfoService extends GeneralService {
 			this.close();
 			return menu;
 		}
+	}*/
+	/**
+	 * 返回menuinfo的详细信息
+	 * @param menuinfoId
+	 * @return
+	 */
+	public Object[] findMenuById(Integer menuinfoId) {
+		Object[] obj = null;
+		TMenuinfo menu= menuDao.findMenuDetailByMenuID(menuinfoId);
+		if(menu==null){
+			this.close();
+			return null;               //没有记录
+		}else{
+			obj = new Object[10];
+			obj[0]=menu.getMenuinfoId();
+			obj[1]=menu.getMenuinfoName();
+			obj[2]=menu.getMenuinfoImage1();
+			obj[3]=menu.getMenuinfoImage2();
+			obj[4]=menu.getMenuinfoImage3();
+			obj[5]=menu.getMenuinfoImage4();
+			obj[6]=menu.getMenuinfoDetail();
+			obj[7]=menu.getMenuinfoPoint();
+			obj[8]=menuDao.findAllDishByMenuinfoId(menuinfoId);
+			if(menu.getMenuinfoType()!=null){
+				obj[9]=menuDao.getMenutype(menu.getMenuinfoType());
+			}else{
+				obj[9]=null;
+			}
+			this.close();
+			return obj;
+		}
 	}
+
 	/**
 	 * 得到所有的menutype
 	 * @return

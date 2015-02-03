@@ -23,7 +23,7 @@ public class BoxpageDao {
 	 * 
 	 * @return
 	 */
-	public List<TBoxpage> listBoxpage() {
+	public List<Object[]> listBoxpage() {
 //		SQLQuery q;
 //		q = session.createSQLQuery("SELECT boxpage_id,boxpage_title,boxpage_tiptext,boxpage_oneText,boxpage_onedesctext,boxpage_threetext,"
 //				+ "boxpage_threedesctext,boxpage_fiveboxtext,boxpage_fivedesctext "
@@ -45,7 +45,8 @@ public class BoxpageDao {
 //			re.add(boxpage);
 //		}
 //		return re;
-		return session.createSQLQuery("select * from t_boxpage").addEntity(TBoxpage.class).list();
+//		return session.createSQLQuery("select * from t_boxpage").addEntity(TBoxpage.class).list();
+		return session.createSQLQuery("select * from t_boxpage").list();
 	}
 	/**
 	 * 	添加文案
