@@ -28,6 +28,7 @@ public class DispatchingManageAction extends ActionSupport {
 	private TDispatching dis;
 	private TDispatchingstatus disstatus;
 	private int code=0;//默认不成功
+	private Object[] obj;
 	
 	/**
 	 * 向数据库中添加TDispathing
@@ -131,5 +132,11 @@ public class DispatchingManageAction extends ActionSupport {
 	}
 	public void setCode(int code) {
 		this.code = code;
+	}
+	public Object[] getObj() {
+		return obj;
+	}
+	public void setObj(Object[] obj) {
+		this.obj = obj;
 	}
 }

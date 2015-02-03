@@ -38,20 +38,29 @@ public class DispatchingService extends GeneralService{
 	public List findDispatchingByUserId(Integer userId) {
 		HibernateSessionManager.getThreadLocalTransaction();
 		List l =disDao.findDispatchingByUserId(userId);
-		List<DispatchingAddress> re = new ArrayList<>();
+		List<Object[]> re = new ArrayList<>();
 		for(int i=0;i<l.size();i++){
 			TDispatching d =(TDispatching) l.get(i);
-			DispatchingAddress add = new DispatchingAddress();
-			add.setDispatchingId(d.getDispatchingId());
-			add.setDispatchingProvince(addDao.findProvince(d.getDispatchingProvince()));
-			add.setDispatchingCity(addDao.findCity(d.getDispatchingCity()));
-			add.setDispatchingDistrict(addDao.findDistrict(d.getDispatchingDistrict()));
-			add.setDispatchingBusinessAreaid(addDao.findBusiness(d.getDispatchingBusinessAreaid()));
-			add.setDispatchingOfficeBuilding(addDao.findOffice(d.getDispatchingOfficeBuilding()));
-			add.setDispatchingPhoneNum(d.getDispatchingPhoneNum());
-			add.setDispatchingAddressDetail(d.getDispatchingAddressDetail());
-			System.out.println(add.toString());
-			re.add(add);
+//			DispatchingAddress add = new DispatchingAddress();
+//			add.setDispatchingId(d.getDispatchingId());
+//			add.setDispatchingProvince(addDao.findProvince(d.getDispatchingProvince()));
+//			add.setDispatchingCity(addDao.findCity(d.getDispatchingCity()));
+//			add.setDispatchingDistrict(addDao.findDistrict(d.getDispatchingDistrict()));
+//			add.setDispatchingBusinessAreaid(addDao.findBusiness(d.getDispatchingBusinessAreaid()));
+//			add.setDispatchingOfficeBuilding(addDao.findOffice(d.getDispatchingOfficeBuilding()));
+//			add.setDispatchingPhoneNum(d.getDispatchingPhoneNum());
+//			add.setDispatchingAddressDetail(d.getDispatchingAddressDetail());
+//			System.out.println(add.toString());
+			Object[] row = new Object[8];
+			row[0]=d.getDispatchingId();
+			row[1]=addDao.findProvince(d.getDispatchingProvince());
+			row[2]=addDao.findCity(d.getDispatchingCity());
+			row[3]=addDao.findDistrict(d.getDispatchingDistrict());
+			row[4]=addDao.findBusiness(d.getDispatchingBusinessAreaid());
+			row[5]=addDao.findOffice(d.getDispatchingOfficeBuilding());
+			row[6]=d.getDispatchingAddressDetail();
+			row[7]=d.getDispatchingPhoneNum();
+			re.add(row);
 		}
 		this.close();
 		return re;
