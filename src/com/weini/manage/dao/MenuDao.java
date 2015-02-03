@@ -397,7 +397,7 @@ public class MenuDao{
 	 * 列出所有t_menutype内容
 	 * @return
 	 */
-	public List listMenutype() {
-		return session.createQuery("from TMenutype").list();
+	public List<Object[]> listMenutype() {
+		return session.createSQLQuery("select * from t_menutype").list();
 	}
 }
