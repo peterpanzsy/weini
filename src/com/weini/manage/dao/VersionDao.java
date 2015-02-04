@@ -18,16 +18,19 @@ public class VersionDao {
 	 * @param type 手机类型 0：Android 1：ios
 	 * @return 
 	 */
-	public List<Object[]> getVersionInfoByType(int type){
-		List<Object[]> res = new ArrayList<Object[]>();
+	public List<TVersion> getVersionInfoByType(int type){
+		List<TVersion> res = new ArrayList<TVersion>();
 		Query q = session.createSQLQuery("SELECT version_info,"
 				+ "version_loc from t_version where version_type = ? ORDER BY version_id DESC limit 2;");
 		q.setParameter(0, type);
 		List l = q.list();
-		if(l.size() > 0 && l.size() < 3){
+		if(l != null && l.size() > 0 && l.size() < 3){
 			for(int i = 0;i<l.size();i++){
 				Object[] row = (Object[])l.get(i);
-				res.add(row);
+				TVersion temp = new TVersion();
+				temp.setVersionInfo((String)row[0]);
+				temp.setVersionLoc((String)row[1]);
+				res.add(temp);
 			}
 			
 		}

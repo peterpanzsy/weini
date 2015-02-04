@@ -18,17 +18,24 @@ public class BoxModelDao {
 	 * 获取boxpage状态为1的记录
 	 * @return
 	 */
-	public List<Object> getBoxpageinfo(){
-		List<Object> res = new ArrayList<Object>();
+	public TBoxpage getBoxpageinfo(){
+		TBoxpage res = null;
 		Query q = session.createSQLQuery("SELECT boxpage_id,boxpage_title,boxpage_tiptext,boxpage_oneText,"
 				+ "boxpage_onedesctext,boxpage_threetext,boxpage_threedesctext,boxpage_fiveboxtext,"
 				+ "boxpage_fivedesctext from t_boxpage where boxpage_status = 1;");
 		List l = q.list();
-		if(l.size() == 1){
+		if(l != null && l.size() == 1){
 			Object[] row = (Object[])(l.get(0));
-			for(Object temp:row){
-				res.add(temp);
-			}
+			res = new TBoxpage();
+			res.setBoxpageId((int)row[0]);
+			res.setBoxpageTitle((String)row[1]);
+			res.setBoxpageTiptext((String)row[2]);
+			res.setBoxpageOneText((String)row[3]);
+			res.setBoxpageOnedesctext((String)row[4]);
+			res.setBoxpageThreetext((String)row[5]);
+			res.setBoxpageThreedesctext((String)row[6]);
+			res.setBoxpageFiveboxtext((String)row[7]);
+			res.setBoxpageFivedesctext((String)row[8]);
 		}
 		return res;
 	}

@@ -13,19 +13,17 @@ public class TSOrder implements java.io.Serializable {
 	// Fields
 
 	private Integer SOrderId;
-	private Integer FOrderId;
 	private String FOrderNum;
 	private Integer menuId;
 	private Integer SOrderWhichday;
-	private Integer SOrderConsumeStatus;
 	private String SOrderConsumeEvaluate;
 	private Date SOrderDispatchingDate;
 	private String SOrderLogisticsEvaluate;
 	private Timestamp SOrderPredictTime;
 	private Integer SOrderIsdispatchingStateOpen;
-	private Integer SOrderIsRefund;
 	private String SOrderNotice;
 	private Integer SOrderDispatchingId;
+	private Integer SOrderStatus;
 
 	// Constructors
 
@@ -34,40 +32,34 @@ public class TSOrder implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public TSOrder(Integer FOrderId, String FOrderNum, Integer menuId,
-			Integer SOrderWhichday, Integer SOrderConsumeStatus,
+	public TSOrder(String FOrderNum, Integer menuId, Integer SOrderWhichday,
 			Date SOrderDispatchingDate, Integer SOrderIsdispatchingStateOpen,
-			Integer SOrderIsRefund) {
-		this.FOrderId = FOrderId;
+			Integer SOrderStatus) {
 		this.FOrderNum = FOrderNum;
 		this.menuId = menuId;
 		this.SOrderWhichday = SOrderWhichday;
-		this.SOrderConsumeStatus = SOrderConsumeStatus;
 		this.SOrderDispatchingDate = SOrderDispatchingDate;
 		this.SOrderIsdispatchingStateOpen = SOrderIsdispatchingStateOpen;
-		this.SOrderIsRefund = SOrderIsRefund;
+		this.SOrderStatus = SOrderStatus;
 	}
 
 	/** full constructor */
-	public TSOrder(Integer FOrderId, String FOrderNum, Integer menuId,
-			Integer SOrderWhichday, Integer SOrderConsumeStatus,
+	public TSOrder(String FOrderNum, Integer menuId, Integer SOrderWhichday,
 			String SOrderConsumeEvaluate, Date SOrderDispatchingDate,
 			String SOrderLogisticsEvaluate, Timestamp SOrderPredictTime,
-			Integer SOrderIsdispatchingStateOpen, Integer SOrderIsRefund,
-			String SOrderNotice, Integer SOrderDispatchingId) {
-		this.FOrderId = FOrderId;
+			Integer SOrderIsdispatchingStateOpen, String SOrderNotice,
+			Integer SOrderDispatchingId, Integer SOrderStatus) {
 		this.FOrderNum = FOrderNum;
 		this.menuId = menuId;
 		this.SOrderWhichday = SOrderWhichday;
-		this.SOrderConsumeStatus = SOrderConsumeStatus;
 		this.SOrderConsumeEvaluate = SOrderConsumeEvaluate;
 		this.SOrderDispatchingDate = SOrderDispatchingDate;
 		this.SOrderLogisticsEvaluate = SOrderLogisticsEvaluate;
 		this.SOrderPredictTime = SOrderPredictTime;
 		this.SOrderIsdispatchingStateOpen = SOrderIsdispatchingStateOpen;
-		this.SOrderIsRefund = SOrderIsRefund;
 		this.SOrderNotice = SOrderNotice;
 		this.SOrderDispatchingId = SOrderDispatchingId;
+		this.SOrderStatus = SOrderStatus;
 	}
 
 	// Property accessors
@@ -78,14 +70,6 @@ public class TSOrder implements java.io.Serializable {
 
 	public void setSOrderId(Integer SOrderId) {
 		this.SOrderId = SOrderId;
-	}
-
-	public Integer getFOrderId() {
-		return this.FOrderId;
-	}
-
-	public void setFOrderId(Integer FOrderId) {
-		this.FOrderId = FOrderId;
 	}
 
 	public String getFOrderNum() {
@@ -110,14 +94,6 @@ public class TSOrder implements java.io.Serializable {
 
 	public void setSOrderWhichday(Integer SOrderWhichday) {
 		this.SOrderWhichday = SOrderWhichday;
-	}
-
-	public Integer getSOrderConsumeStatus() {
-		return this.SOrderConsumeStatus;
-	}
-
-	public void setSOrderConsumeStatus(Integer SOrderConsumeStatus) {
-		this.SOrderConsumeStatus = SOrderConsumeStatus;
 	}
 
 	public String getSOrderConsumeEvaluate() {
@@ -161,14 +137,6 @@ public class TSOrder implements java.io.Serializable {
 		this.SOrderIsdispatchingStateOpen = SOrderIsdispatchingStateOpen;
 	}
 
-	public Integer getSOrderIsRefund() {
-		return this.SOrderIsRefund;
-	}
-
-	public void setSOrderIsRefund(Integer SOrderIsRefund) {
-		this.SOrderIsRefund = SOrderIsRefund;
-	}
-
 	public String getSOrderNotice() {
 		return this.SOrderNotice;
 	}
@@ -183,6 +151,14 @@ public class TSOrder implements java.io.Serializable {
 
 	public void setSOrderDispatchingId(Integer SOrderDispatchingId) {
 		this.SOrderDispatchingId = SOrderDispatchingId;
+	}
+
+	public Integer getSOrderStatus() {
+		return this.SOrderStatus;
+	}
+
+	public void setSOrderStatus(Integer SOrderStatus) {
+		this.SOrderStatus = SOrderStatus;
 	}
 
 }

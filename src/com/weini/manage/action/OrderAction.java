@@ -5,13 +5,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.weini.manage.business.OrderService;
 import com.weini.manage.business.OtherService;
 import com.weini.manage.entity.TOrder;
-import com.weini.manage.entity.TUser;
-import com.weini.tools.Configure;
+import com.weini.tools.Tools;
 
 public class OrderAction extends ActionSupport {
 
@@ -20,11 +18,14 @@ public class OrderAction extends ActionSupport {
 	 */
 	private static final long serialVersionUID = 1L;
 	private int index;
-	private List<Object[]> nowMonthOrderlist;
-	private List<Object[]> lastMonthOrderlist;
-	private List<Object[]> datalist;
+	private List nowMonthOrderlist;
+	private List lastMonthOrderlist;
+	private List datalist;
+	private TOrder orderDetail;
 	private int code;
-	private int result;
+	private String result;
+	private int ordereStatus;
+	private String orderNum;
 	// 新增订单的数据
 	private int orderMenuID;
 	private int boxID;
@@ -34,24 +35,40 @@ public class OrderAction extends ActionSupport {
 	private int orderDispatchingID;
 	private int userHeatID;
 	private int userAppetite;
+	private int pageStart;
+	private int pageLimit;
+	//开始，截止日期 形如 2015-12-01
+	private String dateStart;
+	private String dateEnd;
+	// 用户的某一月订单
+	private int year;
+	private int month;
+	// 用户退款原因
+	private int refundReason;
 	/**
-	 * 传入用户的id
 	 * 获取用户最近两个月的订单信息
-	 * index 用户id
 	 * @return 
 	 */
 	public String getUserLastedMonthOrder(){
-		this.index = 1;
+		code = 0;
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());
 		int year = cal.get(Calendar.YEAR);
 		int month = cal.get(Calendar.MONTH) + 1;//month从0开始
-		nowMonthOrderlist = (new OrderService()).getMonthOrderByUserID(index, year, month);
-		if(month == 1){
-			lastMonthOrderlist = (new OrderService()).getMonthOrderByUserID(index, year-1, 12);
-		}else{
-			lastMonthOrderlist = (new OrderService()).getMonthOrderByUserID(index, year, month-1);
+		int userID = -1;
+		try{
+			userID = Tools.getUserID();
+		}catch(Exception e){
+			e.printStackTrace();
+			return "SUCCESS";
 		}
+		nowMonthOrderlist = (new OrderService()).getMonthOrderByUserID(userID, year, month);
+		if(month == 1){
+			lastMonthOrderlist = (new OrderService()).getMonthOrderByUserID(userID, year-1, 12);
+		}else{
+			lastMonthOrderlist = (new OrderService()).getMonthOrderByUserID(userID, year, month-1);
+		}
+		code = 1;
 		return "SUCCESS";
 	}
 	/**
@@ -61,8 +78,16 @@ public class OrderAction extends ActionSupport {
 	public String addOrder(){
 		code = 0;
 		try{
-			TUser user = (TUser) ActionContext.getContext().getSession().get(Configure.sessionUserName);
-			int userID = user.getUserId();
+//			int userID = 1;
+//			orderMenuID =1;
+//			boxID = 3;
+//			orderStartTime="2015-01-22 10:35:18";
+//			orderOrderTime = "2015-01-22 10:35:18";
+//			orderIsFirst = 0;
+//			orderDispatchingID = 1;
+//			userHeatID = 1;
+//			userAppetite = 1;
+			int userID = Tools.getUserID();
 			TOrder order = new TOrder();
 			order.setOrderMenuinfoId(this.orderMenuID);
 			order.setBoxId(this.boxID);
@@ -74,7 +99,7 @@ public class OrderAction extends ActionSupport {
 			//设置订单编号
 			order.setOrderNum((new OtherService()).getOrderNumSting());
 			// 剩余uesrHeatID,userAppetite 如果是isFirst的话就需要更新user表
-			if((result = (new OrderService()).addUserOrder(order, orderIsFirst, userID, userHeatID, userAppetite)) != -1){
+			if((result = (new OrderService()).addUserOrder(order, orderIsFirst, userID, userHeatID, userAppetite)) != null){
 				code = 1;
 			}
 		}catch(Exception e){
@@ -87,36 +112,97 @@ public class OrderAction extends ActionSupport {
 	 * @return
 	 */
 	public String getOrderPayStatus(){
+		if((ordereStatus = (new OrderService()).getOrderStatusByOrderNum(orderNum)) != -1){
+			code = 1;
+		}else{
+			code = 0;
+		}
 		return "SUCCESS";
 	}
 	/**
 	 * 根据订单id获取子订单信息
-	 * index 订单id
+	 * orderNum 订单id
 	 * @return 
 	 */
 	public String getSonOrderList(){
-		datalist = (new OrderService()).getSonOrderByOrderID(index);
+		code = 0;
+		datalist = (new OrderService()).getSonOrderByOrderID(orderNum);
+		if(datalist != null){
+			code = 1;
+		}
 		return "SUCCESS";
 	}
-	
-	
-	public List<Object[]> getNowMonthOrderlist() {
-		return nowMonthOrderlist;
+	/**
+	 * 根据用户的id获取用户的订单记录
+	 * @return
+	 */
+	public String getUserOrderListLimit(){
+		code = 0;
+		try{
+			datalist = (new OrderService()).getUserOrderListLimit(1/*Tools.getUserID()*/,pageStart,pageLimit);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		if(datalist != null){
+			code = 1;
+		}
+		return "SUCCESS";
 	}
-	public void setNowMonthOrderlist(List<Object[]> nowMonthOrderlist) {
-		this.nowMonthOrderlist = nowMonthOrderlist;
+	/**
+	 * 获取用户的某一个月的订餐记录
+	 * @return
+	 */
+	public String getUserSomeMonthOrder(){
+		code = 0;
+		int userID = -1;
+		try{
+			userID = Tools.getUserID();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+			return "SUCCESS";
+		}
+		datalist = (new OrderService()).getMonthOrderByUserID(userID, year, month);
+		code = 1;
+		return "SUCCESS";
 	}
-	public List<Object[]> getLastMonthOrderlist() {
-		return lastMonthOrderlist;
+	/**
+	 * 根据订单编号获取订单详细
+	 * @param orderNum 订单编号
+	 * @return
+	 */
+	public String getOrderDetailByOrderNum(){
+		code = 0;
+		orderDetail = (new OrderService()).getOrderDetailByOrderNum(orderNum);
+		if(orderDetail != null){
+			code = 1;
+		}
+		return "SUCCESS";
 	}
-	public void setLastMonthOrderlist(List<Object[]> lastMonthOrderlist) {
-		this.lastMonthOrderlist = lastMonthOrderlist;
+	/**
+	 * 用户退款
+	 * orderNum 订单编号
+	 * refundReason 退款原因索引
+	 * @return
+	 */
+	public String UserApplyRefund(){
+		code = 0;
+		if((new OrderService()).UserApplyRefund(orderNum, refundReason)){
+			code = 1;
+		}
+		return "SUCCESS";
 	}
-	public List<Object[]> getDatalist() {
-		return datalist;
-	}
-	public void setDatalist(List<Object[]> datalist) {
-		this.datalist = datalist;
+	public String getUserOrderByDate(){
+		code = 0;
+		try{
+			datalist = (new OrderService()).searchUserOrderByDate(Tools.getUserID(), dateStart, dateEnd, pageStart, pageLimit);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		if(datalist != null){
+			code = 1;
+		}
+		return "SUCCESS";
 	}
 	public int getCode() {
 		return code;
@@ -178,10 +264,88 @@ public class OrderAction extends ActionSupport {
 	public void setUserAppetite(int userAppetite) {
 		this.userAppetite = userAppetite;
 	}
-	public int getResult() {
+	public String getResult() {
 		return result;
 	}
-	public void setResult(int result) {
+	public TOrder getOrderDetail() {
+		return orderDetail;
+	}
+	public void setOrderDetail(TOrder orderDetail) {
+		this.orderDetail = orderDetail;
+	}
+	public void setResult(String result) {
 		this.result = result;
+	}
+	public int getOrdereStatus() {
+		return ordereStatus;
+	}
+	public void setOrdereStatus(int ordereStatus) {
+		this.ordereStatus = ordereStatus;
+	}
+	public String getOrderNum() {
+		return orderNum;
+	}
+	public void setOrderNum(String orderNum) {
+		this.orderNum = orderNum;
+	}
+	public int getYear() {
+		return year;
+	}
+	public void setYear(int year) {
+		this.year = year;
+	}
+	public int getMonth() {
+		return month;
+	}
+	public void setMonth(int month) {
+		this.month = month;
+	}
+	public int getRefundReason() {
+		return refundReason;
+	}
+	public void setRefundReason(int refundReason) {
+		this.refundReason = refundReason;
+	}
+	public int getPageStart() {
+		return pageStart;
+	}
+	public void setPageStart(int pageStart) {
+		this.pageStart = pageStart;
+	}
+	public int getPageLimit() {
+		return pageLimit;
+	}
+	public void setPageLimit(int pageLimit) {
+		this.pageLimit = pageLimit;
+	}
+	public String getDateStart() {
+		return dateStart;
+	}
+	public void setDateStart(String dateStart) {
+		this.dateStart = dateStart;
+	}
+	public String getDateEnd() {
+		return dateEnd;
+	}
+	public void setDateEnd(String dateEnd) {
+		this.dateEnd = dateEnd;
+	}
+	public List getNowMonthOrderlist() {
+		return nowMonthOrderlist;
+	}
+	public void setNowMonthOrderlist(List nowMonthOrderlist) {
+		this.nowMonthOrderlist = nowMonthOrderlist;
+	}
+	public List getLastMonthOrderlist() {
+		return lastMonthOrderlist;
+	}
+	public void setLastMonthOrderlist(List lastMonthOrderlist) {
+		this.lastMonthOrderlist = lastMonthOrderlist;
+	}
+	public List getDatalist() {
+		return datalist;
+	}
+	public void setDatalist(List datalist) {
+		this.datalist = datalist;
 	}
 }

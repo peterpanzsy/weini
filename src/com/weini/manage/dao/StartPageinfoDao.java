@@ -19,17 +19,19 @@ public class StartPageinfoDao {
 	 * 获取当前启用的启动界面图片
 	 * @return 成功返回信息，否则返回null
 	 */
-	public List<Object> getNowStartPageinfoByType(int type){
-		List<Object> res = new ArrayList<Object>();
-		Query q = session.createSQLQuery("SELECT startpage_id,startpage_starttime,startpage_endtime,startpage_imageloc from t_startpageinfo where startpage_status = 1 and startpage_phonetype = ?;");
+	public TStartpageinfo getNowStartPageinfoByType(int type){
+		TStartpageinfo res = null;
+		Query q = session.createSQLQuery("SELECT startpage_id,startpage_starttime,startpage_endtime,"
+				+ "startpage_imageloc from t_startpageinfo where startpage_status = 1 and startpage_phonetype = ?;");
 		q.setInteger(0, type);
 		List l = q.list();
-		if(l.size() == 1){
+		if(l != null && l.size() == 1){
+			res = new TStartpageinfo();
 			Object[] row = (Object[])l.get(0);
-			res.add((int)row[0]);
-			res.add(((Timestamp)row[1]).toString());
-			res.add(((Timestamp)row[2]).toString());
-			res.add((String)row[3]);
+			res.setStartpageId((int)row[0]);
+			res.setStartpageStarttime(((Timestamp)row[1]));
+			res.setStartpageEndtime(((Timestamp)row[2]));
+			res.setStartpageImageloc((String)row[3]);
 		}
 		return res;
 	}

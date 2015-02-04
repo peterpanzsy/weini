@@ -2,6 +2,10 @@ package com.weini.manage.entity;
 // default package
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * TOrder entity. @author MyEclipse Persistence Tools
@@ -11,7 +15,10 @@ public class TOrder implements java.io.Serializable {
 
 	// Fields
 
-	private Integer orderId;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String orderNum;
 	private Integer userId;
 	private Integer orderMenuinfoId;
@@ -20,13 +27,18 @@ public class TOrder implements java.io.Serializable {
 	private Timestamp orderOrderTime;
 	private Integer orderPayStatus;
 	private Integer SOrderConsumeStatus;
-	private Integer orderIsRefund;
 	private Timestamp orderPayTime;
 	private Float boxPrice;
 	private Integer orderIsFirst;
-	private Integer orderIsvalid;
 	private Integer orderDispatchingId;
 	private Integer orderSettleStatus;
+	private Integer orderStatus;
+	
+	//pl add 
+	//菜品是否是西餐
+	private int orderMenuWestern;
+	private String orderMenuTypeDesc;
+	private int orderBoxType;
 
 	// Constructors
 
@@ -38,9 +50,8 @@ public class TOrder implements java.io.Serializable {
 	public TOrder(String orderNum, Integer userId, Integer orderMenuinfoId,
 			Integer boxId, Timestamp orderStartTime, Timestamp orderOrderTime,
 			Integer orderPayStatus, Integer SOrderConsumeStatus,
-			Integer orderIsRefund, Float boxPrice, Integer orderIsFirst,
-			Integer orderIsvalid, Integer orderDispatchingId,
-			Integer orderSettleStatus) {
+			Float boxPrice, Integer orderIsFirst, Integer orderDispatchingId,
+			Integer orderSettleStatus, Integer orderStatus) {
 		this.orderNum = orderNum;
 		this.userId = userId;
 		this.orderMenuinfoId = orderMenuinfoId;
@@ -49,21 +60,20 @@ public class TOrder implements java.io.Serializable {
 		this.orderOrderTime = orderOrderTime;
 		this.orderPayStatus = orderPayStatus;
 		this.SOrderConsumeStatus = SOrderConsumeStatus;
-		this.orderIsRefund = orderIsRefund;
 		this.boxPrice = boxPrice;
 		this.orderIsFirst = orderIsFirst;
-		this.orderIsvalid = orderIsvalid;
 		this.orderDispatchingId = orderDispatchingId;
 		this.orderSettleStatus = orderSettleStatus;
+		this.orderStatus = orderStatus;
 	}
 
 	/** full constructor */
 	public TOrder(String orderNum, Integer userId, Integer orderMenuinfoId,
 			Integer boxId, Timestamp orderStartTime, Timestamp orderOrderTime,
 			Integer orderPayStatus, Integer SOrderConsumeStatus,
-			Integer orderIsRefund, Timestamp orderPayTime, Float boxPrice,
-			Integer orderIsFirst, Integer orderIsvalid,
-			Integer orderDispatchingId, Integer orderSettleStatus) {
+			Timestamp orderPayTime, Float boxPrice, Integer orderIsFirst,
+			Integer orderDispatchingId, Integer orderSettleStatus,
+			Integer orderStatus) {
 		this.orderNum = orderNum;
 		this.userId = userId;
 		this.orderMenuinfoId = orderMenuinfoId;
@@ -72,24 +82,15 @@ public class TOrder implements java.io.Serializable {
 		this.orderOrderTime = orderOrderTime;
 		this.orderPayStatus = orderPayStatus;
 		this.SOrderConsumeStatus = SOrderConsumeStatus;
-		this.orderIsRefund = orderIsRefund;
 		this.orderPayTime = orderPayTime;
 		this.boxPrice = boxPrice;
 		this.orderIsFirst = orderIsFirst;
-		this.orderIsvalid = orderIsvalid;
 		this.orderDispatchingId = orderDispatchingId;
 		this.orderSettleStatus = orderSettleStatus;
+		this.orderStatus = orderStatus;
 	}
 
 	// Property accessors
-
-	public Integer getOrderId() {
-		return this.orderId;
-	}
-
-	public void setOrderId(Integer orderId) {
-		this.orderId = orderId;
-	}
 
 	public String getOrderNum() {
 		return this.orderNum;
@@ -123,20 +124,42 @@ public class TOrder implements java.io.Serializable {
 		this.boxId = boxId;
 	}
 
-	public Timestamp getOrderStartTime() {
+	public String getOrderStartTime() {
+		if(this.orderStartTime != null){
+			return this.orderStartTime.toString();
+		}else{
+			return "";
+		}
+	}
+	public Timestamp getOrderStartTimeTimestamp() {
 		return this.orderStartTime;
 	}
 
-	public void setOrderStartTime(Timestamp orderStartTime) {
-		this.orderStartTime = orderStartTime;
+	public void setOrderStartTime(String orderStartTime) throws ParseException {
+		this.orderStartTime = this.getTimestampByString(orderStartTime);
+	}
+	
+	public void setOrderStartTime(Timestamp startTime) {
+		this.orderStartTime = startTime;
 	}
 
-	public Timestamp getOrderOrderTime() {
-		return this.orderOrderTime;
+	public String getOrderOrderTime() {
+		if(this.orderOrderTime != null){
+			return this.orderOrderTime.toString();
+		}else{
+			return "";
+		}
+	}
+	public Timestamp getOrderOrderTimeTimestamp() {
+			return this.orderOrderTime;
 	}
 
-	public void setOrderOrderTime(Timestamp orderOrderTime) {
-		this.orderOrderTime = orderOrderTime;
+	public void setOrderOrderTime(String orderOrderTime) throws ParseException{
+		this.orderOrderTime = this.getTimestampByString(orderOrderTime);
+	}
+	
+	public void setOrderOrderTime(Timestamp orderTime) {
+		this.orderOrderTime = orderTime;
 	}
 
 	public Integer getOrderPayStatus() {
@@ -155,20 +178,23 @@ public class TOrder implements java.io.Serializable {
 		this.SOrderConsumeStatus = SOrderConsumeStatus;
 	}
 
-	public Integer getOrderIsRefund() {
-		return this.orderIsRefund;
+	public String getOrderPayTime() {
+		if(this.orderPayTime != null){
+			return this.orderPayTime.toString();
+		}else{
+			return "";
+		}
+		
 	}
-
-	public void setOrderIsRefund(Integer orderIsRefund) {
-		this.orderIsRefund = orderIsRefund;
-	}
-
-	public Timestamp getOrderPayTime() {
+	public Timestamp getOrderPayTimeTimestamp() {
 		return this.orderPayTime;
 	}
 
-	public void setOrderPayTime(Timestamp orderPayTime) {
-		this.orderPayTime = orderPayTime;
+	public void setOrderPayTime(String orderPayTime) throws ParseException {
+		this.orderPayTime = this.getTimestampByString(orderPayTime);
+	}
+	public void setOrderPayTime(Timestamp payTime) {
+		this.orderPayTime = payTime;
 	}
 
 	public Float getBoxPrice() {
@@ -187,14 +213,6 @@ public class TOrder implements java.io.Serializable {
 		this.orderIsFirst = orderIsFirst;
 	}
 
-	public Integer getOrderIsvalid() {
-		return this.orderIsvalid;
-	}
-
-	public void setOrderIsvalid(Integer orderIsvalid) {
-		this.orderIsvalid = orderIsvalid;
-	}
-
 	public Integer getOrderDispatchingId() {
 		return this.orderDispatchingId;
 	}
@@ -210,5 +228,44 @@ public class TOrder implements java.io.Serializable {
 	public void setOrderSettleStatus(Integer orderSettleStatus) {
 		this.orderSettleStatus = orderSettleStatus;
 	}
+
+	public Integer getOrderStatus() {
+		return this.orderStatus;
+	}
+
+	public void setOrderStatus(Integer orderStatus) {
+		this.orderStatus = orderStatus;
+	}
+
+	public int getOrderMenuWestern() {
+		return orderMenuWestern;
+	}
+
+	public void setOrderMenuWestern(int orderMenuWestern) {
+		this.orderMenuWestern = orderMenuWestern;
+	}
+
+	public String getOrderMenuTypeDesc() {
+		return orderMenuTypeDesc;
+	}
+
+	public void setOrderMenuTypeDesc(String orderMenuTypeDesc) {
+		this.orderMenuTypeDesc = orderMenuTypeDesc;
+	}
+	private Timestamp getTimestampByString(String time) throws ParseException{
+		DateFormat format2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    	Date date = format2.parse(time);
+    	Timestamp temp = new Timestamp(date.getTime());
+    	return temp;
+	}
+
+	public int getOrderBoxType() {
+		return orderBoxType;
+	}
+
+	public void setOrderBoxType(int orderBoxType) {
+		this.orderBoxType = orderBoxType;
+	}
+
 
 }

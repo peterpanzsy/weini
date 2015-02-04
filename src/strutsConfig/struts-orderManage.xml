@@ -15,7 +15,37 @@
 	</action>
 	<action name="NewOrder" class="com.weini.manage.action.OrderAction" method="addOrder">
 		<result name="SUCCESS" type="json">
+			<param name="includeProperties">code,result</param>				
+		</result>
+	</action>
+	<action name="OrderPayStatus" class="com.weini.manage.action.OrderAction" method="getOrderPayStatus">
+		<result name="SUCCESS" type="json">
+			<param name="includeProperties">code,ordereStatus</param>				
+		</result>
+	</action>
+	<action name="UserOrderList" class="com.weini.manage.action.OrderAction" method="getUserOrderListLimit">
+		<result name="SUCCESS" type="json">
+			<param name="includeProperties">code,datalist.*</param>				
+		</result>
+	</action>
+	<action name="UserSomeMonthOrder" class="com.weini.manage.action.OrderAction" method="getUserSomeMonthOrder">
+		<result name="SUCCESS" type="json">
+			<param name="includeProperties">code,datalist.*</param>				
+		</result>
+	</action>
+	<action name="OrderDetailByOrderNum" class="com.weini.manage.action.OrderAction" method="getOrderDetailByOrderNum">
+		<result name="SUCCESS" type="json">
+			<param name="includeProperties">code,orderDetail.*</param>				
+		</result>
+	</action>
+	<action name="UserApplyRefund" class="com.weini.manage.action.OrderAction" method="UserApplyRefund">
+		<result name="SUCCESS" type="json">
 			<param name="includeProperties">code</param>				
+		</result>
+	</action>
+	<action name="UserOrderByDate" class="com.weini.manage.action.OrderAction" method="getUserOrderByDate">
+		<result name="SUCCESS" type="json">
+			<param name="includeProperties">code,datalist.*</param>				
 		</result>
 	</action>
 	</package>

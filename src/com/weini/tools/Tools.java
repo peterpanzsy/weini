@@ -21,6 +21,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import com.opensymphony.xwork2.ActionContext;
+import com.weini.manage.entity.TUser;
+
 public class Tools {
 	 /**
 	    *获得一个UUID
@@ -186,10 +189,11 @@ public class Tools {
 //	    	cale.add(Calendar.DATE, -2);
 //			System.out.println(cale.get(Calendar.DAY_OF_WEEK));
 //	    	getDatesNotWeekend(3);
-	    	String time = "2015-12-13";
-	    	DateFormat format2= new SimpleDateFormat("yyyy-MM-dd");
+	    	String time = "2015-12-13 12:12:12";
+	    	DateFormat format2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	    	Date date = format2.parse(time);
-	    	System.out.println(date.toString());
+	    	Timestamp temp = new Timestamp(date.getTime());
+	    	System.out.println(temp.toString());
 	    }
 	    public static int getPrintSource(){
 			Throwable t = new Throwable();
@@ -259,5 +263,16 @@ public class Tools {
 			}
 			return res;
 			
+		}
+		/**
+		 * 获取用户的id
+		 * 抛出异常由上层处理
+		 * @return
+		 */
+		public static int getUserID(){
+			TUser user = (TUser) ActionContext.getContext().getSession().get(Configure.sessionUserName);
+			return user.getUserId();
+//			TODO test
+//			return 1;
 		}
 }

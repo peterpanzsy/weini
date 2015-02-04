@@ -17,16 +17,19 @@ public class TrackpageDao {
 	 * 根据id获取溯源信息
 	 * @return 成功返回信息，否则返回null
 	 */
-	public List<Object> getTrackpage(int trackid){
-		List<Object> res = new ArrayList<Object>();
-		Query q = session.createSQLQuery("SELECT trackpage_id,trackpage_currentstate,trackpage_curbackcolindex,trackpage_tiptext FROM t_trackpage where trackpage_id = ?;");
+	public TTrackpage getTrackpage(int trackid){
+		TTrackpage res = null;
+		Query q = session.createSQLQuery("SELECT trackpage_id,trackpage_currentstate,trackpage_curbackcolindex,"
+				+ "trackpage_tiptext FROM t_trackpage where trackpage_id = ?;");
 		q.setParameter(0, trackid);
 		List l = q.list();
 		if(l.size() == 1){
 			Object[] row = (Object[])l.get(0);
-			for(Object temp : row){
-				res.add(temp);
-			}
+			res = new TTrackpage();
+			res.setTrackpageId((int)row[0]);
+			res.setTrackpageCurrentstate((String)row[1]);
+			res.setTrackpageCurbackcolindex((int)row[2]);
+			res.setTrackpageTiptext((String)row[3]);
 		}
 		return res;
 	}

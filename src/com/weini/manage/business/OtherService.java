@@ -15,7 +15,7 @@ public class OtherService extends GeneralService {
 	 * 获取订单编号
 	 * @return '20150130111111'
 	 */
-	public String getOrderNumSting(){
+	public synchronized String getOrderNumSting(){
 		String res = "00000000";
 		String today = new SimpleDateFormat("yyyyMMdd").format(new Date());
 		HibernateSessionManager.getThreadLocalTransaction();

@@ -19,10 +19,10 @@ public class StartUpdateService extends GeneralService {
 	/**
 	 * 根据手机类型，获取最新版本信息和上一个版本信息
 	 * @param phoneType 手机类型
-	 * @return
+	 * @return 成功返回list 失败返回null
 	 */
-	public List<Object[]> getVersionUpdate(int phoneType){
-		List<Object[]> res = null;
+	public List<TVersion> getVersionUpdate(int phoneType){
+		List<TVersion> res = null;
 		try{
 			res = this.versiondao.getVersionInfoByType(phoneType);
 		}catch(Exception e){
@@ -37,11 +37,11 @@ public class StartUpdateService extends GeneralService {
 	 * @param index 手机本地启动页面id
 	 * @return 
 	 */
-	public List<Object> getStartPageinfo(int phoneType,int index){
-		List<Object> res = null;
+	public TStartpageinfo getStartPageinfo(int phoneType,int index){
+		TStartpageinfo res = null;
 		try{
 			res = this.startpagedao.getNowStartPageinfoByType(phoneType);
-			if(res.size() > 0 && (int)res.get(0) == index){
+			if(res != null && res.getStartpageId() == index){
 				res = null;
 			}
 		}catch(Exception e){
@@ -55,11 +55,11 @@ public class StartUpdateService extends GeneralService {
 	 * @param index 手机本地的页面id
 	 * @return
 	 */
-	public List<Object> getBoxPageinfo(int index){
-		List<Object> res = null;
+	public TBoxpage getBoxPageinfo(int index){
+		TBoxpage res = null;
 		try{
 			res = this.boxpagedao.getBoxpageinfo();
-			if(res.size() > 0 && (int)res.get(0) == index){
+			if(res != null && res.getBoxpageId() == index){
 				res = null;
 			}
 		}catch(Exception e){
@@ -73,8 +73,8 @@ public class StartUpdateService extends GeneralService {
 	 * @param trackid 溯源文案id
 	 * @return
 	 */
-	public List<Object> getTrackPageinfo(int trackid){
-		List<Object> res = null;
+	public TTrackpage getTrackPageinfo(int trackid){
+		TTrackpage res = null;
 		try{
 			res = this.trackpagedao.getTrackpage(trackid);
 		}catch(Exception e){

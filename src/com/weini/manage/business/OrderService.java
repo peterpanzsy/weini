@@ -7,9 +7,11 @@ import java.util.List;
 
 import com.weini.manage.dao.BoxModelDao;
 import com.weini.manage.dao.OrderDao;
+import com.weini.manage.dao.OrderRefundDao;
 import com.weini.manage.dao.SonOrderDao;
 import com.weini.manage.dao.UserDao;
 import com.weini.manage.entity.TOrder;
+import com.weini.manage.entity.TOrderrefund;
 import com.weini.manage.entity.TSOrder;
 import com.weini.tools.HibernateSessionManager;
 import com.weini.tools.Tools;
@@ -20,15 +22,16 @@ public class OrderService extends GeneralService {
 	private SonOrderDao sonorderdao = new SonOrderDao(this.session);
 	private BoxModelDao boxdao = new BoxModelDao(this.session);
 	private UserDao userdao = new UserDao(this.session);
+	private OrderRefundDao refunddao = new OrderRefundDao(this.session);
 	/**
 	 * 根据用户的id获取本月的订单记录
 	 * @param userID 用户id
 	 * @return
 	 */
-	public List<Object[]> getMonthOrderByUserID(int userID,int year,int month){
-		List<Object[]> res = null;
+	public List<TOrder> getMonthOrderByUserID(int userID,int year,int month){
+		List<TOrder> res = null;
 		try{
-			res = this.orderdao.searchMonth(userID, year, month);
+			res = this.orderdao.searchMonthOrder(userID, year, month);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -40,7 +43,7 @@ public class OrderService extends GeneralService {
 	 * @param orderID 父订单id
 	 * @return
 	 */
-	public List<Object[]> getSonOrderByOrderID(int orderID){
+	public List<Object[]> getSonOrderByOrderID(String orderID){
 		List<Object[]> res = null;
 		try{
 			res = this.sonorderdao.getSOrderByOrderID(orderID);
@@ -60,15 +63,14 @@ public class OrderService extends GeneralService {
 	 * @param userID 用户id
 	 * @param userHeatID 用户讨厌食物的id
 	 * @param userAppetite 用户的饭量
-	 * @return 成功返回订单id，失败返回-1
+	 * @return 成功返回订单id，失败返回null
 	 */
-	public int addUserOrder(TOrder order,int orderIsFirst,int userID,int userHeatID,int userAppetite){
+	public String addUserOrder(TOrder order,int orderIsFirst,int userID,int userHeatID,int userAppetite){
 		HibernateSessionManager.getThreadLocalTransaction();
 		//设置默认值
 		order.setOrderPayStatus(0);
 		order.setSOrderConsumeStatus(0);
-		order.setOrderIsRefund(0);
-		order.setOrderIsvalid(1);
+		order.setOrderStatus(0);
 		order.setOrderSettleStatus(0);
 		float boxPrice = 0;
 		int box_type = 0;
@@ -89,17 +91,14 @@ public class OrderService extends GeneralService {
 				order.setBoxPrice(boxPrice);
 				//增加订单
 				// 获取订单id
-				int orderID = this.orderdao.insertOrder(order);
-				if(orderID > 0){
+				if(this.orderdao.insertOrder(order) > 0){
 					TSOrder sonOrder = new TSOrder();
-					sonOrder.setFOrderId(orderID);
 					sonOrder.setFOrderNum(order.getOrderNum());
 					sonOrder.setMenuId(order.getOrderMenuinfoId());
-					sonOrder.setSOrderConsumeStatus(0);
+					sonOrder.setSOrderStatus(0);
 					sonOrder.setSOrderConsumeEvaluate("");
 					sonOrder.setSOrderLogisticsEvaluate("");
 					sonOrder.setSOrderIsdispatchingStateOpen(1);
-					sonOrder.setSOrderIsRefund(0);
 					sonOrder.setSOrderNotice("注意：不吃："+userheat+" "+"饭量："+Tools.getUserAppetite(userAppetite));
 					sonOrder.setSOrderDispatchingId(order.getOrderDispatchingId());
 					
@@ -109,20 +108,106 @@ public class OrderService extends GeneralService {
 						//动态设置whichday
 						sonOrder.setSOrderWhichday(i);
 						sonOrder.setSOrderDispatchingDate((new SimpleDateFormat("yyyy-MM-dd")).parse(dates.get(i-1)));
-						if(this.orderdao.insertSonOrder(sonOrder) <= 0){
+						if(this.sonorderdao.insertSonOrder(sonOrder) <= 0){
 							this.roll();
-							return -1;
+							return null;
 						}
 					}
 					this.close();
-					return orderID;
+					return order.getOrderNum();
 				}
 			}
 		}catch(Exception e){
 			e.printStackTrace();
-			this.roll();
 		}
 		this.roll();
-		return -1;
+		return null;
+	}
+	/**
+	 * 根据订单编号获取订单的支付状态
+	 * @param orderNum 订单编号
+	 * @return 执行失败，返回-1，支付成功返回1，支付失败返回0
+	 */
+	public int getOrderStatusByOrderNum(String orderNum){
+		int res = -1;
+		try{
+			res = this.orderdao.getOrderPayStatusByOrderNum(orderNum);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	/**
+	 * 根据用户的id查找用户的记录
+	 * @param pageStart 页面开始的记录数
+	 * @param pagelimit 限制条数
+	 * @return 执行失败 null;成功返回list
+	 */
+	public List<TOrder> getUserOrderListLimit(int userID,int pageStart,int pageLimit){
+		List<TOrder> res = null;
+		try{
+			res = this.orderdao.getUserOrderLimit(userID,pageStart,pageLimit);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		this.close();
+		return res;
+	}
+	/**
+	 * 根据订单的id查找订单
+	 * @param orderNum 订单编号
+	 * @return 执行失败 null;成功返回list
+	 */
+	public TOrder getOrderDetailByOrderNum(String orderNum){
+		TOrder res = null;
+		try{
+			res = this.orderdao.getOrderDetailByOrderNum(orderNum);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		this.close();
+		return res;
+	}
+	/**
+	 * 用户申请退款
+	 * @param orderNum
+	 * @return
+	 * 1、设置订单的状态为3
+	 * 2、更新子订单的状态(将未消费的子订单设置为0)
+	 * 3、给退款表记录中插入数据
+	 */
+	public boolean UserApplyRefund(String orderNum,int reason){
+		boolean flag = false;
+		HibernateSessionManager.getThreadLocalTransaction();
+		try{
+			//设置订单状态和子订单状态
+			if(this.orderdao.updateOrderStatus(orderNum,3) > 0 && 
+					this.sonorderdao.updateSonNotConsumeOrderStatus(orderNum) > 0){
+				//插入退款表
+				TOrderrefund refund = new TOrderrefund();
+				refund.setOrderNum(orderNum);
+				refund.setOrderrefundReason(reason);
+				refund.setOrderrefundStatus(0);
+				refund.setOrderrefundResult(0);
+				if(this.refunddao.insertOrderRefund(refund) > 0){
+					this.close();
+					flag = true;
+				}
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		this.roll();
+		return flag;
+	}
+	public List<Object[]> searchUserOrderByDate(int userID,String start,String end,int pageStart,int pageLimit){
+		List<Object[]> res = null;
+		try{
+			res = this.orderdao.getUserOrderByDate(userID, start, end, pageStart, pageLimit);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return res;
 	}
 }
