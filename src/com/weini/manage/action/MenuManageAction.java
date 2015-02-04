@@ -11,7 +11,7 @@ import com.weini.manage.entity.TMenutype;
 
 public class MenuManageAction extends ActionSupport {
 	
-	MenuinfoService menuService = new MenuinfoService();
+	MenuinfoService menuService ;
 	
 	private int code=0;  //状态，0-失败 ，1-成功
 	private String result;  //错误信息
@@ -25,12 +25,32 @@ public class MenuManageAction extends ActionSupport {
 	 */
 	private static final long serialVersionUID = 1L;
 	/**
+	 * 得到所有存在的菜品信息
+	 * @return
+	 */
+	public String listMenuinfo(){
+		menuService = new MenuinfoService();
+		list = menuService.getMenuInfoList();
+		if(list!=null){
+			code =1;
+		}else{
+			code=0;
+		}
+		return SUCCESS;
+	}
+	/**
 	 * 根据菜品Id的到菜品的详细信息
 	 * @return
 	 */
 	public String menuinfoDetail(){
-		obj = menuService.findMenuById(menuinfoId);
-		if(obj==null){
+		menuService = new MenuinfoService();
+		if(menuinfoId==null){
+			code = 0; 
+			result="参数不正确";
+			return "fail";
+		}
+		menu = menuService.findMenuById(menuinfoId);
+		if(menu==null){
 			code = 0; 
 			result="没有记录";
 			return "fail";
@@ -41,6 +61,7 @@ public class MenuManageAction extends ActionSupport {
 
 	
 	public String listMenutype(){
+		menuService = new MenuinfoService();
 		list = menuService.listMenutype();
 		if(list.size()==0){
 			code = 0;

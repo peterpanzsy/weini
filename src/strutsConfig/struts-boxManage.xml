@@ -12,8 +12,9 @@
 			<result name="success" type="json">	
 				<!-- <param name="includeProperties">
 					list\[\d+\]\.boxImage1,list\[\d+\]\.boxPrice,list\[\d+\]\.boxdesc4,list\[\d+\]\.boxdesc1,list\[\d+\]\.boxdesc2,list\[\d+\]\.boxdesc3,list\[\d+\]\.boxtypename
-				</param>	 -->	
-				 <param name="includeProperties">list.*</param>	 	
+				</param> -->
+				<param name="includeProperties">list.*</param>		
+
 			</result>
 		</action>
 	</package>

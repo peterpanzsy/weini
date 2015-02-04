@@ -109,31 +109,32 @@ public class MenuinfoService extends GeneralService {
 	 * @param menuinfoId
 	 * @return
 	 */
-	public Object[] findMenuById(Integer menuinfoId) {
-		Object[] obj = null;
-		TMenuinfo menu= menuDao.findMenuDetailByMenuID(menuinfoId);
-		if(menu==null){
-			this.close();
-			return null;               //没有记录
-		}else{
-			obj = new Object[10];
-			obj[0]=menu.getMenuinfoId();
-			obj[1]=menu.getMenuinfoName();
-			obj[2]=menu.getMenuinfoImage1();
-			obj[3]=menu.getMenuinfoImage2();
-			obj[4]=menu.getMenuinfoImage3();
-			obj[5]=menu.getMenuinfoImage4();
-			obj[6]=menu.getMenuinfoDetail();
-			obj[7]=menu.getMenuinfoPoint();
-			obj[8]=menuDao.findAllDishByMenuinfoId(menuinfoId);
-			if(menu.getMenuinfoType()!=null){
-				obj[9]=menuDao.getMenutype(menu.getMenuinfoType());
-			}else{
-				obj[9]=null;
-			}
-			this.close();
-			return obj;
-		}
+	public TMenuinfo findMenuById(Integer menuinfoId) {
+//		Object[] obj = null;
+//		TMenuinfo menu= menuDao.findMenuDetailByMenuID(menuinfoId);
+//		if(menu==null){
+//			this.close();
+//			return null;               //没有记录
+//		}else{
+//			obj = new Object[10];
+//			obj[0]=menu.getMenuinfoId();
+//			obj[1]=menu.getMenuinfoName();
+//			obj[2]=menu.getMenuinfoImage1();
+//			obj[3]=menu.getMenuinfoImage2();
+//			obj[4]=menu.getMenuinfoImage3();
+//			obj[5]=menu.getMenuinfoImage4();
+//			obj[6]=menu.getMenuinfoDetail();
+//			obj[7]=menu.getMenuinfoPoint();
+//			obj[8]=menuDao.findAllDishByMenuinfoId(menuinfoId);
+//			if(menu.getMenuinfoType()!=null){
+//				obj[9]=menuDao.getMenutype(menu.getMenuinfoType());
+//			}else{
+//				obj[9]=null;
+//			}
+//			this.close();
+//			return obj;
+//		}
+		return menuDao.findMenuDetailByMenuID(menuinfoId);
 	}
 
 	/**
@@ -142,6 +143,24 @@ public class MenuinfoService extends GeneralService {
 	 */
 	public List listMenutype() {
 		List l = menuDao.listMenutype();
+		this.close();
+		return l;
+	}
+	/**
+	 * 得到t_menuinfo中的所有信息
+	 * @return
+	 */
+	public List getMenuInfoList() {
+		List<TMenuinfo> l = null;
+		try {
+			l = menuDao.getMenuInfoList();
+			for(TMenuinfo t: l){
+				t.setMenuType(menuDao.getMenutype(t.getMenuinfoType()));
+			}
+		} catch (Exception e) {
+			this.roll();
+			e.printStackTrace();
+		}
 		this.close();
 		return l;
 	}

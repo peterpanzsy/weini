@@ -20,6 +20,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.weini.manage.entity.TUser;
@@ -189,11 +191,11 @@ public class Tools {
 //	    	cale.add(Calendar.DATE, -2);
 //			System.out.println(cale.get(Calendar.DAY_OF_WEEK));
 //	    	getDatesNotWeekend(3);
-	    	String time = "2015-12-13 12:12:12";
-	    	DateFormat format2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	    	Date date = format2.parse(time);
-	    	Timestamp temp = new Timestamp(date.getTime());
-	    	System.out.println(temp.toString());
+//	    	String time = "2015-12-13 12:12:12";
+//	    	DateFormat format2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//	    	Date date = format2.parse(time);
+//	    	Timestamp temp = new Timestamp(date.getTime());
+//	    	System.out.println(temp.toString());
 	    }
 	    public static int getPrintSource(){
 			Throwable t = new Throwable();

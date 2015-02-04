@@ -4,19 +4,28 @@
 	<package name="addressmanage" extends="json-default">
 	<!--地址管理-->
 	<action name="listProvice" class="com.weini.manage.action.AddressManageAction" method="listProvice">
-		<result name="SUCCESS" type="json">				
+		<result name="SUCCESS" type="json">		
+			<param name="includeProperties">provices.*</param>		
 		</result>
 	</action>
 	<action name="listCity" class="com.weini.manage.action.AddressManageAction" method="listCity">
-		<result name="SUCCESS" type="json">				
+		<result name="SUCCESS" type="json">		
+			<param name="includeProperties">citys\[\d+\]\.cityName,citys\[\d+\]\.cityId</param>				
 		</result>
 	</action>
 	<action name="listDistrict" class="com.weini.manage.action.AddressManageAction" method="listDistrict">
-		<result name="SUCCESS" type="json">				
+		<result name="SUCCESS" type="json">		
+			<param name="includeProperties">diss\[\d+\]\.districtId,diss\[\d+\]\.districtName</param>			
 		</result>
 	</action>
 	<action name="listbussArea" class="com.weini.manage.action.AddressManageAction" method="listbussArea">
 		<result name="SUCCESS" type="json">				
+			<param name="includeProperties">busses\[\d+\]\.businessAreaId,busses\[\d+\]\.businessAreaName</param>	
+		</result>
+	</action>
+	<action name="listOfficeBuileding" class="com.weini.manage.action.AddressManageAction" method="listOfficeBuileding">
+		<result name="SUCCESS" type="json">				
+			<param name="includeProperties">offes\[\d+\]\.officeBuildingId,offes\[\d+\]\.officeBuildingName</param>	
 		</result>
 	</action>
 	</package>

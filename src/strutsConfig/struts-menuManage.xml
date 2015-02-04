@@ -5,7 +5,9 @@
 		<!-- 列出所有的盒子模型 -->
 		 <action name="menuinfoDetail" class="com.weini.manage.action.MenuManageAction" method="menuinfoDetail">
 			<result name="success" type="json">	
-				<param name="includeProperties">code,obj.*</param>			
+				<param name="includeProperties">code,menu\.menuinfoName,menu\.menuinfoImage1,
+				menu\.menuinfoImage2,menu\.menuinfoImage3,menu\.menuinfoImage4,
+				menu\.menuinfoDetail,menu\.menuinfoPoint,menu\.dishesList.*</param>			
 			</result>
 			<result name="fail" type="json">	
 				<param name="includeProperties">
@@ -20,6 +22,14 @@
 			</result>
 			<result name="fail" type="json">	
 				<param name="includeProperties">code,result</param>			
+			</result>
+		</action>
+		
+		<!-- 列出所有meneinfo  -->	
+		<action name="listMenuinfo" class="com.weini.manage.action.MenuManageAction" method="listMenuinfo">
+			<result name="success" type="json">	
+				<param name="includeProperties">code,list\[\d+\]\.menuinfoName,list\[\d+\]\.menuinfoDetail,
+				list\[\d+\]\.menuinfoPoint,list\[\d+\]\.menuType</param>			
 			</result>
 		</action>
 	</package>

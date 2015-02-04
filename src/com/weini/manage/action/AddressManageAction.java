@@ -2,12 +2,12 @@ package com.weini.manage.action;
 
 import java.util.List;
 
-
 import com.opensymphony.xwork2.ActionSupport;
 import com.weini.manage.business.AddressService;
 import com.weini.manage.entity.TBusinessarea;
 import com.weini.manage.entity.TCity;
 import com.weini.manage.entity.TDistrict;
+import com.weini.manage.entity.TOfficebuilding;
 import com.weini.manage.entity.TProvince;
 
 
@@ -23,6 +23,7 @@ public class AddressManageAction extends ActionSupport{
 	private List<TCity> citys;
 	private List<TDistrict> diss;
 	private List<TBusinessarea> busses;
+	private List<TOfficebuilding> offes;
 	
 	/**
 	 * 
@@ -60,6 +61,14 @@ public class AddressManageAction extends ActionSupport{
 	public String listbussArea(){
 		addressSer = new AddressService();
 		this.busses = addressSer.listBussByDistrictID(indexID);
+		return "SUCCESS";
+	}
+	/**
+	 * 列出写字楼根据所选择的商圈
+	 */
+	public String listOfficeBuileding(){
+		addressSer = new AddressService();
+		this.offes = addressSer.listOfficeBuildingByBusId(indexID);
 		return "SUCCESS";
 	}
 
@@ -103,6 +112,12 @@ public class AddressManageAction extends ActionSupport{
 		this.busses = busses;
 	}
 
+	public List<TOfficebuilding> getOffes() {
+		return offes;
+	}
 
+	public void setOffes(List<TOfficebuilding> offes) {
+		this.offes = offes;
+	}
 	
 }

@@ -132,7 +132,17 @@ public class AddressDao{
 	 * @return
 	 */
 	public List<TOfficebuilding> listOfficebuildingByBusinessAreaId(int bussId){
-		return session.createQuery("select TOfficebuilding t where t.businessAreaId = ?").setInteger(0,bussId).list();
+		List  l =session.createSQLQuery("select officeBuilding_id,officeBuilding_name from t_officebuilding t where businessArea_id = ?").setInteger(0,bussId).list();
+		List<TOfficebuilding> result=new ArrayList<TOfficebuilding>();
+		for(int i=0;i<l.size();i++)
+		{
+			  Object[] row = (Object[])l.get(i);
+			  TOfficebuilding off=new TOfficebuilding();
+			  off.setOfficeBuildingId((Integer)row[0]);
+			  off.setOfficeBuildingName((String)row[1]);
+			  result.add(off);
+		}
+		return result;
 	}
 	/**
 	 * 根据省份Id来查找省份名称

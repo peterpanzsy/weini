@@ -22,13 +22,11 @@ public class LoginService extends GeneralService{
 	
 	public TAdmin searchAdmin(String username,String pass){
 		TAdmin res = null;
-		if(phoneMatch(username)){
 			try{
 				res = this.admindao.searchAdmin(username, pass);
 			}catch(Exception e){
 				e.printStackTrace();
 			}
-		}
 		this.close();
 		return res;
 	}

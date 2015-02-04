@@ -45,7 +45,8 @@ public class TMenuinfo implements java.io.Serializable {
 	private int order;
 	// wangadd
 	private List<TDishes> dishesList;
-
+	private String menuType;
+	
 	/** default constructor */
 	public TMenuinfo() {
 	}
@@ -256,4 +257,13 @@ public class TMenuinfo implements java.io.Serializable {
 	public void setDishesList(List<TDishes> dishesList) {
 		this.dishesList = dishesList;
 	}
+	@Transient
+	public String getMenuType() {
+		return menuType;
+	}
+
+	public void setMenuType(String menuType) {
+		this.menuType = menuType;
+	}
+	
 }

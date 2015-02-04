@@ -51,6 +51,7 @@ public class LoginAction extends ActionSupport{
 	        session.put("wrong", "密码为空");	
 			return "fail";
 		}
+		System.out.println(username+password);
 //		String adminPassword_md5 = CipherUtil.generatePassword(password);
 		String adminPassword_md5 = password;
 		admin=(new LoginService()).searchAdmin(username, adminPassword_md5);
