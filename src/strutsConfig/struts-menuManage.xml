@@ -24,5 +24,13 @@
 				<param name="includeProperties">code,result</param>			
 			</result>
 		</action>
+		
+		<!-- 列出所有meneinfo  -->	
+		<action name="listMenuinfo" class="com.weini.manage.action.MenuManageAction" method="listMenuinfo">
+			<result name="success" type="json">	
+				<param name="includeProperties">code,list\[\d+\]\.menuinfoName,list\[\d+\]\.menuinfoDetail,
+				list\[\d+\]\.menuinfoPoint,list\[\d+\]\.menuType</param>			
+			</result>
+		</action>
 	</package>
 </struts>    

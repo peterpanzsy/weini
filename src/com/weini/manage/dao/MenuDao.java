@@ -400,4 +400,11 @@ public class MenuDao{
 	public List listMenutype() {
 		return session.createQuery("from TMenutype").list();
 	}
+	/**
+	 * 得到所有未删除的菜品信息
+	 * @return
+	 */
+	public List<TMenuinfo> getMenuInfoList() {
+		return session.createSQLQuery("select * from t_menuinfo t where t.menuinfo_status = ?").addEntity(TMenuinfo.class).setInteger(0, 1).list();
+	}
 }

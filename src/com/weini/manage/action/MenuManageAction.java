@@ -24,6 +24,20 @@ public class MenuManageAction extends ActionSupport {
 	 */
 	private static final long serialVersionUID = 1L;
 	/**
+	 * 得到所有存在的菜品信息
+	 * @return
+	 */
+	public String listMenuinfo(){
+		menuService = new MenuinfoService();
+		list = menuService.getMenuInfoList();
+		if(list!=null){
+			code =1;
+		}else{
+			code=0;
+		}
+		return SUCCESS;
+	}
+	/**
 	 * 根据菜品Id的到菜品的详细信息
 	 * @return
 	 */

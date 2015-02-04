@@ -113,4 +113,22 @@ public class MenuinfoService extends GeneralService {
 		this.close();
 		return l;
 	}
+	/**
+	 * 得到t_menuinfo中的所有信息
+	 * @return
+	 */
+	public List getMenuInfoList() {
+		List<TMenuinfo> l = null;
+		try {
+			l = menuDao.getMenuInfoList();
+			for(TMenuinfo t: l){
+				t.setMenuType(menuDao.getMenutype(t.getMenuinfoType()));
+			}
+		} catch (Exception e) {
+			this.roll();
+			e.printStackTrace();
+		}
+		this.close();
+		return l;
+	}
 }
