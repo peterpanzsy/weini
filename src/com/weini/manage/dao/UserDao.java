@@ -284,4 +284,12 @@ public class UserDao{
 			return true;
 		}
 	}
+	/**
+	 * 根据手机号码来查找TUser用户，用来查询该手机号是否为以注册的用户
+	 * @param phoneNum
+	 * @return
+	 */
+	public TUser searchUser(String phoneNum){
+		return (TUser) session.createQuery("from TUser t where t.userPhoneNumber = ?").setString(0, phoneNum).uniqueResult();
+	}
 }

@@ -7,6 +7,7 @@ import com.weini.manage.dao.AddressDao;
 import com.weini.manage.entity.TBusinessarea;
 import com.weini.manage.entity.TCity;
 import com.weini.manage.entity.TDistrict;
+import com.weini.manage.entity.TOfficebuilding;
 import com.weini.manage.entity.TProvince;
 
 public class AddressService extends GeneralService{
@@ -48,6 +49,18 @@ public class AddressService extends GeneralService{
 		try{
 			res = this.addressdao.listBusinessareasByDistrictID(disID);
 		}catch(Exception e){
+			e.printStackTrace();
+		}
+		this.close();
+		return res;
+	}
+
+	public List<TOfficebuilding> listOfficeBuildingByBusId(int busID) {
+		List<TOfficebuilding> res = null;
+		try{
+			res = this.addressdao.listOfficebuildingByBusinessAreaId(busID);
+		}catch(Exception e){
+			this.roll();
 			e.printStackTrace();
 		}
 		this.close();

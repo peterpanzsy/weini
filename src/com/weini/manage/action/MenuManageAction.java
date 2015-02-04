@@ -28,6 +28,11 @@ public class MenuManageAction extends ActionSupport {
 	 * @return
 	 */
 	public String menuinfoDetail(){
+		if(menuinfoId==null){
+			code = 0; 
+			result="参数不正确";
+			return "fail";
+		}
 		menu = menuService.findMenuById(menuinfoId);
 		if(menu==null){
 			code = 0; 
