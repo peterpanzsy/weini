@@ -11,7 +11,7 @@ import com.weini.manage.entity.TMenutype;
 
 public class MenuManageAction extends ActionSupport {
 	
-	MenuinfoService menuService = new MenuinfoService();
+	MenuinfoService menuService ;
 	
 	private int code=0;  //状态，0-失败 ，1-成功
 	private String result;  //错误信息
@@ -28,6 +28,7 @@ public class MenuManageAction extends ActionSupport {
 	 * @return
 	 */
 	public String menuinfoDetail(){
+		menuService = new MenuinfoService();
 		if(menuinfoId==null){
 			code = 0; 
 			result="参数不正确";
@@ -44,6 +45,7 @@ public class MenuManageAction extends ActionSupport {
 	}
 	
 	public String listMenutype(){
+		menuService = new MenuinfoService();
 		list = menuService.listMenutype();
 		if(list.size()==0){
 			code = 0;

@@ -11,7 +11,7 @@ public class DispatchingManageAction extends ActionSupport {
 	
 	private static final long serialVersionUID = 1L;
 
-	DispatchingService disService = new DispatchingService();
+	DispatchingService disService ;
 	
 	//请求的参数列表
 	private Integer dispatchingId;
@@ -34,6 +34,7 @@ public class DispatchingManageAction extends ActionSupport {
 	 * @return
 	 */
 	public String addDispatching(){
+		disService = new DispatchingService();
 		if(disService.addDistaching(dispatchingProvince, dispatchingCity, dispatchingDistrict,
 				dispatchingBusinessAreaid, dispatchingOfficeBuilding,dispatchingAddressDetail,userId,dispatchingPhoneNum)){
 			code = 1;
@@ -45,15 +46,11 @@ public class DispatchingManageAction extends ActionSupport {
 	 * @return
 	 */
 	public String listDispatching(){
+		disService = new DispatchingService();
 		list = disService.findDispatchingByUserId(userId);
 		return SUCCESS;
 	}
-	public DispatchingService getDisService() {
-		return disService;
-	}
-	public void setDisService(DispatchingService disService) {
-		this.disService = disService;
-	}
+
 	public Integer getDispatchingId() {
 		return dispatchingId;
 	}

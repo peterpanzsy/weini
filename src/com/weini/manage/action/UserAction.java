@@ -16,7 +16,7 @@ public class UserAction extends ActionSupport{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private UserService userService = new UserService();
+	private UserService userService;
 	
 	String mark;
 	List<TUser> dataList;
@@ -89,6 +89,7 @@ public class UserAction extends ActionSupport{
 	 * @return
 	 */
 	public String findUserInfo(){
+		userService = new UserService();
 		try {
 			TwoEntity two = userService.findUserInfo(userId);
 			user = (TUser)two.getIndex1();
@@ -111,6 +112,7 @@ public class UserAction extends ActionSupport{
 	 * @return
 	 */
 	public String updateUserNotEat(){
+		userService = new UserService();
 		code = userService.updateUserHeat(userId, menutypeId);
 		return SUCCESS;
 	}
@@ -119,6 +121,7 @@ public class UserAction extends ActionSupport{
 	 * @return
 	 */
 	public String updateUserGender(){
+		userService = new UserService();
 		code = userService.updateUserGender(userId,userGender);
 		return SUCCESS;
 	}
@@ -127,7 +130,7 @@ public class UserAction extends ActionSupport{
 	 * @return
 	 */
 	public String updateUserBirthday(){
-		System.out.println(userBirthday);
+		userService = new UserService();
 		code = userService.updateUserBirthday(userId,userBirthday);
 		return SUCCESS;
 	}

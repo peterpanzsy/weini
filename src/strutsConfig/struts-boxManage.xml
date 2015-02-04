@@ -10,9 +10,10 @@
 		<!-- 列出所有的盒子模型 -->
 		 <action name="listAllBox" class="com.weini.manage.action.BoxManageAction" method="listAllBox">
 			<result name="success" type="json">	
-				<param name="includeProperties">
+				<!-- <param name="includeProperties">
 					list\[\d+\]\.boxImage1,list\[\d+\]\.boxPrice,list\[\d+\]\.boxdesc4,list\[\d+\]\.boxdesc1,list\[\d+\]\.boxdesc2,list\[\d+\]\.boxdesc3,list\[\d+\]\.boxtypename
-				</param>			
+				</param> -->
+				<param name="includeProperties">list.*</param>		
 			</result>
 		</action>
 	</package>

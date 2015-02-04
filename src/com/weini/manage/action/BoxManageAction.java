@@ -7,7 +7,7 @@ import com.weini.manage.business.BoxService;
 
 public class BoxManageAction extends ActionSupport {
 	
-	BoxService boxService = new BoxService();
+	BoxService boxService ;
 	
 	private List list;
 	/**
@@ -20,6 +20,7 @@ public class BoxManageAction extends ActionSupport {
 	 * @return 盒子模式列表
 	 */
 	public String listAllBox(){
+		boxService = new BoxService();
 		list = boxService.listBox();
 		return SUCCESS;
 	}
@@ -28,6 +29,7 @@ public class BoxManageAction extends ActionSupport {
 	 * @return
 	 */
 	public String listAllBoxpage(){
+		boxService = new BoxService();
 		list = boxService.listBoxpage();
 		return SUCCESS;
 	}
