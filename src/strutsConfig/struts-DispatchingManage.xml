@@ -3,13 +3,13 @@
 <struts>
 	<package name="dispatchingmanage" extends="json-default" namespace="/dispatchingManage" >
 		 <action name="addDispatching" class="com.weini.manage.action.DispatchingManageAction" method="addDispatching">
-			<result name="success" type="json">	
+			<result name="SUCCESS" type="json">	
 				<param name="includeProperties">code</param>			
 			</result>
 		</action>
 		<!-- 送餐地址列表 -->
 		<action name="listDispatching" class="com.weini.manage.action.DispatchingManageAction" method="listDispatching">
-			<result name="success" type="json">	
+			<result name="SUCCESS" type="json">	
 				<param name="includeProperties">list.*</param>			
 			</result>
 		</action>

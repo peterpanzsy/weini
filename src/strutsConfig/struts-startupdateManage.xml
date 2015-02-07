@@ -5,12 +5,20 @@
 	<!--启动更新-->
 	<action name="LastedVersion" class="com.weini.manage.action.ClientStartUpdateAction" method="getLastVersion">
 		<result name="SUCCESS" type="json">				
-		<param name="includeProperties">dataResult.*</param>
+		<param name="includeProperties">
+			dataResult\[\d+\]\.versionInfo,
+			dataResult\[\d+\]\.versionLoc
+		</param>
 		</result>
 	</action>
 	<action name="StartPageUpdate" class="com.weini.manage.action.ClientStartUpdateAction" method="getStartPageUpdate">
 		<result name="SUCCESS" type="json">				
-		<param name="includeProperties">startPage.*</param>
+		<param name="includeProperties">
+			startPage\.startpageId,
+			startPage\.startpageImageloc,
+			startPage\.startpageStringStarttime,
+			startPage\.startpageStringEndtime
+		</param>
 		</result>
 	</action>
 	<action name="BoxPageInfo" class="com.weini.manage.action.ClientStartUpdateAction" method="getBoxPageInfo">

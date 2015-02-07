@@ -128,6 +128,7 @@ public class LoginService extends GeneralService{
 					if(userdao.addUser(user)){
 						flag = 1;
 					}else{
+						this.roll();
 						flag = 0 ;
 					}
 				}else{

@@ -27,7 +27,6 @@ public class LoginAction extends ActionSupport{
 	private int identifyCode; //短信验证码
 	private String phoneNum; //用户手机号
 	private int code=0; //返回的状态码
-	private int userId;
 	
 //    TAdmin admin;
 //    List<TAuth> authList;
@@ -112,9 +111,7 @@ public class LoginAction extends ActionSupport{
 				flag ="帐户或者密码错误，或者您的账号正在审核中。";
 //		        session.put("wrong", "帐户或者密码错误，或者您的账号正在审核中。");	
 			}else{
-				session.put("user", user);
-				userId = user.getUserId();
-				code=1;
+				session.put(Configure.sessionUserName, user);
 				result = SUCCESS;
 			}
 		}
@@ -197,7 +194,6 @@ public class LoginAction extends ActionSupport{
 				LoginService loginService = new LoginService();
 				TUser user = loginService.findReguserLogin(phoneNum);
 				if(user!=null){
-					userId = user.getUserId();
 					session.remove(Configure.identifyCode);
 					session.put(Configure.sessionUserName, user);
 					code = 1;
@@ -230,7 +226,9 @@ public class LoginAction extends ActionSupport{
 	}
 	/**
 	 * 用户注册
+	 * 如果用户注册成功，就直接登录
 	 * @return  0-注册失败 ，1-注册成功,2-用户已注册,3-验证码不正确
+	 * 如果注册成功，返回userID,用户id用户密码
 	 */
 	public String userRegist(){
 		ActionContext actionContext = ActionContext.getContext();
@@ -241,6 +239,8 @@ public class LoginAction extends ActionSupport{
 			code = loginService.userRegist(phoneNum, password);
 			if(code == 1)
 				session.remove(Configure.identifyCode);
+				TUser user = (new LoginService()).searchUser(username, password);
+				session.put(Configure.sessionUserName,user);
 		}else{
 			code = 3;
 		}
@@ -300,11 +300,5 @@ public class LoginAction extends ActionSupport{
 	}
 	public void setCode(int code) {
 		this.code = code;
-	}
-	public int getUserId() {
-		return userId;
-	}
-	public void setUserId(int userId) {
-		this.userId = userId;
 	}
 }

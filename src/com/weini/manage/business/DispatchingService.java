@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.weini.manage.dao.AddressDao;
 import com.weini.manage.dao.DispatchingDao;
+import com.weini.manage.entity.DispatchingAddress;
 import com.weini.manage.entity.TDispatching;
 import com.weini.tools.HibernateSessionManager;
 
@@ -34,10 +35,25 @@ public class DispatchingService extends GeneralService{
 	}
 
 
-	public List<TDispatching> findDispatchingByUserId(Integer userId) {
-		List<TDispatching> res = null;
+	public List<DispatchingAddress> findDispatchingByUserId(Integer userId) {
+		List<DispatchingAddress> res = new ArrayList<DispatchingAddress>();
 		try{
-			res =disDao.findDispatchingByUserId(userId);
+			List<TDispatching> tdis =disDao.findDispatchingByUserId(userId);
+			if(tdis != null && tdis.size() > 0){
+				for(int i = 0;i < tdis.size(); i++){
+					DispatchingAddress temp = new DispatchingAddress();
+					TDispatching tdistemp = tdis.get(i);
+					temp.setDispatchingId(tdistemp.getDispatchingId());
+					temp.setDispatchingProvince(this.addDao.findProvince(tdistemp.getDispatchingProvince()));
+					temp.setDispatchingCity(this.addDao.findCity(tdistemp.getDispatchingCity()));
+					temp.setDispatchingDistrict(this.addDao.findDistrict(tdistemp.getDispatchingDistrict()));
+					temp.setDispatchingBusinessAreaid(this.addDao.findBusiness(tdistemp.getDispatchingBusinessAreaid()));
+					temp.setDispatchingOfficeBuilding(this.addDao.findOffice(tdistemp.getDispatchingOfficeBuilding()));
+					temp.setDispatchingAddressDetail(tdistemp.getDispatchingAddressDetail());
+					temp.setDispatchingPhoneNum(tdistemp.getDispatchingPhoneNum());
+					res.add(temp);
+				}
+			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}

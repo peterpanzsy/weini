@@ -38,6 +38,7 @@ public class DispatchingManageAction extends ActionSupport {
 		int userID = -1;
 		try{
 			userID = Tools.getUserID();
+			return "SUCCESS";
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -46,7 +47,7 @@ public class DispatchingManageAction extends ActionSupport {
 				dispatchingBusinessAreaid, dispatchingOfficeBuilding,dispatchingAddressDetail,userID,dispatchingPhoneNum)){
 			code = 1;
 		}
-		return SUCCESS;
+		return "SUCCESS";
 	}
 	/**
 	 * 根据用户Id列出所有的送餐地址
@@ -61,7 +62,7 @@ public class DispatchingManageAction extends ActionSupport {
 			return "SUCCESS";
 		}
 		list = new DispatchingService().findDispatchingByUserId(userID);
-		return SUCCESS;
+		return "SUCCESS";
 	}
 
 	public Integer getDispatchingId() {
