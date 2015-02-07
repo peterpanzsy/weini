@@ -240,7 +240,7 @@ public class LoginAction extends ActionSupport{
 			LoginService loginService = new LoginService();
 			code = loginService.userRegist(phoneNum, password);
 			if(code == 1)
-				session.remove("identifyCode");
+				session.remove(Configure.identifyCode);
 		}else{
 			code = 3;
 		}

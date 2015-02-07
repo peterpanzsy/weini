@@ -6,6 +6,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.weini.manage.business.DispatchingService;
 import com.weini.manage.entity.TDispatching;
 import com.weini.manage.entity.TDispatchingstatus;
+import com.weini.tools.Tools;
 
 public class DispatchingManageAction extends ActionSupport {
 	
@@ -21,7 +22,6 @@ public class DispatchingManageAction extends ActionSupport {
 	private Integer dispatchingBusinessAreaid;
 	private Integer dispatchingOfficeBuilding;
 	private String dispatchingAddressDetail;
-	private Integer userId;
 	private String dispatchingPhoneNum;
 	//返回的参数列表
 	private List list;
@@ -35,9 +35,15 @@ public class DispatchingManageAction extends ActionSupport {
 	 * @return
 	 */
 	public String addDispatching(){
+		int userID = -1;
+		try{
+			userID = Tools.getUserID();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		disService = new DispatchingService();
 		if(disService.addDistaching(dispatchingProvince, dispatchingCity, dispatchingDistrict,
-				dispatchingBusinessAreaid, dispatchingOfficeBuilding,dispatchingAddressDetail,userId,dispatchingPhoneNum)){
+				dispatchingBusinessAreaid, dispatchingOfficeBuilding,dispatchingAddressDetail,userID,dispatchingPhoneNum)){
 			code = 1;
 		}
 		return SUCCESS;
@@ -47,8 +53,14 @@ public class DispatchingManageAction extends ActionSupport {
 	 * @return
 	 */
 	public String listDispatching(){
-		disService = new DispatchingService();
-		list = disService.findDispatchingByUserId(userId);
+		int userID = -1;
+		try{
+			userID = Tools.getUserID();
+		}catch(Exception e){
+			e.printStackTrace();
+			return "SUCCESS";
+		}
+		list = new DispatchingService().findDispatchingByUserId(userID);
 		return SUCCESS;
 	}
 
@@ -93,12 +105,6 @@ public class DispatchingManageAction extends ActionSupport {
 	}
 	public void setDispatchingAddressDetail(String dispatchingAddressDetail) {
 		this.dispatchingAddressDetail = dispatchingAddressDetail;
-	}
-	public Integer getUserId() {
-		return userId;
-	}
-	public void setUserId(Integer userId) {
-		this.userId = userId;
 	}
 	public String getDispatchingPhoneNum() {
 		return dispatchingPhoneNum;

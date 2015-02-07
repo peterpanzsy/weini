@@ -167,13 +167,6 @@ public class TMenuinfo implements java.io.Serializable {
 	public Timestamp getMenuinfoDate() {
 		return this.menuinfoDate;
 	}
-	public String getStringMenuinfoDate() {
-		if(this.menuinfoDate != null){
-			return this.menuinfoDate.toString();
-		}else{
-			return "";
-		}
-	}
 
 	public void setMenuinfoDate(Timestamp menuinfoDate) {
 		this.menuinfoDate = menuinfoDate;
@@ -273,4 +266,12 @@ public class TMenuinfo implements java.io.Serializable {
 		this.menuType = menuType;
 	}
 	
+	@Transient
+	public String getStringMenuinfoDate() {
+		if(this.menuinfoDate != null){
+			return this.menuinfoDate.toString();
+		}else{
+			return "";
+		}
+	}
 }

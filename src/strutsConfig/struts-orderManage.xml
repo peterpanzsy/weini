@@ -5,7 +5,14 @@
 	<!--订单管理-->
 	<action name="UserLastedMonthOrder" class="com.weini.manage.action.OrderAction" method="getUserLastedMonthOrder">
 		<result name="SUCCESS" type="json">
-			<param name="includeProperties">nowMonthOrderlist.*,lastMonthOrderlist.*</param>				
+			<param name="includeProperties">
+				nowMonthOrderlist\[\d+\]\.SOrderId,
+				nowMonthOrderlist\[\d+\]\.SOrderDispatchingDateString,
+				nowMonthOrderlist\[\d+\]\.menuTypeDesc,
+				lastMonthOrderlist\[\d+\]\.SOrderId,
+				lastMonthOrderlist\[\d+\]\.SOrderDispatchingDateString,
+				lastMonthOrderlist\[\d+\]\.menuTypeDesc
+			</param>
 		</result>
 	</action>
 	<action name="SonOrderList" class="com.weini.manage.action.OrderAction" method="getSonOrderList">

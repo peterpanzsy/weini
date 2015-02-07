@@ -10,6 +10,7 @@ import com.weini.manage.business.OrderService;
 import com.weini.manage.business.OtherService;
 import com.weini.manage.business.StartUpdateService;
 import com.weini.manage.entity.TOrder;
+import com.weini.manage.entity.TSOrder;
 import com.weini.manage.entity.TSorderDispatching;
 import com.weini.manage.entity.TTrackpage;
 import com.weini.tools.Tools;
@@ -21,8 +22,8 @@ public class OrderAction extends ActionSupport {
 	 */
 	private static final long serialVersionUID = 1L;
 	private int index;
-	private List nowMonthOrderlist;
-	private List lastMonthOrderlist;
+	private List<TSOrder> nowMonthOrderlist;
+	private List<TSOrder> lastMonthOrderlist;
 	private List datalist;
 	private TOrder orderDetail;
 	private int code;
@@ -30,7 +31,6 @@ public class OrderAction extends ActionSupport {
 	private int ordereStatus;
 	private String orderNum;
 	// 新增订单的数据
-	private int orderMenuID;
 	private int boxID;
 	private String orderStartTime;
 	private String orderOrderTime;
@@ -38,6 +38,7 @@ public class OrderAction extends ActionSupport {
 	private int orderDispatchingID;
 	private int userHeatID;
 	private int userAppetite;
+	private int menuWestern;
 	private int pageStart;
 	private int pageLimit;
 	//开始，截止日期 形如 2015-12-01
@@ -79,6 +80,8 @@ public class OrderAction extends ActionSupport {
 	}
 	/**
 	 * 用户下单
+	 * 用户传入订单的信息
+	 * 注意：用户会传入是中餐还是西餐，根据这个后台搜索这个商圈的菜，然后动态生成菜品id
 	 * @return code 1:成功;0:失败
 	 */
 	public String addOrder(){
@@ -95,7 +98,6 @@ public class OrderAction extends ActionSupport {
 //			userAppetite = 1;
 			int userID = Tools.getUserID();
 			TOrder order = new TOrder();
-			order.setOrderMenuinfoId(this.orderMenuID);
 			order.setBoxId(this.boxID);
 			order.setOrderStartTime(Timestamp.valueOf(this.orderStartTime));
 			order.setOrderOrderTime(Timestamp.valueOf(this.orderOrderTime));
@@ -240,12 +242,6 @@ public class OrderAction extends ActionSupport {
 	public void setIndex(int index) {
 		this.index = index;
 	}
-	public int getOrderMenuID() {
-		return orderMenuID;
-	}
-	public void setOrderMenuID(int orderMenuID) {
-		this.orderMenuID = orderMenuID;
-	}
 	public int getBoxID() {
 		return boxID;
 	}
@@ -383,5 +379,11 @@ public class OrderAction extends ActionSupport {
 	}
 	public void setSonOrderID(int sonOrderID) {
 		this.sonOrderID = sonOrderID;
+	}
+	public int getMenuWestern() {
+		return menuWestern;
+	}
+	public void setMenuWestern(int menuWestern) {
+		this.menuWestern = menuWestern;
 	}
 }

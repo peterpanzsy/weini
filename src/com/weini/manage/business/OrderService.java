@@ -32,16 +32,17 @@ public class OrderService extends GeneralService {
 	 * @param userID 用户id
 	 * @return
 	 */
-	public List<TOrder> getMonthOrderByUserID(int userID,int year,int month){
-		List<TOrder> res = null;
+	public List<TSOrder> getMonthOrderByUserID(int userID,int year,int month){
+		List<TSOrder> res = null;
 		try{
-			res = this.orderdao.searchMonthOrder(userID, year, month);
+			res = this.sonorderdao.searchMonthSonOrder(userID, year, month);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		this.close();
 		return res;
 	}
+	//TODO 等待修改
 	/**
 	 * 获取子订单根据父订单的id
 	 * @param orderID 父订单id
@@ -50,7 +51,7 @@ public class OrderService extends GeneralService {
 	public List<Object[]> getSonOrderByOrderID(String orderID){
 		List<Object[]> res = null;
 		try{
-			res = this.sonorderdao.getSOrderByOrderID(orderID);
+//			res = this.sonorderdao.getSOrderByOrderID(orderID);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -62,6 +63,7 @@ public class OrderService extends GeneralService {
 	 * 	如果是isFirst订单，则需要更新用户的忌口和饭量
 	 * 	增加一个订单
 	 * 	增加对应的子订单
+	 * 注意：需要根据用户选择的中西餐，动态生成菜品id
 	 * @param order 订单对象
 	 * @param orderIsFirst 是否是first订单
 	 * @param userID 用户id
@@ -76,6 +78,8 @@ public class OrderService extends GeneralService {
 		order.setSOrderConsumeStatus(0);
 		order.setOrderStatus(0);
 		order.setOrderSettleStatus(0);
+		//生成菜品id
+		
 		float boxPrice = 0;
 		int box_type = 0;
 		String userheat = "";
@@ -105,6 +109,7 @@ public class OrderService extends GeneralService {
 					sonOrder.setSOrderIsdispatchingStateOpen(1);
 					sonOrder.setSOrderNotice("注意：不吃："+userheat+" "+"饭量："+Tools.getUserAppetite(userAppetite));
 					sonOrder.setSOrderDispatchingId(order.getOrderDispatchingId());
+					sonOrder.setUserId(order.getUserId());
 					
 					//循环增加子订单
 					List<String> dates = Tools.getDatesNotWeekend(box_type);

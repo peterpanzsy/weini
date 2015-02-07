@@ -8,8 +8,8 @@ import cn.ihuyi._106.SubmitResult;
 
 
 public class SMSUtil {
-	private static String account = "cf_kakaxi";
-	private static String password = "7280139";
+	private static String account = "cf_wnkj";
+	private static String password = "zangqing634134";
 
 	/**
 	 * 发送短信验证码的接口

@@ -24,8 +24,20 @@ public class TSOrder implements java.io.Serializable {
 	private String SOrderNotice;
 	private Integer SOrderDispatchingId;
 	private Integer SOrderStatus;
-
+	private Integer userId;
+	
+	//pl add
+	private String menuTypeDesc; 
+	private String SOrderDispatchingDateString;
 	// Constructors
+
+	public String getSOrderDispatchingDateString() {
+		if(this.SOrderDispatchingDate != null){
+			return this.SOrderDispatchingDate.toString();
+		}else{
+			return "";
+		}
+	}
 
 	/** default constructor */
 	public TSOrder() {
@@ -34,13 +46,15 @@ public class TSOrder implements java.io.Serializable {
 	/** minimal constructor */
 	public TSOrder(String FOrderNum, Integer menuId, Integer SOrderWhichday,
 			Date SOrderDispatchingDate, Integer SOrderIsdispatchingStateOpen,
-			Integer SOrderStatus) {
+			Integer SOrderDispatchingId, Integer SOrderStatus, Integer userId) {
 		this.FOrderNum = FOrderNum;
 		this.menuId = menuId;
 		this.SOrderWhichday = SOrderWhichday;
 		this.SOrderDispatchingDate = SOrderDispatchingDate;
 		this.SOrderIsdispatchingStateOpen = SOrderIsdispatchingStateOpen;
+		this.SOrderDispatchingId = SOrderDispatchingId;
 		this.SOrderStatus = SOrderStatus;
+		this.userId = userId;
 	}
 
 	/** full constructor */
@@ -48,7 +62,7 @@ public class TSOrder implements java.io.Serializable {
 			String SOrderConsumeEvaluate, Date SOrderDispatchingDate,
 			String SOrderLogisticsEvaluate, Timestamp SOrderPredictTime,
 			Integer SOrderIsdispatchingStateOpen, String SOrderNotice,
-			Integer SOrderDispatchingId, Integer SOrderStatus) {
+			Integer SOrderDispatchingId, Integer SOrderStatus, Integer userId) {
 		this.FOrderNum = FOrderNum;
 		this.menuId = menuId;
 		this.SOrderWhichday = SOrderWhichday;
@@ -60,6 +74,7 @@ public class TSOrder implements java.io.Serializable {
 		this.SOrderNotice = SOrderNotice;
 		this.SOrderDispatchingId = SOrderDispatchingId;
 		this.SOrderStatus = SOrderStatus;
+		this.userId = userId;
 	}
 
 	// Property accessors
@@ -159,6 +174,22 @@ public class TSOrder implements java.io.Serializable {
 
 	public void setSOrderStatus(Integer SOrderStatus) {
 		this.SOrderStatus = SOrderStatus;
+	}
+
+	public Integer getUserId() {
+		return this.userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public String getMenuTypeDesc() {
+		return menuTypeDesc;
+	}
+
+	public void setMenuTypeDesc(String menuTypeDesc) {
+		this.menuTypeDesc = menuTypeDesc;
 	}
 
 }
