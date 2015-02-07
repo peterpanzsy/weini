@@ -9,7 +9,7 @@ public class BoxManageAction extends ActionSupport {
 	
 	BoxService boxService ;
 	
-	private List<Object[]> list;
+	private List list;
 	/**
 	 * 
 	 */

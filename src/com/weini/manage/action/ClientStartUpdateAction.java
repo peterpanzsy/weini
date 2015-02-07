@@ -20,7 +20,6 @@ public class ClientStartUpdateAction extends ActionSupport{
 	private TStartpageinfo startPage;
 	private TBoxpage boxPage;
 	private int index;
-	private TTrackpage trackPage;
 	/**
 	 *应用启动时，获取最新的系统版本信息
 	 *@param 手机系统类型
@@ -48,15 +47,7 @@ public class ClientStartUpdateAction extends ActionSupport{
 		boxPage = (new StartUpdateService()).getBoxPageinfo(index);
 		return "SUCCESS";
 	}
-	/**
-	 * 应用启动时，获取溯源页面的文案信息
-	 * @param 出入所需的溯源文案id
-	 * @return 如果有，返回页面信息；否则，返回null
-	 */
-	public String searchTrackPageInfo(){
-		setTrackPage((new StartUpdateService()).getTrackPageinfo(index));
-		return "SUCCESS";
-	}
+
 	public int getPhoneType() {
 		return phoneType;
 	}
@@ -87,11 +78,4 @@ public class ClientStartUpdateAction extends ActionSupport{
 	public void setDataResult(List dataResult) {
 		this.dataResult = dataResult;
 	}
-	public TTrackpage getTrackPage() {
-		return trackPage;
-	}
-	public void setTrackPage(TTrackpage trackPage) {
-		this.trackPage = trackPage;
-	}
-	
 }

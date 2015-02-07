@@ -9,10 +9,13 @@ import com.weini.manage.dao.BoxModelDao;
 import com.weini.manage.dao.OrderDao;
 import com.weini.manage.dao.OrderRefundDao;
 import com.weini.manage.dao.SonOrderDao;
+import com.weini.manage.dao.SorderDispatchingDao;
 import com.weini.manage.dao.UserDao;
 import com.weini.manage.entity.TOrder;
 import com.weini.manage.entity.TOrderrefund;
 import com.weini.manage.entity.TSOrder;
+import com.weini.manage.entity.TSorderDispatching;
+import com.weini.manage.entity.TTrackpage;
 import com.weini.tools.HibernateSessionManager;
 import com.weini.tools.Tools;
 
@@ -23,6 +26,7 @@ public class OrderService extends GeneralService {
 	private BoxModelDao boxdao = new BoxModelDao(this.session);
 	private UserDao userdao = new UserDao(this.session);
 	private OrderRefundDao refunddao = new OrderRefundDao(this.session);
+	private SorderDispatchingDao sonDisDao = new SorderDispatchingDao(this.session);
 	/**
 	 * 根据用户的id获取本月的订单记录
 	 * @param userID 用户id
@@ -209,5 +213,25 @@ public class OrderService extends GeneralService {
 			e.printStackTrace();
 		}
 		return res;
+	}
+	/**
+	 * 根据子订单的id获取子订单分派状态
+	 * @param sonOrderID 子订单id
+	 * @return 返回值第一个表示状态是否开启
+	 */
+	public List<TSorderDispatching> getSonOrderDispatchStatus(int sonOrderID){
+		List<TSorderDispatching> res = null;
+		//查看父订单的分配状态功能是否开启
+		try{
+			if(sonorderdao.getOrderDisStatusIsOpenBySonOrderID(sonOrderID) == 1){
+				//获取子订单的分派列表
+				res = this.sonDisDao.findSorderDispatchingBySOrderId(sonOrderID);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		this.close();
+		return res;
+		
 	}
 }

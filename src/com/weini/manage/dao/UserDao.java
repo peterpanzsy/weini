@@ -291,4 +291,10 @@ public class UserDao{
 			return true;
 		}
 	}
+	public int updateUserName(int userID,String userName){
+		Query q = session.createSQLQuery("update t_user SET user_name = ? where user_id = ?;");
+		q.setString(0,userName);
+		q.setInteger(1, userID);
+		return q.executeUpdate();
+	}
 }

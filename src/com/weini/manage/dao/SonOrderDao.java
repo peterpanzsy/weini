@@ -88,4 +88,19 @@ public class SonOrderDao{
 		q.setString(0, fOrderNum);
 		return q.executeUpdate();
 	}
+	/**
+	 * 根据子订单的id获取该订单的分派状态是否开启
+	 * @param sonOrderID
+	 * @return
+	 */
+	public int getOrderDisStatusIsOpenBySonOrderID(int sonOrderID){
+		int res = -1;
+		Query q = session.createSQLQuery("SELECT S_order_isdispatchingStateOpen from t_s_order where S_order_id = ? ;");
+		q.setInteger(0, sonOrderID);
+		List l = q.list();
+		if(l != null && l.size() > 0){
+			res = (int)(l.get(0));
+		}
+		return res;
+	}
 }

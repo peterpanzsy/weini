@@ -18,13 +18,6 @@
 		<param name="includeProperties">boxPage.*</param>
 		</result>
 	</action>
-	<action name="TrackPageInfo" class="com.weini.manage.action.ClientStartUpdateAction" method="searchTrackPageInfo">
-		<result name="SUCCESS" type="json">				
-		<param name="includeProperties">trackPage.*</param>
-		</result>
-	</action>
-	
-	
 	</package>
 
 </struts>    

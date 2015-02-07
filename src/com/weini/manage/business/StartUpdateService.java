@@ -1,5 +1,7 @@
 package com.weini.manage.business;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import com.weini.manage.dao.BoxModelDao;
@@ -69,14 +71,17 @@ public class StartUpdateService extends GeneralService {
 		return res;
 	}
 	/**
-	 * 根据传入的文案id获取文案信息
-	 * @param trackid 溯源文案id
+	 * 获取订单状态的文案信息 
 	 * @return
 	 */
-	public TTrackpage getTrackPageinfo(int trackid){
+	public TTrackpage getTrackPageinfo(){
 		TTrackpage res = null;
 		try{
-			res = this.trackpagedao.getTrackpage(trackid);
+			//获取当前的时间
+			Calendar cale = Calendar.getInstance();
+			int hour = cale.get(Calendar.HOUR_OF_DAY);
+			int minute = cale.get(Calendar.MINUTE);
+			res = this.trackpagedao.getTrackpage(hour,minute);
 		}catch(Exception e){
 			e.printStackTrace();
 		}

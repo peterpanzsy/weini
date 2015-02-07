@@ -14,14 +14,20 @@ public class TrackpageDao {
 		this.session = sess;
 	}
 	/**
-	 * 根据id获取溯源信息
+	 * 根据当前时间获取相应的文案信息
 	 * @return 成功返回信息，否则返回null
 	 */
-	public TTrackpage getTrackpage(int trackid){
+	public TTrackpage getTrackpage(int hour,int minute){
 		TTrackpage res = null;
-		Query q = session.createSQLQuery("SELECT trackpage_id,trackpage_currentstate,trackpage_curbackcolindex,"
-				+ "trackpage_tiptext FROM t_trackpage where trackpage_id = ?;");
-		q.setParameter(0, trackid);
+		Query q = session.createSQLQuery("SELECT trackpage_id,trackpage_currentstate,trackpage_curbackcolindex,trackpage_tiptext "
+				+ "FROM t_trackpage where (HOUR(trackpage_startTime) < ? and HOUR(trackpage_endTime) > ?) OR"
+				+ " ((HOUR(trackpage_startTime) = ? or HOUR(trackpage_endTime) = ?) and  (MINUTE(trackpage_startTime) <? and MINUTE(trackpage_endTime) >=?));");
+		q.setInteger(0, hour);
+		q.setInteger(1, hour);
+		q.setInteger(2, hour);
+		q.setInteger(3, hour);
+		q.setInteger(4, minute);
+		q.setInteger(5, minute);
 		List l = q.list();
 		if(l.size() == 1){
 			Object[] row = (Object[])l.get(0);

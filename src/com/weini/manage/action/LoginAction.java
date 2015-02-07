@@ -14,6 +14,8 @@ import com.weini.manage.entity.TAuth;
 import com.weini.manage.entity.TUser;
 import com.weini.manage.entity.TVendor;
 import com.weini.manage.business.LoginService;
+import com.weini.tools.Configure;
+import com.weini.tools.Tools;
 
 public class LoginAction extends ActionSupport{
 
@@ -175,7 +177,7 @@ public class LoginAction extends ActionSupport{
 		if(identifyCode!=-1){
 			ActionContext actionContext = ActionContext.getContext();
 	        Map session = actionContext.getSession();
-	        session.put("identifyCode", identifyCode);
+	        session.put(Configure.identifyCode, identifyCode);
 			code = 1;
 		}else{
 			code = 0;
@@ -190,14 +192,14 @@ public class LoginAction extends ActionSupport{
 		String result = "fail";
 		ActionContext actionContext = ActionContext.getContext();
 		Map session = actionContext.getSession();
-		Object obj = session.get("identifyCode");
-		if(obj!=null&&(Integer)obj==identifyCode){
+		Integer iden = (Integer)session.get(Configure.identifyCode);
+		if(iden != null && (iden == identifyCode)){
 				LoginService loginService = new LoginService();
 				TUser user = loginService.findReguserLogin(phoneNum);
 				if(user!=null){
 					userId = user.getUserId();
-					session.remove("identifyCode");
-					session.put("user", user);
+					session.remove(Configure.identifyCode);
+					session.put(Configure.sessionUserName, user);
 					code = 1;
 					result = SUCCESS;
 				}else{
@@ -213,14 +215,28 @@ public class LoginAction extends ActionSupport{
 		return result;
 	}
 	/**
+	 *检查用户是否登录  
+	 * @return code： 0:未登录，1：登录
+	 */
+	public String checkUserIsLogin(){
+		code  = 0;
+		try{
+			Tools.getUserID();
+			code = 1;
+		}catch(Exception e){
+			code = 0;
+		}
+		return "SUCCESS";
+	}
+	/**
 	 * 用户注册
 	 * @return  0-注册失败 ，1-注册成功,2-用户已注册,3-验证码不正确
 	 */
 	public String userRegist(){
 		ActionContext actionContext = ActionContext.getContext();
 		Map session = actionContext.getSession();
-		Object obj = session.get("identifyCode");
-		if(obj!=null&&(Integer)obj==identifyCode){
+		Integer iden = (Integer)session.get(Configure.identifyCode);
+		if(iden != null && (iden == identifyCode)){
 			LoginService loginService = new LoginService();
 			code = loginService.userRegist(phoneNum, password);
 			if(code == 1)

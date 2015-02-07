@@ -24,10 +24,14 @@
 		</action>
 		<!-- 修改用户信息（包括忌口、性别） -->
 		<action name="updateUser*" class="com.weini.manage.action.UserAction" method="updateUser{1}">
-			<result name="success" type="json">	
+			<result name="SUCCESS" type="json">	
 				<param name="includeProperties">code</param>			
 			</result>
 		</action>
-		
+		<action name="updateUserName" class="com.weini.manage.action.UserAction" method="updateUserName">
+			<result name="SUCCESS" type="json">	
+				<param name="includeProperties">code</param>			
+			</result>
+		</action>
 	</package>
 </struts>    

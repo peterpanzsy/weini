@@ -7,6 +7,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.weini.manage.business.UserService;
 import com.weini.manage.entity.TUser;
 import com.weini.manage.entity.TUserextra;
+import com.weini.tools.Tools;
 import com.weini.tools.TwoEntity;
 
 
@@ -85,10 +86,10 @@ public class UserAction extends ActionSupport{
 	public String changePwd(){
 		return SUCCESS;
 	}
-/*	*//**
+	/**
 	 * 获取用户的个人信息
 	 * @return
-	 *//*
+	 */
 	public String findUserInfo(){
 		userService = new UserService();
 		try {
@@ -96,29 +97,6 @@ public class UserAction extends ActionSupport{
 			user = (TUser)two.getIndex1();
 			userextra = (TUserextra)two.getIndex2();
 			if(user==null){
-				code = 0; 
-				result="没有记录";
-				return "fail";
-			}
-			code = 1;
-		} catch (Exception e) {
-			code = 0; 
-			result="参数有误";
-			return "fail";
-		}
-		return SUCCESS;
-	}*/
-	/**
-	 * 获取用户的个人信息
-	 * @return
-	 */
-	public String findUserInfo(){
-		try {
-			obj = userService.findUserInfo(userId);
-//			TwoEntity two = userService.findUserInfo(userId);
-//			user = (TUser)two.getIndex1();
-//			userextra = (TUserextra)two.getIndex2();
-			if(obj==null){
 				code = 0; 
 				result="没有记录";
 				return "fail";
@@ -157,6 +135,24 @@ public class UserAction extends ActionSupport{
 		userService = new UserService();
 		code = userService.updateUserBirthday(userId,userBirthday);
 		return SUCCESS;
+	}
+	/**
+	 * 更新用户昵称
+	 * @return
+	 */
+	public String updateUserName(){
+		code = 0;
+		int userID = -1;
+		try{
+			userID = Tools.getUserID();
+		}catch(Exception e){
+			System.out.println("用户没有登录！");
+			return SUCCESS;
+		}
+		if((new UserService()).updateUserName(userID,userName)){
+			code = 1;
+		}
+		return "SUCCESS";
 	}
 	
 	public String getMark() {

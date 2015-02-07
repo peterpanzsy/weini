@@ -56,6 +56,13 @@ public class TStartpageinfo implements java.io.Serializable {
 	public Timestamp getStartpageStarttime() {
 		return this.startpageStarttime;
 	}
+	public String getStartpageStringStarttime() {
+		if(startpageStarttime != null){
+			return this.startpageStarttime.toString();
+		}else{
+			return "";
+		}
+	}
 
 	public void setStartpageStarttime(Timestamp startpageStarttime) {
 		this.startpageStarttime = startpageStarttime;
@@ -63,6 +70,13 @@ public class TStartpageinfo implements java.io.Serializable {
 
 	public Timestamp getStartpageEndtime() {
 		return this.startpageEndtime;
+	}
+	public String getStartpageStringEndtime() {
+		if(this.startpageEndtime != null){
+			return this.startpageEndtime.toString();
+		}else{
+			return "";
+		}
 	}
 
 	public void setStartpageEndtime(Timestamp startpageEndtime) {

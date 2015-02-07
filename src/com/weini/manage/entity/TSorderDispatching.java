@@ -14,8 +14,8 @@ import org.hibernate.annotations.GenericGenerator;
 /**
  * TSorderDispatching entity. @author MyEclipse Persistence Tools
  */
-@Entity   
-@Table(name="t_sorder_dispatching")
+//@Entity   
+//@Table(name="t_sorder_dispatching")
 public class TSorderDispatching implements java.io.Serializable {
 
 	// Fields
@@ -24,6 +24,10 @@ public class TSorderDispatching implements java.io.Serializable {
 	private Integer SOrderId;
 	private Integer dispatchingstatusId;
 	private Timestamp statusTime;
+	
+	//pl add
+	private String statusImage;
+	private String statusDesc;
 
 	// Constructors
 
@@ -39,10 +43,10 @@ public class TSorderDispatching implements java.io.Serializable {
 	}
 
 	// Property accessors
-	@Id              // 表示主键
-    @GenericGenerator(name = "generator", strategy = "increment")  
-    @GeneratedValue(generator = "generator")   // 自增长
-    @Column(name = "sorderdispatching_id")
+//	@Id              // 表示主键
+//    @GenericGenerator(name = "generator", strategy = "increment")  
+//    @GeneratedValue(generator = "generator")   // 自增长
+//    @Column(name = "sorderdispatching_id")
 	public Integer getSorderdispatchingId() {
 		return this.sorderdispatchingId;
 	}
@@ -70,9 +74,34 @@ public class TSorderDispatching implements java.io.Serializable {
 	public Timestamp getStatusTime() {
 		return this.statusTime;
 	}
+	
+	public String getStringStatusTime() {
+		if(this.statusTime != null){
+			return this.statusTime.toString();
+		}else{
+			return "";
+		}
+		
+	}
 
 	public void setStatusTime(Timestamp statusTime) {
 		this.statusTime = statusTime;
+	}
+
+	public String getStatusImage() {
+		return statusImage;
+	}
+
+	public void setStatusImage(String statusImage) {
+		this.statusImage = statusImage;
+	}
+
+	public String getStatusDesc() {
+		return statusDesc;
+	}
+
+	public void setStatusDesc(String statusDesc) {
+		this.statusDesc = statusDesc;
 	}
 
 }

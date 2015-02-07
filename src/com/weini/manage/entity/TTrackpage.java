@@ -1,6 +1,8 @@
 package com.weini.manage.entity;
 // default package
 
+import java.sql.Timestamp;
+
 /**
  * TTrackpage entity. @author MyEclipse Persistence Tools
  */
@@ -13,6 +15,8 @@ public class TTrackpage implements java.io.Serializable {
 	private String trackpageCurrentstate;
 	private Integer trackpageCurbackcolindex;
 	private String trackpageTiptext;
+	private Timestamp trackpageStartTime;
+	private Timestamp trackpageEndTime;
 
 	// Constructors
 
@@ -20,12 +24,23 @@ public class TTrackpage implements java.io.Serializable {
 	public TTrackpage() {
 	}
 
-	/** full constructor */
+	/** minimal constructor */
 	public TTrackpage(String trackpageCurrentstate,
 			Integer trackpageCurbackcolindex, String trackpageTiptext) {
 		this.trackpageCurrentstate = trackpageCurrentstate;
 		this.trackpageCurbackcolindex = trackpageCurbackcolindex;
 		this.trackpageTiptext = trackpageTiptext;
+	}
+
+	/** full constructor */
+	public TTrackpage(String trackpageCurrentstate,
+			Integer trackpageCurbackcolindex, String trackpageTiptext,
+			Timestamp trackpageStartTime, Timestamp trackpageEndTime) {
+		this.trackpageCurrentstate = trackpageCurrentstate;
+		this.trackpageCurbackcolindex = trackpageCurbackcolindex;
+		this.trackpageTiptext = trackpageTiptext;
+		this.trackpageStartTime = trackpageStartTime;
+		this.trackpageEndTime = trackpageEndTime;
 	}
 
 	// Property accessors
@@ -60,6 +75,22 @@ public class TTrackpage implements java.io.Serializable {
 
 	public void setTrackpageTiptext(String trackpageTiptext) {
 		this.trackpageTiptext = trackpageTiptext;
+	}
+
+	public Timestamp getTrackpageStartTime() {
+		return this.trackpageStartTime;
+	}
+
+	public void setTrackpageStartTime(Timestamp trackpageStartTime) {
+		this.trackpageStartTime = trackpageStartTime;
+	}
+
+	public Timestamp getTrackpageEndTime() {
+		return this.trackpageEndTime;
+	}
+
+	public void setTrackpageEndTime(Timestamp trackpageEndTime) {
+		this.trackpageEndTime = trackpageEndTime;
 	}
 
 }

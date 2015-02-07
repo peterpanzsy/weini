@@ -51,12 +51,18 @@
 		</action> 
 	<!-- 商家管理登陆登出 -->
 		<action name="vendorLogin" class="com.weini.manage.action.LoginAction" method="vendorlogin" >
-			<result name="SUCCESS" type="json">
+			<result name="success" type="json">
 			</result>
 		</action>
 	    <action name="vendorLogout" class="com.weini.manage.action.LoginAction" method="vendorlogout">
 			<result name="success" type="json">	
 			<param name="includeProperties">flag</param>			
+			</result>
+		</action>
+		<!-- 检查用户是否登录 -->
+		<action name="UserIsLogin" class="com.weini.manage.action.LoginAction" method="checkUserIsLogin">
+			<result name="SUCCESS" type="json">	
+				<param name="includeProperties">code</param>			
 			</result>
 		</action>
 	</package>

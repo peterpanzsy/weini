@@ -69,7 +69,6 @@ public class LoginService extends GeneralService{
 	public int sendCode(String phoneNum) {
 		int mobile_code = (int)((Math.random()*9+1)*100000);
 		int temp = mobile_code;
-		System.out.println(mobile_code);
 		boolean result = SMSUtil.sendMsg(phoneNum, mobile_code);
 		if(!result){
 			temp=-1;

@@ -8,7 +8,10 @@ import java.util.List;
 import com.opensymphony.xwork2.ActionSupport;
 import com.weini.manage.business.OrderService;
 import com.weini.manage.business.OtherService;
+import com.weini.manage.business.StartUpdateService;
 import com.weini.manage.entity.TOrder;
+import com.weini.manage.entity.TSorderDispatching;
+import com.weini.manage.entity.TTrackpage;
 import com.weini.tools.Tools;
 
 public class OrderAction extends ActionSupport {
@@ -45,6 +48,9 @@ public class OrderAction extends ActionSupport {
 	private int month;
 	// 用户退款原因
 	private int refundReason;
+	//订单溯源信息；
+	private TTrackpage trackPage;
+	private int sonOrderID;
 	/**
 	 * 获取用户最近两个月的订单信息
 	 * @return 
@@ -192,6 +198,10 @@ public class OrderAction extends ActionSupport {
 		}
 		return "SUCCESS";
 	}
+	/**
+	 * 
+	 * @return
+	 */
 	public String getUserOrderByDate(){
 		code = 0;
 		try{
@@ -199,6 +209,20 @@ public class OrderAction extends ActionSupport {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+		if(datalist != null){
+			code = 1;
+		}
+		return "SUCCESS";
+	}
+	/**
+	 * 应用启动时，获取溯源页面的文案信息以及
+	 * @param 子订单id
+	 * @return 如果有，返回页面信息；否则，返回null
+	 */
+	public String searchOrderStatusTrack(){
+		code = 0;
+		setTrackPage((new StartUpdateService()).getTrackPageinfo());
+		datalist = (new OrderService()).getSonOrderDispatchStatus(sonOrderID);
 		if(datalist != null){
 			code = 1;
 		}
@@ -347,5 +371,17 @@ public class OrderAction extends ActionSupport {
 	}
 	public void setDatalist(List datalist) {
 		this.datalist = datalist;
+	}
+	public TTrackpage getTrackPage() {
+		return trackPage;
+	}
+	public void setTrackPage(TTrackpage trackPage) {
+		this.trackPage = trackPage;
+	}
+	public int getSonOrderID() {
+		return sonOrderID;
+	}
+	public void setSonOrderID(int sonOrderID) {
+		this.sonOrderID = sonOrderID;
 	}
 }

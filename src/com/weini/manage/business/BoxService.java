@@ -30,9 +30,9 @@ public class BoxService extends GeneralService{
 	 *列出所有的盒子模型 
 	 * @return
 	 */
-	public List<Object[]> listBox() {
+	public List<TBox> listBox() {
 //		List l = new ArrayList<>();
-		List list = boxDao.listBox();
+		List<TBox> list = boxDao.listBox();
 //		
 //		for(TBox b:list){
 //			Object[] temp = new Object[];

@@ -48,6 +48,11 @@
 			<param name="includeProperties">code,datalist.*</param>				
 		</result>
 	</action>
+	<action name="OrderStatusTrack" class="com.weini.manage.action.OrderAction" method="searchOrderStatusTrack">
+		<result name="SUCCESS" type="json">				
+		<param name="includeProperties">code,trackPage.*,datalist.*</param>
+		</result>
+	</action>
 	</package>
 
 </struts>    

@@ -29,8 +29,7 @@ public class MenuManageAction extends ActionSupport {
 	 * @return
 	 */
 	public String listMenuinfo(){
-		menuService = new MenuinfoService();
-		list = menuService.getMenuInfoList();
+		list = (new MenuinfoService()).getMenuInfoList();
 		if(list!=null){
 			code =1;
 		}else{
