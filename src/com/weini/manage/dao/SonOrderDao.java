@@ -60,7 +60,7 @@ public class SonOrderDao{
 				+ "S_order_status,S_order_consumeEvaluate,S_order_dispatchingDate,"
 				+ "S_order_logisticsEvaluate,S_order_predictTime,S_order_isdispatchingStateOpen,"
 				+ "S_order_notice,S_order_dispatchingID,user_id)"
-				+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?);");
+				+ "values(?,?,?,?,?,?,?,?,?,?,?,?);");
 		q.setString(0,sonOrder.getFOrderNum());
 		q.setInteger(1, sonOrder.getMenuId());
 		q.setInteger(2,sonOrder.getSOrderWhichday());
@@ -70,9 +70,9 @@ public class SonOrderDao{
 		q.setString(6,sonOrder.getSOrderLogisticsEvaluate());
 		q.setTimestamp(7,sonOrder.getSOrderPredictTime());
 		q.setInteger(8,sonOrder.getSOrderIsdispatchingStateOpen());
-		q.setString(10,sonOrder.getSOrderNotice());
-		q.setInteger(11,sonOrder.getSOrderDispatchingId());
-		q.setInteger(12, sonOrder.getUserId());
+		q.setString(9,sonOrder.getSOrderNotice());
+		q.setInteger(10,sonOrder.getSOrderDispatchingId());
+		q.setInteger(11, sonOrder.getUserId());
 		return q.executeUpdate();
 	}
 	/**

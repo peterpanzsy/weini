@@ -1,5 +1,7 @@
 package com.weini.manage.entity;
 
+import java.beans.Transient;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,6 +25,8 @@ public class TDishes implements java.io.Serializable {
 	private String dishesName;
 	private String dishesSeries1;
 	private String dishesSeries2;
+	//pl add
+	private String dishesWeight;
 
 	// Constructors
 
@@ -84,4 +88,12 @@ public class TDishes implements java.io.Serializable {
         //return ReflectionToStringBuilder.toString(this);  
         return ToStringBuilder.reflectionToString(this);  
     }
+	@Transient
+	public String getDishesWeight() {
+		return dishesWeight;
+	}
+
+	public void setDishesWeight(String dishesWeight) {
+		this.dishesWeight = dishesWeight;
+	}
 }

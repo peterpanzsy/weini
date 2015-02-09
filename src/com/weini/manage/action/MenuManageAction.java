@@ -6,6 +6,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.weini.manage.business.BoxService;
 import com.weini.manage.business.MenuinfoService;
 import com.weini.manage.entity.TBox;
+import com.weini.manage.entity.TDishes;
 import com.weini.manage.entity.TMenuinfo;
 import com.weini.manage.entity.TMenutype;
 
@@ -19,7 +20,7 @@ public class MenuManageAction extends ActionSupport {
 	private TMenuinfo menu;
 	private List list;
 	private TMenutype menutype;
-	private Object[] obj;
+	private List<TDishes> menuDish;
 	/**
 	 * 
 	 */
@@ -42,20 +43,21 @@ public class MenuManageAction extends ActionSupport {
 	 * @return
 	 */
 	public String menuinfoDetail(){
-		menuService = new MenuinfoService();
 		if(menuinfoId==null){
 			code = 0; 
 			result="参数不正确";
-			return "fail";
+			return "FAIL";
 		}
-		menu = menuService.findMenuById(menuinfoId);
+		menu = new MenuinfoService().findMenuById(menuinfoId);
 		if(menu==null){
 			code = 0; 
 			result="没有记录";
-			return "fail";
+			return "FAIL";
+		}else{
+			menuDish = new MenuinfoService().getDishesByMenuinfoID(menuinfoId);
 		}
 		code = 1;
-		return SUCCESS;
+		return "SUCCESS";
 	}
 
 	
@@ -112,12 +114,10 @@ public class MenuManageAction extends ActionSupport {
 	public void setMenutype(TMenutype menutype) {
 		this.menutype = menutype;
 	}
-
-	public Object[] getObj() {
-		return obj;
+	public List<TDishes> getMenuDish() {
+		return menuDish;
 	}
-
-	public void setObj(Object[] obj) {
-		this.obj = obj;
+	public void setMenuDish(List<TDishes> menuDish) {
+		this.menuDish = menuDish;
 	}
 }

@@ -28,8 +28,17 @@ public class TSorderDispatching implements java.io.Serializable {
 	//pl add
 	private String statusImage;
 	private String statusDesc;
+	private String statusStringTime;
 
 	// Constructors
+
+	public String getStatusStringTime() {
+		if(this.statusTime != null){
+			return this.statusTime.toString();
+		}else{
+			return "";
+		}
+	}
 
 	/** default constructor */
 	public TSorderDispatching() {

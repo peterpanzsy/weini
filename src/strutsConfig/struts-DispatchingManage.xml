@@ -6,11 +6,18 @@
 			<result name="SUCCESS" type="json">	
 				<param name="includeProperties">code</param>			
 			</result>
+			<result name="FAIL" type="json">	
+				<param name="includeProperties">code,result</param>			
+			</result>
 		</action>
+			
 		<!-- 送餐地址列表 -->
 		<action name="listDispatching" class="com.weini.manage.action.DispatchingManageAction" method="listDispatching">
 			<result name="SUCCESS" type="json">	
 				<param name="includeProperties">list.*</param>			
+			</result>
+			<result name="FAIL" type="json">	
+				<param name="includeProperties">code,result</param>			
 			</result>
 		</action>
 	</package>

@@ -20,13 +20,18 @@ public class ClientStartUpdateAction extends ActionSupport{
 	private TStartpageinfo startPage;
 	private TBoxpage boxPage;
 	private int index;
+	private int code;
 	/**
 	 *应用启动时，获取最新的系统版本信息
 	 *@param 手机系统类型
 	 * @return 返回最新版本和前一版本
 	 */
 	public String getLastVersion(){
+		code = 0;
 		setDataResult((new StartUpdateService()).getVersionUpdate(phoneType));
+		if(this.dataResult != null && this.dataResult.size() > 0){
+			code = 1;
+		}
 		return "SUCCESS";
 	}
 	/**
@@ -35,7 +40,11 @@ public class ClientStartUpdateAction extends ActionSupport{
 	 * @return 如果有，返回图片信息；否则，返回null
 	 */
 	public String getStartPageUpdate(){
+		code = 0;
 		startPage = (new StartUpdateService()).getStartPageinfo(phoneType,index);
+		if(this.startPage != null){
+			code = 1;
+		}
 		return "SUCCESS";
 	}
 	/**
@@ -44,7 +53,11 @@ public class ClientStartUpdateAction extends ActionSupport{
 	 * @return 如果有返回页面信息；否则，返回null
 	 */
 	public String getBoxPageInfo(){
+		code = 0;
 		boxPage = (new StartUpdateService()).getBoxPageinfo(index);
+		if(boxPage != null){
+			code = 1;
+		}
 		return "SUCCESS";
 	}
 
@@ -77,5 +90,11 @@ public class ClientStartUpdateAction extends ActionSupport{
 	}
 	public void setDataResult(List dataResult) {
 		this.dataResult = dataResult;
+	}
+	public int getCode() {
+		return code;
+	}
+	public void setCode(int code) {
+		this.code = code;
 	}
 }

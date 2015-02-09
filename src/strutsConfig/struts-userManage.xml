@@ -16,7 +16,15 @@
 			<result name="success" type="json">	
 				<!-- <param name="includeProperties">code,user\.userId,user\.userName
 				,user\.userGender,user\.userAddress,user\.notEat,user\.countDays,userextra\.userextraBirthday</param> -->
-				<param name="includeProperties">code,obj.*</param>			
+				<param name="includeProperties">
+					code,
+					tuser.*,
+					tuserextra.*
+				</param>
+				<param name="excludeProperties">
+					tuser\.userRegdate,
+					tuserextra\.userextraBirthday,
+				</param>			
 			</result>
 			<result name="fail" type="json">	
 				<param name="includeProperties">code,result</param>			
@@ -27,10 +35,16 @@
 			<result name="SUCCESS" type="json">	
 				<param name="includeProperties">code</param>			
 			</result>
+			<result name="FAIL" type="json">	
+				<param name="includeProperties">code,result</param>			
+			</result>
 		</action>
 		<action name="updateUserName" class="com.weini.manage.action.UserAction" method="updateUserName">
 			<result name="SUCCESS" type="json">	
 				<param name="includeProperties">code</param>			
+			</result>
+			<result name="FAIL" type="json">	
+				<param name="includeProperties">code,result</param>			
 			</result>
 		</action>
 	</package>

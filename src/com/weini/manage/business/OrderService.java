@@ -6,11 +6,14 @@ import java.util.Date;
 import java.util.List;
 
 import com.weini.manage.dao.BoxModelDao;
+import com.weini.manage.dao.DispatchingDao;
+import com.weini.manage.dao.MenuDao;
 import com.weini.manage.dao.OrderDao;
 import com.weini.manage.dao.OrderRefundDao;
 import com.weini.manage.dao.SonOrderDao;
 import com.weini.manage.dao.SorderDispatchingDao;
 import com.weini.manage.dao.UserDao;
+import com.weini.manage.entity.TDispatching;
 import com.weini.manage.entity.TOrder;
 import com.weini.manage.entity.TOrderrefund;
 import com.weini.manage.entity.TSOrder;
@@ -27,6 +30,8 @@ public class OrderService extends GeneralService {
 	private UserDao userdao = new UserDao(this.session);
 	private OrderRefundDao refunddao = new OrderRefundDao(this.session);
 	private SorderDispatchingDao sonDisDao = new SorderDispatchingDao(this.session);
+	private DispatchingDao disDao = new DispatchingDao(this.session);
+	private MenuDao menuDao = new MenuDao(this.session);
 	/**
 	 * 根据用户的id获取本月的订单记录
 	 * @param userID 用户id
@@ -63,12 +68,13 @@ public class OrderService extends GeneralService {
 	 * 	如果是isFirst订单，则需要更新用户的忌口和饭量
 	 * 	增加一个订单
 	 * 	增加对应的子订单
-	 * 注意：需要根据用户选择的中西餐，动态生成菜品id
+	 * 注意：需要根据用户选择的中西餐，以及用户的性别，动态生成菜品id
 	 * @param order 订单对象
 	 * @param orderIsFirst 是否是first订单
 	 * @param userID 用户id
 	 * @param userHeatID 用户讨厌食物的id
 	 * @param userAppetite 用户的饭量
+	 * @param userSex 用户性别
 	 * @return 成功返回订单id，失败返回null
 	 */
 	public String addUserOrder(TOrder order,int orderIsFirst,int userID,int userHeatID,int userAppetite){
@@ -79,7 +85,12 @@ public class OrderService extends GeneralService {
 		order.setOrderStatus(0);
 		order.setOrderSettleStatus(0);
 		//生成菜品id
-		
+		int menuID = this.getRandomMenuID(order.getOrderMenuWestern(), order.getOrderDispatchingId());
+		if(menuID > 0){
+			order.setOrderMenuinfoId(menuID);
+		}else{
+			return null;
+		}
 		float boxPrice = 0;
 		int box_type = 0;
 		String userheat = "";
@@ -238,5 +249,27 @@ public class OrderService extends GeneralService {
 		this.close();
 		return res;
 		
+	}
+	/**
+	 * 根据用户的中西餐选择以及地址信息获取随机的菜品
+	 * @param menuWestern 菜品是否为西餐
+	 * @param dispatchID 订单地址id
+	 * @return
+	 */
+	private int getRandomMenuID(int menuWestern,int dispatchID){
+		int res = -1;
+		//根据订单的地址id获取商圈id
+		int bussAreaID = -1;
+		TDispatching tdis = this.disDao.findDispatchingById(dispatchID);
+		if(tdis!= null){
+			bussAreaID = tdis.getDispatchingBusinessAreaid();
+			//根据获取的商圈id获取菜品列表，然后随机选取菜品id
+			List<Integer> menuids = this.menuDao.findMenuIdsByBussAreaID(bussAreaID,menuWestern);
+			if(menuids != null && menuids.size() > 0){
+				int num = (int)(Math.random() * menuids.size());
+				res = menuids.get(num);
+			}
+		}
+		return res;
 	}
 }

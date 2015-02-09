@@ -31,7 +31,7 @@
 		<!-- 注册用户通过手机号和密码登录 -->
 		<action name="userLogin" class="com.weini.manage.action.LoginAction" method="userLogin">
 			<result name="SUCCESS" type="json">	
-				<param name="includeProperties">code</param>
+				<param name="includeProperties">code,userId</param>
 			</result>
 			<result name="FAIL" type="json">	
 				<param name="includeProperties">code,flag</param>
@@ -64,6 +64,10 @@
 			<result name="SUCCESS" type="json">	
 				<param name="includeProperties">code</param>			
 			</result>
+			<result name="FAIL" type="json">	
+				<param name="includeProperties">code,flag</param>			
+			</result>
+			
 		</action>
 	</package>
 

@@ -53,7 +53,7 @@ public class UserService extends GeneralService{
 			if(user.getUserRegdate()!=null){
 				try {
 					user.setCountDays(daysBetween(user.getUserRegdate(),new Date()));
-					if(user.getUserHeat()!=0&&user.getUserHeat()!=null){
+					if(user.getUserHeat() != -1 && user.getUserHeat()!=null){
 						user.setNotEat(menudao.getMenutype(user.getUserHeat()));
 					}
 				} catch (Exception e) {

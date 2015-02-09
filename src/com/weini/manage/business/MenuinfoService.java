@@ -1,5 +1,6 @@
 package com.weini.manage.business;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.weini.manage.business.GeneralService;
@@ -8,6 +9,7 @@ import com.weini.manage.dao.MenuDao;
 import com.weini.manage.dao.VendorDao;
 import com.weini.manage.entity.TBusinessarea;
 import com.weini.manage.entity.TCity;
+import com.weini.manage.entity.TDishes;
 import com.weini.manage.entity.TDistrict;
 import com.weini.manage.entity.TMenuinfo;
 import com.weini.manage.entity.TProvince;
@@ -51,6 +53,21 @@ public class MenuinfoService extends GeneralService {
 		menu.setVendorName(vendorDao.findVendorNameByID(menu.getVendorId()));
 		this.close();
 		return menu;
+	}
+	/**
+	 * 根据菜品id获取菜品的dishes组成信息
+	 * @param menuinfoID 菜品id
+	 * @return
+	 */
+	public List<TDishes> getDishesByMenuinfoID(int menuinfoID){
+		List<TDishes> res = new ArrayList<TDishes>();
+		try{
+			res = this.menuDao.findAllDishByMenuinfoId(menuinfoID);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		this.close();
+		return res;
 	}
 	public boolean changeMenuStatus(int menuID,boolean status){
 		boolean flag = false;
@@ -110,30 +127,6 @@ public class MenuinfoService extends GeneralService {
 	 * @return
 	 */
 	public TMenuinfo findMenuById(Integer menuinfoId) {
-//		Object[] obj = null;
-//		TMenuinfo menu= menuDao.findMenuDetailByMenuID(menuinfoId);
-//		if(menu==null){
-//			this.close();
-//			return null;               //没有记录
-//		}else{
-//			obj = new Object[10];
-//			obj[0]=menu.getMenuinfoId();
-//			obj[1]=menu.getMenuinfoName();
-//			obj[2]=menu.getMenuinfoImage1();
-//			obj[3]=menu.getMenuinfoImage2();
-//			obj[4]=menu.getMenuinfoImage3();
-//			obj[5]=menu.getMenuinfoImage4();
-//			obj[6]=menu.getMenuinfoDetail();
-//			obj[7]=menu.getMenuinfoPoint();
-//			obj[8]=menuDao.findAllDishByMenuinfoId(menuinfoId);
-//			if(menu.getMenuinfoType()!=null){
-//				obj[9]=menuDao.getMenutype(menu.getMenuinfoType());
-//			}else{
-//				obj[9]=null;
-//			}
-//			this.close();
-//			return obj;
-//		}
 		return menuDao.findMenuDetailByMenuID(menuinfoId);
 	}
 

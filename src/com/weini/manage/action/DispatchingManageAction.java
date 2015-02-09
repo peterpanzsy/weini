@@ -29,18 +29,19 @@ public class DispatchingManageAction extends ActionSupport {
 	private TDispatchingstatus disstatus;
 	private int code=0;//默认不成功
 	private Object[] obj;
+	private String result;
 	
 	/**
 	 * 向数据库中添加TDispathing
 	 * @return
 	 */
 	public String addDispatching(){
-		int userID = -1;
-		try{
-			userID = Tools.getUserID();
-			return "SUCCESS";
-		}catch(Exception e){
-			e.printStackTrace();
+		int userID = Tools.getUserID();
+		if(userID == -1){
+			System.err.println("用户没有登录");
+			code = 0; 
+			result = "用户没有登录";
+			return "FAIL";
 		}
 		disService = new DispatchingService();
 		if(disService.addDistaching(dispatchingProvince, dispatchingCity, dispatchingDistrict,
@@ -54,15 +55,20 @@ public class DispatchingManageAction extends ActionSupport {
 	 * @return
 	 */
 	public String listDispatching(){
-		int userID = -1;
-		try{
-			userID = Tools.getUserID();
-		}catch(Exception e){
-			e.printStackTrace();
-			return "SUCCESS";
+		code = 0;
+		int userID = Tools.getUserID();
+		if(userID == -1){
+			System.err.println("用户没有登录");
+			code = 0; 
+			result = "用户没有登录";
+			return "FAIL";
 		}
 		list = new DispatchingService().findDispatchingByUserId(userID);
+		if(list != null && list.size() > 0){
+			code = 1;
+		}
 		return "SUCCESS";
+		
 	}
 
 	public Integer getDispatchingId() {
@@ -142,5 +148,11 @@ public class DispatchingManageAction extends ActionSupport {
 	}
 	public void setObj(Object[] obj) {
 		this.obj = obj;
+	}
+	public String getResult() {
+		return result;
+	}
+	public void setResult(String result) {
+		this.result = result;
 	}
 }

@@ -4,10 +4,20 @@
 	<package name="menumanage" extends="json-default" namespace="/menuManage" >
 		<!-- 列出所有的盒子模型 -->
 		 <action name="menuinfoDetail" class="com.weini.manage.action.MenuManageAction" method="menuinfoDetail">
-			<result name="success" type="json">	
-				<param name="includeProperties">code,menu\.menuinfoName,menu\.menuinfoImage1,
-				menu\.menuinfoImage2,menu\.menuinfoImage3,menu\.menuinfoImage4,
-				menu\.menuinfoDetail,menu\.menuinfoPoint,menu\.dishesList.*</param>			
+			<result name="SUCCESS" type="json">	
+				<param name="includeProperties">
+				code,
+				menu\.menuinfoName,
+				menu\.menuinfoImage1,
+				menu\.menuinfoImage2,
+				menu\.menuinfoImage3,
+				menu\.menuinfoImage4,
+				menu\.menuinfoDetail,
+				menu\.menuinfoPoint,
+				menuDish\[\d+\]\.dishesName,
+				menuDish\[\d+\]\.dishesSeries1,
+				menuDish\[\d+\]\.dishesWeight,
+				</param>			
 			</result>
 			<result name="fail" type="json">	
 				<param name="includeProperties">

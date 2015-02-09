@@ -23,10 +23,18 @@ public class LoginAction extends ActionSupport{
 	String  username;
 	String  password;
 	String flag;
+	public String getFlag() {
+		return flag;
+	}
+	public void setFlag(String flag) {
+		this.flag = flag;
+	}
+	private int userId;
 	//---------------wpr----------
 	private int identifyCode; //短信验证码
 	private String phoneNum; //用户手机号
 	private int code=0; //返回的状态码
+//	private String result;
 	
 //    TAdmin admin;
 //    List<TAuth> authList;
@@ -112,6 +120,7 @@ public class LoginAction extends ActionSupport{
 //		        session.put("wrong", "帐户或者密码错误，或者您的账号正在审核中。");	
 			}else{
 				session.put(Configure.sessionUserName, user);
+				this.userId = user.getUserId();
 				code = 1;
 				result = "SUCCESS";
 			}
@@ -198,6 +207,7 @@ public class LoginAction extends ActionSupport{
 					session.remove(Configure.identifyCode);
 					session.put(Configure.sessionUserName, user);
 					code = 1;
+					userId = user.getUserId();
 					result = SUCCESS;
 				}else{
 					code =0;
@@ -217,11 +227,14 @@ public class LoginAction extends ActionSupport{
 	 */
 	public String checkUserIsLogin(){
 		code  = 0;
-		try{
-			Tools.getUserID();
+		int userID = Tools.getUserID();
+		if(userID == -1){
+			System.err.println("用户没有登录");
+			code = 0; 
+			flag = "用户没有登录";
+			return "FAIL";
+		}else{
 			code = 1;
-		}catch(Exception e){
-			code = 0;
 		}
 		return "SUCCESS";
 	}
@@ -278,12 +291,7 @@ public class LoginAction extends ActionSupport{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getFlag() {
-		return flag;
-	}
-	public void setFlag(String flag) {
-		this.flag = flag;
-	}	
+
 	public int getIdentifyCode() {
 		return identifyCode;
 	}
@@ -301,5 +309,11 @@ public class LoginAction extends ActionSupport{
 	}
 	public void setCode(int code) {
 		this.code = code;
+	}
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 }

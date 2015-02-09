@@ -1,7 +1,6 @@
 package com.weini.manage.dao;
 
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +12,6 @@ import com.weini.manage.entity.TDishes;
 import com.weini.manage.entity.TMenuCookinfo;
 import com.weini.manage.entity.TMenuDishes;
 import com.weini.manage.entity.TMenuinfo;
-import com.weini.tools.HibernateSessionManager;
 
 public class MenuDao{
 	protected  Session session ;
@@ -49,6 +47,27 @@ public class MenuDao{
 	 */
 	public TMenuinfo findMenuDetailByMenuID(int menuId) {
 		return (TMenuinfo) session.createQuery("from TMenuinfo t where t.menuinfoId = ?").setInteger(0, menuId).uniqueResult();
+	}
+	
+	/**
+	 * 根据商圈id获取menu的id列表
+	 * @param bussAreaID 商圈id
+	 * @return 返回菜品id列表
+	 */
+	public List<Integer> findMenuIdsByBussAreaID(int bussAreaID,int menuWestern) {
+		List<Integer> res = null;
+		Query q = session.createSQLQuery("SELECT menuinfo_id from t_menuinfo where menuinfo_bussinessAreaID  = ? and menuinfo_western = ? and menuinfo_status = 1;");
+		q.setInteger(0,bussAreaID);
+		q.setInteger(1, menuWestern);
+		List l = q.list();
+		if(l != null && l.size() > 0){
+			res = new ArrayList<Integer>();
+			for(int i = 0;i < l.size();i++){
+				res.add((Integer)l.get(i));
+			}
+		}
+		return res;
+
 	}
 	/**
 	 * 列出所有的删除或者未删除的菜品信息
@@ -137,22 +156,25 @@ public class MenuDao{
 	 * @param menuId 
 	 * @return 午餐组成列表
 	 */
-	public List findAllDishByMenuinfoId(Integer menuId){
-		SQLQuery q =session.createSQLQuery( "SELECT t1.dishes_id,t1.dishes_name,t1.dishes_series_1,t1.dishes_series_2"
-				+ " FROM t_dishes t1"
-				+ " WHERE  t1.dishes_id IN"
-				+ "	(SELECT t2.dishes_id FROM t_menu_dishes t2"
-				+ " WHERE t2.menuinfo_id=?)");
+	public List<TDishes> findAllDishByMenuinfoId(Integer menuId){
+		List<TDishes> res = null;
+		SQLQuery q =session.createSQLQuery("SELECT t1.dishes_id,t1.dishes_name,t1.dishes_series_1,t2.dishes_weight FROM t_dishes t1,"
+				+ "t_menu_dishes as t2 WHERE t1.dishes_id IN (SELECT t2.dishes_id FROM t_menu_dishes as t2 WHERE t2.menuinfo_id=?)");
 		q.setInteger(0, menuId);
 		List l = q.list();
-//		List<TDishes> re = new ArrayList<>();
-//		for(int i=0 ;i<l.size();i++){
-//			Object row[] = (Object[]) l.get(i);
-////			TDishes d = new TDishes((String)row[1],(String)row[2],(String)row[3]);
-////			d.setDishesId((Integer)row[0]);
-//			re.add(d);
-//		}
-		return l;
+		if(l != null && l.size() > 0){
+			res = new ArrayList<>();
+			for(int i=0 ;i<l.size();i++){
+				Object row[] = (Object[]) l.get(i);
+				TDishes temp = new TDishes();
+				temp.setDishesId((Integer)row[0]);
+				temp.setDishesName((String)row[1]);
+				temp.setDishesSeries1((String)row[2]);
+				temp.setDishesWeight((String)row[3]);
+				res.add(temp);
+			}
+		}
+		return res;
 	}
 	/**
 	 * 添加或更新dishes 之前不存在，添加；之前存在更新

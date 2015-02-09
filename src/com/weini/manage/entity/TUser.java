@@ -1,6 +1,7 @@
 package com.weini.manage.entity;
 // default package
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -24,21 +25,25 @@ public class TUser implements java.io.Serializable {
 	private Integer userId;
 	private String userName;
 	private String userPwd;
-	private Integer userGender;
+	private Integer userGender = -1;
 	private String userAddress;
 	private String userPhoneNumber;
-	private Integer userPhoneType;
-	private Integer userScale;
-	private Integer userBankDefault;
-	private Integer userAlipayDefault;
+	private Integer userPhoneType = -1;
+	private Integer userScale = -1;
+	private Integer userBankDefault = -1;
+	private Integer userAlipayDefault = -1;
 	private String userWeChatPay;
-	private Integer userPointDefault;
+	private Integer userPointDefault = -1;
 	private Date userRegdate;
-	private Integer userHeat;
-	private Integer userDispatchdefaultId;
-	private Integer userAppetite;
+	//默认为-1
+	private Integer userHeat = -1;
+	//默认为-1
+	private Integer userDispatchdefaultId = -1;
+	//默认为中份
+	private Integer userAppetite = 1;
 	//add 在平台上累计的天数
-	private Integer countDays;  
+	private Integer countDays = 0;  
+	private String userRegdateString;
 	// Constructors
 
 	//add
@@ -218,11 +223,19 @@ public class TUser implements java.io.Serializable {
 	}
 	@Transient
 	public String getNotEat() {
-		return notEat;
+		if(notEat == null){
+			return "";
+		}else{
+			return this.notEat;
+		}
 	}
 
 	public void setNotEat(String notEat) {
-		this.notEat = notEat;
+		if(notEat == null){
+			notEat = "";
+		}else{
+			this.notEat = notEat;
+		}
 	}
 
 	public void setUserHeat(Integer userHeat) {
@@ -231,6 +244,15 @@ public class TUser implements java.io.Serializable {
 
 	public void setCountDays(Integer countDays) {
 		this.countDays = countDays;
+	}
+
+	@Transient
+	public String getUserRegdateString() {
+		if(this.userRegdate != null){
+			return new SimpleDateFormat("yyyy-MM-dd").format(userRegdate);
+		}else{
+			return "";
+		}
 	}
 	
 }

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -268,13 +269,16 @@ public class Tools {
 		}
 		/**
 		 * 获取用户的id
-		 * 抛出异常由上层处理
-		 * @return
+		 * @return 错误返回-1
 		 */
 		public static int getUserID(){
 			TUser user = (TUser) ActionContext.getContext().getSession().get(Configure.sessionUserName);
-			return user.getUserId();
-//			TODO test
-//			return 1;
+			int res = -1;
+			if(user != null){
+				res = user.getUserId();
+			}else{
+				System.err.println("用户没有登录！");
+			}
+			return res;
 		}
 }

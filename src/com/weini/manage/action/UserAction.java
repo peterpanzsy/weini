@@ -25,7 +25,7 @@ public class UserAction extends ActionSupport{
 	private int order;
     private String userName;
     private String userAddress;
-    private String userPhoneNumber;
+	private String userPhoneNumber;
     private int userPhoneType;
     private int userScale;
     
@@ -46,15 +46,14 @@ public class UserAction extends ActionSupport{
 	//--------wang------------//
 	//请求的参数
 	private int menutypeId; //修改忌口
-	private Integer userId;
     private int userGender;
     private Date userBirthday;
 	//返回的参数
-	private TUser user;
-	private TUserextra userextra;
+	private TUser tuser;
+	private TUserextra tuserextra;
 	private int code=0;  //状态，0-失败 ，1-成功
 	private String result;  //错误信息
-	private Object[] obj;
+//	private Object[] obj;
 	
 //	public String listUser(){//根据角色获取账户列表		
 //		UserDaoDEL dao=new UserDaoDEL();
@@ -92,11 +91,18 @@ public class UserAction extends ActionSupport{
 	 */
 	public String findUserInfo(){
 		userService = new UserService();
+		int userID = Tools.getUserID();
+		if(userID == -1){
+			System.err.println("用户没有登录");
+			code = 0; 
+			result="用户没有登录";
+			return "fail";
+		}
 		try {
-			TwoEntity two = userService.findUserInfo(userId);
-			user = (TUser)two.getIndex1();
-			userextra = (TUserextra)two.getIndex2();
-			if(user==null){
+			TwoEntity two = userService.findUserInfo(userID);
+			tuser = (TUser)two.getIndex1();
+			tuserextra = (TUserextra)two.getIndex2();
+			if(tuser==null){
 				code = 0; 
 				result="没有记录";
 				return "fail";
@@ -109,14 +115,34 @@ public class UserAction extends ActionSupport{
 		}
 		return SUCCESS;
 	}
+	public TUser getTuser() {
+		return tuser;
+	}
+	public void setTuser(TUser tuser) {
+		this.tuser = tuser;
+	}
+	public TUserextra getTuserextra() {
+		return tuserextra;
+	}
+	public void setTuserextra(TUserextra tuserextra) {
+		this.tuserextra = tuserextra;
+	}
 	/**
 	 * 修改用户忌口
 	 * @return
 	 */
 	public String updateUserNotEat(){
+		code = 0;
 		userService = new UserService();
-		code = userService.updateUserHeat(userId, menutypeId);
-		return SUCCESS;
+		int userID = Tools.getUserID();
+		if(userID == -1){
+			System.err.println("用户没有登录");
+			code = 0; 
+			result="用户没有登录";
+			return "fail";
+		}
+		code = userService.updateUserHeat(userID, menutypeId);
+		return "SUCCESS";
 	}
 	/**
 	 * 修改用户性别
@@ -124,8 +150,15 @@ public class UserAction extends ActionSupport{
 	 */
 	public String updateUserGender(){
 		userService = new UserService();
-		code = userService.updateUserGender(userId,userGender);
-		return SUCCESS;
+		int userID = Tools.getUserID();
+		if(userID == -1){
+			System.err.println("用户没有登录");
+			code = 0; 
+			result="用户没有登录";
+			return "FAIL";
+		}
+		code = userService.updateUserGender(userID,userGender);
+		return "SUCCESS";
 	}
 	/**
 	 * 修改用户生日
@@ -133,8 +166,15 @@ public class UserAction extends ActionSupport{
 	 */
 	public String updateUserBirthday(){
 		userService = new UserService();
-		code = userService.updateUserBirthday(userId,userBirthday);
-		return SUCCESS;
+		int userID = Tools.getUserID();
+		if(userID == -1){
+			System.err.println("用户没有登录");
+			code = 0; 
+			result="用户没有登录";
+			return "FAIL";
+		}
+		code = userService.updateUserBirthday(userID,userBirthday);
+		return "SUCCESS";
 	}
 	/**
 	 * 更新用户昵称
@@ -142,12 +182,12 @@ public class UserAction extends ActionSupport{
 	 */
 	public String updateUserName(){
 		code = 0;
-		int userID = -1;
-		try{
-			userID = Tools.getUserID();
-		}catch(Exception e){
-			System.out.println("用户没有登录！");
-			return SUCCESS;
+		int userID = Tools.getUserID();
+		if(userID == -1){
+			System.err.println("用户没有登录");
+			code = 0; 
+			result="用户没有登录";
+			return "FAIL";
 		}
 		if((new UserService()).updateUserName(userID,userName)){
 			code = 1;
@@ -161,47 +201,11 @@ public class UserAction extends ActionSupport{
 	public void setMark(String mark) {
 		this.mark = mark;
 	}
-	public int getOrder() {
-		return order;
-	}
-	public void setOrder(int order) {
-		this.order = order;
-	}
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
 	public int getUserGender() {
 		return userGender;
 	}
 	public void setUserGender(int userGender) {
 		this.userGender = userGender;
-	}
-	public String getUserAddress() {
-		return userAddress;
-	}
-	public void setUserAddress(String userAddress) {
-		this.userAddress = userAddress;
-	}
-	public String getUserPhoneNumber() {
-		return userPhoneNumber;
-	}
-	public void setUserPhoneNumber(String userPhoneNumber) {
-		this.userPhoneNumber = userPhoneNumber;
-	}
-	public int getUserPhoneType() {
-		return userPhoneType;
-	}
-	public void setUserPhoneType(int userPhoneType) {
-		this.userPhoneType = userPhoneType;
-	}
-	public int getUserScale() {
-		return userScale;
-	}
-	public void setUserScale(int userScale) {
-		this.userScale = userScale;
 	}
 	public String getBankName() {
 		return bankName;
@@ -263,12 +267,6 @@ public class UserAction extends ActionSupport{
 	public void setPointTotal(int pointTotal) {
 		this.pointTotal = pointTotal;
 	}
-	public TUser getUser() {
-		return user;
-	}
-	public void setUser(TUser user) {
-		this.user = user;
-	}
 	public int getCode() {
 		return code;
 	}
@@ -281,23 +279,11 @@ public class UserAction extends ActionSupport{
 	public void setResult(String result) {
 		this.result = result;
 	}
-	public TUserextra getUserextra() {
-		return userextra;
-	}
-	public void setUserextra(TUserextra userextra) {
-		this.userextra = userextra;
-	}
 	public int getMenutypeId() {
 		return menutypeId;
 	}
 	public void setMenutypeId(int menutypeId) {
 		this.menutypeId = menutypeId;
-	}
-	public Integer getUserId() {
-		return userId;
-	}
-	public void setUserId(Integer userId) {
-		this.userId = userId;
 	}
 	public Date getUserBirthday() {
 		return userBirthday;
@@ -305,10 +291,52 @@ public class UserAction extends ActionSupport{
 	public void setUserBirthday(Date userBirthday) {
 		this.userBirthday = userBirthday;
 	}
-	public Object[] getObj() {
-		return obj;
+	public UserService getUserService() {
+		return userService;
 	}
-	public void setObj(Object[] obj) {
-		this.obj = obj;
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+	public List<TUser> getDataList() {
+		return dataList;
+	}
+	public void setDataList(List<TUser> dataList) {
+		this.dataList = dataList;
+	}
+	public int getOrder() {
+		return order;
+	}
+	public void setOrder(int order) {
+		this.order = order;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getUserAddress() {
+		return userAddress;
+	}
+	public void setUserAddress(String userAddress) {
+		this.userAddress = userAddress;
+	}
+	public String getUserPhoneNumber() {
+		return userPhoneNumber;
+	}
+	public void setUserPhoneNumber(String userPhoneNumber) {
+		this.userPhoneNumber = userPhoneNumber;
+	}
+	public int getUserPhoneType() {
+		return userPhoneType;
+	}
+	public void setUserPhoneType(int userPhoneType) {
+		this.userPhoneType = userPhoneType;
+	}
+	public int getUserScale() {
+		return userScale;
+	}
+	public void setUserScale(int userScale) {
+		this.userScale = userScale;
 	}
 }

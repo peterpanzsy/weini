@@ -38,13 +38,14 @@ public class TMenuinfo implements java.io.Serializable {
 	private Integer menuinfoWestern;
 	private Integer menuinfoType;
 	private Integer menuinfoConsumernum;
+	private Integer menuinfoBusinessAreaID;
 
 	// add
 	private String vendorName;
 	private String bussinessName;
 	private int order;
 	// wangadd
-	private List<TDishes> dishesList;
+//	private List<TDishes> dishesList;
 	private String menuType;
 	
 	/** default constructor */
@@ -249,13 +250,13 @@ public class TMenuinfo implements java.io.Serializable {
 	public void setMenuinfoWestern(Integer menuinfoWestern) {
 		this.menuinfoWestern = menuinfoWestern;
 	}
-	@Transient
-	public List<TDishes> getDishesList() {
-		return dishesList;
+	@Column(name = "menuinfo_bussinessAreaID", nullable = false)
+	public Integer getMenuinfoBusinessAreaID() {
+		return menuinfoBusinessAreaID;
 	}
 
-	public void setDishesList(List<TDishes> dishesList) {
-		this.dishesList = dishesList;
+	public void setMenuinfoBusinessAreaID(Integer menuinfoBusinessAreaID) {
+		this.menuinfoBusinessAreaID = menuinfoBusinessAreaID;
 	}
 	@Transient
 	public String getMenuType() {

@@ -1,6 +1,7 @@
 package com.weini.manage.entity;
 // default package
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -8,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.annotations.GenericGenerator;
@@ -26,6 +28,8 @@ public class TUserextra implements java.io.Serializable {
 	private String userextraImage;
 	private String userextraReserved;
 	private Date userextraBirthday;
+
+	private String userextraBirthdayString;
 
 	// Constructors
 
@@ -97,4 +101,13 @@ public class TUserextra implements java.io.Serializable {
         //return ReflectionToStringBuilder.toString(this);  
         return ToStringBuilder.reflectionToString(this);  
     }
+	@Transient
+	public String getUserextraBirthdayString() {
+		if(this.userextraBirthday != null){
+			return new SimpleDateFormat("yyyy-MM-dd").format(userextraBirthday);
+		}else{
+			return "";
+		}
+		
+	}
 }

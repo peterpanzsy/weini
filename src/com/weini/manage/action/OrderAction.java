@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.weini.manage.business.OrderService;
 import com.weini.manage.business.OtherService;
@@ -13,6 +14,8 @@ import com.weini.manage.entity.TOrder;
 import com.weini.manage.entity.TSOrder;
 import com.weini.manage.entity.TSorderDispatching;
 import com.weini.manage.entity.TTrackpage;
+import com.weini.manage.entity.TUser;
+import com.weini.tools.Configure;
 import com.weini.tools.Tools;
 
 public class OrderAction extends ActionSupport {
@@ -86,32 +89,40 @@ public class OrderAction extends ActionSupport {
 	 */
 	public String addOrder(){
 		code = 0;
+//		boxID = 3;
+//		orderStartTime="2015-01-22 10:35:18";
+//		orderOrderTime = "2015-01-22 10:35:18";
+//		orderIsFirst = 0;
+//		orderDispatchingID = 1;
+//		userHeatID = 1;
+//		userAppetite = 1;
 		try{
-//			int userID = 1;
-//			orderMenuID =1;
-//			boxID = 3;
-//			orderStartTime="2015-01-22 10:35:18";
-//			orderOrderTime = "2015-01-22 10:35:18";
-//			orderIsFirst = 0;
-//			orderDispatchingID = 1;
-//			userHeatID = 1;
-//			userAppetite = 1;
-			int userID = Tools.getUserID();
+			TUser user = (TUser) ActionContext.getContext().getSession().get(Configure.sessionUserName);
+			if(user == null){
+				System.err.println("用户没有登录");
+				code = 0; 
+				result = "用户没有登录";
+				return "FAIL";
+			}
 			TOrder order = new TOrder();
 			order.setBoxId(this.boxID);
 			order.setOrderStartTime(Timestamp.valueOf(this.orderStartTime));
 			order.setOrderOrderTime(Timestamp.valueOf(this.orderOrderTime));
 			order.setOrderIsFirst(this.orderIsFirst);
 			order.setOrderDispatchingId(this.orderDispatchingID);
-			order.setUserId(userID);
+			order.setUserId(user.getUserId());
+			order.setOrderMenuWestern(menuWestern);
 			//设置订单编号
 			order.setOrderNum((new OtherService()).getOrderNumSting());
 			// 剩余uesrHeatID,userAppetite 如果是isFirst的话就需要更新user表
-			if((result = (new OrderService()).addUserOrder(order, orderIsFirst, userID, userHeatID, userAppetite)) != null){
+			if((orderNum = (new OrderService()).addUserOrder(order, orderIsFirst, user.getUserId(), userHeatID, userAppetite)) != null){
 				code = 1;
 			}
 		}catch(Exception e){
 			e.printStackTrace();
+			code = 0;
+			result = "参数设置错误";
+			return "FAIL";
 		}
 		return "SUCCESS";
 	}
