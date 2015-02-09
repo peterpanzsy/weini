@@ -86,7 +86,7 @@ public class LoginAction extends ActionSupport{
 	 * @return
 	 */
 	public String userLogin()   {
-		String result = "fail";
+		String result = "FAIL";
 		//add by zsy to log remote access ip
 		HttpServletRequest request = ServletActionContext.getRequest(); 
 		String remoteip=request.getRemoteHost();
@@ -112,7 +112,8 @@ public class LoginAction extends ActionSupport{
 //		        session.put("wrong", "帐户或者密码错误，或者您的账号正在审核中。");	
 			}else{
 				session.put(Configure.sessionUserName, user);
-				result = SUCCESS;
+				code = 1;
+				result = "SUCCESS";
 			}
 		}
 		return result;
