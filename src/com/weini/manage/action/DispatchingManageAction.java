@@ -15,20 +15,20 @@ public class DispatchingManageAction extends ActionSupport {
 	DispatchingService disService ;
 	
 	//请求的参数列表
-	private Integer dispatchingId;
-	private Integer dispatchingProvince;
-	private Integer dispatchingCity;
-	private Integer dispatchingDistrict;
-	private Integer dispatchingBusinessAreaid;
-	private Integer dispatchingOfficeBuilding;
+	private int dispatchingId;
+	private int dispatchingProvince;
+	private int dispatchingCity;
+	private int dispatchingDistrict;
+	private int dispatchingBusinessAreaid;
+	private int dispatchingOfficeBuilding;
 	private String dispatchingAddressDetail;
 	private String dispatchingPhoneNum;
+	//分派id
 	//返回的参数列表
 	private List list;
 	private TDispatching dis;
 	private TDispatchingstatus disstatus;
 	private int code=0;//默认不成功
-	private Object[] obj;
 	private String result;
 	
 	/**
@@ -70,7 +70,50 @@ public class DispatchingManageAction extends ActionSupport {
 		return "SUCCESS";
 		
 	}
+	/**
+	 * 删除用户的送餐地址
+	 * @return 0:失败；1成功
+	 */
+	public String delDispatching(){
+		code = 0;
+		if(dispatchingId <= 0){
+			result = "送餐地址不存在";
+			return "FAIL";
+		}
+		if((new DispatchingService()).delDispatching(dispatchingId)){
+			code = 1;
+		}else{
+			result = "执行失败";
+			return "FAIL";
+		}
+		return "SUCCESS";
+	}
+	/**
+	 * 删除用户的送餐地址
+	 * 
+	 * @return 0:失败；1成功
+	 */
+	public String ChangeUserDefaultDispatchingId(){
+		code = 0;
+		int userId = Tools.getUserID();
+		if(userId == -1){
+			result = "用户未登录";
+			return "FAIL";
+		}
+		if(dispatchingId <= 0){
+			result = "送餐地址不存在";
+			return "FAIL";
+		}
+		if((new DispatchingService()).setUserDefaultDispatching(dispatchingId, userId)){
+			code = 1;
+		}else{
+			result = "执行失败";
+			return "FAIL";
+		}
+		return "SUCCESS";
+	}
 
+	
 	public Integer getDispatchingId() {
 		return dispatchingId;
 	}
@@ -142,12 +185,6 @@ public class DispatchingManageAction extends ActionSupport {
 	}
 	public void setCode(int code) {
 		this.code = code;
-	}
-	public Object[] getObj() {
-		return obj;
-	}
-	public void setObj(Object[] obj) {
-		this.obj = obj;
 	}
 	public String getResult() {
 		return result;

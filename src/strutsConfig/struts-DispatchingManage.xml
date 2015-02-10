@@ -20,5 +20,23 @@
 				<param name="includeProperties">code,result</param>			
 			</result>
 		</action>
+		<!-- 删除送餐地址 -->
+		<action name="delDispatching" class="com.weini.manage.action.DispatchingManageAction" method="delDispatching">
+			<result name="SUCCESS" type="json">	
+				<param name="includeProperties">code</param>			
+			</result>
+			<result name="FAIL" type="json">	
+				<param name="includeProperties">code,result</param>			
+			</result>
+		</action>
+		<!-- 修改用户默认送餐地址 -->
+		<action name="ChangeUserDefaultDispatching" class="com.weini.manage.action.DispatchingManageAction" method="ChangeUserDefaultDispatchingId">
+			<result name="SUCCESS" type="json">	
+				<param name="includeProperties">code</param>			
+			</result>
+			<result name="FAIL" type="json">	
+				<param name="includeProperties">code,result</param>			
+			</result>
+		</action>
 	</package>
 </struts>    

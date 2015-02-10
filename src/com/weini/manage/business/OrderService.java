@@ -1,6 +1,7 @@
 package com.weini.manage.business;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -38,7 +39,7 @@ public class OrderService extends GeneralService {
 	 * @return
 	 */
 	public List<TSOrder> getMonthOrderByUserID(int userID,int year,int month){
-		List<TSOrder> res = null;
+		List<TSOrder> res = new ArrayList<TSOrder>();
 		try{
 			res = this.sonorderdao.searchMonthSonOrder(userID, year, month);
 		}catch(Exception e){
@@ -53,8 +54,8 @@ public class OrderService extends GeneralService {
 	 * @param orderID 父订单id
 	 * @return
 	 */
-	public List<Object[]> getSonOrderByOrderID(String orderID){
-		List<Object[]> res = null;
+	public List<TSOrder> getSonOrderByOrderID(String orderID){
+		List<TSOrder> res = new ArrayList<TSOrder>();
 		try{
 //			res = this.sonorderdao.getSOrderByOrderID(orderID);
 		}catch(Exception e){
@@ -78,6 +79,7 @@ public class OrderService extends GeneralService {
 	 * @return 成功返回订单id，失败返回null
 	 */
 	public String addUserOrder(TOrder order,int orderIsFirst,int userID,int userHeatID,int userAppetite){
+		String res = null;
 		HibernateSessionManager.getThreadLocalTransaction();
 		//设置默认值
 		order.setOrderPayStatus(0);
@@ -89,7 +91,7 @@ public class OrderService extends GeneralService {
 		if(menuID > 0){
 			order.setOrderMenuinfoId(menuID);
 		}else{
-			return null;
+			return res;
 		}
 		float boxPrice = 0;
 		int box_type = 0;
@@ -130,18 +132,19 @@ public class OrderService extends GeneralService {
 						sonOrder.setSOrderDispatchingDate((new SimpleDateFormat("yyyy-MM-dd")).parse(dates.get(i-1)));
 						if(this.sonorderdao.insertSonOrder(sonOrder) <= 0){
 							this.roll();
-							return null;
+							return res;
 						}
 					}
 					this.close();
-					return order.getOrderNum();
+					res = order.getOrderNum();
+					return res;
 				}
 			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		this.roll();
-		return null;
+		return res;
 	}
 	/**
 	 * 根据订单编号获取订单的支付状态
@@ -165,11 +168,12 @@ public class OrderService extends GeneralService {
 	 * @return 执行失败 null;成功返回list
 	 */
 	public List<TOrder> getUserOrderListLimit(int userID,int pageStart,int pageLimit){
-		List<TOrder> res = null;
+		List<TOrder> res = new ArrayList<TOrder>();
 		try{
 			res = this.orderdao.getUserOrderLimit(userID,pageStart,pageLimit);
 		}catch(Exception e){
 			e.printStackTrace();
+			res = null;
 		}
 		this.close();
 		return res;
@@ -217,17 +221,28 @@ public class OrderService extends GeneralService {
 			}
 		}catch(Exception e){
 			e.printStackTrace();
+			this.roll();
 		}
-		this.roll();
 		return flag;
 	}
+	/**
+	 * TODO 等待修改
+	 * @param userID
+	 * @param start
+	 * @param end
+	 * @param pageStart
+	 * @param pageLimit
+	 * @return
+	 */
 	public List<Object[]> searchUserOrderByDate(int userID,String start,String end,int pageStart,int pageLimit){
 		List<Object[]> res = null;
 		try{
 			res = this.orderdao.getUserOrderByDate(userID, start, end, pageStart, pageLimit);
 		}catch(Exception e){
 			e.printStackTrace();
+			res = null;
 		}
+		this.close();
 		return res;
 	}
 	/**
@@ -236,7 +251,7 @@ public class OrderService extends GeneralService {
 	 * @return 返回值第一个表示状态是否开启
 	 */
 	public List<TSorderDispatching> getSonOrderDispatchStatus(int sonOrderID){
-		List<TSorderDispatching> res = null;
+		List<TSorderDispatching> res = new ArrayList<TSorderDispatching>();
 		//查看父订单的分配状态功能是否开启
 		try{
 			if(sonorderdao.getOrderDisStatusIsOpenBySonOrderID(sonOrderID) == 1){
@@ -245,6 +260,7 @@ public class OrderService extends GeneralService {
 			}
 		}catch(Exception e){
 			e.printStackTrace();
+			res = null;
 		}
 		this.close();
 		return res;

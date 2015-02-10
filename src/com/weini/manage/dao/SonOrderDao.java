@@ -134,7 +134,7 @@ public class SonOrderDao{
 		q.setInteger(1,year);
 		q.setInteger(2, month);
 		List l = q.list();
-		if(l != null){
+		if(l != null && l.size() > 0){
 			for (int i = 0; i < l.size(); i++) {
 				Object[] row = (Object[]) l.get(i);
 				TSOrder sorder = new TSOrder();

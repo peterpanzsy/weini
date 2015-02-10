@@ -35,7 +35,7 @@ public class OrderDao{
 		q.setInteger(1,pageStart);
 		q.setInteger(2,pageLimit);
 		List l = q.list();
-		if(l.size() > 0){
+		if(l != null && l.size() > 0){
 			for (int i = 0; i < l.size(); i++) {
 				TOrder temp = new TOrder();
 				Object[] row = (Object[]) l.get(i);
@@ -84,7 +84,7 @@ public class OrderDao{
 		Query q = session.createSQLQuery("select order_payStatus from t_order where order_num = ?;");
 		q.setString(0,orderNum);
 		List l = q.list();
-		if(l.size() == 1){
+		if(l != null && l.size() == 1){
 			res = (int)l.get(0);
 		}
 		return res;
@@ -337,7 +337,7 @@ public class OrderDao{
 	 * @return
 	 */
 	public TOrder getOrderDetailByOrderNum(String orderNum){
-		TOrder res = new TOrder();;
+		TOrder res = null;
 		Query q = session.createSQLQuery("select order_num,user_id,order_menuinfo_id,box_type,order_orderTime,order_payStatus,"
 				+ "S_order_consumeStatus,order_payTime,o.box_price,order_isFirst,order_dispatching_id,order_status "
 				+ "from t_order as o, t_box as b where o.box_id = b.box_id and order_num = ?;");
@@ -371,6 +371,15 @@ public class OrderDao{
 		q.setString(1,orderNum);
 		return q.executeUpdate();
 	}
+	/**TODO 等待修改
+	 * 根据日期来查找用户的订单
+	 * @param userID 用户订单
+	 * @param start 开始日期
+	 * @param end 结束日期
+	 * @param pageStart 页面开始记录
+	 * @param pageLimit 页面记录
+	 * @return
+	 */
 	public List<Object[]> getUserOrderByDate(int userID,String start,String end,int pageStart,int pageLimit){
 		Query q = session.createSQLQuery("select order_num,order_menuinfo_id,order_orderTime,order_status from t_order where order_orderTime BETWEEN ? and ? "
 				+ "and user_id = ? ORDER BY order_orderTime limit ?,?;");

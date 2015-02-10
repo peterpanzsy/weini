@@ -65,20 +65,24 @@ public class OrderAction extends ActionSupport {
 		cal.setTime(new Date());
 		int year = cal.get(Calendar.YEAR);
 		int month = cal.get(Calendar.MONTH) + 1;//month从0开始
-		int userID = -1;
-		try{
-			userID = Tools.getUserID();
-		}catch(Exception e){
-			e.printStackTrace();
-			return "SUCCESS";
+		int userId = userId = Tools.getUserID();
+		if(userId == -1){
+			result="用户没有登录";
+			return "FAIL";
 		}
-		nowMonthOrderlist = (new OrderService()).getMonthOrderByUserID(userID, year, month);
+		nowMonthOrderlist = (new OrderService()).getMonthOrderByUserID(userId, year, month);
 		if(month == 1){
-			lastMonthOrderlist = (new OrderService()).getMonthOrderByUserID(userID, year-1, 12);
+			lastMonthOrderlist = (new OrderService()).getMonthOrderByUserID(userId, year-1, 12);
 		}else{
-			lastMonthOrderlist = (new OrderService()).getMonthOrderByUserID(userID, year, month-1);
+			lastMonthOrderlist = (new OrderService()).getMonthOrderByUserID(userId, year, month-1);
 		}
-		code = 1;
+		if(nowMonthOrderlist != null && lastMonthOrderlist != null){
+			code = 1;
+		}else{
+			code = 0;
+			result = "查询失败";
+			return "FAIL";
+		}
 		return "SUCCESS";
 	}
 	/**
@@ -89,17 +93,9 @@ public class OrderAction extends ActionSupport {
 	 */
 	public String addOrder(){
 		code = 0;
-//		boxID = 3;
-//		orderStartTime="2015-01-22 10:35:18";
-//		orderOrderTime = "2015-01-22 10:35:18";
-//		orderIsFirst = 0;
-//		orderDispatchingID = 1;
-//		userHeatID = 1;
-//		userAppetite = 1;
 		try{
 			TUser user = (TUser) ActionContext.getContext().getSession().get(Configure.sessionUserName);
 			if(user == null){
-				System.err.println("用户没有登录");
 				code = 0; 
 				result = "用户没有登录";
 				return "FAIL";
@@ -135,11 +131,13 @@ public class OrderAction extends ActionSupport {
 			code = 1;
 		}else{
 			code = 0;
+			result = "查询失败";
+			return "FAIL";
 		}
 		return "SUCCESS";
 	}
 	/**
-	 * 根据订单id获取子订单信息
+	 * 根据订单id获取子订单信息 
 	 * orderNum 订单id
 	 * @return 
 	 */
@@ -148,6 +146,10 @@ public class OrderAction extends ActionSupport {
 		datalist = (new OrderService()).getSonOrderByOrderID(orderNum);
 		if(datalist != null){
 			code = 1;
+		}else{
+			code = 0;
+			result = "查询失败";
+			return "FAIL";
 		}
 		return "SUCCESS";
 	}
@@ -157,13 +159,18 @@ public class OrderAction extends ActionSupport {
 	 */
 	public String getUserOrderListLimit(){
 		code = 0;
-		try{
-			datalist = (new OrderService()).getUserOrderListLimit(1/*Tools.getUserID()*/,pageStart,pageLimit);
-		}catch(Exception e){
-			e.printStackTrace();
+		int userId = Tools.getUserID();
+		if(userId == -1){
+			result="用户没有登录";
+			return "FAIL";
 		}
+		datalist = (new OrderService()).getUserOrderListLimit(userId,pageStart,pageLimit);
 		if(datalist != null){
 			code = 1;
+		}else{
+			code = 0;
+			result = "查询失败";
+			return "FAIL";
 		}
 		return "SUCCESS";
 	}
@@ -173,16 +180,19 @@ public class OrderAction extends ActionSupport {
 	 */
 	public String getUserSomeMonthOrder(){
 		code = 0;
-		int userID = -1;
-		try{
-			userID = Tools.getUserID();
-			
-		}catch(Exception e){
-			e.printStackTrace();
-			return "SUCCESS";
+		int userId = Tools.getUserID();
+		if(userId == -1){
+			result="用户没有登录";
+			return "FAIL";
+		}	
+		datalist = (new OrderService()).getMonthOrderByUserID(userId, year, month);
+		if(datalist != null){
+			code = 1;
+		}else{
+			code = 0;
+			result="查询失败";
+			return "FAIL";
 		}
-		datalist = (new OrderService()).getMonthOrderByUserID(userID, year, month);
-		code = 1;
 		return "SUCCESS";
 	}
 	/**
@@ -195,6 +205,10 @@ public class OrderAction extends ActionSupport {
 		orderDetail = (new OrderService()).getOrderDetailByOrderNum(orderNum);
 		if(orderDetail != null){
 			code = 1;
+		}else{
+			code = 0;
+			result = "订单不存在";
+			return "FAIL";
 		}
 		return "SUCCESS";
 	}
@@ -211,7 +225,7 @@ public class OrderAction extends ActionSupport {
 		}
 		return "SUCCESS";
 	}
-	/**
+	/**TODO 等待修改
 	 * 
 	 * @return
 	 */

@@ -291,10 +291,28 @@ public class UserDao{
 			return true;
 		}
 	}
+	/**
+	 * 修改用户名
+	 * @param userID 用户id
+	 * @param userName 用户名
+	 * @return
+	 */
 	public int updateUserName(int userID,String userName){
 		Query q = session.createSQLQuery("update t_user SET user_name = ? where user_id = ?;");
 		q.setString(0,userName);
 		q.setInteger(1, userID);
+		return q.executeUpdate();
+	}
+	/**
+	 * 修改用户名
+	 * @param userId 用户id
+	 * @param disId 默认送餐地址id
+	 * @return
+	 */
+	public int updateUserDefaultDispatchingId(int userId,int disId){
+		Query q = session.createSQLQuery("update t_user SET user_dispatchdefault_id = ? where user_id = ?;");
+		q.setInteger(0,disId);
+		q.setInteger(1, userId);
 		return q.executeUpdate();
 	}
 }
