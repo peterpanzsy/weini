@@ -1,5 +1,6 @@
 package com.weini.manage.business;
 
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -125,8 +126,10 @@ public class LoginService extends GeneralService{
 					user.setUserPhoneNumber(phoneNum);
 					user.setUserPwd(password);
 					user.setUserName("味你新用户");
+					user.setUserRegdate(new Date());
 					if(userdao.addUser(user)){
 						flag = 1;
+						this.close();
 					}else{
 						this.roll();
 						flag = 0 ;
@@ -140,7 +143,6 @@ public class LoginService extends GeneralService{
 				e.printStackTrace();
 			}
 		}
-		this.close();
 		return flag;
 	}
 	/**

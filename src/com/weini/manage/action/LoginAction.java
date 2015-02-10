@@ -245,6 +245,7 @@ public class LoginAction extends ActionSupport{
 	 * 如果注册成功，返回userID,用户id用户密码
 	 */
 	public String userRegist(){
+		code = 0;
 		ActionContext actionContext = ActionContext.getContext();
 		Map session = actionContext.getSession();
 		Integer iden = (Integer)session.get(Configure.identifyCode);
