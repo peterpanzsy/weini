@@ -12,6 +12,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.weini.manage.entity.TAdmin;
 import com.weini.manage.entity.TAuth;
 import com.weini.manage.entity.TUser;
+import com.weini.manage.entity.TUserextra;
 import com.weini.manage.entity.TVendor;
 import com.weini.manage.business.LoginService;
 import com.weini.tools.Configure;
@@ -254,8 +255,15 @@ public class LoginAction extends ActionSupport{
 			code = loginService.userRegist(phoneNum, password);
 			if(code == 1)
 				session.remove(Configure.identifyCode);
-				TUser user = (new LoginService()).searchUser(username, password);
-				session.put(Configure.sessionUserName,user);
+				TUser user = (new LoginService()).searchUser(phoneNum, password);
+				//增加用户其他信息
+				TUserextra uextra = new TUserextra();
+				uextra.setUserId(user.getUserId());
+				if(!(new LoginService()).insertUserExtra(uextra)){
+					code = 0;
+				}else{
+					session.put(Configure.sessionUserName,user);
+				}
 		}else{
 			code = 3;
 		}

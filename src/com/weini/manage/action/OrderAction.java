@@ -42,6 +42,7 @@ public class OrderAction extends ActionSupport {
 	private int userHeatID;
 	private int userAppetite;
 	private int menuWestern;
+	private int userPungent;
 	private int pageStart;
 	private int pageLimit;
 	//开始，截止日期 形如 2015-12-01
@@ -111,7 +112,7 @@ public class OrderAction extends ActionSupport {
 			//设置订单编号
 			order.setOrderNum((new OtherService()).getOrderNumSting());
 			// 剩余uesrHeatID,userAppetite 如果是isFirst的话就需要更新user表
-			if((orderNum = (new OrderService()).addUserOrder(order, orderIsFirst, user.getUserId(), userHeatID, userAppetite)) != null){
+			if((orderNum = (new OrderService()).addUserOrder(order, orderIsFirst, user.getUserId(), userHeatID, userAppetite,userPungent)) != null){
 				code = 1;
 			}
 		}catch(Exception e){

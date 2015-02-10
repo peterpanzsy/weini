@@ -251,6 +251,18 @@ public class Tools {
 			}
 			return res;
 		}
+		/**
+	     * 获取饭量的描述
+	     * @param index 饭量大小索引
+	     * @return
+	     */
+		public static String getUserPungent(int index){
+			String res = "吃辣";
+			if(index == 1){
+				res = "不吃辣";
+			}
+			return res;
+		}
 		public static List<String> getDatesNotWeekend(int num){
 			List<String> res = new ArrayList<String>();
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");

@@ -39,6 +39,10 @@ public class TOrder implements java.io.Serializable {
 	private int orderMenuWestern;
 	private String orderMenuTypeDesc;
 	private int orderBoxType;
+	private String orderBoxTypeName;
+	private String orderStartTimeString;
+	private String orderOrderTimeString;
+	private String orderPayTimeString;
 
 	// Constructors
 
@@ -267,5 +271,35 @@ public class TOrder implements java.io.Serializable {
 		this.orderBoxType = orderBoxType;
 	}
 
+	public String getOrderBoxTypeName() {
+		return orderBoxTypeName;
+	}
+
+	public void setOrderBoxTypeName(String orderBoxTypeName) {
+		this.orderBoxTypeName = orderBoxTypeName;
+	}
+	public String getOrderStartTimeString() {
+		if(this.orderStartTime != null){
+			return this.orderStartTime.toString();
+		}else{
+			return "";
+		}
+	}
+
+	public String getOrderOrderTimeString() {
+		if(this.orderOrderTime != null){
+			return this.orderOrderTime.toString();
+		}else{
+			return "";
+		}
+	}
+
+	public String getOrderPayTimeString() {
+		if(this.orderPayTime != null){
+			return this.orderPayTime.toString();
+		}else{
+			return "";
+		}
+	}
 
 }

@@ -54,21 +54,6 @@ public class MenuinfoService extends GeneralService {
 		this.close();
 		return menu;
 	}
-	/**
-	 * 根据菜品id获取菜品的dishes组成信息
-	 * @param menuinfoID 菜品id
-	 * @return
-	 */
-	public List<TDishes> getDishesByMenuinfoID(int menuinfoID){
-		List<TDishes> res = new ArrayList<TDishes>();
-		try{
-			res = this.menuDao.findAllDishByMenuinfoId(menuinfoID);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		this.close();
-		return res;
-	}
 	public boolean changeMenuStatus(int menuID,boolean status){
 		boolean flag = false;
 		HibernateSessionManager.getThreadLocalTransaction();
@@ -109,25 +94,24 @@ public class MenuinfoService extends GeneralService {
 		this.close();
 		return res;
 	}
-	
-/*	public TMenuinfo findMenuById(Integer menuinfoId) {
-		TMenuinfo menu= menuDao.findMenuDetailByMenuID(menuinfoId);
-		if(menu==null){
-			this.close();
-			return null;               //没有记录
-		}else{
-			menu.setDishesList(menuDao.findAllDishByMenuinfoId(menuinfoId));   //设置子菜品
-			this.close();
-			return menu;
-		}
-	}*/
 	/**
 	 * 返回menuinfo的详细信息
 	 * @param menuinfoId
 	 * @return
 	 */
-	public TMenuinfo findMenuById(Integer menuinfoId) {
-		return menuDao.findMenuDetailByMenuID(menuinfoId);
+	public TMenuinfo findMenuById(int menuinfoId) {
+		TMenuinfo res = null;
+		try{
+			res = menuDao.findMenuDetailByMenuID(menuinfoId);
+			if(res != null){
+				res.setMenuType(menuDao.getMenutype(res.getMenuinfoType()));
+				res.setDishesList(menuDao.findAllDishByMenuinfoId(menuinfoId));   //设置子菜品
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		this.close();
+		return res;
 	}
 
 	/**
@@ -141,18 +125,22 @@ public class MenuinfoService extends GeneralService {
 	}
 	/**
 	 * 得到t_menuinfo中的所有信息
-	 * @return
+	 * @return 
 	 */
 	public List getMenuInfoList() {
-		List<TMenuinfo> l = null;
+		List<TMenuinfo> l = new ArrayList<TMenuinfo>();
 		try {
 			l = menuDao.getMenuInfoList();
+			if(l == null){//数据库为空的情况下
+				l = new ArrayList<TMenuinfo>();
+			}
 			for(TMenuinfo t: l){
 				t.setMenuType(menuDao.getMenutype(t.getMenuinfoType()));
+				t.setDishesList(menuDao.findAllDishByMenuinfoId(t.getMenuinfoId()));
 			}
 		} catch (Exception e) {
-			this.roll();
 			e.printStackTrace();
+			l = null;
 		}
 		this.close();
 		return l;

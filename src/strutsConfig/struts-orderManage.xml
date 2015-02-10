@@ -41,7 +41,14 @@
 	</action>
 	<action name="UserOrderList" class="com.weini.manage.action.OrderAction" method="getUserOrderListLimit">
 		<result name="SUCCESS" type="json">
-			<param name="includeProperties">code,datalist.*</param>				
+			<param name="includeProperties">
+				code,
+				datalist\[\d+\]\.orderNum,
+				datalist\[\d+\]\.orderBoxType,
+				datalist\[\d+\]\.orderOrderTime,
+				datalist\[\d+\]\.orderMenuWestern, 
+				datalist\[\d+\]\.orderStatus,
+			</param>				
 		</result>
 		<result name="FAIL" type="json">
 			<param name="includeProperties">code,result</param>				
@@ -57,7 +64,22 @@
 	</action>
 	<action name="OrderDetailByOrderNum" class="com.weini.manage.action.OrderAction" method="getOrderDetailByOrderNum">
 		<result name="SUCCESS" type="json">
-			<param name="includeProperties">code,orderDetail.*</param>				
+			<param name="includeProperties">
+				code,
+				orderDetail\.orderNum,
+				orderDetail\.userId,
+				orderDetail\.orderMenuinfoId,
+				orderDetail\.orderBoxType,
+				orderDetail\.orderBoxTypeName,
+				orderDetail\.orderStartTimeString,
+				orderDetail\.orderOrderTimeString,
+				orderDetail\.SOrderConsumeStatus,
+				orderDetail\.orderPayTimeString,
+				orderDetail\.boxPrice,
+				orderDetail\.orderIsFirst,
+				orderDetail\.orderDispatchingId,
+				orderDetail\.orderStatus
+			</param>				
 		</result>
 		<result name="FAIL" type="json">
 			<param name="includeProperties">code,result</param>				
@@ -81,8 +103,6 @@
 			trackPage\.trackpageCurrentstate,
 			trackPage\.trackpageCurbackcolindex,
 			trackPage\.trackpageTiptext,
-			trackPage\.trackStringPageStartTime,
-			datalist\[\d+\]\.statusTime,
 			datalist\[\d+\]\.statusImage,
 			datalist\[\d+\]\.statusDesc,
 			datalist\[\d+\]\.statusStringTime

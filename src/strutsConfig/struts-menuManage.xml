@@ -13,13 +13,18 @@
 				menu\.menuinfoImage3,
 				menu\.menuinfoImage4,
 				menu\.menuinfoDetail,
+				menu\.menuinfoDateString,
 				menu\.menuinfoPoint,
-				menuDish\[\d+\]\.dishesName,
-				menuDish\[\d+\]\.dishesSeries1,
-				menuDish\[\d+\]\.dishesWeight,
+				menu\.menuinfoWestern,
+				menu\.menuType,
+				menu\.menuinfoConsumernum,
+				menu\.menuinfoBusinessAreaID,
+				menu\.dishesList\[\d+\]\.dishesName,
+				menu\.dishesList\[\d+\]\.dishesSeries1,
+				menu\.dishesList\[\d+\]\.dishesWeight,
 				</param>			
 			</result>
-			<result name="fail" type="json">	
+			<result name="FAIL" type="json">	
 				<param name="includeProperties">
 					code,result
 				</param>			
@@ -37,9 +42,25 @@
 		
 		<!-- 列出所有meneinfo  -->	
 		<action name="listMenuinfo" class="com.weini.manage.action.MenuManageAction" method="listMenuinfo">
-			<result name="success" type="json">	
-				<param name="includeProperties">code,list\[\d+\]\.menuinfoName,list\[\d+\]\.menuinfoDetail,
-				list\[\d+\]\.menuinfoPoint,list\[\d+\]\.menuType</param>			
+			<result name="SUCCESS" type="json">	
+				<param name="includeProperties">
+					code,
+					list\[\d+\]\.menuinfoName,
+					list\[\d+\]\.menuinfoImage1,
+					list\[\d+\]\.menuinfoImage2,
+					list\[\d+\]\.menuinfoImage3,
+					list\[\d+\]\.menuinfoImage4,
+					list\[\d+\]\.menuinfoDetail,
+					list\[\d+\]\.menuinfoDateString,
+					list\[\d+\]\.menuinfoPoint,
+					list\[\d+\]\.menuinfoWestern,
+					list\[\d+\]\.menuType,
+					list\[\d+\]\.menuinfoConsumernum,
+					list\[\d+\]\.menuinfoBusinessAreaID,
+					list\[\d+\]\.dishesList\[\d+\]\.dishesName,
+					list\[\d+\]\.dishesList\[\d+\]\.dishesSeries1,
+					list\[\d+\]\.dishesList\[\d+\]\.dishesWeight,
+				</param>			
 			</result>
 		</action>
 	</package>

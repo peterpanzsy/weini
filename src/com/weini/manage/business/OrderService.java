@@ -75,10 +75,11 @@ public class OrderService extends GeneralService {
 	 * @param userID 用户id
 	 * @param userHeatID 用户讨厌食物的id
 	 * @param userAppetite 用户的饭量
+	 * @param userPungent 麻辣程度
 	 * @param userSex 用户性别
 	 * @return 成功返回订单id，失败返回null
 	 */
-	public String addUserOrder(TOrder order,int orderIsFirst,int userID,int userHeatID,int userAppetite){
+	public String addUserOrder(TOrder order,int orderIsFirst,int userID,int userHeatID,int userAppetite,int userPungent){
 		String res = null;
 		HibernateSessionManager.getThreadLocalTransaction();
 		//设置默认值
@@ -101,7 +102,7 @@ public class OrderService extends GeneralService {
 		try{
 			if(orderIsFirst == 1){
 				//失败的话可以忍受
-				this.userdao.updateUserHeatAndAppe(userID, userHeatID, userAppetite);
+				this.userdao.updateUserTaste(userID, userHeatID, userAppetite,userPungent);
 				userheat = this.userdao.getUserHeatByID(userHeatID);
 			}
 			List<Object> temp = this.boxdao.getBoxPriceAndTypeByBoxID(order.getBoxId());
@@ -120,7 +121,13 @@ public class OrderService extends GeneralService {
 					sonOrder.setSOrderConsumeEvaluate("");
 					sonOrder.setSOrderLogisticsEvaluate("");
 					sonOrder.setSOrderIsdispatchingStateOpen(1);
-					sonOrder.setSOrderNotice("注意：不吃："+userheat+" "+"饭量："+Tools.getUserAppetite(userAppetite));
+					String notice = "注意：";
+					if(!userheat.equals("")){
+						notice += "不吃："+ (userheat+" ");
+					}
+					notice += "饭量："+Tools.getUserAppetite(userAppetite)+" ";
+					notice += "辣度："+Tools.getUserPungent(userPungent);
+					sonOrder.setSOrderNotice(notice);
 					sonOrder.setSOrderDispatchingId(order.getOrderDispatchingId());
 					sonOrder.setUserId(order.getUserId());
 					

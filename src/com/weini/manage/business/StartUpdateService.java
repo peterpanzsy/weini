@@ -79,9 +79,8 @@ public class StartUpdateService extends GeneralService {
 		try{
 			//获取当前的时间
 			Calendar cale = Calendar.getInstance();
-			int hour = cale.get(Calendar.HOUR_OF_DAY);
-			int minute = cale.get(Calendar.MINUTE);
-			res = this.trackpagedao.getTrackpage(hour,minute);
+			String time = (new SimpleDateFormat("HH:mm:ss")).format(cale.getTime());
+			res = this.trackpagedao.getTrackpage(time);
 		}catch(Exception e){
 			e.printStackTrace();
 		}

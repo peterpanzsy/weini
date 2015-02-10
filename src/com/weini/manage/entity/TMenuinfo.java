@@ -3,6 +3,7 @@ package com.weini.manage.entity;
 // default package
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -44,8 +45,9 @@ public class TMenuinfo implements java.io.Serializable {
 	private String vendorName;
 	private String bussinessName;
 	private int order;
+	private String menuinfoDateString;
 	// wangadd
-//	private List<TDishes> dishesList;
+	private List<TDishes> dishesList;
 	private String menuType;
 	
 	/** default constructor */
@@ -271,6 +273,26 @@ public class TMenuinfo implements java.io.Serializable {
 	public String getStringMenuinfoDate() {
 		if(this.menuinfoDate != null){
 			return this.menuinfoDate.toString();
+		}else{
+			return "";
+		}
+	}
+	@Transient
+	public List<TDishes> getDishesList() {
+		if(this.dishesList == null){
+			return (new ArrayList<TDishes>());
+		}else{
+			return this.dishesList;
+		}
+	}
+
+	public void setDishesList(List<TDishes> dishesList) {
+		this.dishesList = dishesList;
+	}
+	@Transient
+	public String getMenuinfoDateString() {
+		if(this.menuinfoDate != null){
+			return menuinfoDate.toString();
 		}else{
 			return "";
 		}

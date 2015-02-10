@@ -20,7 +20,6 @@ public class MenuManageAction extends ActionSupport {
 	private TMenuinfo menu;
 	private List list;
 	private TMenutype menutype;
-	private List<TDishes> menuDish;
 	/**
 	 * 
 	 */
@@ -31,12 +30,12 @@ public class MenuManageAction extends ActionSupport {
 	 */
 	public String listMenuinfo(){
 		list = (new MenuinfoService()).getMenuInfoList();
-		if(list!=null){
-			code =1;
+		if(list != null){
+			code = 1;
 		}else{
-			code=0;
+			code = 0;
 		}
-		return SUCCESS;
+		return "SUCCESS";
 	}
 	/**
 	 * 根据菜品Id的到菜品的详细信息
@@ -53,8 +52,6 @@ public class MenuManageAction extends ActionSupport {
 			code = 0; 
 			result="没有记录";
 			return "FAIL";
-		}else{
-			menuDish = new MenuinfoService().getDishesByMenuinfoID(menuinfoId);
 		}
 		code = 1;
 		return "SUCCESS";
@@ -113,11 +110,5 @@ public class MenuManageAction extends ActionSupport {
 
 	public void setMenutype(TMenutype menutype) {
 		this.menutype = menutype;
-	}
-	public List<TDishes> getMenuDish() {
-		return menuDish;
-	}
-	public void setMenuDish(List<TDishes> menuDish) {
-		this.menuDish = menuDish;
 	}
 }

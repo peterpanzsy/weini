@@ -35,6 +35,19 @@ public class DispatchingService extends GeneralService{
 		this.close();
 		return flag;
 	}
+	public boolean updateDistaching(int dispatchingId,Integer dispatchingProvince,
+			Integer dispatchingCity, Integer dispatchingDistrict,
+			Integer dispatchingBusinessAreaid,
+			Integer dispatchingOfficeBuilding, String dispatchingAddressDetail,
+			Integer userId, String dispatchingPhoneNum) {
+		HibernateSessionManager.getThreadLocalTransaction();
+		TDispatching temp = new TDispatching(dispatchingProvince, dispatchingCity, dispatchingDistrict,
+				dispatchingBusinessAreaid, dispatchingOfficeBuilding,dispatchingAddressDetail,userId,dispatchingPhoneNum);
+		temp.setDispatchingId(dispatchingId);
+		boolean flag = disDao.updateDispatching(temp);
+		this.close();
+		return flag;
+	}
 
 
 	public List<DispatchingAddress> findDispatchingByUserId(Integer userId) {

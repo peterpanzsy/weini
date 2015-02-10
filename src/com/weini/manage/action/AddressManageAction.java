@@ -66,7 +66,7 @@ public class AddressManageAction extends ActionSupport{
 	/**
 	 * 列出写字楼根据所选择的商圈
 	 */
-	public String listOfficeBuileding(){
+	public String listOfficeBuilding(){
 		addressSer = new AddressService();
 		this.offes = addressSer.listOfficeBuildingByBusId(indexID);
 		return "SUCCESS";

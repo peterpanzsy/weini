@@ -16,17 +16,12 @@ public class TrackpageDao {
 	 * 根据当前时间获取相应的文案信息
 	 * @return 成功返回信息，否则返回null
 	 */
-	public TTrackpage getTrackpage(int hour,int minute){
+	public TTrackpage getTrackpage(String time){
 		TTrackpage res = null;
 		Query q = session.createSQLQuery("SELECT trackpage_id,trackpage_currentstate,trackpage_curbackcolindex,trackpage_tiptext "
-				+ "FROM t_trackpage where (HOUR(trackpage_startTime) < ? and HOUR(trackpage_endTime) > ?) OR"
-				+ " ((HOUR(trackpage_startTime) = ? or HOUR(trackpage_endTime) = ?) and  (MINUTE(trackpage_startTime) <? and MINUTE(trackpage_endTime) >=?));");
-		q.setInteger(0, hour);
-		q.setInteger(1, hour);
-		q.setInteger(2, hour);
-		q.setInteger(3, hour);
-		q.setInteger(4, minute);
-		q.setInteger(5, minute);
+				+ "FROM t_trackpage where DATE_FORMAT(trackpage_startTime,'%H:%i:%s') < ? and DATE_FORMAT(trackpage_endTime,'%H:%i:%s') > ?;");
+		q.setString(0,time);
+		q.setString(1,time);
 		List l = q.list();
 		if(l.size() == 1){
 			Object[] row = (Object[])l.get(0);

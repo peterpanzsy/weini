@@ -12,6 +12,7 @@ import com.weini.manage.dao.VendorDao;
 import com.weini.manage.entity.TAdmin;
 import com.weini.manage.entity.TAuth;
 import com.weini.manage.entity.TUser;
+import com.weini.manage.entity.TUserextra;
 import com.weini.manage.entity.TVendor;
 import com.weini.tools.HibernateSessionManager;
 import com.weini.tools.SMSUtil;
@@ -122,6 +123,7 @@ public class LoginService extends GeneralService{
 			try {
 				user = userdao.searchUser(phoneNum);
 				if(user==null){
+					//增加用户
 					user = new TUser();
 					user.setUserPhoneNumber(phoneNum);
 					user.setUserPwd(password);
@@ -130,19 +132,17 @@ public class LoginService extends GeneralService{
 					if(userdao.addUser(user)){
 						flag = 1;
 						this.close();
-					}else{
-						this.roll();
-						flag = 0 ;
+						return flag;
 					}
 				}else{
 					flag = 2;
 				}
 			} catch (Exception e) {
-				flag = 0;
-				this.roll();
 				e.printStackTrace();
 			}
 		}
+		this.roll();
+		flag = 0 ;
 		return flag;
 	}
 	/**
@@ -176,5 +176,20 @@ public class LoginService extends GeneralService{
 		}
 		this.close();
 		return 0;
+	}
+	public boolean insertUserExtra(TUserextra uextra){
+		HibernateSessionManager.getThreadLocalTransaction();
+		boolean flag = false;
+		try{
+			if(this.userdao.addUserextra(uextra)){
+				flag = true;
+				this.close();
+				return flag;
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		this.roll();
+		return flag;
 	}
 }

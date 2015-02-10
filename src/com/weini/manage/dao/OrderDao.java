@@ -139,7 +139,7 @@ public class OrderDao{
 		if(temp[0] > 0){
 			flag = true;
 			for(int i = 0; i < l.size(); i++){
-				int time = ((BigInteger)(l.get(i))).intValue();
+				int time = ((Double)(l.get(i))).intValue();
 				if(time < 10){
 					temp[1] ++;
 				}else if(time < 20){
@@ -339,11 +339,12 @@ public class OrderDao{
 	public TOrder getOrderDetailByOrderNum(String orderNum){
 		TOrder res = null;
 		Query q = session.createSQLQuery("select order_num,user_id,order_menuinfo_id,box_type,order_orderTime,order_payStatus,"
-				+ "S_order_consumeStatus,order_payTime,o.box_price,order_isFirst,order_dispatching_id,order_status "
+				+ "S_order_consumeStatus,order_payTime,o.box_price,order_isFirst,order_dispatching_id,order_status,box_typename "
 				+ "from t_order as o, t_box as b where o.box_id = b.box_id and order_num = ?;");
 		q.setString(0, orderNum);
 		List l = q.list();
 		if(l != null && l.size() == 1){
+			res = new TOrder();
 			Object[] row = (Object[])l.get(0);
 			res.setOrderNum((String)row[0]);
 			res.setUserId((int)row[1]);
@@ -357,6 +358,7 @@ public class OrderDao{
 			res.setOrderIsFirst((int)row[9]);
 			res.setOrderDispatchingId((int)row[10]);
 			res.setOrderStatus((int)row[11]);
+			res.setOrderBoxTypeName((String)row[12]);
 		}
 		return res;
 	}

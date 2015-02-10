@@ -17,30 +17,6 @@ public class UserService extends GeneralService{
 	private UserDao userdao  = new UserDao(this.session);
 	private MenuDao menudao = new MenuDao(this.session);
 	/**
-	 * 更新用户的忌口和饭量信息
-	 * @param userID 用户id
-	 * @param heatID 用户忌口id
-	 * @param appeID 用户饭量
-	 * @return 执行结果
-	 */
-	public boolean updateUserHeatandAppe(int userID,int heatID,int appeID){
-		boolean flag = false;
-		HibernateSessionManager.getThreadLocalTransaction();
-		try{
-			int res = this.userdao.updateUserHeatAndAppe(userID, heatID, appeID);
-			if(res > 0){
-				flag = true;
-				this.close();
-			}else{
-				this.roll();
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-			this.roll();
-		}
-		return flag;
-	}
-	/**
 	 * 根据用户Id来查找用户的信息
 	 * @param userId
 	 * @return  TwoEntity 由2个对象组成 TUser，TUserextra 

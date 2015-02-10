@@ -38,13 +38,30 @@ public class DispatchingManageAction extends ActionSupport {
 	public String addDispatching(){
 		int userID = Tools.getUserID();
 		if(userID == -1){
-			System.err.println("用户没有登录");
 			code = 0; 
 			result = "用户没有登录";
 			return "FAIL";
 		}
 		disService = new DispatchingService();
 		if(disService.addDistaching(dispatchingProvince, dispatchingCity, dispatchingDistrict,
+				dispatchingBusinessAreaid, dispatchingOfficeBuilding,dispatchingAddressDetail,userID,dispatchingPhoneNum)){
+			code = 1;
+		}
+		return "SUCCESS";
+	}
+	/**
+	 * 数据库中修改TDispathing
+	 * @return
+	 */
+	public String updateDispatching(){
+		int userID = Tools.getUserID();
+		if(userID == -1){
+			code = 0; 
+			result = "用户没有登录";
+			return "FAIL";
+		}
+		disService = new DispatchingService();
+		if(disService.updateDistaching(dispatchingId,dispatchingProvince, dispatchingCity, dispatchingDistrict,
 				dispatchingBusinessAreaid, dispatchingOfficeBuilding,dispatchingAddressDetail,userID,dispatchingPhoneNum)){
 			code = 1;
 		}

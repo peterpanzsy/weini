@@ -218,8 +218,8 @@ public class UserDao{
 	 * @param appeID 用户饭量id
 	 * @return
 	 */
-	public int updateUserHeatAndAppe(int userID,int heatID,int appeID){
-		Query q = session.createSQLQuery("update t_user SET user_heat = ?,user_appetite = ? WHERE user_id = ?;");
+	public int updateUserTaste(int userID,int heatID,int appeID,int userPungent){
+		Query q = session.createSQLQuery("update t_user SET user_heat = ?,user_appetite = ?,user_pungent = ? WHERE user_id = ?;");
 		q.setInteger(0,heatID);
 		q.setInteger(1, appeID);
 		q.setInteger(2,userID);

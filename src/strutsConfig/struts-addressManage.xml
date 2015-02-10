@@ -23,7 +23,7 @@
 			<param name="includeProperties">busses\[\d+\]\.businessAreaId,busses\[\d+\]\.businessAreaName</param>	
 		</result>
 	</action>
-	<action name="listOfficeBuileding" class="com.weini.manage.action.AddressManageAction" method="listOfficeBuileding">
+	<action name="listOfficeBuilding" class="com.weini.manage.action.AddressManageAction" method="listOfficeBuilding">
 		<result name="SUCCESS" type="json">				
 			<param name="includeProperties">offes\[\d+\]\.officeBuildingId,offes\[\d+\]\.officeBuildingName</param>	
 		</result>
