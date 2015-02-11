@@ -38,6 +38,15 @@
 				<param name="includeProperties">code,result</param>			
 			</result>
 		</action>
+		<!-- 获取详细送餐地址信息 -->
+		<action name="detailDispatching" class="com.weini.manage.action.DispatchingManageAction" method="dispatchingDetail">
+			<result name="SUCCESS" type="json">	
+				<param name="includeProperties">code,dispatchAddress.*</param>			
+			</result>
+			<result name="FAIL" type="json">	
+				<param name="includeProperties">code,result</param>			
+			</result>
+		</action>
 		<!-- 修改用户默认送餐地址 -->
 		<action name="ChangeUserDefaultDispatching" class="com.weini.manage.action.DispatchingManageAction" method="ChangeUserDefaultDispatchingId">
 			<result name="SUCCESS" type="json">	

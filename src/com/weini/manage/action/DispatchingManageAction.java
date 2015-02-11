@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.weini.manage.business.DispatchingService;
+import com.weini.manage.entity.DispatchingAddress;
 import com.weini.manage.entity.TDispatching;
 import com.weini.manage.entity.TDispatchingstatus;
 import com.weini.tools.Tools;
@@ -30,6 +31,8 @@ public class DispatchingManageAction extends ActionSupport {
 	private TDispatchingstatus disstatus;
 	private int code=0;//默认不成功
 	private String result;
+	//地址详细信息
+	private DispatchingAddress dispatchAddress;
 	
 	/**
 	 * 向数据库中添加TDispathing
@@ -88,6 +91,19 @@ public class DispatchingManageAction extends ActionSupport {
 		
 	}
 	/**
+	 * 根据id获取具体的地址信息
+	 * @return
+	 */
+	public String dispatchingDetail(){
+		code = 0;
+		dispatchAddress = new DispatchingService().findDispatchingByDisId(dispatchingId);
+		if(dispatchAddress != null){
+			code = 1;
+		}
+		return "SUCCESS";
+		
+	}
+	/**
 	 * 删除用户的送餐地址
 	 * @return 0:失败；1成功
 	 */
@@ -131,42 +147,6 @@ public class DispatchingManageAction extends ActionSupport {
 	}
 
 	
-	public Integer getDispatchingId() {
-		return dispatchingId;
-	}
-	public void setDispatchingId(Integer dispatchingId) {
-		this.dispatchingId = dispatchingId;
-	}
-	public Integer getDispatchingProvince() {
-		return dispatchingProvince;
-	}
-	public void setDispatchingProvince(Integer dispatchingProvince) {
-		this.dispatchingProvince = dispatchingProvince;
-	}
-	public Integer getDispatchingCity() {
-		return dispatchingCity;
-	}
-	public void setDispatchingCity(Integer dispatchingCity) {
-		this.dispatchingCity = dispatchingCity;
-	}
-	public Integer getDispatchingDistrict() {
-		return dispatchingDistrict;
-	}
-	public void setDispatchingDistrict(Integer dispatchingDistrict) {
-		this.dispatchingDistrict = dispatchingDistrict;
-	}
-	public Integer getDispatchingBusinessAreaid() {
-		return dispatchingBusinessAreaid;
-	}
-	public void setDispatchingBusinessAreaid(Integer dispatchingBusinessAreaid) {
-		this.dispatchingBusinessAreaid = dispatchingBusinessAreaid;
-	}
-	public Integer getDispatchingOfficeBuilding() {
-		return dispatchingOfficeBuilding;
-	}
-	public void setDispatchingOfficeBuilding(Integer dispatchingOfficeBuilding) {
-		this.dispatchingOfficeBuilding = dispatchingOfficeBuilding;
-	}
 	public String getDispatchingAddressDetail() {
 		return dispatchingAddressDetail;
 	}
@@ -208,5 +188,47 @@ public class DispatchingManageAction extends ActionSupport {
 	}
 	public void setResult(String result) {
 		this.result = result;
+	}
+	public int getDispatchingId() {
+		return dispatchingId;
+	}
+	public void setDispatchingId(int dispatchingId) {
+		this.dispatchingId = dispatchingId;
+	}
+	public int getDispatchingProvince() {
+		return dispatchingProvince;
+	}
+	public void setDispatchingProvince(int dispatchingProvince) {
+		this.dispatchingProvince = dispatchingProvince;
+	}
+	public int getDispatchingCity() {
+		return dispatchingCity;
+	}
+	public void setDispatchingCity(int dispatchingCity) {
+		this.dispatchingCity = dispatchingCity;
+	}
+	public int getDispatchingDistrict() {
+		return dispatchingDistrict;
+	}
+	public void setDispatchingDistrict(int dispatchingDistrict) {
+		this.dispatchingDistrict = dispatchingDistrict;
+	}
+	public int getDispatchingBusinessAreaid() {
+		return dispatchingBusinessAreaid;
+	}
+	public void setDispatchingBusinessAreaid(int dispatchingBusinessAreaid) {
+		this.dispatchingBusinessAreaid = dispatchingBusinessAreaid;
+	}
+	public int getDispatchingOfficeBuilding() {
+		return dispatchingOfficeBuilding;
+	}
+	public void setDispatchingOfficeBuilding(int dispatchingOfficeBuilding) {
+		this.dispatchingOfficeBuilding = dispatchingOfficeBuilding;
+	}
+	public DispatchingAddress getDispatchAddress() {
+		return dispatchAddress;
+	}
+	public void setDispatchAddress(DispatchingAddress dispatchAddress) {
+		this.dispatchAddress = dispatchAddress;
 	}
 }

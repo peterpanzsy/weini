@@ -41,6 +41,7 @@ public class TUser implements java.io.Serializable {
 	private Integer userDispatchdefaultId = -1;
 	//默认为中份
 	private Integer userAppetite = 1;
+	private Integer userPungent;
 	//add 在平台上累计的天数
 	private Integer countDays = 0;  
 	private String userRegdateString;
@@ -210,6 +211,14 @@ public class TUser implements java.io.Serializable {
 
 	public void setUserAppetite(Integer userAppetite) {
 		this.userAppetite = userAppetite;
+	}
+	
+	@Column(name = "user_pungent")
+	public Integer getUserPungent() {
+		return userPungent;
+	}
+	public void setUserPungent(Integer userPungent) {
+		this.userPungent = userPungent;
 	}
 	@Override  
     public String toString() {  

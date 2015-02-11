@@ -115,7 +115,7 @@ public class SonOrderDao{
 	}
 	/**
 	 * 根据用户id获取用户一个月的消费记录
-	 * 订单要求 所有订单
+	 * 订单要求 所有消费成功的订单
 	 * @param userId 用户id
 	 * @param year 年
 	 * @param month 月
@@ -125,10 +125,10 @@ public class SonOrderDao{
 	public List<TSOrder> searchMonthSonOrder(Integer userId, int year, int month) throws ParseException {
 		List<TSOrder> res = new ArrayList<TSOrder>();
 		Query q;
-		String sql = ("select S_order_id,S_order_dispatchingDate,mtype.menutype_desc from t_s_order as so,"
+		String sql = ("select S_order_id,S_order_dispatchingDate,mtype.menutype_desc,menu_id from t_s_order as so,"
 				+ "t_menutype as mtype,t_menuinfo as minfo where minfo.menuinfo_id = so.menu_id and "
 				+ "minfo.menuinfo_type = mtype.menutype_id and user_id = ? "
-				+ "AND YEAR(S_order_dispatchingDate) = ? AND MONTH(S_order_dispatchingDate) = ?;");
+				+ "AND YEAR(S_order_dispatchingDate) = ? AND MONTH(S_order_dispatchingDate) = ? and S_order_status = 4;");
 		q = session.createSQLQuery(sql);
 		q.setInteger(0, userId);
 		q.setInteger(1,year);
@@ -141,6 +141,7 @@ public class SonOrderDao{
 				sorder.setSOrderId((int)row[0]);
 				sorder.setSOrderDispatchingDate((Date)row[1]);
 				sorder.setMenuTypeDesc((String)row[2]);
+				sorder.setMenuId((int)row[3]);
 				res.add(sorder);
 			}
 		}

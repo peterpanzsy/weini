@@ -26,7 +26,7 @@ public class UserService extends GeneralService{
 		TwoEntity two = null;
 		try {
 			TUser user = userdao.findByUserID(userId);
-			if(user.getUserRegdate()!=null){
+			if(user != null && (user.getUserRegdate()!=null)){
 				try {
 					user.setCountDays(daysBetween(user.getUserRegdate(),new Date()));
 					if(user.getUserHeat() != -1 && user.getUserHeat()!=null){
@@ -35,69 +35,36 @@ public class UserService extends GeneralService{
 				} catch (Exception e) {
 					user.setCountDays(0);
 				}
+				TUserextra userextra = userdao.findUserextraByUserId(user);
+				two = new TwoEntity(user,userextra);
+				this.close();
+				return two;
 			}
-			TUserextra userextra = userdao.findUserextraByUserId(user);
-			two = new TwoEntity(user,userextra);
-			this.close();
 		} catch (Exception e) {
-			this.roll();
+			e.printStackTrace();
 		}
+		this.roll();
 		return two;
 	}
 	/**
-	 * 修改用户忌口
-	 * @param userID  用户Id
-	 * @param menutypeId  munetypeId
+	 * 修改用户个人信息
+	 * @param user  用户
 	 * @return  成功返回1，失败返回0
 	 */
-	public int updateUserHeat(Integer userId, int menutypeId) {
+	public int updateUser(TUser user) {
 		HibernateSessionManager.getThreadLocalTransaction();
 		try {
-			TUser user = userdao.findByUserID(userId);
-			if(user==null){
+			if(userdao.updateUser(user)){
+				//更新成功
 				this.close();
-				return 0;
-			}else{
-				user.setUserHeat(menutypeId);
-				if(userdao.updateUser(user)){
-					//更新成功
-					this.close();
-					return 1;
-				}
-				this.close();
+				return 1;
 			}
 		} catch (Exception e) {
-			this.roll();
+			e.printStackTrace();
 		}
+		this.roll();
 		return 0;
 	}   
-	/**
-	 * 修改用户的性别
-	 * @param userId
-	 * @param userGender
-	 * @return
-	 */
-	public int updateUserGender(Integer userId, int userGender) {
-		HibernateSessionManager.getThreadLocalTransaction();
-		try {
-			TUser user = userdao.findByUserID(userId);
-			if(user==null){
-				this.close();
-				return 0;
-			}else{
-				user.setUserGender(userGender);
-				if(userdao.updateUser(user)){
-					//更新成功
-					this.close();
-					return 1;
-				}
-				this.close();
-			}
-		} catch (Exception e) {
-			this.roll();
-		}
-		return 0;
-	}
 	/**
 	 * 修改用户的生日
 	 * @param userId
@@ -106,15 +73,11 @@ public class UserService extends GeneralService{
 	 */
 	public int updateUserBirthday(Integer userId, Date userBirthday) {
 		HibernateSessionManager.getThreadLocalTransaction();
-		boolean flag = false;
 		try {
 			TUser user = userdao.findByUserID(userId);
-			if(user==null){
-				this.close();
-				return 0;
-			}else{
+			if(user != null){
 				TUserextra userextra = userdao.findUserextraByUserId(user);
-				if(userextra==null){
+				if(userextra == null){
 					userextra = new TUserextra();
 					userextra.setUserId(userId);
 				}
@@ -124,11 +87,11 @@ public class UserService extends GeneralService{
 					this.close();
 					return 1;
 				}
-				this.close();
 			}
 		} catch (Exception e) {
-			this.roll();
+			e.printStackTrace();
 		}
+		this.roll();
 		return 0;
 		
 	}

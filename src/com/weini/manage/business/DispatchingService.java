@@ -76,6 +76,33 @@ public class DispatchingService extends GeneralService{
 		return res;
 	}
 	/**
+	 * 根据地址id获取地址的详细信息
+	 * @param disId 地址id 
+	 * @return
+	 */
+	public DispatchingAddress findDispatchingByDisId(int disId) {
+		DispatchingAddress res = null;
+		try{
+			TDispatching tdis =disDao.findDispatchingById(disId);
+			if(tdis != null){
+				res = new DispatchingAddress();
+				res.setDispatchingId(tdis.getDispatchingId());
+				res.setDispatchingProvince(this.addDao.findProvince(tdis.getDispatchingProvince()));
+				res.setDispatchingCity(this.addDao.findCity(tdis.getDispatchingCity()));
+				res.setDispatchingDistrict(this.addDao.findDistrict(tdis.getDispatchingDistrict()));
+				res.setDispatchingBusinessAreaid(this.addDao.findBusiness(tdis.getDispatchingBusinessAreaid()));
+				res.setDispatchingOfficeBuilding(this.addDao.findOffice(tdis.getDispatchingOfficeBuilding()));
+				res.setDispatchingAddressDetail(tdis.getDispatchingAddressDetail());
+				res.setDispatchingPhoneNum(tdis.getDispatchingPhoneNum());
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			res = null;
+		}
+		this.close();
+		return res;
+	}
+	/**
 	 * 删除订餐地址
 	 * @param disId 地址id
 	 * @return 执行结果

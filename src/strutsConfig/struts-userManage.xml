@@ -30,16 +30,8 @@
 				<param name="includeProperties">code,result</param>			
 			</result>
 		</action>
-		<!-- 修改用户信息（包括忌口、性别） -->
+		<!-- 修改用户信息（包括忌口、性别，昵称） -->
 		<action name="updateUser*" class="com.weini.manage.action.UserAction" method="updateUser{1}">
-			<result name="SUCCESS" type="json">	
-				<param name="includeProperties">code</param>			
-			</result>
-			<result name="FAIL" type="json">	
-				<param name="includeProperties">code,result</param>			
-			</result>
-		</action>
-		<action name="updateUserName" class="com.weini.manage.action.UserAction" method="updateUserName">
 			<result name="SUCCESS" type="json">	
 				<param name="includeProperties">code</param>			
 			</result>

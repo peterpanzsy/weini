@@ -92,6 +92,7 @@ public class OrderService extends GeneralService {
 		if(menuID > 0){
 			order.setOrderMenuinfoId(menuID);
 		}else{
+			this.roll();
 			return res;
 		}
 		float boxPrice = 0;

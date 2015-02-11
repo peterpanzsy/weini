@@ -16,6 +16,7 @@ import com.weini.manage.entity.TSorderDispatching;
 import com.weini.manage.entity.TTrackpage;
 import com.weini.manage.entity.TUser;
 import com.weini.tools.Configure;
+import com.weini.tools.HibernateSessionManager;
 import com.weini.tools.Tools;
 
 public class OrderAction extends ActionSupport {

@@ -1,12 +1,16 @@
 package com.weini.manage.action;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.weini.manage.business.UserService;
 import com.weini.manage.entity.TUser;
 import com.weini.manage.entity.TUserextra;
+import com.weini.tools.Configure;
 import com.weini.tools.Tools;
 import com.weini.tools.TwoEntity;
 
@@ -40,14 +44,14 @@ public class UserAction extends ActionSupport{
     
 	private String weChatPay;
 	
-	private Date userRegdate;
+	private String userRegdate;
 	
 	private int pointTotal;
 	//--------wang------------//
 	//请求的参数
 	private int menutypeId; //修改忌口
     private int userGender;
-    private Date userBirthday;
+    private String userBirthday;
 	//返回的参数
 	private TUser tuser;
 	private TUserextra tuserextra;
@@ -71,13 +75,6 @@ public class UserAction extends ActionSupport{
 //		dao.close();
 //		return "SUCCESS";
 //	}
-	/**
-	 * 用户注册
-	 * @return
-	 */
-	public String addUser(){
-		return SUCCESS;
-	}
 	/**
 	 * 用户修改密码
 	 * @return
@@ -115,33 +112,24 @@ public class UserAction extends ActionSupport{
 		}
 		return SUCCESS;
 	}
-	public TUser getTuser() {
-		return tuser;
-	}
-	public void setTuser(TUser tuser) {
-		this.tuser = tuser;
-	}
-	public TUserextra getTuserextra() {
-		return tuserextra;
-	}
-	public void setTuserextra(TUserextra tuserextra) {
-		this.tuserextra = tuserextra;
-	}
 	/**
 	 * 修改用户忌口
 	 * @return
 	 */
 	public String updateUserNotEat(){
 		code = 0;
-		userService = new UserService();
-		int userID = Tools.getUserID();
-		if(userID == -1){
-			System.err.println("用户没有登录");
+		Map session = ActionContext.getContext().getSession();
+		TUser user = (TUser) session.get(Configure.sessionUserName);
+		if(user == null){
 			code = 0; 
 			result="用户没有登录";
 			return "fail";
 		}
-		code = userService.updateUserHeat(userID, menutypeId);
+		user.setUserHeat(menutypeId);
+		code = (new UserService()).updateUser(user);
+		if(code == 1){
+			session.put(Configure.sessionUserName, user);
+		}
 		return "SUCCESS";
 	}
 	/**
@@ -149,15 +137,19 @@ public class UserAction extends ActionSupport{
 	 * @return
 	 */
 	public String updateUserGender(){
-		userService = new UserService();
-		int userID = Tools.getUserID();
-		if(userID == -1){
-			System.err.println("用户没有登录");
+		code = 0;
+		Map session = ActionContext.getContext().getSession();
+		TUser user = (TUser) session.get(Configure.sessionUserName);
+		if(user == null){
 			code = 0; 
 			result="用户没有登录";
-			return "FAIL";
+			return "fail";
 		}
-		code = userService.updateUserGender(userID,userGender);
+		user.setUserGender(userGender);
+		code = (new UserService()).updateUser(user);
+		if(code == 1){
+			session.put(Configure.sessionUserName, user);
+		}
 		return "SUCCESS";
 	}
 	/**
@@ -168,12 +160,20 @@ public class UserAction extends ActionSupport{
 		userService = new UserService();
 		int userID = Tools.getUserID();
 		if(userID == -1){
-			System.err.println("用户没有登录");
 			code = 0; 
 			result="用户没有登录";
 			return "FAIL";
 		}
-		code = userService.updateUserBirthday(userID,userBirthday);
+		Date date = null;
+		try{
+			date = new SimpleDateFormat("yyyy-MM-dd").parse(userBirthday);
+		}catch(Exception e){
+			e.printStackTrace();
+			code = 0; 
+			result="参数错误";
+			return "FAIL";
+		}
+		code = userService.updateUserBirthday(userID,date);
 		return "SUCCESS";
 	}
 	/**
@@ -182,15 +182,17 @@ public class UserAction extends ActionSupport{
 	 */
 	public String updateUserName(){
 		code = 0;
-		int userID = Tools.getUserID();
-		if(userID == -1){
-			System.err.println("用户没有登录");
+		Map session = ActionContext.getContext().getSession();
+		TUser user = (TUser) session.get(Configure.sessionUserName);
+		if(user == null){
 			code = 0; 
 			result="用户没有登录";
-			return "FAIL";
+			return "fail";
 		}
-		if((new UserService()).updateUserName(userID,userName)){
-			code = 1;
+		user.setUserName(userName);
+		code = (new UserService()).updateUser(user);
+		if(code == 1){
+			session.put(Configure.sessionUserName, user);
 		}
 		return "SUCCESS";
 	}
@@ -255,12 +257,6 @@ public class UserAction extends ActionSupport{
 	public void setWeChatPay(String weChatPay) {
 		this.weChatPay = weChatPay;
 	}
-	public Date getUserRegdate() {
-		return userRegdate;
-	}
-	public void setUserRegdate(Date userRegdate) {
-		this.userRegdate = userRegdate;
-	}
 	public int getPointTotal() {
 		return pointTotal;
 	}
@@ -285,10 +281,16 @@ public class UserAction extends ActionSupport{
 	public void setMenutypeId(int menutypeId) {
 		this.menutypeId = menutypeId;
 	}
-	public Date getUserBirthday() {
+	public String getUserRegdate() {
+		return userRegdate;
+	}
+	public void setUserRegdate(String userRegdate) {
+		this.userRegdate = userRegdate;
+	}
+	public String getUserBirthday() {
 		return userBirthday;
 	}
-	public void setUserBirthday(Date userBirthday) {
+	public void setUserBirthday(String userBirthday) {
 		this.userBirthday = userBirthday;
 	}
 	public UserService getUserService() {
@@ -338,5 +340,17 @@ public class UserAction extends ActionSupport{
 	}
 	public void setUserScale(int userScale) {
 		this.userScale = userScale;
+	}
+	public TUser getTuser() {
+		return tuser;
+	}
+	public void setTuser(TUser tuser) {
+		this.tuser = tuser;
+	}
+	public TUserextra getTuserextra() {
+		return tuserextra;
+	}
+	public void setTuserextra(TUserextra tuserextra) {
+		this.tuserextra = tuserextra;
 	}
 }

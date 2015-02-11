@@ -56,7 +56,12 @@
 	</action>
 	<action name="UserSomeMonthOrder" class="com.weini.manage.action.OrderAction" method="getUserSomeMonthOrder">
 		<result name="SUCCESS" type="json">
-			<param name="includeProperties">code,datalist.*</param>				
+			<param name="includeProperties">
+				code,
+				datalist\[\d+\]\.menuId,
+				datalist\[\d+\]\.SOrderDispatchingDateString,
+				datalist\[\d+\]\.menuTypeDesc
+			</param>				
 		</result>
 		<result name="FAIL" type="json">
 			<param name="includeProperties">code,result</param>				
