@@ -46,8 +46,8 @@ public class LoginService extends GeneralService{
 		TUser res = null;
 		try{
 			res = this.userdao.searchUser(username, pass);
+			
 		}catch(Exception e){
-			this.roll();
 			e.printStackTrace();
 		}
 		this.close();

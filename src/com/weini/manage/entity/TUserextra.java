@@ -25,8 +25,8 @@ public class TUserextra implements java.io.Serializable {
 
 	private Integer userextraId;
 	private Integer userId;
-	private String userextraImage;
-	private String userextraReserved;
+	private String userextraImage = "";
+	private String userextraReserved = "";
 	private Date userextraBirthday;
 
 	private String userextraBirthdayString;

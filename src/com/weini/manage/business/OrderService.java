@@ -64,6 +64,23 @@ public class OrderService extends GeneralService {
 		this.close();
 		return res;
 	}
+		/**
+		 * 获取用户当天的子订单id
+		 * @param 
+		 * @return -1 失败，否则，订单id
+		 */
+		public int getTodaySonOrderByUserId(int userId){
+			int res = -1;
+			Calendar cale = Calendar.getInstance();
+			String time = (new SimpleDateFormat("yyyy-MM-dd")).format(cale.getTime());
+			try{
+				res = this.sonorderdao.getSonOrderIDByUserIdAndDate(userId, time);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			this.close();
+			return res;
+		}
 	/**
 	 * 增加一个订单
 	 * 	如果是isFirst订单，则需要更新用户的忌口和饭量
@@ -114,6 +131,13 @@ public class OrderService extends GeneralService {
 				order.setBoxPrice(boxPrice);
 				//增加订单
 				// 获取订单id
+				String notice = "注意：";
+				if(!userheat.equals("")){
+					notice += "不吃："+ (userheat+" ");
+				}
+				notice += "饭量："+Tools.getUserAppetite(userAppetite)+" ";
+				notice += "辣度："+Tools.getUserPungent(userPungent);
+				order.setOrderNotice(notice);
 				if(this.orderdao.insertOrder(order) > 0){
 					TSOrder sonOrder = new TSOrder();
 					sonOrder.setFOrderNum(order.getOrderNum());
@@ -122,16 +146,9 @@ public class OrderService extends GeneralService {
 					sonOrder.setSOrderConsumeEvaluate("");
 					sonOrder.setSOrderLogisticsEvaluate("");
 					sonOrder.setSOrderIsdispatchingStateOpen(1);
-					String notice = "注意：";
-					if(!userheat.equals("")){
-						notice += "不吃："+ (userheat+" ");
-					}
-					notice += "饭量："+Tools.getUserAppetite(userAppetite)+" ";
-					notice += "辣度："+Tools.getUserPungent(userPungent);
 					sonOrder.setSOrderNotice(notice);
 					sonOrder.setSOrderDispatchingId(order.getOrderDispatchingId());
 					sonOrder.setUserId(order.getUserId());
-					
 					//循环增加子订单
 					List<String> dates = Tools.getDatesNotWeekend(box_type);
 					for(int i = 1;i <= box_type;i++){

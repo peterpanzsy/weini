@@ -1,5 +1,7 @@
 package com.weini.manage.dao;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -16,20 +18,25 @@ public class TrackpageDao {
 	 * 根据当前时间获取相应的文案信息
 	 * @return 成功返回信息，否则返回null
 	 */
-	public TTrackpage getTrackpage(String time){
-		TTrackpage res = null;
-		Query q = session.createSQLQuery("SELECT trackpage_id,trackpage_currentstate,trackpage_curbackcolindex,trackpage_tiptext "
-				+ "FROM t_trackpage where DATE_FORMAT(trackpage_startTime,'%H:%i:%s') < ? and DATE_FORMAT(trackpage_endTime,'%H:%i:%s') > ?;");
+	public List<TTrackpage> getTrackpage(String time){
+		List<TTrackpage> res = new ArrayList<TTrackpage>();
+		Query q = session.createSQLQuery("SELECT trackpage_id,trackpage_currentstate,trackpage_curbackcolindex,trackpage_tiptext,trackpage_startTime,trackpage_endTime "
+				+ "FROM t_trackpage where DATE_FORMAT(trackpage_endTime,'%H:%i:%s') < ?;");
 		q.setString(0,time);
-		q.setString(1,time);
 		List l = q.list();
-		if(l.size() == 1){
-			Object[] row = (Object[])l.get(0);
-			res = new TTrackpage();
-			res.setTrackpageId((int)row[0]);
-			res.setTrackpageCurrentstate((String)row[1]);
-			res.setTrackpageCurbackcolindex((int)row[2]);
-			res.setTrackpageTiptext((String)row[3]);
+		if(l != null && l.size() > 0){
+			for(int i = 0;i < l.size(); i++){
+				Object[] row = (Object[])l.get(i);
+				TTrackpage temp = new TTrackpage();
+				temp = new TTrackpage();
+				temp.setTrackpageId((int)row[0]);
+				temp.setTrackpageCurrentstate((String)row[1]);
+				temp.setTrackpageCurbackcolindex((int)row[2]);
+				temp.setTrackpageTiptext((String)row[3]);
+				temp.setTrackpageStartTime((Timestamp)row[4]);
+				temp.setTrackpageEndTime((Timestamp)row[5]);
+				res.add(temp);
+			}
 		}
 		return res;
 	}

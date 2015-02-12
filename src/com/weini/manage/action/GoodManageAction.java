@@ -156,37 +156,23 @@ public class GoodManageAction extends ActionSupport{
 		this.vendors = (new MenuinfoService()).listVendorsByBussID(indexID);
 		return "SUCCESS";
 	}
-	// TODO 处理异常
-	public String uploadPicture() throws IOException{
+	public String uploadPicture(){
 		this.uploadSuccess = false;
-		String savePath = ServletActionContext.getServletContext().getRealPath(Configure.goodPicPath);//上传完后文件存放位置  
-        String newsuffix = "";
-		//获取后缀名
-		if((this.uploadifyFileName != null) && (this.uploadifyFileName.length() > 0)){
-			int dot = uploadifyFileName.lastIndexOf(".");  
-            if((dot >-1) && (dot < (uploadifyFileName.length() - 1)))  
-            {  
-                 newsuffix = uploadifyFileName.substring(dot + 1);
-            }  
+		List<Object> res = Tools.uploadFile(uploadifyFileName, Configure.goodPicPath, uploadify, Configure.goodPicSuffix, Configure.goodPicMaxSize);
+		if(res.size() > 0){
+			int first = (int) res.get(0);
+			if(first == 3){
+				this.picNewPath = (String)res.get(1);
+				uploadSuccess = true;
+				this.info = "上传成功";
+			}else if(first == 2){
+				this.info = "上传失败，文件大于3M";
+			}else if(first == 1){
+				this.info = "上传失败，文件格式不对！";
+			}else{
+				this.info = "上传失败";
+			}
 		}
-		//判断类型
-		if(newsuffix == "" || !Configure.goodPicSuffix.contains(newsuffix)){
-			this.info = "上传失败，文件格式不对！";
-			return "SUCCESS";
-		}
-        //判断大小
-		if(this.uploadify == null || (this.uploadify.length() > Configure.goodPicMaxSize )){
-			this.info = "上传失败，文件大于3M";
-			return "SUCCESS";
-		}
-		String desPathTemp =  File.separator+Tools.getUUID() + "." + newsuffix;
-		if(!Tools.copyFile(this.uploadify.getAbsolutePath(), savePath + desPathTemp ,true)){
-			this.info = "上传失败";
-			return "SUCCESS";
-		}
-		this.uploadSuccess = true;
-		this.picNewPath = Configure.goodPicPath.substring(1) + desPathTemp;
-		this.info = "上传成功";
 		return "SUCCESS";
 	}
 	public List<TMenuinfo> getGoodlist() {

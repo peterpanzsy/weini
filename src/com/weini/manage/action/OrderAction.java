@@ -7,9 +7,11 @@ import java.util.List;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import com.weini.manage.business.DispatchingService;
 import com.weini.manage.business.OrderService;
 import com.weini.manage.business.OtherService;
 import com.weini.manage.business.StartUpdateService;
+import com.weini.manage.entity.DispatchingAddress;
 import com.weini.manage.entity.TOrder;
 import com.weini.manage.entity.TSOrder;
 import com.weini.manage.entity.TSorderDispatching;
@@ -55,8 +57,10 @@ public class OrderAction extends ActionSupport {
 	// 用户退款原因
 	private int refundReason;
 	//订单溯源信息；
-	private TTrackpage trackPage;
+	private List<TTrackpage> trackPage;
 	private int sonOrderID;
+	//地址信息类
+	private DispatchingAddress disAddress;
 	/**
 	 * 获取用户最近两个月的订单信息
 	 * @return 
@@ -215,6 +219,24 @@ public class OrderAction extends ActionSupport {
 		return "SUCCESS";
 	}
 	/**
+	 * 根据订单编号获取订单简略信息
+	 * @param orderNum 订单编号
+	 * @return 订单信息，地址类
+	 */
+	public String getOrderSimpleInfoByOrderNum(){
+		code = 0;
+		orderDetail = (new OrderService()).getOrderDetailByOrderNum(orderNum);
+		if(orderDetail != null){
+			disAddress = (new DispatchingService()).findDispatchingByDisId(orderDetail.getOrderDispatchingId());
+			code = 1;
+		}else{
+			code = 0;
+			result = "订单不存在";
+			return "FAIL";
+		}
+		return "SUCCESS";
+	}
+	/**
 	 * 用户退款
 	 * orderNum 订单编号
 	 * refundReason 退款原因索引
@@ -232,12 +254,13 @@ public class OrderAction extends ActionSupport {
 	 * @return
 	 */
 	public String getUserOrderByDate(){
-		code = 0;
-		try{
-			datalist = (new OrderService()).searchUserOrderByDate(Tools.getUserID(), dateStart, dateEnd, pageStart, pageLimit);
-		}catch(Exception e){
-			e.printStackTrace();
+		int userId = Tools.getUserID();
+		if(userId == -1){
+			code = 0;
+			result="用户没有登录";
+			return "FAIL";
 		}
+		datalist = (new OrderService()).searchUserOrderByDate(userId, dateStart, dateEnd, pageStart, pageLimit);
 		if(datalist != null){
 			code = 1;
 		}
@@ -250,11 +273,23 @@ public class OrderAction extends ActionSupport {
 	 */
 	public String searchOrderStatusTrack(){
 		code = 0;
-		setTrackPage((new StartUpdateService()).getTrackPageinfo());
-		datalist = (new OrderService()).getSonOrderDispatchStatus(sonOrderID);
-		if(datalist != null){
-			code = 1;
+		int userId = Tools.getUserID();
+		if(userId == -1){
+			code = 0;
+			result="用户没有登录";
+			return "FAIL";
 		}
+		//获取用户今天的子订单id
+		int sonId = -1;
+		sonId = new OrderService().getTodaySonOrderByUserId(userId);
+		if(sonId == -1){
+			code = 0;
+			result = "用户今天没有订单";
+			return "FAIL";
+		}
+		code = 1;
+		trackPage = (new StartUpdateService()).getTrackPageinfo();
+
 		return "SUCCESS";
 	}
 	public int getCode() {
@@ -395,10 +430,16 @@ public class OrderAction extends ActionSupport {
 	public void setDatalist(List datalist) {
 		this.datalist = datalist;
 	}
-	public TTrackpage getTrackPage() {
+	public int getUserPungent() {
+		return userPungent;
+	}
+	public void setUserPungent(int userPungent) {
+		this.userPungent = userPungent;
+	}
+	public List<TTrackpage> getTrackPage() {
 		return trackPage;
 	}
-	public void setTrackPage(TTrackpage trackPage) {
+	public void setTrackPage(List<TTrackpage> trackPage) {
 		this.trackPage = trackPage;
 	}
 	public int getSonOrderID() {
@@ -412,5 +453,11 @@ public class OrderAction extends ActionSupport {
 	}
 	public void setMenuWestern(int menuWestern) {
 		this.menuWestern = menuWestern;
+	}
+	public DispatchingAddress getDisAddress() {
+		return disAddress;
+	}
+	public void setDisAddress(DispatchingAddress disAddress) {
+		this.disAddress = disAddress;
 	}
 }

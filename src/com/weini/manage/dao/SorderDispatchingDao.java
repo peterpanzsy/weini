@@ -67,8 +67,9 @@ public class SorderDispatchingDao {
 	 */
 	public List<TSorderDispatching> findSorderDispatchingBySOrderId(Integer sorderId){
 		Query q = session.createSQLQuery("select s.dispatchingStatus_imagename,s.dispatchingStatus_desctext,"
-				+ "so.status_time from t_sorder_dispatching as so,t_dispatchingstatus as s where s_order_id = 40 "
+				+ "so.status_time from t_sorder_dispatching as so,t_dispatchingstatus as s where s_order_id = ? "
 				+ "and so.dispatchingstatus_id = s.dispatchingStatus_id ORDER BY status_time ASC;");
+		q.setInteger(0, sorderId);
 		List l = q.list();
 		List<TSorderDispatching> res = new ArrayList<TSorderDispatching>();
 		if(l != null && l.size() > 0){

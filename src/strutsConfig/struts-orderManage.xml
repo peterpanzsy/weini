@@ -45,7 +45,7 @@
 				code,
 				datalist\[\d+\]\.orderNum,
 				datalist\[\d+\]\.orderBoxType,
-				datalist\[\d+\]\.orderOrderTime,
+				datalist\[\d+\]\.orderOrderTimeString,
 				datalist\[\d+\]\.orderMenuWestern, 
 				datalist\[\d+\]\.orderStatus,
 			</param>				
@@ -83,7 +83,28 @@
 				orderDetail\.boxPrice,
 				orderDetail\.orderIsFirst,
 				orderDetail\.orderDispatchingId,
-				orderDetail\.orderStatus
+				orderDetail\.orderStatus,
+				orderDetail\.orderNotice
+			</param>				
+		</result>
+		<result name="FAIL" type="json">
+			<param name="includeProperties">code,result</param>				
+		</result>
+	</action>
+	<!-- 获取订单简略信息 -->
+	<action name="OrderSimpleInfoByOrderNum" class="com.weini.manage.action.OrderAction" method="getOrderSimpleInfoByOrderNum">
+		<result name="SUCCESS" type="json">
+			<param name="includeProperties">
+				code,
+				orderDetail\.orderNum,
+				orderDetail\.orderOrderTimeString,
+				orderDetail\.orderNotice,
+				disAddress\.dispatchingCity,
+				disAddress\.dispatchingDistrict,
+				disAddress\.dispatchingBusinessAreaid,
+				disAddress\.dispatchingOfficeBuilding,
+				disAddress\.dispatchingAddressDetail,
+				disAddress\.dispatchingPhoneNum
 			</param>				
 		</result>
 		<result name="FAIL" type="json">
@@ -99,19 +120,25 @@
 		<result name="SUCCESS" type="json">
 			<param name="includeProperties">code,datalist.*</param>				
 		</result>
+		<result name="FAIL" type="json">
+			<param name="includeProperties">code,result</param>				
+		</result>
 	</action>
 	<action name="OrderStatusTrack" class="com.weini.manage.action.OrderAction" method="searchOrderStatusTrack">
 		<result name="SUCCESS" type="json">				
 		<param name="includeProperties">
 			code,
-			trackPage\.trackpageId,
-			trackPage\.trackpageCurrentstate,
-			trackPage\.trackpageCurbackcolindex,
-			trackPage\.trackpageTiptext,
-			datalist\[\d+\]\.statusImage,
-			datalist\[\d+\]\.statusDesc,
-			datalist\[\d+\]\.statusStringTime
+			trackPage\[\d+\]\.trackpageId,
+			trackPage\[\d+\]\.trackpageCurrentstate,
+			trackPage\[\d+\]\.trackpageCurbackcolindex,
+			trackPage\[\d+\]\.trackpageTiptext,
+			trackPage\[\d+\]\.trackStringPageStartTime,
+			trackPage\[\d+\]\.trackStringPageEndTime
+			
 		</param>
+		</result>
+		<result name="FAIL" type="json">
+			<param name="includeProperties">code,result</param>				
 		</result>
 	</action>
 	</package>

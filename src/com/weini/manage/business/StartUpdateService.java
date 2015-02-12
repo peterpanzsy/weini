@@ -1,6 +1,7 @@
 package com.weini.manage.business;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -74,8 +75,8 @@ public class StartUpdateService extends GeneralService {
 	 * 获取订单状态的文案信息 
 	 * @return
 	 */
-	public TTrackpage getTrackPageinfo(){
-		TTrackpage res = null;
+	public List<TTrackpage> getTrackPageinfo(){
+		List<TTrackpage> res = new ArrayList<TTrackpage>();
 		try{
 			//获取当前的时间
 			Calendar cale = Calendar.getInstance();
@@ -83,6 +84,7 @@ public class StartUpdateService extends GeneralService {
 			res = this.trackpagedao.getTrackpage(time);
 		}catch(Exception e){
 			e.printStackTrace();
+			res = null;
 		}
 		this.close();
 		return res;

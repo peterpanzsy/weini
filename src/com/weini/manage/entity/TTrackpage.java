@@ -19,7 +19,7 @@ public class TTrackpage implements java.io.Serializable {
 	private Timestamp trackpageEndTime;
 	private String trackStringPageStartTime;
 	private String trackStringPageEndTime;
-
+	
 	// Constructors
 
 	/** default constructor */
@@ -96,7 +96,7 @@ public class TTrackpage implements java.io.Serializable {
 	}
 	
 	public String getTrackStringPageStartTime() {
-		if(trackStringPageStartTime != null){
+		if(trackpageStartTime != null){
 			return this.trackpageStartTime.toString();
 		}else{
 			return "";

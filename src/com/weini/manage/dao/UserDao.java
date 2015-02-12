@@ -167,24 +167,7 @@ public class UserDao{
 	 * 			否则，返回null
 	 */
 	public TUser searchUser(String phoneNum,String pass){
-		SQLQuery query = session.createSQLQuery("select t1.user_id,t1.user_name,t1.user_gender,t1.user_address,t1.user_phoneNumber,t1.user_phoneType,t1.user_scale"
-				+ " from t_user t1 where user_phoneNumber = ? and user_pwd =? ");
-	    query.setParameter(0, phoneNum);
-	    query.setParameter(1, pass);
-	   TUser u = new TUser();
-	   List l= query.list();
-	   if(l.size()>0){
-		   Object[] row =(Object[]) l.get(0);
-		   	u.setUserId((Integer)row[0]);
-		   	u.setUserName((String)row[1]);		
-		   	u.setUserGender((Integer)row[2]);
-		   	u.setUserAddress((String)row[3]);
-		   	u.setUserPhoneNumber((String)row[4]);
-		   	u.setUserPhoneType((Integer)row[5]);
-		   	u.setUserScale((Integer)row[6]);
-		   	return u;
-	   }
-		   return null;
+		return (TUser) session.createQuery("from TUser t where t.userPhoneNumber = ? and t.userPwd = ? ").setString(0, phoneNum).setString(1,pass).uniqueResult();
 	}
 	/**
 	 * 根据手机号码来查找TUser用户，用来查询该手机号是否为以注册的用户

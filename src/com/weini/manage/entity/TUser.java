@@ -41,7 +41,7 @@ public class TUser implements java.io.Serializable {
 	private Integer userDispatchdefaultId = -1;
 	//默认为中份
 	private Integer userAppetite = 1;
-	private Integer userPungent;
+	private Integer userPungent = 1;
 	//add 在平台上累计的天数
 	private Integer countDays = 0;  
 	private String userRegdateString;

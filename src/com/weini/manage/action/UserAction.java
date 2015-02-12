@@ -93,7 +93,7 @@ public class UserAction extends ActionSupport{
 			System.err.println("用户没有登录");
 			code = 0; 
 			result="用户没有登录";
-			return "fail";
+			return "FAIL";
 		}
 		try {
 			TwoEntity two = userService.findUserInfo(userID);
@@ -102,13 +102,14 @@ public class UserAction extends ActionSupport{
 			if(tuser==null){
 				code = 0; 
 				result="没有记录";
-				return "fail";
+				return "FAIL";
 			}
 			code = 1;
 		} catch (Exception e) {
+			e.printStackTrace();
 			code = 0; 
 			result="参数有误";
-			return "fail";
+			return "FAIL";
 		}
 		return SUCCESS;
 	}
@@ -123,7 +124,7 @@ public class UserAction extends ActionSupport{
 		if(user == null){
 			code = 0; 
 			result="用户没有登录";
-			return "fail";
+			return "FAIL";
 		}
 		user.setUserHeat(menutypeId);
 		code = (new UserService()).updateUser(user);
@@ -143,7 +144,7 @@ public class UserAction extends ActionSupport{
 		if(user == null){
 			code = 0; 
 			result="用户没有登录";
-			return "fail";
+			return "FAIL";
 		}
 		user.setUserGender(userGender);
 		code = (new UserService()).updateUser(user);
@@ -177,6 +178,22 @@ public class UserAction extends ActionSupport{
 		return "SUCCESS";
 	}
 	/**
+	 * 上传用户图像
+	 * @return
+	 */
+	public String updateUserImage(){
+		userService = new UserService();
+		int userID = Tools.getUserID();
+		if(userID == -1){
+			code = 0; 
+			result="用户没有登录";
+			return "FAIL";
+		}
+		
+//		code = userService.updateUserBirthday(userID,date);
+		return "SUCCESS";
+	}
+	/**
 	 * 更新用户昵称
 	 * @return
 	 */
@@ -187,7 +204,7 @@ public class UserAction extends ActionSupport{
 		if(user == null){
 			code = 0; 
 			result="用户没有登录";
-			return "fail";
+			return "FAIL";
 		}
 		user.setUserName(userName);
 		code = (new UserService()).updateUser(user);

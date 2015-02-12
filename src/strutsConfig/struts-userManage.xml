@@ -26,7 +26,7 @@
 					tuserextra\.userextraBirthday,
 				</param>			
 			</result>
-			<result name="fail" type="json">	
+			<result name="FAIL" type="json">	
 				<param name="includeProperties">code,result</param>			
 			</result>
 		</action>

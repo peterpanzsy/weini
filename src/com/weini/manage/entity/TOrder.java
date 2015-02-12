@@ -1,16 +1,26 @@
 package com.weini.manage.entity;
 // default package
 
+import java.beans.Transient;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+
 /**
  * TOrder entity. @author MyEclipse Persistence Tools
  */
-
+@Entity   
+@Table(name="t_order")
 public class TOrder implements java.io.Serializable {
 
 	// Fields
@@ -33,6 +43,7 @@ public class TOrder implements java.io.Serializable {
 	private Integer orderDispatchingId;
 	private Integer orderSettleStatus;
 	private Integer orderStatus;
+	private String orderNotice;
 	
 	//pl add 
 	//菜品是否是西餐
@@ -95,7 +106,8 @@ public class TOrder implements java.io.Serializable {
 	}
 
 	// Property accessors
-
+	@Id              // 表示主键
+    @Column(name = "order_num")
 	public String getOrderNum() {
 		return this.orderNum;
 	}
@@ -103,7 +115,7 @@ public class TOrder implements java.io.Serializable {
 	public void setOrderNum(String orderNum) {
 		this.orderNum = orderNum;
 	}
-
+	@Column(name = "user_id")
 	public Integer getUserId() {
 		return this.userId;
 	}
@@ -111,7 +123,7 @@ public class TOrder implements java.io.Serializable {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-
+	@Column(name = "order_menuinfo_id")
 	public Integer getOrderMenuinfoId() {
 		return this.orderMenuinfoId;
 	}
@@ -119,7 +131,8 @@ public class TOrder implements java.io.Serializable {
 	public void setOrderMenuinfoId(Integer orderMenuinfoId) {
 		this.orderMenuinfoId = orderMenuinfoId;
 	}
-
+	
+	@Column(name = "box_id")
 	public Integer getBoxId() {
 		return this.boxId;
 	}
@@ -127,45 +140,35 @@ public class TOrder implements java.io.Serializable {
 	public void setBoxId(Integer boxId) {
 		this.boxId = boxId;
 	}
-
-	public String getOrderStartTime() {
-		if(this.orderStartTime != null){
-			return this.orderStartTime.toString();
-		}else{
-			return "";
-		}
-	}
-	public Timestamp getOrderStartTimeTimestamp() {
-		return this.orderStartTime;
+	
+	@Column(name = "order_startTime")
+	public Timestamp getOrderStartTime() {
+		return orderStartTime;
 	}
 
-	public void setOrderStartTime(String orderStartTime) throws ParseException {
-		this.orderStartTime = this.getTimestampByString(orderStartTime);
+	public void setOrderStartTime(Timestamp orderStartTime) {
+		this.orderStartTime = orderStartTime;
 	}
 	
-	public void setOrderStartTime(Timestamp startTime) {
-		this.orderStartTime = startTime;
+	@Column(name = "order_orderTime")
+	public Timestamp getOrderOrderTime() {
+		return orderOrderTime;
 	}
 
-	public String getOrderOrderTime() {
-		if(this.orderOrderTime != null){
-			return this.orderOrderTime.toString();
-		}else{
-			return "";
-		}
-	}
-	public Timestamp getOrderOrderTimeTimestamp() {
-			return this.orderOrderTime;
+	public void setOrderOrderTime(Timestamp orderOrderTime) {
+		this.orderOrderTime = orderOrderTime;
 	}
 
-	public void setOrderOrderTime(String orderOrderTime) throws ParseException{
-		this.orderOrderTime = this.getTimestampByString(orderOrderTime);
-	}
-	
-	public void setOrderOrderTime(Timestamp orderTime) {
-		this.orderOrderTime = orderTime;
+	@Column(name = "order_payTime")
+	public Timestamp getOrderPayTime() {
+		return orderPayTime;
 	}
 
+	public void setOrderPayTime(Timestamp orderPayTime) {
+		this.orderPayTime = orderPayTime;
+	}
+
+	@Column(name = "order_payStatus")
 	public Integer getOrderPayStatus() {
 		return this.orderPayStatus;
 	}
@@ -173,7 +176,8 @@ public class TOrder implements java.io.Serializable {
 	public void setOrderPayStatus(Integer orderPayStatus) {
 		this.orderPayStatus = orderPayStatus;
 	}
-
+	
+	@Column(name = "S_order_ConsumeStatus")
 	public Integer getSOrderConsumeStatus() {
 		return this.SOrderConsumeStatus;
 	}
@@ -181,26 +185,8 @@ public class TOrder implements java.io.Serializable {
 	public void setSOrderConsumeStatus(Integer SOrderConsumeStatus) {
 		this.SOrderConsumeStatus = SOrderConsumeStatus;
 	}
-
-	public String getOrderPayTime() {
-		if(this.orderPayTime != null){
-			return this.orderPayTime.toString();
-		}else{
-			return "";
-		}
-		
-	}
-	public Timestamp getOrderPayTimeTimestamp() {
-		return this.orderPayTime;
-	}
-
-	public void setOrderPayTime(String orderPayTime) throws ParseException {
-		this.orderPayTime = this.getTimestampByString(orderPayTime);
-	}
-	public void setOrderPayTime(Timestamp payTime) {
-		this.orderPayTime = payTime;
-	}
-
+	
+	@Column(name = "box_price")
 	public Float getBoxPrice() {
 		return this.boxPrice;
 	}
@@ -208,7 +194,8 @@ public class TOrder implements java.io.Serializable {
 	public void setBoxPrice(Float boxPrice) {
 		this.boxPrice = boxPrice;
 	}
-
+	
+	@Column(name = "order_isFirst")
 	public Integer getOrderIsFirst() {
 		return this.orderIsFirst;
 	}
@@ -217,6 +204,7 @@ public class TOrder implements java.io.Serializable {
 		this.orderIsFirst = orderIsFirst;
 	}
 
+	@Column(name = "order_dispatching_id")
 	public Integer getOrderDispatchingId() {
 		return this.orderDispatchingId;
 	}
@@ -225,6 +213,7 @@ public class TOrder implements java.io.Serializable {
 		this.orderDispatchingId = orderDispatchingId;
 	}
 
+	@Column(name = "order_settleStatus")
 	public Integer getOrderSettleStatus() {
 		return this.orderSettleStatus;
 	}
@@ -232,7 +221,8 @@ public class TOrder implements java.io.Serializable {
 	public void setOrderSettleStatus(Integer orderSettleStatus) {
 		this.orderSettleStatus = orderSettleStatus;
 	}
-
+	
+	@Column(name = "order_status")
 	public Integer getOrderStatus() {
 		return this.orderStatus;
 	}
@@ -240,7 +230,17 @@ public class TOrder implements java.io.Serializable {
 	public void setOrderStatus(Integer orderStatus) {
 		this.orderStatus = orderStatus;
 	}
+	
+	@Column(name = "order_notice")
+	public String getOrderNotice() {
+		return orderNotice;
+	}
 
+	public void setOrderNotice(String orderNotice) {
+		this.orderNotice = orderNotice;
+	}
+
+	@Transient
 	public int getOrderMenuWestern() {
 		return orderMenuWestern;
 	}
@@ -248,7 +248,8 @@ public class TOrder implements java.io.Serializable {
 	public void setOrderMenuWestern(int orderMenuWestern) {
 		this.orderMenuWestern = orderMenuWestern;
 	}
-
+	
+	@Transient
 	public String getOrderMenuTypeDesc() {
 		return orderMenuTypeDesc;
 	}
@@ -256,6 +257,8 @@ public class TOrder implements java.io.Serializable {
 	public void setOrderMenuTypeDesc(String orderMenuTypeDesc) {
 		this.orderMenuTypeDesc = orderMenuTypeDesc;
 	}
+	
+	@Transient
 	private Timestamp getTimestampByString(String time) throws ParseException{
 		DateFormat format2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     	Date date = format2.parse(time);
@@ -263,6 +266,7 @@ public class TOrder implements java.io.Serializable {
     	return temp;
 	}
 
+	@Transient
 	public int getOrderBoxType() {
 		return orderBoxType;
 	}
@@ -271,6 +275,7 @@ public class TOrder implements java.io.Serializable {
 		this.orderBoxType = orderBoxType;
 	}
 
+	@Transient
 	public String getOrderBoxTypeName() {
 		return orderBoxTypeName;
 	}
@@ -278,6 +283,8 @@ public class TOrder implements java.io.Serializable {
 	public void setOrderBoxTypeName(String orderBoxTypeName) {
 		this.orderBoxTypeName = orderBoxTypeName;
 	}
+	
+	@Transient
 	public String getOrderStartTimeString() {
 		if(this.orderStartTime != null){
 			return this.orderStartTime.toString();
@@ -285,7 +292,8 @@ public class TOrder implements java.io.Serializable {
 			return "";
 		}
 	}
-
+	
+	@Transient
 	public String getOrderOrderTimeString() {
 		if(this.orderOrderTime != null){
 			return this.orderOrderTime.toString();
@@ -293,7 +301,8 @@ public class TOrder implements java.io.Serializable {
 			return "";
 		}
 	}
-
+	
+	@Transient
 	public String getOrderPayTimeString() {
 		if(this.orderPayTime != null){
 			return this.orderPayTime.toString();
@@ -301,5 +310,6 @@ public class TOrder implements java.io.Serializable {
 			return "";
 		}
 	}
+
 
 }

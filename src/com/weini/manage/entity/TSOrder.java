@@ -1,13 +1,23 @@
 package com.weini.manage.entity;
 // default package
 
+import java.beans.Transient;
 import java.sql.Timestamp;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * TSOrder entity. @author MyEclipse Persistence Tools
  */
-
+@Entity   
+@Table(name="t_s_order")
 public class TSOrder implements java.io.Serializable {
 
 	// Fields
@@ -78,7 +88,12 @@ public class TSOrder implements java.io.Serializable {
 	}
 
 	// Property accessors
-
+	@Id
+	// 表示主键
+	@GenericGenerator(name = "generator", strategy = "increment")
+	@GeneratedValue(generator = "generator")
+	// 自增长
+	@Column(name = "S_order_id")
 	public Integer getSOrderId() {
 		return this.SOrderId;
 	}
@@ -86,7 +101,8 @@ public class TSOrder implements java.io.Serializable {
 	public void setSOrderId(Integer SOrderId) {
 		this.SOrderId = SOrderId;
 	}
-
+	
+	@Column(name = "F_order_num")
 	public String getFOrderNum() {
 		return this.FOrderNum;
 	}
@@ -94,7 +110,8 @@ public class TSOrder implements java.io.Serializable {
 	public void setFOrderNum(String FOrderNum) {
 		this.FOrderNum = FOrderNum;
 	}
-
+	
+	@Column(name = "menu_id")
 	public Integer getMenuId() {
 		return this.menuId;
 	}
@@ -103,6 +120,7 @@ public class TSOrder implements java.io.Serializable {
 		this.menuId = menuId;
 	}
 
+	@Column(name = "S_order_whichday")
 	public Integer getSOrderWhichday() {
 		return this.SOrderWhichday;
 	}
@@ -110,7 +128,7 @@ public class TSOrder implements java.io.Serializable {
 	public void setSOrderWhichday(Integer SOrderWhichday) {
 		this.SOrderWhichday = SOrderWhichday;
 	}
-
+	@Column(name = "S_order_consumeEvaluate")
 	public String getSOrderConsumeEvaluate() {
 		return this.SOrderConsumeEvaluate;
 	}
@@ -119,6 +137,7 @@ public class TSOrder implements java.io.Serializable {
 		this.SOrderConsumeEvaluate = SOrderConsumeEvaluate;
 	}
 
+	@Column(name = "S_order_dispatchingDate")
 	public Date getSOrderDispatchingDate() {
 		return this.SOrderDispatchingDate;
 	}
@@ -126,7 +145,8 @@ public class TSOrder implements java.io.Serializable {
 	public void setSOrderDispatchingDate(Date SOrderDispatchingDate) {
 		this.SOrderDispatchingDate = SOrderDispatchingDate;
 	}
-
+	
+	@Column(name = "S_order_logisticsEvaluate")
 	public String getSOrderLogisticsEvaluate() {
 		return this.SOrderLogisticsEvaluate;
 	}
@@ -134,7 +154,8 @@ public class TSOrder implements java.io.Serializable {
 	public void setSOrderLogisticsEvaluate(String SOrderLogisticsEvaluate) {
 		this.SOrderLogisticsEvaluate = SOrderLogisticsEvaluate;
 	}
-
+	
+	@Column(name = "S_order_predictTime")
 	public Timestamp getSOrderPredictTime() {
 		return this.SOrderPredictTime;
 	}
@@ -142,7 +163,8 @@ public class TSOrder implements java.io.Serializable {
 	public void setSOrderPredictTime(Timestamp SOrderPredictTime) {
 		this.SOrderPredictTime = SOrderPredictTime;
 	}
-
+	
+	@Column(name = "S_order_isdispatchingStateOpen")
 	public Integer getSOrderIsdispatchingStateOpen() {
 		return this.SOrderIsdispatchingStateOpen;
 	}
@@ -151,7 +173,8 @@ public class TSOrder implements java.io.Serializable {
 			Integer SOrderIsdispatchingStateOpen) {
 		this.SOrderIsdispatchingStateOpen = SOrderIsdispatchingStateOpen;
 	}
-
+	
+	@Column(name = "S_order_notice")
 	public String getSOrderNotice() {
 		return this.SOrderNotice;
 	}
@@ -159,7 +182,7 @@ public class TSOrder implements java.io.Serializable {
 	public void setSOrderNotice(String SOrderNotice) {
 		this.SOrderNotice = SOrderNotice;
 	}
-
+	@Column(name = "S_order_dispatchingID")
 	public Integer getSOrderDispatchingId() {
 		return this.SOrderDispatchingId;
 	}
@@ -167,7 +190,7 @@ public class TSOrder implements java.io.Serializable {
 	public void setSOrderDispatchingId(Integer SOrderDispatchingId) {
 		this.SOrderDispatchingId = SOrderDispatchingId;
 	}
-
+	@Column(name = "S_order_status")
 	public Integer getSOrderStatus() {
 		return this.SOrderStatus;
 	}
@@ -175,19 +198,20 @@ public class TSOrder implements java.io.Serializable {
 	public void setSOrderStatus(Integer SOrderStatus) {
 		this.SOrderStatus = SOrderStatus;
 	}
-
+	@Column(name = "user_id")
 	public Integer getUserId() {
 		return this.userId;
 	}
 
+	@Transient
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-
+	@Transient
 	public String getMenuTypeDesc() {
 		return menuTypeDesc;
 	}
-
+	@Transient
 	public void setMenuTypeDesc(String menuTypeDesc) {
 		this.menuTypeDesc = menuTypeDesc;
 	}

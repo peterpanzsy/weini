@@ -24,6 +24,8 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.struts2.ServletActionContext;
+
 import com.opensymphony.xwork2.ActionContext;
 import com.weini.manage.entity.TUser;
 
@@ -211,23 +213,10 @@ public class Tools {
 	    	return 2;
 	    }
 	    public static String getSomeDayDate(int type){
-//			Timestamp time = null;
-//			DateFormat format2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");         
-//			Date date = null;	
 			Calendar cale = Calendar.getInstance();
 			cale.add(Calendar.DATE, type);
-//			String tarday = new SimpleDateFormat("yyyy-MM-dd").format(cale.getTime())+" 00:00:00";
 			String tarday = new SimpleDateFormat("yyyy-MM-dd").format(cale.getTime());
 			return tarday;
-//			// String转Date    
-//			try {               
-//	           date = format2.parse(tarday); 
-//	           System.out.println(date.getTime());
-//	           time = new Timestamp(date.getTime());
-//			} catch (ParseException e) {    
-//			           e.printStackTrace();  
-//			}
-//			return time;
 		}
 	    /**
 	     * 获取饭量的描述
@@ -291,6 +280,53 @@ public class Tools {
 			}else{
 				System.err.println("用户没有登录！");
 			}
+			return res;
+		}
+		/**
+		 * 上传文件
+		 * @param sourceImageName 图片名字
+		 * @param desFilePath 文件目的地址(相对路径)(例如："upload"+File.separator+"goodsPic")
+		 * @param imageFile 图片文件
+		 * @param rightSuffix 合法的后缀名 (null,表示无限制)
+		 * @param imageSize 图像最大值 (-1,表示没有限制)
+		 * @return 结果：第一个实体 0:出错；1：后缀名不合法 2：文件超过限制  3：上传成功
+		 * 				如果成功，第二个实体表示文件路径
+		 */
+		public static List<Object> uploadFile(String sourceFileName,String desFilePath,File fileSource,List<String> rightSuffix,long fileSize){
+			List<Object> res = new ArrayList<Object>();
+			String savePath = ServletActionContext.getServletContext().getRealPath(desFilePath);//上传完后文件存放位置  
+	        String newsuffix = "";
+			//获取后缀名
+			if((sourceFileName != null) && (sourceFileName.length() > 0)){
+				int dot = sourceFileName.lastIndexOf(".");  
+	            if((dot >-1) && (dot < (sourceFileName.length() - 1)))  
+	            {  
+	                 newsuffix = sourceFileName.substring(dot + 1);
+	            }  
+			}
+			//判断类型
+			if(rightSuffix != null){
+				if(newsuffix == "" || !rightSuffix.contains(newsuffix)){
+					//类型出错处理
+					res.add(1);
+					return res;
+				}
+			}
+	        //判断大小
+			if(fileSize != -1){
+				if(fileSource == null || (fileSource.length() > fileSize )){
+					//大小出错处理
+					res.add(2);
+					return res;
+				}
+			}
+			String desPathTemp =  File.separator+Tools.getUUID() + "." + newsuffix;
+			if(!Tools.copyFile(fileSource.getAbsolutePath(), savePath + desPathTemp ,true)){
+				res.add(0);
+				return res;
+			}
+			res.add(3);
+			res.add(desFilePath + desPathTemp);
 			return res;
 		}
 }

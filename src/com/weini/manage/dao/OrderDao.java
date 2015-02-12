@@ -56,22 +56,23 @@ public class OrderDao{
 	public int insertOrder(TOrder order){
 		Query q = session.createSQLQuery("insert into t_order(order_num,user_id,order_menuinfo_id,box_id,"
 			+ "order_startTime,order_orderTime,order_payStatus,S_order_consumeStatus,"
-			+ "order_payTime,box_price,order_isFirst,order_dispatching_id,order_settleStatus,order_status)"
-			+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
+			+ "order_payTime,box_price,order_isFirst,order_dispatching_id,order_settleStatus,order_status,order_notice)"
+			+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
 		q.setString(0,order.getOrderNum());
 		q.setInteger(1, order.getUserId());
 		q.setInteger(2,order.getOrderMenuinfoId());
 		q.setInteger(3,order.getBoxId());
-		q.setTimestamp(4, order.getOrderStartTimeTimestamp());
-		q.setTimestamp(5,order.getOrderOrderTimeTimestamp());
+		q.setTimestamp(4, order.getOrderStartTime());
+		q.setTimestamp(5,order.getOrderOrderTime());
 		q.setInteger(6,order.getOrderPayStatus());
 		q.setInteger(7,order.getSOrderConsumeStatus());
-		q.setTimestamp(8,order.getOrderPayTimeTimestamp());
+		q.setTimestamp(8,order.getOrderPayTime());
 		q.setFloat(9,order.getBoxPrice());
 		q.setInteger(10,order.getOrderIsFirst());
 		q.setInteger(11,order.getOrderDispatchingId());
 		q.setInteger(12,order.getOrderSettleStatus());
 		q.setInteger(13,order.getOrderStatus());
+		q.setString(14, order.getOrderNotice());
 		return q.executeUpdate();
 	}
 	/**
@@ -339,7 +340,7 @@ public class OrderDao{
 	public TOrder getOrderDetailByOrderNum(String orderNum){
 		TOrder res = null;
 		Query q = session.createSQLQuery("select order_num,user_id,order_menuinfo_id,box_type,order_orderTime,order_payStatus,"
-				+ "S_order_consumeStatus,order_payTime,o.box_price,order_isFirst,order_dispatching_id,order_status,box_typename "
+				+ "S_order_consumeStatus,order_payTime,o.box_price,order_isFirst,order_dispatching_id,order_status,box_typename,order_notice "
 				+ "from t_order as o, t_box as b where o.box_id = b.box_id and order_num = ?;");
 		q.setString(0, orderNum);
 		List l = q.list();
@@ -359,6 +360,7 @@ public class OrderDao{
 			res.setOrderDispatchingId((int)row[10]);
 			res.setOrderStatus((int)row[11]);
 			res.setOrderBoxTypeName((String)row[12]);
+			res.setOrderNotice((String)row[13]);
 		}
 		return res;
 	}

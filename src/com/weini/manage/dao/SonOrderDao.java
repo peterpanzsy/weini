@@ -114,6 +114,22 @@ public class SonOrderDao{
 		return res;
 	}
 	/**
+	 * 根据用户的id获取今天的子订单id
+	 * @param sonOrderID
+	 * @return
+	 */
+	public int getSonOrderIDByUserIdAndDate(int userId,String time){
+		int res = -1;
+		Query q = session.createSQLQuery("SELECT S_order_id from t_s_order where user_id = ? and S_order_dispatchingDate = ? and S_order_status > 1;");
+		q.setInteger(0, userId);
+		q.setString(1,time);
+		List l = q.list();
+		if(l != null && l.size() == 1){
+			res = (int)(l.get(0));
+		}
+		return res;
+	}
+	/**
 	 * 根据用户id获取用户一个月的消费记录
 	 * 订单要求 所有消费成功的订单
 	 * @param userId 用户id
