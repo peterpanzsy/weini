@@ -1,20 +1,16 @@
 package com.weini.manage.entity;
 // default package
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.beans.Transient;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
 
 /**
  * TOrder entity. @author MyEclipse Persistence Tools
@@ -25,9 +21,6 @@ public class TOrder implements java.io.Serializable {
 
 	// Fields
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private String orderNum;
 	private Integer userId;
@@ -44,7 +37,12 @@ public class TOrder implements java.io.Serializable {
 	private Integer orderSettleStatus;
 	private Integer orderStatus;
 	private String orderNotice;
-	
+
+    private TMenuinfo tMenuinfo;
+    private TUser tUser;
+	private TBox tBox;
+    private TDispatching tDispatching;
+
 	//pl add 
 	//菜品是否是西餐
 	private int orderMenuWestern;
@@ -82,7 +80,7 @@ public class TOrder implements java.io.Serializable {
 		this.orderStatus = orderStatus;
 	}
 
-	/** full constructor */
+	/** full constructor without orderNotice and western*/
 	public TOrder(String orderNum, Integer userId, Integer orderMenuinfoId,
 			Integer boxId, Timestamp orderStartTime, Timestamp orderOrderTime,
 			Integer orderPayStatus, Integer SOrderConsumeStatus,
@@ -105,7 +103,30 @@ public class TOrder implements java.io.Serializable {
 		this.orderStatus = orderStatus;
 	}
 
-	// Property accessors
+    /** full construtor without western **/
+    public TOrder(String orderNum, Integer userId, Integer orderMenuinfoId, Integer boxId,
+                  Timestamp orderStartTime, Timestamp orderOrderTime, Integer orderPayStatus,
+                  Integer SOrderConsumeStatus, Timestamp orderPayTime, Float boxPrice,
+                  Integer orderIsFirst, Integer orderDispatchingId, Integer orderSettleStatus,
+                  Integer orderStatus, String orderNotice) {
+        this.orderNum = orderNum;
+        this.userId = userId;
+        this.orderMenuinfoId = orderMenuinfoId;
+        this.boxId = boxId;
+        this.orderStartTime = orderStartTime;
+        this.orderOrderTime = orderOrderTime;
+        this.orderPayStatus = orderPayStatus;
+        this.SOrderConsumeStatus = SOrderConsumeStatus;
+        this.orderPayTime = orderPayTime;
+        this.boxPrice = boxPrice;
+        this.orderIsFirst = orderIsFirst;
+        this.orderDispatchingId = orderDispatchingId;
+        this.orderSettleStatus = orderSettleStatus;
+        this.orderStatus = orderStatus;
+        this.orderNotice = orderNotice;
+    }
+
+    // Property accessors
 	@Id              // 表示主键
     @Column(name = "order_num")
 	public String getOrderNum() {
@@ -311,5 +332,36 @@ public class TOrder implements java.io.Serializable {
 		}
 	}
 
+    public TMenuinfo getTMenuinfo() {
+        return tMenuinfo;
+    }
+
+    public void setTMenuinfo(TMenuinfo tMenuinfo) {
+        this.tMenuinfo = tMenuinfo;
+    }
+
+    public TUser getTUser() {
+        return tUser;
+    }
+
+    public void setTUser(TUser user) {
+        this.tUser = user;
+    }
+
+    public TBox getTBox() {
+        return tBox;
+    }
+
+    public void setTBox(TBox tBox) {
+        this.tBox = tBox;
+    }
+
+    public TDispatching getTDispatching() {
+        return tDispatching;
+    }
+
+    public void setTDispatching(TDispatching tDispatching) {
+        this.tDispatching = tDispatching;
+    }
 
 }

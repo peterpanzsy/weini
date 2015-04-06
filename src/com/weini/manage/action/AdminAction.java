@@ -1,12 +1,12 @@
 package com.weini.manage.action;
 
-import java.util.List;
-
 import com.opensymphony.xwork2.ActionSupport;
 import com.weini.manage.business.AdminService;
 import com.weini.manage.entity.TAdmin;
 import com.weini.manage.entity.TAuth;
 import com.weini.tools.CipherUtil;
+
+import java.util.List;
 
 
 public class AdminAction extends ActionSupport{
@@ -22,9 +22,11 @@ public class AdminAction extends ActionSupport{
 	List<TAdmin> dataList;
 	List<TAuth> authList;
 	String result;
-	
+	AdminService adminService=new AdminService();
 
-	public String getResult() {
+
+
+    public String getResult() {
 		return result;
 	}
 
@@ -47,15 +49,15 @@ public class AdminAction extends ActionSupport{
 	}
 	
 	public String listAuthByRole(){//根据角色获取权限列表		
-		authList=(new AdminService()).getAuthbyRoleList(getRoleid(role));
+		authList=(adminService).getAuthbyRoleList(getRoleid(role));
 		return "SUCCESS";
 	}
 	public String updateAuthByRole(){//更新角色的权限列表	
-		(new AdminService()).updateAuthByRole(getRoleid(role),auth,aflag);
+		(adminService).updateAuthByRole(getRoleid(role),auth,aflag);
 		return "SUCCESS";
 	}
 	public String listAdmin(){//根据角色获取账户列表		
-		dataList=(new AdminService()).getAdminList(getRoleid(role));
+		dataList=(adminService).getAdminList(getRoleid(role));
 		return "SUCCESS";
 	}
 
@@ -63,14 +65,14 @@ public class AdminAction extends ActionSupport{
 		this.result = "false";
 		if(this.adminPassword.equals(confirmPassword)){
 			String adminPassword_md5 = CipherUtil.generatePassword(adminPassword);  
-			if((new AdminService()).updateAdmin(adminID,adminName,adminPassword_md5,getRoleid(role),mark)){
+			if((adminService).updateAdmin(adminID,adminName,adminPassword_md5,getRoleid(role),mark)){
 				this.result = "true";
 			}
 		}
 		return "SUCCESS";
 	}
 	public String delAdmin(){//删除账户		
-		(new AdminService()).delAdmin(id);
+		(adminService).delAdmin(id);
 		return "SUCCESS";
 	}
 	public int getAdminID() {

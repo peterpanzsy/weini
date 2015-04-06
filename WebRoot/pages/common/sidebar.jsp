@@ -34,6 +34,7 @@
         <i class="fa fa-database"></i> 订单信息 <div class="pull-right"><span class="caret"></span></div>
       </a>
       <ul class="templatemo-submenu">
+        <li id="manageOrderLi"><a href="pages/orderManage/manageOrder.jsp">订单列表</a></li>
         <li class="open"><a href="#">订单模式</a></li>
         <li><a href="#">订单区域</a></li>
         <li><a href="#">订单商家</a></li>             

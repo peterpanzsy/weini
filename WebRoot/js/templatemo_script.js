@@ -15,55 +15,64 @@ $(document).ready( function() {
 		}
 	});  
 	var $pathname=window.location.pathname;
-	if($pathname.indexOf("/WeiNiManage/pages/adminManage")>=0){//二级菜单点击进入页面后，保持一级菜单的active效果
+	if($pathname.indexOf("/pages/adminManage")>=0){//二级菜单点击进入页面后，保持一级菜单的active效果
 		$(".active").removeClass("active");
 		$("#adminManage").addClass("open active");
-	}else if($pathname.indexOf("/WeiNiManage/pages/vendorManage")>=0){//二级菜单点击进入页面后，保持一级菜单的active效果
+	}else if($pathname.indexOf("/pages/vendorManage")>=0){//二级菜单点击进入页面后，保持一级菜单的active效果
 		$(".active").removeClass("active");
 		$("#vendorManage").addClass("open active");
-	}else if($pathname.indexOf("/WeiNiManage/pages/goodManage")>=0){
+	}else if($pathname.indexOf("/pages/goodManage")>=0){
 		$(".active").removeClass("active");
 		$("#goodManage").addClass("open active");
-	}else if($pathname.indexOf("/WeiNiManage/pages/reportManage")>=0){
+	}else if($pathname.indexOf("/pages/reportManage")>=0){
 		$(".active").removeClass("active");
 		$("#reportManage").addClass("open active");
-	}
+	}else if($pathname.indexOf("/pages/orderManage")>=0){
+        $(".active").removeClass("active");
+        $("#orderManage").addClass("open active");
+    }
+    //订单管理
+    switch($pathname){
+        case "/weini/pages/orderManage/manageOrder.jsp":
+            $("#manageOrderLi").css("background-color","#FFF");
+            break;
+    }
 	//用户管理
 	switch($pathname){
-	case "/WeiNiManage/pages/adminManage/rootAdmin.jsp":
+	case "/weini/pages/adminManage/rootAdmin.jsp":
 		$("#rootAdminLi").css("background-color","#FFF");
 		break;
-	case "/WeiNiManage/pages/adminManage/financeAdmin.jsp":
+	case "/weini/pages/adminManage/financeAdmin.jsp":
 		$("#financeAdminLi").css("background-color","#FFF");
 		break;
-	case "/WeiNiManage/pages/adminManage/goodAdmin.jsp":
+	case "/weini/pages/adminManage/goodAdmin.jsp":
 		$("#goodAdminLi").css("background-color","#FFF");
 		break;
-	case "/WeiNiManage/pages/adminManage/ordinaryAdmin.jsp":
+	case "/weini/pages/adminManage/ordinaryAdmin.jsp":
 		$("#ordinaryAdminLi").css("background-color","#FFF");
 		break;
-	case "/WeiNiManage/pages/vendorManage/manageVendor.jsp":
+	case "/weini/pages/vendorManage/manageVendor.jsp":
 		$("#manageVendorLi").css("background-color","#FFF");
 		break;
 	}	
 	//商品管理
 	switch($pathname){
-	case "/WeiNiManage/pages/goodManage/existGood.jsp":
+	case "/weini/pages/goodManage/existGood.jsp":
 		$("#existGoodli").css("background-color","#FFF");
 		break;
-	case "/WeiNiManage/pages/goodManage/deletedGood.jsp":
+	case "/weini/pages/goodManage/deletedGood.jsp":
 		$("#deletedGoodli").css("background-color","#FFF");
 		break;
-	case "/WeiNiManage/pages/goodManage/addGood.jsp":
+	case "/weini/pages/goodManage/addGood.jsp":
 		$("#addGoodli").css("background-color","#FFF");
 		break;
 	}
 	//报表统计
 	switch($pathname){
-	case "/WeiNiManage/pages/reportManage/statistics.jsp":
+	case "/weini/pages/reportManage/statistics.jsp":
 		$("#statistics").css("background-color","#FFF");
 		break;
-	case "/WeiNiManage/pages/reportManage/userPrefer.jsp":
+	case "/weini/pages/reportManage/userPrefer.jsp":
 		$("userPrefer").css("background-color","#FFF");
 		break;
 	}

@@ -2,6 +2,11 @@
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
 	<package name="ordermanage" extends="json-default">
+        <action name="listOrder" class="com.weini.manage.action.OrderAdminAction" method="listOrder">
+            <result name="SUCCESS" type="json">
+            </result>
+        </action>
+
 	<!--订单管理-->
 	<action name="UserLastedMonthOrder" class="com.weini.manage.action.OrderAction" method="getUserLastedMonthOrder">
 		<result name="SUCCESS" type="json">
