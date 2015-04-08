@@ -76,7 +76,7 @@ public class MenuDao{
 	 */
 	public List<TMenuinfo> listMenuInfo(boolean isExist){
 		SQLQuery q;
-		q = session.createSQLQuery("select menu.menuinfo_id, menu.menuinfo_name, vendor.vendor_name, barea.businessArea_name from t_menuinfo menu,t_vendor vendor,t_businessarea barea where menu.menuinfo_status = ? and menu.vendor_id = vendor.vendor_id and vendor.vendor_business_areaid = barea.businessArea_id ");
+		q = session.createSQLQuery("select menu.menuinfo_id, menu.menuinfo_name, vendor.vendor_name, barea.businessArea_name from t_menuinfo menu,t_vendor vendor,t_businessarea barea where menu.menuinfo_status = ? and menu.vendor_id = vendor.vendor_id and menu.`menuinfo_bussinessAreaID` = barea.businessArea_id ");
 		q.setParameter(0, isExist);
 		List l = q.list();
 		List<TMenuinfo> re=new ArrayList<TMenuinfo>();
