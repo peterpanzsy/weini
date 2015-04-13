@@ -36,25 +36,27 @@
     		},
             	
             "columnDefs": [
-                           {
+            {
+                "visible":false,
                 "targets": -2,//编辑
                 "dataList": null,
                 "defaultContent": "<button id='editrow' class='btn btn-primary' type='button'><i class='fa fa-edit'></i></button>"
             },
             {
+                "visible":false,
                 "targets": -1,//删除
                 "dataList": null,
                 "defaultContent": "<button id='delrow' class='btn btn-primary' type='button'><i class='fa fa-trash-o'></i></button>"
             },
 	        {
 	            "targets": 0,//第一列
-	            "data":"userID",
+	            "data":"userId",
 	            "visible": false
 	        },
 	        {
 	            "targets": 1,//第二列
-	            "data":"order"
-//	            "visible": false,
+	            "data":"userId",//"order",
+	            "visible": false
 //	            "searchable": false
 	        },{
 	        	"targets":2,
@@ -87,19 +89,18 @@
 	            "data":"userScale"
 	        },{
 	        	"targets":8,
-	        	"data":"bankCardNumber"
+	        	"data":"userBankDefault"//"bankCardNumber"
 	        },
 	        {
 	            "targets":9,
-	            "data":"alipayUserAccount",
-	            "visible": false
+	            "data":"userAlipayDefault"//"alipayUserAccount"
 	        },
 	        {
 	            "targets": 10,
-	            "data":"weChatPay"
+	            "data":"userWeChatPay"//"weChatPay"
 	        },{
 	        	"targets":11,
-	        	"data":"pointTotal"
+	        	"data":"userPointDefault"//"pointTotal"
 	        },{
 	        	"targets":12,
 	        	"data":"userRegdate"

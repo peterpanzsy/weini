@@ -30,6 +30,9 @@ $(document).ready( function() {
 	}else if($pathname.indexOf("/pages/orderManage")>=0){
         $(".active").removeClass("active");
         $("#orderManage").addClass("open active");
+    }else if($pathname.indexOf("/pages/userManage")>=0){
+        $(".active").removeClass("active");
+        $("#userManage").addClass("open active");
     }
     //订单管理
     switch($pathname){
@@ -37,7 +40,7 @@ $(document).ready( function() {
             $("#manageOrderLi").css("background-color","#FFF");
             break;
     }
-	//用户管理
+	//账户管理
 	switch($pathname){
 	case "/weini/pages/adminManage/rootAdmin.jsp":
 		$("#rootAdminLi").css("background-color","#FFF");
@@ -67,6 +70,18 @@ $(document).ready( function() {
 		$("#addGoodli").css("background-color","#FFF");
 		break;
 	}
+    //商家管理
+    switch($pathname){
+        case "/weini/pages/vendorManage/manageVendor.jsp":
+            $("#manageVendorLi").css("background-color","#FFF");
+            break;
+    }
+    //手机用户管理
+    switch($pathname){
+        case "/weini/pages/userManage/manageUser.jsp":
+            $("#manageUserLi").css("background-color","#FFF");
+            break;
+    }
 	//报表统计
 	switch($pathname){
 	case "/weini/pages/reportManage/statistics.jsp":

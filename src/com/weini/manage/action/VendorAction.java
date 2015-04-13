@@ -3,6 +3,7 @@ package com.weini.manage.action;
 import java.util.List;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.weini.manage.business.VendorService;
 import com.weini.manage.entity.TVendor;
 
 
@@ -38,7 +39,12 @@ public class VendorAction extends ActionSupport{
     private String vendorCity;
     private String vendorProvince;
     private String vendorDetail;
-	
+
+    private VendorService vendorService = new VendorService();
+    public String listVendor(){
+        dataList = vendorService.getVendorList();
+        return SUCCESS;
+    }
 //	public String listVendor(){//根据角色获取账户列表		
 //		VendorDao dao=new VendorDao();
 //		dataList=dao.getVendorList();
@@ -58,8 +64,17 @@ public class VendorAction extends ActionSupport{
 //		dao.close();
 //		return "SUCCESS";
 //	}
-    
-	public String getAdminPassword() {
+
+
+    public List<TVendor> getDataList() {
+        return dataList;
+    }
+
+    public void setDataList(List<TVendor> dataList) {
+        this.dataList = dataList;
+    }
+
+    public String getAdminPassword() {
 		return adminPassword;
 	}
 	public void setAdminPassword(String adminPassword) {

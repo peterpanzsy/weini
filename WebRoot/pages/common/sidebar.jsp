@@ -35,13 +35,13 @@
       </a>
       <ul class="templatemo-submenu">
         <li id="manageOrderLi"><a href="pages/orderManage/manageOrder.jsp">订单列表</a></li>
-        <li class="open"><a href="#">订单模式</a></li>
+        <%--<li class="open"><a href="#">订单模式</a></li>
         <li><a href="#">订单区域</a></li>
         <li><a href="#">订单商家</a></li>             
         <li><a href="#">订单金额</a></li>
         <li><a href="#">订单统计</a></li>             
         <li><a href="#">订单追踪</a></li>
-         <li><a href="#">订单状况</a></li>
+         <li><a href="#">订单状况</a></li>--%>
       </ul>
     </li>
     <%
@@ -57,8 +57,8 @@
         <li id="existGoodli"><a href="pages/goodManage/existGood.jsp">现有商品</a></li>
         <li id="deletedGoodli"><a href="pages/goodManage/deletedGood.jsp">已删除商品</a></li>
         <li id="addGoodli"><a href="addGood">添加商品</a></li>
-        <li><a href="pages/goodManage/addGood.jsp">优惠活动</a></li>             
-        <li><a href="pages/goodManage/addGood.jsp">积分兑换商品</a></li>
+<%--        <li><a href="pages/goodManage/addGood.jsp">优惠活动</a></li>
+        <li><a href="pages/goodManage/addGood.jsp">积分兑换商品</a></li>--%>
       </ul>
     </li>
     <%
@@ -71,9 +71,9 @@
       </a>
       <ul class="templatemo-submenu">
         <li id="manageVendorLi"><a href="pages/vendorManage/manageVendor.jsp">商家列表</a></li>
-        <li><a href="#">商家审核</a></li>
+<%--        <li><a href="#">商家审核</a></li>
         <li><a href="#">商家信息</a></li>             
-        <li><a href="#">商家后台管理</a></li>
+        <li><a href="#">商家后台管理</a></li>--%>
       </ul>
     </li>
     <%
@@ -86,10 +86,10 @@
       </a>
       <ul class="templatemo-submenu">
       	 <li id="manageUserLi"><a href="pages/userManage/manageUser.jsp">用户列表</a></li>
-        <li><a href="#">用户信息</a></li>
+    <%--    <li><a href="#">用户信息</a></li>
         <li><a href="#">积分信息</a></li>
-        <li><a href="#">用户位置定位</a></li>             
-        <li><a href="#">用户增长量统计</a></li>
+        <li><a href="#">用户位置定位</a></li>
+        <li><a href="#">用户增长量统计</a></li>--%>
       </ul>
     </li>
     <%
@@ -124,10 +124,10 @@
     <%
 		}
     %>
-    <li><a href="pages/data-visualization.jsp"><i class="fa fa-cubes"></i><span class="badge pull-right">9</span>Data Visualization</a></li>
+    <%--<li><a href="pages/data-visualization.jsp"><i class="fa fa-cubes"></i><span class="badge pull-right">9</span>Data Visualization</a></li>
     <li><a href="pages/maps.jsp"><i class="fa fa-map-marker"></i><span class="badge pull-right">42</span>Maps</a></li>
     <li><a href="pages/tables.jsp"><i class="fa fa-users"></i><span class="badge pull-right">NEW</span>Manage Users</a></li>
-    <li><a href="pages/preferences.jsp"><i class="fa fa-cog"></i>Preferences</a></li>
+    <li><a href="pages/preferences.jsp"><i class="fa fa-cog"></i>Preferences</a></li>--%>
     <li><a href="javascript:void(0);" onclick="logout()"><i class="fa fa-sign-out"></i>注销</a></li>
   </ul>
 </div><!--/.navbar-collapse -->

@@ -54,7 +54,7 @@
         	"bProcessing": true,
             "ajax": {
             	"url":"listVendor.action",
-            	"type": "POST",
+            	"type": "POST"
          /*   	"data":{
             		"role":role
             	}*/
@@ -84,13 +84,13 @@
             },
 	        {
 	            "targets": 0,//第一列
-	            "data":"vendorID",
+	            "data":"vendorId",
 	            "visible": false
 	        },
 	        {
 	            "targets": 1,//第二列
-	            "data":"order"
-//	            "visible": false,
+	            "data":"vendorId",//"order"
+	            "visible": false
 //	            "searchable": false
 	        },{
 	        	"targets":2,
@@ -129,7 +129,7 @@
 	        },
 	        {
 	            "targets":9,//第一列
-	            "data":"vendorEmploynum",
+	            "data":"vendorEmployernum",
 	            "visible": false
 	        },
 	        {
@@ -146,10 +146,10 @@
 	        	"data":"vendorPaytype"
 	        },{
 	        	"targets":14,
-	        	"data":"vendorAccount"
+	        	"data":"vendorDefaultAccountid"//"vendorAccount"
 	        },{
 	        	"targets":15,
-	        	"data":"vendorBusinessArea"
+	        	"data":"vendorBusinessAreaid"//"vendorBusinessArea"
 	        },{
 	        	"targets":16,
 	        	"data":"vendorDetail"

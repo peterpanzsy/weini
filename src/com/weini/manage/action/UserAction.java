@@ -21,7 +21,7 @@ public class UserAction extends ActionSupport{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private UserService userService;
+	private UserService userService = new UserService();
 	
 	String mark;
 	List<TUser> dataList;
@@ -58,7 +58,11 @@ public class UserAction extends ActionSupport{
 	private int code=0;  //状态，0-失败 ，1-成功
 	private String result;  //错误信息
 //	private Object[] obj;
-	
+
+    public String listUser(){
+        dataList = userService.listUser();
+        return SUCCESS;
+    }
 //	public String listUser(){//根据角色获取账户列表		
 //		UserDaoDEL dao=new UserDaoDEL();
 //		dataList=dao.getUserList();

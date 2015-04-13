@@ -7,6 +7,7 @@ import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
+import com.weini.manage.entity.TUser;
 import com.weini.manage.entity.TVendor;
 import com.weini.manage.entity.TVendorextra;
 import com.weini.tools.HibernateSessionManager;
@@ -18,7 +19,14 @@ public class VendorDao  {
 	public VendorDao(Session sess)
 	{		
 		session = sess;
-	}	
+	}
+    /**
+     * 列出所有商家
+     * @return
+     */
+    public List<TVendor> listVendor(){
+        return session.createSQLQuery("select * from t_vendor").addEntity(TVendor.class).list();
+    }
 //	public List<Vendor> getVendorList(){
 //		SQLQuery q;
 //		q=session.createSQLQuery("select t.vendor_id,t.vendor_name,t.vendor_mail,t.vendor_phonenum,ifnull(t.vendor_pwd,''),t.vendor_isopen,ifnull(t.vendor_totalmoney,0),"
@@ -36,7 +44,7 @@ public class VendorDao  {
 //			String vphone=(String)row[3];
 //			String vpwd=(String)row[4];
 //			Boolean isopen=(Boolean)row[5];
-//			int totalmoney=Integer.valueOf(row[6].toString());	
+//			int totalmoney=Integer.valueOf(row[6].toString());
 //			int paidmoney=Integer.valueOf(row[7].toString());
 //			int remainedmoney=Integer.valueOf(row[8].toString());
 //			int employernum=Integer.valueOf(row[9].toString());
@@ -48,10 +56,10 @@ public class VendorDao  {
 //			String busArea=(String)row[15];
 //			String district=(String)row[16];
 //			String city=(String)row[17];
-//			String province=(String)row[18];	
+//			String province=(String)row[18];
 //			String vendorDetail=(String)row[19];
 //			String defaultAcc=String.valueOf(defaultAccount);
-//			Vendor v=new Vendor(i+1,vid, vname,vmail,vphone,isopen,totalmoney,paidmoney,remainedmoney,employernum,cooknum,shophourStart,shophourEnd,paytype,defaultAcc,busArea,district,city,province,vendorDetail); 
+//			Vendor v=new Vendor(i+1,vid, vname,vmail,vphone,isopen,totalmoney,paidmoney,remainedmoney,employernum,cooknum,shophourStart,shophourEnd,paytype,defaultAcc,busArea,district,city,province,vendorDetail);
 //			re.add(v);
 //		}
 //		return re;

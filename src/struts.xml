@@ -25,7 +25,7 @@
 		</action>
 		<!-- 商家管理 -->
 		<action name="listVendor" class="com.weini.manage.action.VendorAction" method="listVendor">
-			<result name="SUCCESS" type="json">				
+			<result name="success" type="json">
 			</result>
 		</action>
 			<action name="updateVendor" class="com.weini.manage.action.VendorAction" method="updateVendor">

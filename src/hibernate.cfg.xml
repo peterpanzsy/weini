@@ -7,10 +7,10 @@
  		<property name="show_sql">true</property>		
 		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
 		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="connection.url"> <![CDATA[jdbc:mysql://115.28.64.167:3306/weini?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull]]></property>
+		<property name="connection.url"> <![CDATA[jdbc:mysql://localhost:3306/weini?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull]]></property>
 		<property name="connection.username">root</property>
 		
-		 <property name="connection.password">root</property>
+		<property name="connection.password">admin</property>
 		<!-- 
 		<property name="connection.password">root</property>
 		 -->
@@ -46,6 +46,6 @@
        <mapping class="com.weini.manage.entity.TBank"></mapping>
        <mapping class="com.weini.manage.entity.TOfficebuilding"></mapping>
        <mapping class="com.weini.manage.entity.TMenutype"></mapping>
-     
-	</session-factory>
+       <mapping class="com.weini.manage.entity.TVendor"></mapping>
+     </session-factory>
 </hibernate-configuration>

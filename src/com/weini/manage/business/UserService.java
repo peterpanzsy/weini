@@ -4,18 +4,25 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import com.weini.manage.dao.MenuDao;
 import com.weini.manage.dao.UserDao;
 import com.weini.manage.entity.TUser;
 import com.weini.manage.entity.TUserextra;
 import com.weini.tools.HibernateSessionManager;
-import com.weini.tools.SMSUtil;
 import com.weini.tools.TwoEntity;
 
 public class UserService extends GeneralService{
 	private UserDao userdao  = new UserDao(this.session);
 	private MenuDao menudao = new MenuDao(this.session);
+
+    public List<TUser> listUser(){//根据角色获取账户列表
+        List<TUser> res=userdao.listUser();
+		this.close();
+		return res;
+	}
+
 	/**
 	 * 根据用户Id来查找用户的信息
 	 * @param userId
