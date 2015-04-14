@@ -12,6 +12,16 @@
 			<param name="includeProperties">flag</param>			
 			</result>
 		</action>
+    <!-- 商家管理登陆登出 -->
+        <action name="vendorLogin" class="com.weini.manage.action.LoginAction" method="vendorlogin" >
+            <result name="success" type="redirect">/vendor/pages/index.jsp</result>
+            <result name="fail" type="redirect">/vendor/pages/sign-in.jsp</result>
+        </action>
+        <action name="vendorLogout" class="com.weini.manage.action.LoginAction" method="vendorlogout">
+            <result name="success" type="json">
+                <param name="includeProperties">flag</param>
+            </result>
+        </action>
 	<!-- 处理手机端的用户登录 -->
 		<!-- 获取验证码 -->
 		<action name="getDynamicCode" class="com.weini.manage.action.LoginAction" method="dynamicCode">
@@ -48,18 +58,8 @@
 			<result name="success" type="json">	
 				<param name="includeProperties">code</param>
 			</result>
-		</action> 
-	<!-- 商家管理登陆登出 -->
-		<action name="vendorLogin" class="com.weini.manage.action.LoginAction" method="vendorlogin" >
-			<result name="success" type="json">
-			</result>
 		</action>
-	    <action name="vendorLogout" class="com.weini.manage.action.LoginAction" method="vendorlogout">
-			<result name="success" type="json">	
-			<param name="includeProperties">flag</param>			
-			</result>
-		</action>
-		<!-- 检查用户是否登录 -->
+    <!-- 检查用户是否登录 -->
 		<action name="UserIsLogin" class="com.weini.manage.action.LoginAction" method="checkUserIsLogin">
 			<result name="SUCCESS" type="json">	
 				<param name="includeProperties">code</param>			

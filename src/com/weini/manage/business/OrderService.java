@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import com.sun.tools.classfile.StackMapTable_attribute;
 import com.weini.manage.dao.BoxModelDao;
 import com.weini.manage.dao.DispatchingDao;
 import com.weini.manage.dao.MenuDao;
@@ -20,6 +21,7 @@ import com.weini.manage.entity.TOrderrefund;
 import com.weini.manage.entity.TSOrder;
 import com.weini.manage.entity.TSorderDispatching;
 import com.weini.manage.entity.TTrackpage;
+import com.weini.manage.websocket.SocketServerEndPoint;
 import com.weini.tools.HibernateSessionManager;
 import com.weini.tools.Tools;
 
@@ -98,6 +100,7 @@ public class OrderService extends GeneralService {
 	 */
 	public String addUserOrder(TOrder order,int orderIsFirst,int userID,int userHeatID,int userAppetite,int userPungent){
 		String res = null;
+        int vendorId = -1;
 		HibernateSessionManager.getThreadLocalTransaction();
 		//设置默认值
 		order.setOrderPayStatus(0);
@@ -108,6 +111,7 @@ public class OrderService extends GeneralService {
 		int menuID = this.getRandomMenuID(order.getOrderMenuWestern(), order.getOrderDispatchingId());
 		if(menuID > 0){
 			order.setOrderMenuinfoId(menuID);
+            vendorId = menuDao.getVendorIdByMenuId(menuID);
 		}else{
 			this.roll();
 			return res;
@@ -162,6 +166,8 @@ public class OrderService extends GeneralService {
 					}
 					this.close();
 					res = order.getOrderNum();
+                    if(vendorId>-1)//下单成功，通知商家
+                        SocketServerEndPoint.sendInformToVendor(vendorId);
 					return res;
 				}
 			}

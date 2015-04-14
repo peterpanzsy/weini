@@ -126,6 +126,7 @@ public class OrderAction extends ActionSupport {
 			result = "参数设置错误";
 			return "FAIL";
 		}
+
 		return "SUCCESS";
 	}
 	/**

@@ -1,4 +1,4 @@
-package com.weini.manage.dao;
+package com.weini.manage.dao.vendor;
 
 
 import java.util.ArrayList;
@@ -13,27 +13,13 @@ import com.weini.manage.entity.TMenuCookinfo;
 import com.weini.manage.entity.TMenuDishes;
 import com.weini.manage.entity.TMenuinfo;
 
-public class MenuDao{
+public class MenuDao {
 	protected  Session session ;
 	
 	public MenuDao(Session sess) {
 		this.session = sess;
 	}
-    /**
-     * 根据菜单Id获取商家Id
-     * @param menuId
-     * @return int
-     */
-    public int getVendorIdByMenuId(int menuId){
-        int vendorId = -1;
-        Query q = session.createSQLQuery(" select vendor_id from t_menuinfo where menuinfo_id=?");
-        q.setParameter(0, menuId);
-        List l = q.list();
-        if(l.size() > 0 ){
-            vendorId = (Integer) l.get(0);
-        }
-        return vendorId;
-    }
+
 	/**
 	 * 开启事务
 	 * 更新菜品的评分
@@ -88,10 +74,13 @@ public class MenuDao{
 	 * @param isExistGood 菜品是否被删除
 	 * @return 所有的菜品
 	 */
-	public List<TMenuinfo> listMenuInfo(boolean isExist){
+	public List<TMenuinfo> listMenuInfo(boolean isExist,int vendorId){
 		SQLQuery q;
-		q = session.createSQLQuery("select menu.menuinfo_id, menu.menuinfo_name, vendor.vendor_name, barea.businessArea_name from t_menuinfo menu,t_vendor vendor,t_businessarea barea where menu.menuinfo_status = ? and menu.vendor_id = vendor.vendor_id and menu.`menuinfo_bussinessAreaID` = barea.businessArea_id ");
+		q = session.createSQLQuery("select menu.menuinfo_id, menu.menuinfo_name, vendor.vendor_name, barea.businessArea_name " +
+                "from t_menuinfo menu,t_vendor vendor,t_businessarea barea where menu.menuinfo_status = ? " +
+                "and menu.vendor_id = vendor.vendor_id and menu.`menuinfo_bussinessAreaID` = barea.businessArea_id and menu.`vendor_id`=?");
 		q.setParameter(0, isExist);
+        q.setParameter(1,vendorId);
 		List l = q.list();
 		List<TMenuinfo> re=new ArrayList<TMenuinfo>();
 		for(int i=0;i<l.size();i++)

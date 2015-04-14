@@ -20,8 +20,9 @@ public class VendorDao  {
 	{		
 		session = sess;
 	}
+    //--------------------------数据管理中的商家管理------------------
     /**
-     * 列出所有商家
+     * 数据管理-商家管理，列出所有商家
      * @return
      */
     public List<TVendor> listVendor(){
@@ -99,6 +100,12 @@ public class VendorDao  {
 //		}
 //		return result;
 //	}
+
+    /**
+     * 数据管理-商家管理，删除商家以及关联权限
+     * @param id
+     * @return
+     */
 	public int delVendor(int id) {//删除账户以及其角色关系
 		HibernateSessionManager.getThreadLocalTransaction();
 		Query q = session.createSQLQuery(" delete from t_vendor where vendor_id=?");
@@ -121,6 +128,12 @@ public class VendorDao  {
 		}
 		return name;
 	}
+
+    /**
+     * 根据商圈ID获取商家列表
+     * @param busID
+     * @return
+     */
 	public List<TVendor> listVendorsByBussID(int busID){
 		List<TVendor> res = new ArrayList<TVendor>();
 		Query q = session.createSQLQuery("select t_vendor.vendor_id,t_vendor.vendor_name from t_vendor where t_vendor.vendor_business_areaid = ?");
@@ -147,7 +160,7 @@ public class VendorDao  {
 				+"vendor_isopen,vendor_totalmoney,vendor_paidmoney,vendor_remainedmoney,vendor_employernum,"
 				+ "vendor_cooknum,vendor_detail,vendor_shophour_start,vendor_paytype,vendor_business_areaid,"
 				+ "vendor_default_accountid,vendor_shophour_end FROM t_vendor WHERE "
-				+ "vendor_name = ? AND vendor_pwd= ?;");
+				+ "vendor_mail = ? AND vendor_pwd= ?;");
 		q.setString(0,username);
 		q.setString(1,pass);
 		List l = q.list();
@@ -155,24 +168,25 @@ public class VendorDao  {
 			res = new TVendor();
 			Object[] row = (Object[])l.get(0);
 			//赋值
-			res.setVendorId((int)row[0]);
-			res.setVendorName((String)row[1]);
-			res.setVendorMail((String)row[2]);
-			res.setVendorPhonenum((String)row[3]);
-			res.setVendorPwd((String)row[4]);
-			res.setVendorIsopen((int)row[5]);
-			res.setVendorTotalmoney((double)row[6]);
-			res.setVendorPaidmoney((double)row[7]);
-			res.setVendorRemainedmoney((double)row[8]);
-			res.setVendorEmployernum((int)row[9]);
-			res.setVendorCooknum((int)row[10]);
-			res.setVendorDetail((String)row[11]);
-			res.setVendorShophourStart((Timestamp)row[12]);
-			res.setVendorPaytype((int)row[13]);
-			res.setVendorBusinessAreaid((int)row[14]);
+            res.setVendorId((int)row[0]);
+            res.setVendorName((String)row[1]);
+            res.setVendorMail((String)row[2]);
+            res.setVendorPhonenum((String)row[3]);
+            res.setVendorPwd((String)row[4]);
+            res.setVendorIsopen((int)row[5]);
+            res.setVendorTotalmoney(row[6]!=null?(double)row[6]:0.0);
+            res.setVendorPaidmoney(row[7]!=null?(double)row[7]:0.0);
+            res.setVendorRemainedmoney(row[8]!=null?(double)row[8]:0.0);
+            res.setVendorEmployernum(row[9]!=null?(int)row[9]:0);
+            res.setVendorCooknum(row[10]!=null?(int)row[10]:0);
+            res.setVendorDetail((String)row[11]);
+            res.setVendorShophourStart((Timestamp)row[12]);
+            res.setVendorPaytype((int)row[13]);
+            res.setVendorBusinessAreaid((int)row[14]);
 		}
 		return res;
 	}
+
 	//--------------------------和vendorextra有关的东东------------------
 	/**
 	 * 添加或更新t_vendorextra表

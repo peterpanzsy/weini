@@ -2,6 +2,11 @@
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
 	<package name="menuinfo" extends="json-default">
+    <!--商家的商品管理-->
+    <action name="listGoodVendor" class="com.weini.manage.action.vendor.GoodManageAction" method="listGood">
+        <result name="SUCCESS" type="json">
+        </result>
+    </action>
 	<!--商品管理-->
 	<action name="listGood" class="com.weini.manage.action.GoodManageAction" method="listGood">
 		<result name="SUCCESS" type="json">				
