@@ -28,7 +28,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<%@ include file="common/sidebar.jsp"  %>
         <div class="templatemo-content-wrapper">
             <div class="templatemo-content" style="padding:2px;">
-                <img src="images/weini.jpg" border="1" />
+                <img src="images/weini.jpg" border="1" style="width: 1300px;"/>
             </div>
         </div>
        <%@ include file="common/footer.jsp"  %>

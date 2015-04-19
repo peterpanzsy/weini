@@ -12,6 +12,11 @@
             </result>
         </action>
 
+        <action name="countOrder" class="com.weini.manage.action.OrderAdminAction" method="countOrder">
+            <result name="SUCCESS" type="json">
+            </result>
+        </action>
+
 	<!--订单管理-->
 	<action name="UserLastedMonthOrder" class="com.weini.manage.action.OrderAction" method="getUserLastedMonthOrder">
 		<result name="SUCCESS" type="json">

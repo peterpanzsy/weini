@@ -1,13 +1,20 @@
 package com.weini.manage.dao;
 
-import com.weini.manage.entity.*;
+import java.math.BigInteger;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
+import com.weini.manage.entity.*;
 
 
 public class OrderAdminDao {
@@ -16,18 +23,52 @@ public class OrderAdminDao {
 	 public OrderAdminDao(Session sess){
 		 this.session = sess;
 	 }
-	
-	public List<TOrder> getOrderList() {//获取账户列表
-		SQLQuery q;
-		/*q = session.createSQLQuery("select t.order_num,t.`order_menuinfo_id`,t.`user_id`,t.box_id,t.`box_price`,t.`order_notice`,t.`order_isFirst`" +
-                ",t.`order_dispatching_id`,t.`order_payStatus`,t.`S_order_ConsumeStatus`,t.`order_status`,t.`order_settleStatus`,t.`order_startTime`" +
-                ",t.`order_orderTime`,t.`order_payTime` from t_order t");*/
-        q = session.createSQLQuery("select t.order_num,t.`order_menuinfo_id`,t.`user_id`,t.box_id,t.`box_price`,t.`order_notice`,t.`order_isFirst`" +
+	public int getOrderTotal(Date start,Date end){
+        int res=0;
+        SQLQuery q = session.createSQLQuery("select count(*) from t_order t where Date(t.`order_orderTime`)>? and Date(t.`order_orderTime`)<?");
+        q.setParameter(0,start);
+        q.setParameter(1,end);
+        res = ((BigInteger)q.uniqueResult()).intValue();
+        return res;
+    }
+    public double getOrderSum(Date start,Date end){
+        double sum=0;
+        SQLQuery q = session.createSQLQuery("select sum(t.box_price) from t_order t where Date(t.`order_orderTime`)>? and Date(t.`order_orderTime`)<?");
+        q.setParameter(0,start);
+        q.setParameter(1,end);
+        sum = (Double)q.uniqueResult();
+        DecimalFormat df = new DecimalFormat("##.00");
+        sum = Double.parseDouble(df.format(sum));
+        return sum;
+    }
+	public List<TOrder> getOrderList(String start,String end) {//获取账户列表
+		SQLQuery q = null;
+        if(start!=null && end!=null && !start.equals("") && !end.equals("")){
+            DateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+            try {
+                Date startDate = format.parse(start);
+                Date endDate = format.parse(end);
+                q = session.createSQLQuery("select t.order_num,t.`order_menuinfo_id`,t.`user_id`,t.box_id,t.`box_price`,t.`order_notice`,t.`order_isFirst`" +
+                        ",t.`order_dispatching_id`,t.`order_payStatus`,t.`S_order_ConsumeStatus`,t.`order_status`,t.`order_settleStatus`" +
+                        ",t.`order_startTime`,t.`order_orderTime`,t.`order_payTime`," +
+                        "tuser.`user_phoneNumber`,tuser.`user_name`,tmenu.`menuinfo_name`,tdispatch.`dispatching_addressDetail`" +
+                        " from t_order t,t_user tuser,`t_box` tbox,`t_menuinfo` tmenu,`t_dispatching` tdispatch " +
+                        "where t.`box_id`=tbox.`box_id` and t.`order_dispatching_id`=tdispatch.`dispatching_id` and t.`user_id`=tuser.`user_id` and t.`order_menuinfo_id`=tmenu.`menuinfo_id`" +
+                        "and Date(t.`order_orderTime`)>? and Date(t.`order_orderTime`)<?");
+                q.setParameter(0,startDate);
+                q.setParameter(1,endDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }else{
+            q = session.createSQLQuery("select t.order_num,t.`order_menuinfo_id`,t.`user_id`,t.box_id,t.`box_price`,t.`order_notice`,t.`order_isFirst`" +
                 ",t.`order_dispatching_id`,t.`order_payStatus`,t.`S_order_ConsumeStatus`,t.`order_status`,t.`order_settleStatus`" +
                 ",t.`order_startTime`,t.`order_orderTime`,t.`order_payTime`," +
                 "tuser.`user_phoneNumber`,tuser.`user_name`,tmenu.`menuinfo_name`,tdispatch.`dispatching_addressDetail`" +
                 " from t_order t,t_user tuser,`t_box` tbox,`t_menuinfo` tmenu,`t_dispatching` tdispatch where t.`box_id`=tbox.`box_id` and t.`order_dispatching_id`=tdispatch.`dispatching_id` and t.`user_id`=tuser.`user_id` and t.`order_menuinfo_id`=tmenu.`menuinfo_id`");
-		List l = q.list();
+        }
+        List l = q.list();
 		List<TOrder> re=new ArrayList<TOrder>();
 		for(int i=0;i<l.size();i++)
 		{

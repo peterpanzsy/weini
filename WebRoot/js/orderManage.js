@@ -1,4 +1,41 @@
- $(document).ready(function() {
+function orderSearch(){
+/*    $.ajax({
+        'url':"listOrder.action",
+        'method':'POST',
+        'data':{
+            "dateStart":$("#dateStart").val(),
+            "dateEnd":$("#dateEnd").val()
+        },
+        success:function(data){
+            $('#orderTable').DataTable().ajax.reload();
+        },
+        error:function(msg){
+            alert(msg);
+        }
+    });*/
+}
+function orderCount(){
+    $.ajax({
+        "url":"countOrder.action",
+        "method":"POST",
+        "data":{
+            "dateStart":$("#dateStart").val(),
+            "dateEnd":$("#dateEnd").val()
+        },
+        success:function(data){
+            $("#orderTotal").val(data.orderTotal);
+            $("#orderSum").val(data.orderSum);
+        },
+        error:function(msg){
+            alert(msg);
+        }
+    });
+}
+$(document).ready(function() {
+
+        $("#dateStart").datepicker();
+        $("#dateEnd").datepicker();
+
 	    /*
 	     *  订单列表
 	     */
@@ -23,10 +60,11 @@
         	"bProcessing": true,
             "ajax": {
             	"url":"listOrder.action",
-            	"type": "POST"
-         /*   	"data":{
-            		"role":role
-            	}*/
+            	"type": "POST",
+                "data":{
+                    "dateStart":$("#dateStart").val(),
+                    "dateEnd":$("#dateEnd").val()
+                }
             	},
  
             "sAjaxDataProp":"dataList",
@@ -134,9 +172,5 @@
 		      $(this).addClass('selected');
 		   }
         } );
-
-
-
-        
         
     } );

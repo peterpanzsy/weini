@@ -51,7 +51,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<script type="text/javascript" charset="utf8" src="DataTables-1.10.4/js/jquery.dataTables.min.js"></script>
   	<script type="text/javascript" charset="utf8" src="DataTables-1.10.4/js/dataTables.bootstrap.js"></script>  
   	
-  	<script type="text/javascript" charset="utf8" src="jtimepicker/jquery.timepicker.js"></script>  
+  	<script type="text/javascript" charset="utf8" src="jtimepicker/jquery.timepicker.js"></script>
     <script type="text/javascript" charset="utf8" src="js/orderManage.js"></script>
 </body>
 </html>

@@ -35,6 +35,7 @@
       </a>
       <ul class="templatemo-submenu">
         <li id="manageOrderLi"><a href="pages/orderManage/manageOrder.jsp">订单列表</a></li>
+
         <%--<li class="open"><a href="#">订单模式</a></li>
         <li><a href="#">订单区域</a></li>
         <li><a href="#">订单商家</a></li>             
@@ -56,7 +57,7 @@
         <!-- <li id="utiliSurveyli"><a href="pages/goodManage/utilizationSurvey.jsp">使用概况</a></li> -->
         <li id="existGoodli"><a href="pages/goodManage/existGood.jsp">现有商品</a></li>
         <li id="deletedGoodli"><a href="pages/goodManage/deletedGood.jsp">已删除商品</a></li>
-        <li id="addGoodli"><a href="addGood">添加商品</a></li>
+        <li id="addGoodli"><a href="addGood.action">添加商品</a></li>
 <%--        <li><a href="pages/goodManage/addGood.jsp">优惠活动</a></li>
         <li><a href="pages/goodManage/addGood.jsp">积分兑换商品</a></li>--%>
       </ul>
