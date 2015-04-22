@@ -137,10 +137,10 @@
 	            "data":"vendorCooknum"
 	        },{
 	        	"targets":11,
-	        	"data":"vendorShophourStart"
+	        	"data":"vendorShophourStartString"
 	        },{
 	        	"targets":12,
-	        	"data":"vendorShophourEnd"
+	        	"data":"vendorShophourEndString"
 	        },{
 	        	"targets":13,
 	        	"data":"vendorPaytype"
@@ -177,11 +177,15 @@
                 url: 'delVendor.action',
                 type: 'POST',
                 dataType: 'json',
-                data: {vendorID: data.vendorID},
+                data: {vendorID: data.vendorId},
             })
             .done(function(data) {
+            	if(data.result == 0){
+            		alert("删除失败！");
+            	}else{
                 	alert("删除成功！");
                 	vendorTable.ajax.reload();
+            	}
             })
             .fail(function() {
                 alert("发生错误！");
@@ -225,15 +229,15 @@
         	$(":input[name='vendorDetail']").val("");
         }
         function putValue(data) {
-        	$(":input[name='vendorID']").val(data.vendorID);
+        	$(":input[name='vendorID']").val(data.vendorId);
         	$(":input[name='vendorName']").val(data.vendorName);
         	$(":input[name='vendorMail']").val(data.vendorMail);
         	$(":input[name='vendorPhonenum']").val(data.vendorPhonenum);
         	$("input[name='vendorIsopen'][value='"+data.vendorIsopen+"']").attr("checked",true);
         	$(":input[name='vendorEmploynum']").val(data.vendorEmploynum);
         	$(":input[name='vendorCooknum']").val(data.vendorCooknum);
-        	$(":input[name='vendorShophourStart']").val(data.vendorShophourStart);
-        	$(":input[name='vendorShophourEnd']").val(data.vendorShophourEnd);
+        	$(":input[name='vendorShophourStart']").val(data.vendorShophourStartString);
+        	$(":input[name='vendorShophourEnd']").val(data.vendorShophourEndString);
         	$(":input[name='vendorDetail']").val(data.vendorDetail);
         }
        
@@ -322,13 +326,17 @@
  		  				mark:$("#mark").val()
  		  			},
  		  			success : function(data) {
- 		  				switch(data.mark){
- 		  				case "add":
- 		  					alert("添加成功！");
- 		  					break;
- 		  				case "edit":
- 		  					alert("修改成功！");
- 		  					break;
+ 		  				if(data.result == 0){
+ 		  					alert("执行失败！");
+ 		  				}else{
+	 		  				switch(data.mark){
+	 		  				case "add":
+	 		  					alert("添加成功！");
+	 		  					break;
+	 		  				case "edit":
+	 		  					alert("修改成功！");
+	 		  					break;
+	 		  				}
  		  				}
  		  				dialogClose();
  		  				vendorTable.ajax.reload();	

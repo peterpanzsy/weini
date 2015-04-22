@@ -1,5 +1,10 @@
 package com.weini.manage.action;
 
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -17,6 +22,7 @@ public class VendorAction extends ActionSupport{
 	String mark;
 	int id;
 	List<TVendor> dataList;
+	int result;
 	
 	private int order;
     private int vendorID;
@@ -40,30 +46,67 @@ public class VendorAction extends ActionSupport{
     private String vendorProvince;
     private String vendorDetail;
 
-    private VendorService vendorService = new VendorService();
     public String listVendor(){
-        dataList = vendorService.getVendorList();
+        dataList = (new VendorService()).getVendorList();
         return SUCCESS;
     }
-//	public String listVendor(){//根据角色获取账户列表		
-//		VendorDao dao=new VendorDao();
-//		dataList=dao.getVendorList();
-//		dao.close();
-//		return "SUCCESS";
-//	}
-//	public String updateVendor(){//更新或者添加账户 
-//		VendorDao dao=new VendorDao();
-//	
-//		int res=dao.updateVendor(vendorID,vendorName,vendorMail,vendorPhonenum,vendorIsopen,vendorEmploynum,vendorCooknum,vendorShophourStart,vendorShophourEnd,vendorDetail,mark);
-//		dao.close();
-//		return "SUCCESS";
-//	}
-//	public String delVendor(){//删除账户		
-//		VendorDao dao=new VendorDao();
-//		dao.delVendor(vendorID);
-//		dao.close();
-//		return "SUCCESS";
-//	}
+    /**
+     * 更新或添加账户
+     * vendorID:商家id
+     * vendorName：商家名称
+     * vendorMail：商家邮箱
+     * vendorPhonenum：商家电话号码
+     * vendorIsopen：商家是否营业
+     * vendorEmploynum:商家员工数
+     * vendorCooknum：商家厨师数
+     * vendorShophourStart：商家开始营业时间
+     * vendorShophourEnd：商家结束营业时间
+     * vendorDetail：商家详细描述
+     * mark add:增加账户;edit编辑账户
+     * @return
+     */
+	public String updateVendor(){ 
+		TVendor vendor = new TVendor();
+		if(mark.equalsIgnoreCase("edit")){
+			vendor.setVendorId(vendorID);
+		}
+		vendor.setVendorName(vendorName);
+		vendor.setVendorMail(vendorMail);
+		vendor.setVendorPhonenum(vendorPhonenum);
+		if(vendorIsopen){
+			vendor.setVendorIsopen(1);
+		}else{
+			vendor.setVendorIsopen(0);
+		}
+		vendor.setVendorEmployernum(vendorEmploynum);
+		vendor.setVendorCooknum(vendorCooknum);
+		SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+		try {
+			Date shopStart = format.parse(vendorShophourStart);
+			Date shopEnd = format.parse(vendorShophourEnd);
+			vendor.setVendorShophourStart(new Timestamp(shopStart.getTime()));
+			vendor.setVendorShophourEnd(new Timestamp(shopEnd.getTime()));
+		} catch (ParseException e) {
+			e.printStackTrace();
+			result = 0;
+			return "SUCCESS";
+		}
+		vendor.setVendorDetail(vendorDetail);
+		if((new VendorService()).updateVendor(vendor)){
+			result = 1;
+		}else{
+			result = 0;
+		}
+		return "SUCCESS";
+	}
+	public String delVendor(){//删除账户		
+		if((new VendorService().delVendor(vendorID))){
+			result = 1;
+		}else{
+			result = 0;
+		}
+		return "SUCCESS";
+	}
 
 
     public List<TVendor> getDataList() {
@@ -225,6 +268,12 @@ public class VendorAction extends ActionSupport{
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public int getResult() {
+		return result;
+	}
+	public void setResult(int result) {
+		this.result = result;
 	}
 	
 }

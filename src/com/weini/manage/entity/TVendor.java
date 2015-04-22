@@ -2,6 +2,8 @@ package com.weini.manage.entity;
 // default package
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+
 import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -32,6 +34,10 @@ public class TVendor implements java.io.Serializable {
 	private Integer vendorBusinessAreaid = -1;
 	private Integer vendorDefaultAccountid = -1;
 	private Timestamp vendorShophourEnd;
+	
+	private String vendorShophourStartString;
+	private String vendorShophourEndString;
+	
 
 	// Constructors
 
@@ -220,6 +226,21 @@ public class TVendor implements java.io.Serializable {
 
 	public void setVendorShophourEnd(Timestamp vendorShophourEnd) {
 		this.vendorShophourEnd = vendorShophourEnd;
+	}
+	@Transient
+	public String getVendorShophourStartString() {
+		if(this.vendorShophourStart != null){
+			return new SimpleDateFormat("HH:mm:ss").format(this.vendorShophourStart);
+		}
+		return "";
+	}
+
+	@Transient
+	public String getVendorShophourEndString() {
+		if(this.vendorShophourStart != null){
+			return new SimpleDateFormat("HH:mm:ss").format(this.vendorShophourEnd);
+		}
+		return "";
 	}
 
 }

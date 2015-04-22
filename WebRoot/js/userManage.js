@@ -103,7 +103,7 @@
 	        	"data":"userPointDefault"//"pointTotal"
 	        },{
 	        	"targets":12,
-	        	"data":"userRegdate"
+	        	"data":"userRegdateString"
 	        }]
         } );
       

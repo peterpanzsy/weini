@@ -72,6 +72,8 @@ public class HibernateSessionManager {
 			ThreadLocal_Transaction.remove();
 		} catch (Exception e) {
 			e.printStackTrace();
+//			TODO pl add
+			throw e;
 		}
 	}
 	

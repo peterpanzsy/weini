@@ -21,7 +21,6 @@ public abstract class GeneralService {
 		HibernateSessionManager.closeThreadLocalSession();
 	}
 
-
 	public void initDao()
 	{	
 		session = HibernateSessionManager.getThreadLocalSession();
