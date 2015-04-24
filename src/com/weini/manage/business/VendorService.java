@@ -29,13 +29,26 @@ public class VendorService extends GeneralService {
 	 *            商家信息类
 	 * @return 返回执行结果
 	 */
+	public boolean addVendor(TVendor vendor) {
+		HibernateSessionManager.getThreadLocalTransaction();
+		boolean flag = false;
+		try{
+			vdao.addVendor(vendor);
+			this.close();
+			flag = true;
+		}catch(Exception e){
+			e.printStackTrace();
+			this.roll();
+			flag = false;
+		}
+		return flag;
+	}
 	public boolean updateVendor(TVendor vendor) {
 		HibernateSessionManager.getThreadLocalTransaction();
 		boolean flag = false;
 		try{
-			vdao.updateVendor(vendor);
+			flag = vdao.updateVendor(vendor);
 			this.close();
-			flag = true;
 		}catch(Exception e){
 			e.printStackTrace();
 			this.roll();

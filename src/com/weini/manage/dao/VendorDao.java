@@ -25,8 +25,38 @@ public class VendorDao  {
 	 * @param vendor
 	 * @return
 	 */
-	public void updateVendor(TVendor vendor){
+	public void addVendor(TVendor vendor){
 		session.saveOrUpdate(vendor);
+	}
+	/**
+	 * 开启事务
+	 * 修改菜品状态菜品
+	 * @param id 菜品id
+	 * @return 修改结果
+	 */
+	public boolean updateVendor(TVendor vendor) {
+		boolean flag = false;
+		Query q = session.createSQLQuery(" update t_vendor set vendor_name = ?,vendor_mail = ?"
+				+ ",vendor_phonenum = ?,vendor_isopen = ?,vendor_employernum = ?,vendor_cooknum = ?"
+				+ ",vendor_detail = ?,vendor_shophour_start = ?,vendor_shophour_end = ? where vendor_id = ?");
+		q.setParameter(0, vendor.getVendorName());
+		q.setParameter(1,vendor.getVendorMail());
+		q.setParameter(2,vendor.getVendorPhonenum());
+		q.setParameter(3,vendor.getVendorIsopen());
+		q.setParameter(4,vendor.getVendorEmployernum());
+		q.setParameter(5,vendor.getVendorCooknum());
+		q.setParameter(6,vendor.getVendorDetail());
+		q.setParameter(7,vendor.getVendorShophourStart());
+		q.setParameter(8,vendor.getVendorShophourEnd());
+		q.setParameter(9,vendor.getVendorId());
+		int result;
+		try{
+		result=q.executeUpdate();
+		if(result > 0) flag = true;
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return flag;
 	}
     //--------------------------数据管理中的商家管理------------------
     /**

@@ -43,6 +43,9 @@ public class LoginAction extends ActionSupport{
 		//add by zsy to log remote access ip
 		HttpServletRequest request = ServletActionContext.getRequest(); 
 		String remoteip=request.getRemoteHost();
+//		TODO esay to test need to delete
+		username = "root";
+		password = "root";
 		//above add by zsy to log remote access ip		
 		if(username==null||username.equals("")){
 	        ActionContext actionContext = ActionContext.getContext();

@@ -66,6 +66,7 @@
                      	<input type="radio" name="vendorIsopen" value="否" > 否
                         <!-- <input id="vendorIsopen" name="vendorIsopen" type="text" style="width:200px" class="required"/>*</td> -->
                  </tr>
+                 
                  <tr>
                      <td>雇员规模</td>
                      <td>

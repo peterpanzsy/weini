@@ -34,6 +34,8 @@ public class TMenuinfo implements java.io.Serializable {
 	private String menuinfoImage4;
 	private String menuinfoDetail;
 	private Timestamp menuinfoDate;
+	private Timestamp menuinfoStartDate;
+	private Timestamp menuinfoEndDate;
 	private Integer menuinfoStatus;
 	private Float menuinfoPoint;
 	private Integer menuinfoWestern;
@@ -58,11 +60,19 @@ public class TMenuinfo implements java.io.Serializable {
 
 	/** minimal constructor */
 	public TMenuinfo(String menuinfoName, Integer vendorId,
-			Timestamp menuinfoDate, Integer menuinfoStatus) {
+			Timestamp menuinfoDate, Timestamp menuinfoStartDate,
+			Timestamp menuinfoEndDate, Integer menuinfoStatus,
+			Integer menuinfoWestern, Integer menuinfoType,
+			Integer menuinfoBussinessAreaId) {
 		this.menuinfoName = menuinfoName;
 		this.vendorId = vendorId;
 		this.menuinfoDate = menuinfoDate;
+		this.menuinfoStartDate = menuinfoStartDate;
+		this.menuinfoEndDate = menuinfoEndDate;
 		this.menuinfoStatus = menuinfoStatus;
+		this.menuinfoWestern = menuinfoWestern;
+		this.menuinfoType = menuinfoType;
+		this.menuinfoBusinessAreaID = menuinfoBussinessAreaId;
 	}
 
 	/** full constructor */
@@ -70,9 +80,10 @@ public class TMenuinfo implements java.io.Serializable {
 			String menuinfoImage1, String menuinfoImage2,
 			String menuinfoImage3, String menuinfoImage4,
 			String menuinfoDetail, Timestamp menuinfoDate,
+			Timestamp menuinfoStartDate, Timestamp menuinfoEndDate,
 			Integer menuinfoStatus, Float menuinfoPoint,
 			Integer menuinfoWestern, Integer menuinfoType,
-			Integer menuinfoConsumernum) {
+			Integer menuinfoConsumernum, Integer menuinfoBussinessAreaId) {
 		this.menuinfoName = menuinfoName;
 		this.vendorId = vendorId;
 		this.menuinfoImage1 = menuinfoImage1;
@@ -81,11 +92,14 @@ public class TMenuinfo implements java.io.Serializable {
 		this.menuinfoImage4 = menuinfoImage4;
 		this.menuinfoDetail = menuinfoDetail;
 		this.menuinfoDate = menuinfoDate;
+		this.menuinfoStartDate = menuinfoStartDate;
+		this.menuinfoEndDate = menuinfoEndDate;
 		this.menuinfoStatus = menuinfoStatus;
 		this.menuinfoPoint = menuinfoPoint;
 		this.menuinfoWestern = menuinfoWestern;
 		this.menuinfoType = menuinfoType;
 		this.menuinfoConsumernum = menuinfoConsumernum;
+		this.menuinfoBusinessAreaID = menuinfoBussinessAreaId;
 	}
 
 	// Property accessors
@@ -259,6 +273,24 @@ public class TMenuinfo implements java.io.Serializable {
 
 	public void setMenuinfoBusinessAreaID(Integer menuinfoBusinessAreaID) {
 		this.menuinfoBusinessAreaID = menuinfoBusinessAreaID;
+	}
+	
+	@Column(name = "menuinfo_startDate", nullable = false)
+	public Timestamp getMenuinfoStartDate() {
+		return menuinfoStartDate;
+	}
+
+	public void setMenuinfoStartDate(Timestamp menuinfoStartDate) {
+		this.menuinfoStartDate = menuinfoStartDate;
+	}
+	
+	@Column(name = "menuinfo_endDate", nullable = false)
+	public Timestamp getMenuinfoEndDate() {
+		return menuinfoEndDate;
+	}
+
+	public void setMenuinfoEndDate(Timestamp menuinfoEndDate) {
+		this.menuinfoEndDate = menuinfoEndDate;
 	}
 	@Transient
 	public String getMenuType() {

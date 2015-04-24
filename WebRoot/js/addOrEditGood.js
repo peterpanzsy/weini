@@ -8,10 +8,20 @@
         		alert("商品名称不能为空");
         		return false;
         	}
-            //判断商家是否选择
+//            判断商家是否选择
         	var index = $('#vendorID option:selected').val();
         	if(index == -1){
         		alert("请选择商家");
+        		return false;
+        	}
+        	//判断开始时间是否为空
+        	if($('#startDate').val() == ""){
+        		alert("开始时间不能为空");
+        		return false;
+        	}
+        	//判断结束时间是否为空
+        	if($('#endDate').val() == ""){
+        		alert("结束时间不能为空");
         		return false;
         	}
         	//商品图片验证
@@ -30,30 +40,38 @@
                  url: 'updateGood.action',
                  type: 'POST',
                  dataType: 'json',
+                 async:false,
                  data: {"menuName": $('#menuName').val(),
                 	 "vendorId": $('#vendorID option:selected').val(),
+                	 "bussAreaID": $('#bussAreaID option:selected').val(),
                 	 "img1": $('#img1').attr("src"),
                 	 "img2": $('#img2').attr("src"),
                 	 "img3": $('#img3').attr("src"),
                 	 "img4": $('#img4').attr("src"),
                 	 "menuDetail": $('#menuDetail').val(),
                 	 "isAdd":$('#isAdd').val(),
-        	 		 "indexID":$('#menuID').val()
+        	 		 "indexID":$('#menuID').val(),
+        	 		 "startDateString":$('#startDate').val(),
+        	 		 "endDateString":$('#endDate').val(),
+        	 		 "menuType":$('#menuinfoType').val(),
+        	 		 "menuWestern":$('#menuinfoWestern').val()
+        	 		 
                  },
         	 })
         	 .done(function(data) {
         		 if(!data.uploadSuccess){
         			 $('#menuName').val = menuName;
-        			 $('#img1').attr("src")
+        			 $('#img1').attr("src");
         		 }
         		 alert(data.info);
              })
-             .fail(function() {
+             .error(function() {
                  alert("添加商品出错！");
              });
         });
-        //页面加载后调用函数，加载省份
+        //页面加载后调用函数
         window.onload = function(){
+//        	加载省份
              if($('#proviceID option').length < 2){
                	 $.ajax({
                          url: 'listProvice.action',
@@ -72,7 +90,32 @@
                      .fail(function() {
                          alert("获取省份出错！");
                      });
-             }  	    
+             }
+             //加载菜品类型信息
+             $.ajax({
+                 url: 'menuManage/listMenutype.action',
+                 type: 'POST',
+                 dataType: 'json',
+             })
+             .done(function(data) {
+                 	var code = data.code;
+                 	if(code == 0){
+                 		alert("菜品类型信息加载失败！");
+                 	}else{
+                 		var obj = data.list;
+                 		var index = $("#menuTypeValue").val();
+	                 	for ( var i = 0; i < obj.length; i++ ){
+	 						var varItem = new Option(obj[i][1],obj[i][0]);
+	 						if(obj[i][0] == index){
+	 							varItem.selected = true;
+	 						}
+	 						$('#menuinfoType').append(varItem);     					
+	 					}
+                 	}
+             })
+             .fail(function() {
+                 alert("菜品类型信息加载失败！");
+             });
        }
         
       //获取proviceID,然后加载省下面的城市
@@ -97,12 +140,11 @@
                     for ( var i = 0; i < obj.length; i++ ){
       						var varItem = new Option(obj[i].cityName,obj[i].cityId);
       						$('#cityID').append(varItem);     					
-      					}
+      				}
                   })
            .fail(function() {
-                      alert("获取城市出错！");
-                  });
-     		
+                   alert("获取城市出错！");
+           });
         });
         
       //获取cityID,然后加载城市下面的县区
@@ -158,7 +200,6 @@
            .fail(function() {
                       alert("获取商圈出错！");
                   });
-     		
         });
         
       //获取bussAreaID,然后加载商圈下面的商家
@@ -178,14 +219,13 @@
             .done(function(data) {
                    var obj = data.vendors;
                     for ( var i = 0; i < obj.length; i++ ){
-      						var varItem = new Option(obj[i].vendorName,obj[i].vendorID);
+      						var varItem = new Option(obj[i].vendorName,obj[i].vendorId);
       						$('#vendorID').append(varItem);     					
       					}
                   })
            .fail(function() {
                       alert("获取商家出错！");
                   });
-     		
         });
         function DeleteOptions(id)
         {
@@ -203,7 +243,7 @@
                 'multi' : false,
                 'folder' : 'uploads',
                 'displayData' : 'speed',
-                'cancelImg' : 'uploadify/uploadify-cancel.png',
+//                'cancelImg' : 'uploadify/uploadify-cancel.png',
                 'buttonText': '选择商品图片',
                 "fileSizeLimit" : 3*1024*1024,
                 "fileTypeExts": '*.jpg;*.bmp;*.gif;*.png',
@@ -225,7 +265,7 @@
             'multi' : false,
             'folder' : 'uploads',
             'displayData' : 'speed',
-            'cancelImg' : 'uploadify/uploadify-cancel.png',
+//            'cancelImg' : 'uploadify/uploadify-cancel.png',
             'buttonText': '选择商品图片',
             "fileSizeLimit" : 3*1024*1024,
             "fileTypeExts": '*.jpg;*.bmp;*.gif;*.png',
@@ -247,7 +287,7 @@
             'multi' : false,
             'folder' : 'uploads',
             'displayData' : 'speed',
-            'cancelImg' : 'uploadify/uploadify-cancel.png',
+//            'cancelImg' : 'uploadify/uploadify-cancel.png',
             'buttonText': '选择商品图片',
             "fileSizeLimit" : 3*1024*1024,
             "fileTypeExts": '*.jpg;*.bmp;*.gif;*.png',
@@ -269,7 +309,7 @@
             'multi' : false,
             'folder' : 'uploads',
             'displayData' : 'speed',
-            'cancelImg' : 'uploadify/uploadify-cancel.png',
+//            'cancelImg' : 'uploadify/uploadify-cancel.png',
             'buttonText': '选择商品图片',
             "fileSizeLimit" : 3*1024*1024,
             "fileTypeExts": '*.jpg;*.bmp;*.gif;*.png',

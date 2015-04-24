@@ -140,7 +140,7 @@ public class OrderDao{
 		if(temp[0] > 0){
 			flag = true;
 			for(int i = 0; i < l.size(); i++){
-				int time = ((Double) l.get(i)).intValue();
+				int time = ((BigInteger) l.get(i)).intValue();
 				if(time < 10){
 					temp[1] ++;
 				}else if(time < 20){

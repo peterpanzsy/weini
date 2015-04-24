@@ -134,14 +134,13 @@ public class MenuDao{
 	 * @param isAdd 增加菜品true，否则为false
 	 * @return
 	 */
-	public boolean updateGoodInfo(TMenuinfo menu,boolean isAdd) {
+	public boolean updateGoodInfo(TMenuinfo menu) {
 		boolean flag = false;
 		Query q;
-		if(isAdd){
-			q = session.createSQLQuery("insert into t_menuinfo(vendor_id, menuinfo_image1,menuinfo_image2,menuinfo_image3,menuinfo_image4,menuinfo_detail,menuinfo_name,menuinfo_date,menuinfo_status) value (?,?,?,?,?,?,?,?,1)");
-		}else{
-			q = session.createSQLQuery("update t_menuinfo set vendor_id = ?, menuinfo_image1 = ?,menuinfo_image2 = ?,menuinfo_image3 = ?,menuinfo_image4 = ?,menuinfo_detail = ?,menuinfo_name = ?,menuinfo_date = ? where t_menuinfo.menuinfo_id = ?");
-		}
+		q = session.createSQLQuery("update t_menuinfo set vendor_id = ?, menuinfo_image1 = ?,"
+				+ "menuinfo_image2 = ?,menuinfo_image3 = ?,menuinfo_image4 = ?,menuinfo_detail = ?"
+				+ ",menuinfo_name = ?,menuinfo_startDate = ?,menuinfo_endDate = ?,menuinfo_western = ?"
+				+ ",menuinfo_type = ?,menuinfo_bussinessAreaID = ? where t_menuinfo.menuinfo_id = ?");
 		 
 		q.setParameter(0, menu.getVendorId());
 		q.setParameter(1, menu.getMenuinfoImage1());
@@ -150,11 +149,12 @@ public class MenuDao{
 		q.setParameter(4, menu.getMenuinfoImage4());
 		q.setParameter(5, menu.getMenuinfoDetail());
 		q.setParameter(6, menu.getMenuinfoName());
-		q.setParameter(7, menu.getMenuinfoDate());		
-		//更新的话，应该添加商品id
-		if(!isAdd){
-			q.setParameter(8,menu.getMenuinfoId());
-		}
+		q.setParameter(7, menu.getMenuinfoStartDate());
+		q.setParameter(8, menu.getMenuinfoEndDate());
+		q.setParameter(9, menu.getMenuinfoWestern());
+		q.setParameter(10,menu.getMenuinfoType());
+		q.setParameter(11, menu.getMenuinfoBusinessAreaID());
+		q.setParameter(12,menu.getMenuinfoId());
 		int result;
 		try{
 			result=q.executeUpdate();
@@ -163,6 +163,10 @@ public class MenuDao{
 			e.printStackTrace();
 		}
 		return flag;
+	}
+	public void addGoodInfo(TMenuinfo menu) {
+		session.saveOrUpdate(menu);
+		
 	}
 	//----------------------------和dishes有关的东东---------------------
 	/**

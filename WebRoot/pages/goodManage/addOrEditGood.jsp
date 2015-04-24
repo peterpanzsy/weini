@@ -63,11 +63,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                          <option selected = "selected" value="-1">请选择县区</option>
                          </select>
                          <select id="bussAreaID" style="width:200px;height:30px;" class="required" >
-                         <option selected = "selected" value="-1">请选择商圈</option>
+                          	<s:if test="%{menu.menuinfoBusinessAreaID > 0}">
+	                        	<option value="${menu.menuinfoBusinessAreaID}" selected = "selected">${menu.bussinessName}</option>
+	                        </s:if>
+	                        <s:else>
+                         		<option selected = "selected" value="-1">请选择商圈</option>
+                         	</s:else>
                          </select>
 					</td>
                 </tr>
-                 <tr>                          
+                <tr>                          
                      <td>商家名称</td>
                      <td>
                          <select id="vendorID" style="width:200px;height:30px;" class="required">
@@ -78,10 +83,42 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                          <option selected = "selected" value="-1">请选择商家</option>
                          </s:else>
                          </select>*
-                         
                      </td>
                  </tr>
-                 <tr> 
+                <tr>
+                	<td>开始日期</td>
+                	<td><input id="startDate" type="text" onClick="WdatePicker({dateFmt:'yyyy-M-d H:mm:ss'})" value="${menu.menuinfoStartDate}"/></td>
+                </tr>
+                <tr>
+                	<td>结束日期</td>
+                	<td><input id="endDate" type="text" onClick="WdatePicker({dateFmt:'yyyy-M-d H:mm:ss'})" value="${menu.menuinfoEndDate}"/></td>
+                </tr>
+                <tr>
+                	<td>中西餐</td>
+                     <td>
+                         <select id="menuinfoWestern" style="width:200px;height:30px;" class="required">
+	                        <s:if test="%{menu.menuinfoWestern == 1}">
+	                        	<option value="0" >中餐</option>
+	                        	<option value="1" selected = "selected">西餐</option>
+	                        </s:if>
+	                     	<s:else>
+	                        	<option value="0" selected = "selected">中餐</option>
+	                        	<option value="1">西餐</option>
+	                        </s:else>
+	                        
+	                        
+                         </select>*
+                     </td>
+                </tr>
+                <tr>
+                	<td>商品类型</td>
+                     <td>
+                     <input id="menuTypeValue"type = "hidden" value="${menu.menuinfoType}" >
+                     <select id="menuinfoType" style="width:200px;height:30px;" class="required">
+                     </select>*
+                     </td>
+                </tr>
+                 <tr>
                  	<td>商品图片：</td>
 					<td>
 						<div style = "width:200px;height:300px;float:left;">
@@ -134,15 +171,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <input id="role" value="root" style="display:none" />
   	<!-- <script src="js/jquery.min.js"></script> -->
-  	<script>
-  	
-    
-   
-
-  	
-  	
-  	
-  	</script>
   	<script type="text/javascript" charset="utf8" src="DataTables-1.10.4/js/jquery-1.11.1.min.js"></script>  
   	<script src="js/bootstrap.min.js"></script>
   	<script src="jquery-validation-1.11.1/dist/jquery.validate.js" type="text/javascript"></script>
@@ -157,5 +185,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script type="text/javascript" src="js/jquery.min.js"></script>  
 	<script type="text/javascript" src="uploadify/jquery.uploadify.js"></script>  
 	<script type="text/javascript" src="uploadify/jquery.uploadify.min.js"></script>  
+	<!-- My97DatePicker  -->
+	<script type="text/javascript" src="My97DatePicker/WdatePicker.js"></script>
 </body>
 </html>

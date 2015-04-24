@@ -20,6 +20,7 @@ public class MenuinfoService extends GeneralService {
 	private MenuDao menuDao;
 	private VendorDao vendorDao;
 	private AddressDao addressDao;
+	
 	public MenuinfoService(){
 		this.menuDao = new MenuDao(this.session);
 		this.vendorDao = new VendorDao(this.session);
@@ -31,10 +32,23 @@ public class MenuinfoService extends GeneralService {
 		this.close();
 		return res;
 	}
-	public boolean updateMenuInfo(TMenuinfo menu,boolean isAdd){
+	public boolean addMenuInfo(TMenuinfo menu){
 		boolean flag = false;
 		HibernateSessionManager.getThreadLocalTransaction();
-		flag = menuDao.updateGoodInfo(menu, isAdd);
+		try{
+			menuDao.addGoodInfo(menu);
+			this.close();
+			flag = true;
+		}catch(Exception e){
+			flag = false;
+			this.roll();
+		}
+		return flag;
+	}
+	public boolean updateMenuinfo(TMenuinfo menu){
+		boolean flag = false;
+		HibernateSessionManager.getThreadLocalTransaction();
+		flag = menuDao.updateGoodInfo(menu);
 		if(flag){
 			this.close();
 		}else{
@@ -51,6 +65,8 @@ public class MenuinfoService extends GeneralService {
 		TMenuinfo menu = new TMenuinfo();
 		menu = menuDao.findMenuDetailByMenuID(indexID);
 		menu.setVendorName(vendorDao.findVendorNameByID(menu.getVendorId()));
+		// set the bussinessName
+		menu.setBussinessName(addressDao.findBusiness(menu.getMenuinfoBusinessAreaID()));
 		this.close();
 		return menu;
 	}

@@ -222,7 +222,7 @@
      // 数据删除
         $('#goodTable tbody').on( 'click', 'button#editrow', function () {
         	var data = goodTable.row( $(this).parents('tr') ).data();
-        	 window.location = "editGood?indexID="+data.menuinfoId;
+        	 window.location = "editGood.action?indexID="+data.menuinfoId;
         });
         
         

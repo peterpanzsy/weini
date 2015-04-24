@@ -92,7 +92,13 @@ public class VendorAction extends ActionSupport{
 			return "SUCCESS";
 		}
 		vendor.setVendorDetail(vendorDetail);
-		if((new VendorService()).updateVendor(vendor)){
+		boolean res = false;
+		if(mark.equalsIgnoreCase("edit")){
+			res = (new VendorService()).updateVendor(vendor);
+		}else{
+			res = (new VendorService()).addVendor(vendor);
+		}
+		if(res){
 			result = 1;
 		}else{
 			result = 0;
