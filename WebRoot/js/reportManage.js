@@ -666,32 +666,27 @@ $(document).ready(function() {
     		},
     	"sPaginationType": "full_numbers",
     	"bProcessing": true,
-            /*        "ajax": {
-        	"url":"",
-        	"type": "POST",
-        	"data":{
-        		"role":role
-        	}
-        	},*/
+                    "ajax": {
+        	"url":"getAllFirstOrder.action",
+        	"type": "POST"
+        	
+        	},
 
-        "sAjaxDataProp":"dataList",
+        "sAjaxDataProp":"firOrderList",
       
         "columnDefs": [
         {
             "targets": 0,//第一列
-            "data":1,
+            "data":"index1"
             
         },
         {
             "targets": 1,//第二列
-            "data":2
+            "data":"index2"
 
         },{
         	"targets":2,
-        	"data":3
-        },{
-        	"targets":2,
-        	"data":4
+        	"data":"index3"
         }]
     } );
     

@@ -49,6 +49,7 @@ public class StatisticAction extends ActionSupport{
 	public String getTimeAnalysis(){
 		staSer = new StatisticService();
 		timeData = staSer.getUserOrderTime();
+		
 		return "SUCCESS";
 	}
 	/**

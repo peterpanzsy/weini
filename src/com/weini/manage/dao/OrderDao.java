@@ -134,13 +134,19 @@ public class OrderDao{
 	 */
 	public boolean getUserOrderTimeSum(int[] temp){
 		boolean flag = false;
-		Query q = session.createSQLQuery("select (t.order_orderTime - t.order_startTime) as time from t_order as t");
+//		Query q = session.createSQLQuery("select (t.order_orderTime - t.order_startTime) as time from t_order as t");
+		Query q = session.createSQLQuery("select t.order_orderTime,t.order_startTime from t_order as t");
 		List l = q.list();
 		temp[0] = l.size(); 
 		if(temp[0] > 0){
+		
 			flag = true;
 			for(int i = 0; i < l.size(); i++){
-				int time = ((BigInteger) l.get(i)).intValue();
+				Object[] row = (Object[]) l.get(i);
+				Timestamp orderTime = (Timestamp)(row[0]);
+				Timestamp startTime =  (Timestamp)(row[1]);
+				long time = (orderTime.getTime() - startTime.getTime())/1000;
+//				int time = ((BigInteger) l.get(i)).intValue();
 				if(time < 10){
 					temp[1] ++;
 				}else if(time < 20){
@@ -226,7 +232,7 @@ public class OrderDao{
 	 */
 	public List<TwoEntity> getOrderFirstModelSum(){
 		List<TwoEntity> res = new ArrayList<TwoEntity>();
-		Query q = session.createSQLQuery("select box_type,count(order_num) from t_order as o,t_box as b where o.order_isFirst = 1 and o.order_status > 4 and o.box_id = b.box_id group by box_type;");
+		Query q = session.createSQLQuery("select box_type,count(order_num) as cntNum from t_order as o,t_box as b where o.order_isFirst = 1 and o.order_status > 4 and o.box_id = b.box_id group by box_type;");
 		List l = q.list();
 		for(int i = 0; i < l.size(); i++){
 			Object[] row = (Object[])l.get(i);
@@ -286,7 +292,7 @@ public class OrderDao{
 		List l = q.list();
 		for(int i = 0; i < l.size(); i++){
 			Object[] row = (Object[])l.get(i);
-			ThreeEntity temp = new ThreeEntity((int)row[0],(String)row[1],(String)row[2]);
+			ThreeEntity temp = new ThreeEntity((String)row[0],(String)row[1],(String)row[2]);
 			res.add(temp);
 		}
 		return res;

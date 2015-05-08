@@ -64,10 +64,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <table id="againBuyTable" class="display table table-striped table-bordered" cellspacing="0" cellspacing="0" width="100%">
                           <thead>
                               <tr>  
-                                <th>盒子模式</th>
-                                  <th>XXXX</th>
-                                  <th>xxxx</th>
-                                  <th>xxx</th>                    
+                                <th>订单编号</th>
+                                  <th>用户名</th>
+                                  <th>商圈名</th>
+                                                  
                               </tr>
                           </thead>
                         </table> 

@@ -41,8 +41,8 @@ public class OrderAdminAction extends ActionSupport {
             Date end = format.parse(dateEnd);
             orderTotal = orderAdminService.getOrderTotal(start,end);
             orderSum = orderAdminService.getOrderSum(start,end);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        }catch(Exception e){
+        	e.printStackTrace();
         }
         orderAdminService.close();
         return "SUCCESS";
