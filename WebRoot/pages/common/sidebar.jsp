@@ -35,6 +35,8 @@
       </a>
       <ul class="templatemo-submenu">
         <li id="manageOrderLi"><a href="pages/orderManage/manageOrder.jsp">订单列表</a></li>
+		<li id="orderMoneySta"><a href="pages/orderManage/staMoneyOrder.jsp">订单金额统计</a></li>    
+        <li id="orderNumberSta"><a href="pages/orderManage/staNumberOrder.jsp">订单数量统计</a></li>         
 
         <%--<li class="open"><a href="#">订单模式</a></li>
         <li><a href="#">订单区域</a></li>

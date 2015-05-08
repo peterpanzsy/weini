@@ -36,9 +36,15 @@ $(document).ready( function() {
     }
     //订单管理
     switch($pathname){
-        case "/weini/pages/orderManage/manageOrder.jsp":
+        case "/pages/orderManage/manageOrder.jsp":
             $("#manageOrderLi").css("background-color","#FFF");
             break;
+        case "/pages/orderManage/staMoneyOrder.jsp":
+    		$("#orderMoneySta").css("background-color","#FFF");
+    		break;
+    	case "/pages/orderManage/staNumberOrder.jsp":
+    		$("#orderNumberSta").css("background-color","#FFF");
+    		break;
     }
 	//账户管理
 	switch($pathname){
